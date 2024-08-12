@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../dashboard/dashboard_screen.dart';
+import '../../hotel/hotel_page.dart';
 import '../../reseller/reseller_page.dart';
 
 class SideMenu extends StatelessWidget {
@@ -61,7 +62,9 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "الفنادق",
             svgSrc: "assets/icons/menu_store.svg",
-            press: () {},
+            press: () {
+              Provider.of<Rootwidget>(context,listen: false).getWidet(HotelPage());
+            },
           ),
           
         ],
