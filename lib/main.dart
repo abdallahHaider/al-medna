@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import 'controllers/hotel_controller.dart';
 import 'controllers/reseller_controller.dart';
 import 'controllers/rootWidget.dart';
 
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => ActionController(),
           ),
+    ChangeNotifierProvider(
+    create: (context) => HotelController(),
+    ),
           ChangeNotifierProvider(
             create: (context) => GeneralInformationController(),
           ),

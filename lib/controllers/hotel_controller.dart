@@ -55,7 +55,7 @@ class HotelController extends ChangeNotifier{
     try {
       SmartDialog.showLoading();
      x =  await postApi("/api/hotel/delete", {
-        "reseller_id": id,
+        "hotel_id": id,
       
       });
        notifyListeners();
