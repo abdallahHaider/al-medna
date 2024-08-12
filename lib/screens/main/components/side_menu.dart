@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../dashboard/dashboard_screen.dart';
 import '../../hotel/hotel_page.dart';
 import '../../reseller/reseller_page.dart';
+import '../../trap/trap_page.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -52,7 +53,9 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "الرحلات",
             svgSrc: "assets/icons/menu_task.svg",
-            press: () {},
+            press: () {
+              Provider.of<Rootwidget>(context,listen: false).getWidet(TrapPage());
+            },
           ),
           DrawerListTile(
             title: "تسديدات الرحلات",

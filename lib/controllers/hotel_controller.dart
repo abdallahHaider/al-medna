@@ -9,6 +9,8 @@ import 'package:http/http.dart'as http;
 
 class HotelController extends ChangeNotifier{
 
+  List hotels=[];
+
   Future<List> fetchData() async {
     // Simulate fetching data (replace with your actual logic)
     // await Future.delayed(Duration(seconds: 1));
@@ -25,6 +27,24 @@ class HotelController extends ChangeNotifier{
       throw "jjj";
     }
     
+  }
+  Future getfetchData() async {
+    // Simulate fetching data (replace with your actual logic)
+    // await Future.delayed(Duration(seconds: 1));
+
+    try {
+      var x= await getpi("/api/hotel/index");
+      var data = jsonDecode(x.body);
+      print(jsonDecode(x.body));
+      final List resellers =
+      data.map((json) => Reseller.fromJson(json)).toList();
+      hotels=resellers;
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw "jjj";
+    }
+
   }
   Future addReseller(String name,String phone_number,String address,BuildContext context)async{
     http.Response x;

@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'controllers/hotel_controller.dart';
 import 'controllers/reseller_controller.dart';
 import 'controllers/rootWidget.dart';
+import 'controllers/trap_controller .dart';
 
 void main() {
   runApp(MyApp());
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
     ),
           ChangeNotifierProvider(
             create: (context) => GeneralInformationController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => TrapController(),
           ),
         ],
         child: MainScreen(),
