@@ -36,7 +36,6 @@ class TrapController extends ChangeNotifier{
         "phone_number": phone_number,
       });
       
-      // snackBar(context, "تم اضافة الوكيل بنجاح");
     } catch (e) {
         snackBar(context, e.toString());
       throw e;

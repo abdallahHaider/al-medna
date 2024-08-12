@@ -36,6 +36,8 @@ class ResellerController extends ChangeNotifier{
         "phone_number": phone_number,
       });
        notifyListeners();
+             Navigator.pop(context);
+
       snackBar(context, "تم اضافة الوكيل بنجاح");
     } catch (e) {
         snackBar(context, e.toString());
@@ -44,7 +46,29 @@ class ResellerController extends ChangeNotifier{
       SmartDialog.dismiss();
     }
     if (x.statusCode==200||x.statusCode==201) {
-      snackBar(context, "تم اضافة الوكيل بنجاح");
+    }else{
+      snackBar(context, jsonDecode(x.body));
+    }
+  }
+  Future delete(int id,BuildContext context)async{
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+     x =  await postApi("/api/reseller/delete", {
+        "reseller_id": id,
+      
+      });
+       notifyListeners();
+             Navigator.pop(context);
+
+      snackBar(context, "تم حذف الوكيل بنجاح");
+    } catch (e) {
+        snackBar(context, e.toString());
+      throw e;
+    }finally{
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode==200||x.statusCode==201) {
     }else{
       snackBar(context, jsonDecode(x.body));
     }
