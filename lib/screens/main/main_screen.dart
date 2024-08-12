@@ -1,9 +1,9 @@
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../controllers/rootWidget.dart';
 import 'components/side_menu.dart';
 
 class MainScreen extends StatelessWidget {
@@ -26,8 +26,11 @@ class MainScreen extends StatelessWidget {
             Expanded(
               // It takes 5/6 part of the screen
               flex: 5,
-              child: DashboardScreen(),
-            ),
+              child: Consumer<Rootwidget>(
+                            builder: (BuildContext context, value, Widget? child) {
+                              return value.mywidget;
+                            },
+                             ),)
           ],
         ),
       ),

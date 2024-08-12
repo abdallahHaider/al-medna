@@ -2,7 +2,7 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/dashboard/components/my_fields.dart';
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import '../../utl/constants.dart';
 import 'components/header.dart';
 
 import 'components/recent_files.dart';
@@ -17,7 +17,7 @@ class DashboardScreen extends StatelessWidget {
         padding: EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            Header(),
+            Header(title: 'الصفحة الرئيسية',),
             SizedBox(height: defaultPadding),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,

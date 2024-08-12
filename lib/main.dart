@@ -1,9 +1,12 @@
-import 'package:admin/constants.dart';
+import 'package:admin/utl/constants.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'controllers/reseller_controller.dart';
+import 'controllers/rootWidget.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +27,12 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(
             create: (context) => MenuAppController(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => Rootwidget(),
+          ),
+          ChangeNotifierProvider(
+            create: (context) => ResellerController(),
           ),
         ],
         child: MainScreen(),

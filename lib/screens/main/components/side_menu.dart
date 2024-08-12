@@ -1,6 +1,11 @@
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../dashboard/dashboard_screen.dart';
+import '../../reseller/reseller_page.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
@@ -31,12 +36,17 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "الرئيسية",
             svgSrc: "assets/icons/menu_dashboard.svg",
-            press: () {},
+            press: () {
+              Provider.of<Rootwidget>(context,listen: false).getWidet(DashboardScreen());
+            },
           ),
           DrawerListTile(
             title: "الوكلاء",
             svgSrc: "assets/icons/menu_tran.svg",
-            press: () {},
+            press: () {
+              Provider.of<Rootwidget>(context,listen: false).getWidet(ResellerPage());
+
+            },
           ),
           DrawerListTile(
             title: "الرحلات",
