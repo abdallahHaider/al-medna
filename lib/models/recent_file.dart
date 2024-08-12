@@ -1,50 +1,43 @@
+import 'package:flutter/material.dart';
+
 class RecentFile {
+  final Color color;
   final String? icon, title, date, size;
 
-  RecentFile({this.icon, this.title, this.date, this.size});
+  RecentFile({this.icon, this.title, this.date, this.size,required this.color});
 }
 
 List demoRecentFiles = [
   RecentFile(
-    icon: "assets/icons/xd_file.svg",
-    title: "XD File",
+    icon: "assets/icons/menu_task.svg",
+    title: "انشاء رحلة",
     date: "01-03-2021",
-    size: "3.5mb",
+    size: "اجمالي المبلغ 500 دولار",
+    color: Colors.green,
   ),
   RecentFile(
-    icon: "assets/icons/Figma_file.svg",
-    title: "Figma File",
+    icon: "assets/icons/menu_task.svg",
+    title: "مسح رحلة",
     date: "27-02-2021",
-    size: "19.0mb",
+    size: "لا يوجد",
+        color: Colors.red,
+
   ),
   RecentFile(
-    icon: "assets/icons/doc_file.svg",
-    title: "Document",
+    icon: "assets/icons/menu_doc.svg",
+    title: "تسديد رحلة",
     date: "23-02-2021",
-    size: "32.5mb",
+    size: "اجمالي التسديد 500 دولار",
+        color: Colors.green,
+
   ),
-  RecentFile(
-    icon: "assets/icons/sound_file.svg",
-    title: "Sound File",
-    date: "21-02-2021",
-    size: "3.5mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/media_file.svg",
-    title: "Media File",
+ RecentFile(
+    icon: "assets/icons/menu_doc.svg",
+    title: "حذف تسديده",
     date: "23-02-2021",
-    size: "2.5gb",
+    size: "مبلغ التسديدة  500 دولار",
+        color: Colors.red,
+
   ),
-  RecentFile(
-    icon: "assets/icons/pdf_file.svg",
-    title: "Sales PDF",
-    date: "25-02-2021",
-    size: "3.5mb",
-  ),
-  RecentFile(
-    icon: "assets/icons/excel_file.svg",
-    title: "Excel File",
-    date: "25-02-2021",
-    size: "34.5mb",
-  ),
+ 
 ];

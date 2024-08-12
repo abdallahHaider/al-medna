@@ -19,10 +19,10 @@ class RecentFiles extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            "Recent Files",
+            "اخر العمليات",
             style: Theme.of(context).textTheme.titleMedium,
           ),
           SizedBox(
@@ -32,13 +32,13 @@ class RecentFiles extends StatelessWidget {
               // minWidth: 600,
               columns: [
                 DataColumn(
-                  label: Text("File Name"),
+                  label: Text("اسم العملية"),
                 ),
                 DataColumn(
-                  label: Text("Date"),
+                  label: Text("تاريخ الانشاء"),
                 ),
                 DataColumn(
-                  label: Text("Size"),
+                  label: Text("ملاحظات"),
                 ),
               ],
               rows: List.generate(
@@ -59,11 +59,20 @@ DataRow recentFileDataRow(RecentFile fileInfo) {
       DataCell(
         Row(
           children: [
-            SvgPicture.asset(
-              fileInfo.icon!,
-              height: 30,
-              width: 30,
-            ),
+              Container(
+                padding: EdgeInsets.all(defaultPadding * 0.75),
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                  color: fileInfo.color.withOpacity(0.1),
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                ),
+                child: SvgPicture.asset(
+                  fileInfo.icon!,
+                  colorFilter: ColorFilter.mode(
+                      fileInfo.color ?? Colors.black, BlendMode.srcIn),
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
               child: Text(fileInfo.title!),

@@ -16,12 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Admin Panel',
-      theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: bgColor,
-        textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-            .apply(bodyColor: Colors.white),
-        canvasColor: secondaryColor,
-      ),
+      theme: ThemeData(
+          scaffoldBackgroundColor: Color(0xFF171821),
+          fontFamily: 'Alexandria',
+          brightness: Brightness.dark),
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
