@@ -1,4 +1,5 @@
 import 'package:admin/controllers/action_controller.dart';
+import 'package:admin/controllers/general_information.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/screens/main/main_screen.dart';
@@ -38,9 +39,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => ActionController(),
           ),
+          ChangeNotifierProvider(
+            create: (context) => GeneralInformationController(),
+          ),
         ],
         child: MainScreen(),
       ),
     );
   }
 }
+//GeneralInformationController

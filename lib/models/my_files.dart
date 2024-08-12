@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CloudStorageInfo {
   final String? svgSrc, title, totalStorage;
-  final int? numOfFiles, percentage;
+  final int? numOfFiles;
   final Color? color;
 
   CloudStorageInfo({
@@ -11,7 +11,6 @@ class CloudStorageInfo {
     this.title,
     this.totalStorage,
     this.numOfFiles,
-    this.percentage,
     this.color,
   });
 }
@@ -23,7 +22,6 @@ List demoMyFiles = [
     svgSrc: "assets/icons/menu_tran.svg",
     totalStorage: "وكيل",
     color: primaryColor,
-    percentage: 35,
   ),
   CloudStorageInfo(
     title: "عدد الرحلات",
@@ -31,7 +29,6 @@ List demoMyFiles = [
     svgSrc: "assets/icons/menu_task.svg",
     totalStorage: "رحلة",
     color: Color(0xFFFFA113),
-    percentage: 35,
   ),
   CloudStorageInfo(
     title: "عدد الفنادق",
@@ -39,7 +36,6 @@ List demoMyFiles = [
     svgSrc: "assets/icons/menu_store.svg",
     totalStorage: "فندق",
     color: Color(0xFFA4CDFF),
-    percentage: 10,
   ),
   CloudStorageInfo(
     title: "عدد الفواتير",
@@ -47,6 +43,5 @@ List demoMyFiles = [
     svgSrc: "assets/icons/menu_doc.svg",
     totalStorage: "فاتورة",
     color: Color(0xFF007EE5),
-    percentage: 78,
   ),
 ];
