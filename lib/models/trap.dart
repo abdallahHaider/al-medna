@@ -14,9 +14,9 @@ class Trap {
   String? hotelId;
   int? duration;
   int? quantity;
-  int? pricePerOne;
-  int? rasToUsd;
-  int? iqdToUsd;
+  double pricePerOne;
+  double rasToUsd;
+  double iqdToUsd;
   String? transport;
   DateTime? createdAt;
 
@@ -26,9 +26,9 @@ class Trap {
     this.hotelId,
     this.duration,
     this.quantity,
-    this.pricePerOne,
-    this.rasToUsd,
-    this.iqdToUsd,
+  required  this.pricePerOne,
+  required  this.rasToUsd,
+   required this.iqdToUsd,
     this.transport,
     this.createdAt,
   });

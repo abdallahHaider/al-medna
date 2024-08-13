@@ -36,13 +36,13 @@ class MyApp extends StatelessWidget {
             create: (context) => Rootwidget(),
           ),
           ChangeNotifierProvider(
-            create: (context) => ResellerController(),
+            create: (context) => ResellerController()..getfetchData(),
           ),
           ChangeNotifierProvider(
             create: (context) => ActionController(),
           ),
     ChangeNotifierProvider(
-    create: (context) => HotelController(),
+    create: (context) => HotelController()..getfetchData(),
     ),
           ChangeNotifierProvider(
             create: (context) => GeneralInformationController(),
@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => TrapController(),
           ),
+  
         ],
         child: MainScreen(),
       ),

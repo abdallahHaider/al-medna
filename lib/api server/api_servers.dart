@@ -7,7 +7,7 @@ Future<http.Response> postApi(String endpoint, Map<String, dynamic> body) async 
   final response =
       await http.post(Uri.parse('$bessUrl$endpoint'), body: jsonEncode(body), headers: {
     'Content-Type': 'application/json',
-    
+    "Accept":'application/json'
   });
   return response;
 }
