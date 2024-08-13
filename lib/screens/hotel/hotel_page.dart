@@ -1,6 +1,4 @@
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/dashboard/components/storage_details.dart';
-import 'package:admin/screens/dashboard/components/storage_info_card.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
@@ -8,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/hotel_controller.dart';
-import '../../controllers/reseller_controller.dart';
 import '../dashboard/components/header.dart';
 
 class HotelPage extends StatelessWidget {

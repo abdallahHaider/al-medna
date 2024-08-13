@@ -1,5 +1,5 @@
 import 'package:admin/controllers/rootWidget.dart';
-import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -60,7 +60,9 @@ class SideMenu extends StatelessWidget {
           DrawerListTile(
             title: "تسديدات الرحلات",
             svgSrc: "assets/icons/menu_doc.svg",
-            press: () {},
+            press: () {
+              Provider.of<Rootwidget>(context,listen: false).getWidet(TrapPayPage());
+            },
           ),
           DrawerListTile(
             title: "الفنادق",

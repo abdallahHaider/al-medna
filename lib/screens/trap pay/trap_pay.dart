@@ -1,3 +1,4 @@
+import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../../controllers/reseller_controller.dart';
 import '../dashboard/components/header.dart';
 
-class ResellerPage extends StatelessWidget {
+class TrapPayPage extends StatelessWidget {
   final nameController = TextEditingController();
   final adressController = TextEditingController();
   final phoneController = TextEditingController();
@@ -31,7 +32,7 @@ class ResellerPage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(defaultPadding),
                       child: Header(
-                        title: 'الوكلاء',
+                        title: 'التسديدات',
                       ),
                     ),
                     InkWell(
@@ -47,107 +48,107 @@ class ResellerPage extends StatelessWidget {
                                     SizedBox(
                                       height: defaultPadding * 5,
                                     ),
-                                    Card(
-                                        child: Padding(
-                                            padding: const EdgeInsets.all(
-                                                defaultPadding),
-                                            child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Header(
-                                                    title: 'اضافة وكيل',
-                                                  ),
-                                                  SizedBox(
-                                                      height: defaultPadding),
-                                                  TextFormField(
-                                                    controller: nameController,
-                                                    decoration: InputDecoration(
-                                                      labelText: 'اسم الوكيل',
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      height: defaultPadding),
-                                                  TextFormField(
-                                                    controller: phoneController,
-                                                    decoration: InputDecoration(
-                                                      labelText: 'رقم الهاتف',
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                    keyboardType:
-                                                        TextInputType.phone,
-                                                  ),
-                                                  SizedBox(
-                                                      height: defaultPadding),
-                                                  TextFormField(
-                                                    controller:
-                                                        adressController,
-                                                    decoration: InputDecoration(
-                                                      labelText: 'العنوان',
-                                                      border:
-                                                          OutlineInputBorder(),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      height: defaultPadding),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      ElevatedButton(
-                                                        onPressed: () async {
-                                                          if (nameController
-                                                                  .text
-                                                                  .isEmpty ||
-                                                              phoneController
-                                                                  .text
-                                                                  .isEmpty ||
-                                                              adressController
-                                                                  .text
-                                                                  .isEmpty) {
-                                                            snackBar(context,
-                                                                'الرجاء ملئ جميع الحقول');
-                                                          } else {
-                                                            await Provider.of<
-                                                                        ResellerController>(
-                                                                    context,
-                                                                    listen:
-                                                                        false)
-                                                                .addReseller(
-                                                                    nameController
-                                                                        .text
-                                                                        .toString(),
-                                                                    phoneController
-                                                                        .text
-                                                                        .toString(),
-                                                                    adressController
-                                                                        .text
-                                                                        .toString(),
-                                                                    context);
-                                                          }
-                                                        },
-                                                        child: Text('اضافة'),
-                                                      ),
-                                                      InkWell(
-                                                        child: Text(
-                                                          "الغاء",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.red),
-                                                        ),
-                                                        onTap: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
-                                                ]))),
+                                    // Card(
+                                    //     child: Padding(
+                                    //         padding: const EdgeInsets.all(
+                                    //             defaultPadding),
+                                    //         child: Column(
+                                    //             crossAxisAlignment:
+                                    //                 CrossAxisAlignment.start,
+                                    //             mainAxisSize: MainAxisSize.min,
+                                    //             children: [
+                                    //               Header(
+                                    //                 title: 'اضافة تسديد',
+                                    //               ),
+                                    //               SizedBox(
+                                    //                   height: defaultPadding),
+                                    //               TextFormField(
+                                    //                 controller: nameController,
+                                    //                 decoration: InputDecoration(
+                                    //                   labelText: 'اسم الوكيل',
+                                    //                   border:
+                                    //                       OutlineInputBorder(),
+                                    //                 ),
+                                    //               ),
+                                    //               SizedBox(
+                                    //                   height: defaultPadding),
+                                    //               TextFormField(
+                                    //                 controller: phoneController,
+                                    //                 decoration: InputDecoration(
+                                    //                   labelText: 'رقم الهاتف',
+                                    //                   border:
+                                    //                       OutlineInputBorder(),
+                                    //                 ),
+                                    //                 keyboardType:
+                                    //                     TextInputType.phone,
+                                    //               ),
+                                    //               SizedBox(
+                                    //                   height: defaultPadding),
+                                    //               TextFormField(
+                                    //                 controller:
+                                    //                     adressController,
+                                    //                 decoration: InputDecoration(
+                                    //                   labelText: 'العنوان',
+                                    //                   border:
+                                    //                       OutlineInputBorder(),
+                                    //                 ),
+                                    //               ),
+                                    //               SizedBox(
+                                    //                   height: defaultPadding),
+                                    //               Row(
+                                    //                 mainAxisAlignment:
+                                    //                     MainAxisAlignment
+                                    //                         .spaceBetween,
+                                    //                 children: [
+                                    //                   ElevatedButton(
+                                    //                     onPressed: () async {
+                                    //                       if (nameController
+                                    //                               .text
+                                    //                               .isEmpty ||
+                                    //                           phoneController
+                                    //                               .text
+                                    //                               .isEmpty ||
+                                    //                           adressController
+                                    //                               .text
+                                    //                               .isEmpty) {
+                                    //                         snackBar(context,
+                                    //                             'الرجاء ملئ جميع الحقول');
+                                    //                       } else {
+                                    //                         await Provider.of<
+                                    //                                     ResellerController>(
+                                    //                                 context,
+                                    //                                 listen:
+                                    //                                     false)
+                                    //                             .addReseller(
+                                    //                                 nameController
+                                    //                                     .text
+                                    //                                     .toString(),
+                                    //                                 phoneController
+                                    //                                     .text
+                                    //                                     .toString(),
+                                    //                                 adressController
+                                    //                                     .text
+                                    //                                     .toString(),
+                                    //                                 context);
+                                    //                       }
+                                    //                     },
+                                    //                     child: Text('اضافة'),
+                                    //                   ),
+                                    //                   InkWell(
+                                    //                     child: Text(
+                                    //                       "الغاء",
+                                    //                       style: TextStyle(
+                                    //                           color:
+                                    //                               Colors.red),
+                                    //                     ),
+                                    //                     onTap: () {
+                                    //                       Navigator.of(context)
+                                    //                           .pop();
+                                    //                     },
+                                    //                   )
+                                    //                 ],
+                                    //               ),
+                                    //             ]))),
                                   ],
                                 ),
                               );
@@ -159,7 +160,7 @@ class ResellerPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 30, vertical: 7),
-                            child: Text("اضافة وكيل"),
+                            child: Text("اضافة تسديد"),
                           ),
                           decoration: BoxDecoration(
                               color: Color.fromARGB(255, 26, 26, 48),
@@ -174,7 +175,7 @@ class ResellerPage extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 2,
-                        child: Consumer<ResellerController>(
+                        child: Consumer<TrapPayController>(
                           builder:
                               (BuildContext context, value, Widget? child) {
                             return FutureBuilder(
@@ -194,6 +195,7 @@ class ResellerPage extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 4, horizontal: 8),
                                           child: Container(
+                                            height: 100,
                                             padding: EdgeInsets.all(8.0),
                                             decoration: BoxDecoration(
                                                 color: secondaryColor,
@@ -209,30 +211,32 @@ class ResellerPage extends StatelessWidget {
                                                     CircleAvatar(
                                                       child: Text(snapshot
                                                           .data![index]
-                                                          .fullName!
+                                                          .resellerId
+                                                          .toString()
                                                           .substring(0, 1)),
                                                     ),
                                                     SizedBox(
                                                       width: 10,
                                                     ),
-                                                    Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                    Row(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(snapshot
                                                             .data![index]
-                                                            .fullName!),
-                                                        Text(snapshot
-                                                            .data![index]
-                                                            .phoneNumber
-                                                            .toString()),
-                                                            Text(snapshot
-                                                        .data![index].address
-                                                        .toString()),
+                                                            .resellerId!),
                                                       ],
                                                     ),
-                                                    
                                                   ],
                                                 ),
+                                                Text(snapshot
+                                                    .data![index].payNumber
+                                                    .toString()),
+                                                Text(snapshot
+                                                    .data![index].createdAt
+                                                    .toString()
+                                                    .substring(0, 10)),
                                                 InkWell(
                                                   hoverColor:
                                                       Colors.transparent,
@@ -257,21 +261,23 @@ class ResellerPage extends StatelessWidget {
                                                                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
                                                                           Header(
                                                                             title:
-                                                                                'حذف الوكيل ',
+                                                                                'حذف التسديد ',
                                                                           ),
                                                                           SizedBox(
                                                                               height: defaultPadding),
                                                                           Text(
-                                                                              "هل انت متاكد من انك تريد حذف الوكيل؟"),
-                                                                              SizedBox(height: 10,),
+                                                                              "هل انت متاكد من انك تريد حذف التسديد"),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                10,
+                                                                          ),
                                                                           Row(
                                                                             mainAxisAlignment:
                                                                                 MainAxisAlignment.spaceBetween,
                                                                             children: [
                                                                               ElevatedButton(
                                                                                 onPressed: () async {
-                                                                                  await Provider.of<ResellerController>(context, listen: false).delete(snapshot
-                                                            .data![index].id, context);
+                                                                                  await Provider.of<ResellerController>(context, listen: false).delete(snapshot.data![index].id, context);
                                                                                 },
                                                                                 child: Text('حذف'),
                                                                               ),
@@ -304,7 +310,7 @@ class ResellerPage extends StatelessWidget {
                                                                 horizontal: 15,
                                                                 vertical: 3.5),
                                                         child: Text(
-                                                          "حذف الوكيل",
+                                                          "حذف التسديد",
                                                           style: TextStyle(
                                                               fontSize: 10),
                                                         ),

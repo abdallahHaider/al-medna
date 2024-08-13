@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
-import 'package:admin/models/reseller.dart';
 import 'package:admin/models/transport.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +15,15 @@ class TrapController extends ChangeNotifier {
     Transport(name: "جوي", id: "fly"),
   ];
 
-  Future<Map> fetchData() async {
+  Future<Map> fetchData(String time,int page) async {
     // Simulate fetching data (replace with your actual logic)
     // await Future.delayed(Duration(seconds: 1));
+    print("///////////////////////////////////////");
+    print(time);
 
     try {
       Map hap = {};
-      var x = await getpi("/api/trap/index?start_date=2024-08-12&end_date=2024-10-12");
+      var x = await getpi("/api/trap/index?page=$page${time==""?"":time}");
       var data = jsonDecode(x.body)["data"];
       print(jsonDecode(x.body));
       final List resellers = [];
@@ -112,5 +113,8 @@ class TrapController extends ChangeNotifier {
     } else {
       snackBar(context, jsonDecode(x.body));
     }
+  }
+  void updete(){
+    notifyListeners();
   }
 }

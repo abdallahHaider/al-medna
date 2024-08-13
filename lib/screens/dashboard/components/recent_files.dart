@@ -36,7 +36,7 @@ class RecentFiles extends StatelessWidget {
                     return Center(child: CircularProgressIndicator());
                   } else if (bb.hasError) {
                     return ErorrWidget();
-                  } else  {
+                  } else {
                     return SizedBox(
                       width: double.infinity,
                       child: DataTable(

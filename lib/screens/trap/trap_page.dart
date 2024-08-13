@@ -5,19 +5,36 @@ import 'package:provider/provider.dart';
 import '../../controllers/hotel_controller.dart';
 import '../../controllers/reseller_controller.dart';
 import '../dashboard/components/header.dart';
-import 'package:admin/responsive.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 
-class TrapPage extends StatelessWidget {
+class TrapPage extends StatefulWidget {
+  @override
+  State<TrapPage> createState() => _TrapPageState();
+}
+
+class _TrapPageState extends State<TrapPage> {
   final duration = TextEditingController();
+
   final quantity = TextEditingController();
+
   final pricePerOne = TextEditingController();
+
   final rasToUsd = TextEditingController();
+
   final iqdToUsd = TextEditingController();
+
+  final _startDateController = TextEditingController();
+
+  final _endDateController = TextEditingController();
+
   String resslrid = "";
+
   String trapid = "";
+
   String transportsid = "";
+  int page = 1;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -384,6 +401,107 @@ class TrapPage extends StatelessWidget {
                         ),
                       ),
                     ),
+                    TextButton.icon(
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (c) => AlertDialog(
+                                  title: Text("حدد تاريخ"),
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      TextField(
+                                        controller: _startDateController,
+                                        decoration: InputDecoration(
+                                          labelText: "تاريخ من",
+                                          border: OutlineInputBorder(),
+                                          filled: true,
+                                        ),
+                                        onTap: () async {
+                                          final DateTime? picker =
+                                              await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2000),
+                                            lastDate: DateTime.now()
+                                                .add(Duration(days: 100)),
+                                          );
+                                          if (picker != null) {
+                                            // setState(() {
+                                            _startDateController.text = picker
+                                                .toString()
+                                                .substring(0, 10);
+                                            // });
+                                          }
+                                        },
+                                      ),
+                                      TextField(
+                                        controller: _endDateController,
+                                        decoration: InputDecoration(
+                                          labelText: "تاريخ الى",
+                                          border: OutlineInputBorder(),
+                                          filled: true,
+                                        ),
+                                        onTap: () async {
+                                          final DateTime? picker =
+                                              await showDatePicker(
+                                            context: context,
+                                            initialDate: DateTime.now(),
+                                            firstDate: DateTime(2000),
+                                            lastDate: DateTime.now()
+                                                .add(Duration(days: 100)),
+                                          );
+                                          if (picker != null) {
+                                            // setState(() {
+                                            _endDateController.text = picker
+                                                .toString()
+                                                .substring(0, 10);
+                                            // });
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("الغاء"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        if (_startDateController.text.isEmpty ||
+                                            _endDateController.text.isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "من فضلك ادخل تاريخ من و الى")),
+                                          );
+                                        } else {
+                                          // await Provider.of<TrapController>(
+                                          //         context,
+                                          //         listen: false)
+                                          //     .fetchData(
+                                          // "?start_date=${_startDateController.text}&end_date=${_endDateController.text}");
+                                          page=1;
+                                          Provider.of<TrapController>(context,
+                                                  listen: false)
+                                              .updete();
+                                          Navigator.of(context).pop();
+                                          // _startDateController.text = "";
+                                          // _endDateController.text = "";
+                                        }
+                                      },
+                                      child: Text("حسنا"),
+                                    ),
+                                  ],
+                                ));
+                      },
+                      label: Text("بحث متقدم"),
+                      icon: Icon(Icons.search),
+                    )
                   ],
                 ),
                 Expanded(
@@ -393,8 +511,14 @@ class TrapPage extends StatelessWidget {
                         flex: 2,
                         child: Consumer<TrapController>(
                           builder: (context, value, _) {
+                            print("111111111111111111111111");
+                            print(_startDateController.text.isEmpty);
                             return FutureBuilder(
-                              future: value.fetchData(),
+                              future: value.fetchData(
+                                  _startDateController.text.isEmpty
+                                      ? ""
+                                      : "&start_date=${_startDateController.text}&end_date=${_endDateController.text}",
+                                  page),
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
@@ -415,7 +539,9 @@ class TrapPage extends StatelessWidget {
                                                   BorderRadius.circular(10)),
                                           child: Column(
                                             children: [
-                                              SizedBox(height: 10,),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
                                               Text('معلومات عامة'),
                                               SizedBox(
                                                 height: defaultPadding,
@@ -439,7 +565,9 @@ class TrapPage extends StatelessWidget {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
                                                 child: Divider(),
                                               ),
                                               Padding(
@@ -461,7 +589,9 @@ class TrapPage extends StatelessWidget {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
                                                 child: Divider(),
                                               ),
                                               Padding(
@@ -499,23 +629,66 @@ class TrapPage extends StatelessWidget {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
                                                 child: Divider(),
                                               ),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 12),
-                                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                                                  Text('عدد التسديدات :'+snapshot.data!['count_pays'].toString()),
-                                                 Text(
-                                                    "المدة الزمنية : ${snapshot.data!['start_date'] == null ? "لا يوجد" : " من " + snapshot.data!['start_date'] + " الى " + snapshot.data!['end_date']}"),
-                                                Text('عدد الرحلات :'+snapshot.data!['count_trap'].toString()),
-                                                ],),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text('عدد التسديدات :' +
+                                                        snapshot
+                                                            .data!['count_pays']
+                                                            .toString()),
+                                                    Text(
+                                                        "المدة الزمنية : ${snapshot.data!['start_date'] == null ? "لا يوجد" : " من " + snapshot.data!['start_date'] + " الى " + snapshot.data!['end_date']}"),
+                                                    Text('عدد الرحلات :' +
+                                                        snapshot
+                                                            .data!['count_trap']
+                                                            .toString()),
+                                                  ],
+                                                ),
                                               ),
-                                              SizedBox(height: 10,)
-                                         
+                                              SizedBox(
+                                                height: 10,
+                                              )
                                             ],
                                           ),
                                         ),
+                                      ),
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                page += 1;
+                                                Provider.of<TrapController>(
+                                                        context,
+                                                        listen: false)
+                                                    .updete();
+                                              },
+                                              child: Text("الصفحة التالية")),
+                                          Text("الصفحة :$page"),
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                if (page > 1) {
+                                                  page -= 1;
+                                                  Provider.of<TrapController>(
+                                                          context,
+                                                          listen: false)
+                                                      .updete();
+                                                }
+                                              },
+                                              child: Text("الصفحة السابقة")),
+                                        ],
                                       ),
                                       Expanded(
                                         child: ListView.builder(
