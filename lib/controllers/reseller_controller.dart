@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/reseller.dart';
+import 'package:admin/models/trap.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart'as http;
+
+import '../models/trap_pay.dart';
 
 class ResellerController extends ChangeNotifier{
 
@@ -56,8 +59,8 @@ class ResellerController extends ChangeNotifier{
         "address": address,
         "phone_number": phone_number,
       });
-       notifyListeners();
-             Navigator.pop(context);
+      //  notifyListeners();
+      //        Navigator.pop(context);
 
       snackBar(context, "تم اضافة الوكيل بنجاح");
     } catch (e) {
@@ -92,6 +95,32 @@ class ResellerController extends ChangeNotifier{
     if (x.statusCode==200||x.statusCode==201) {
     }else{
       snackBar(context, jsonDecode(x.body));
+    }
+  }
+  Future<List> getResellerinfo(String id)async{
+     try {
+      var x= await getpi("/api/trap/index?reseller_id=$id");
+      var data = jsonDecode(x.body);
+      print(jsonDecode(x.body));
+      final List Traps =
+      data["data"].map((json) => Trap.fromJson(json)).toList();
+     return Traps;
+    } catch (e) {
+      print(e);
+      throw "jjj";
+    }
+  }
+  Future<List> getDbetPayinfo(String id)async{
+    try {
+      var x= await getpi("/api/trap_pay/index?reseller_id=$id");
+      var data = jsonDecode(x.body);
+      print(jsonDecode(x.body));
+      final List Traps =
+      data["data"].map((json) => TrapPay.fromJson(json)).toList();
+      return Traps;
+    } catch (e) {
+      print(e);
+      throw "jjj";
     }
   }
 }

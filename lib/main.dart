@@ -3,7 +3,10 @@ import 'package:admin/controllers/general_information.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/screens/main/main_screen.dart';
+import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/hotel_controller.dart';
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => TrapController(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => TrapPayController(),
         ),
       ],
@@ -50,12 +53,18 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Admin Panel',
         theme: ThemeData(
-            scaffoldBackgroundColor: Color(0xFF171821),
+            primaryColor: primaryColor,
+            // iconButtonTheme:IconButtonThemeData(style: ButtonStyle(foregroundColor:WidgetStateProperty() )) ,
             fontFamily: 'Alexandria',
-            brightness: Brightness.dark),
-        home: MainScreen(),
+            // textTheme: GoogleFonts.alexandriaTextTheme(),
+            brightness: Brightness.light),
+        home: Directionality(
+          textDirection: TextDirection.rtl,
+          child: MainScreen(),
+        ),
+        navigatorObservers: [FlutterSmartDialog.observer],
+        builder: FlutterSmartDialog.init(),
       ),
     );
   }
 }
-//GeneralInformationController

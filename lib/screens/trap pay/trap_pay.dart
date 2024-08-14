@@ -1,18 +1,16 @@
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/widgets/snakbar.dart';
+import 'package:admin/screens/widgets/pdd.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/reseller_controller.dart';
 import '../dashboard/components/header.dart';
 
 class TrapPayPage extends StatelessWidget {
-  final nameController = TextEditingController();
-  final adressController = TextEditingController();
-  final phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,6 +39,10 @@ class TrapPayPage extends StatelessWidget {
                         showDialog(
                             context: context,
                             builder: (c) {
+                              String resslrid = "";
+                              final costController = TextEditingController();
+                              final namberController = TextEditingController();
+                              final uSDController = TextEditingController();
                               return AlertDialog(
                                 backgroundColor: Colors.transparent,
                                 content: Column(
@@ -48,107 +50,150 @@ class TrapPayPage extends StatelessWidget {
                                     SizedBox(
                                       height: defaultPadding * 5,
                                     ),
-                                    // Card(
-                                    //     child: Padding(
-                                    //         padding: const EdgeInsets.all(
-                                    //             defaultPadding),
-                                    //         child: Column(
-                                    //             crossAxisAlignment:
-                                    //                 CrossAxisAlignment.start,
-                                    //             mainAxisSize: MainAxisSize.min,
-                                    //             children: [
-                                    //               Header(
-                                    //                 title: 'اضافة تسديد',
-                                    //               ),
-                                    //               SizedBox(
-                                    //                   height: defaultPadding),
-                                    //               TextFormField(
-                                    //                 controller: nameController,
-                                    //                 decoration: InputDecoration(
-                                    //                   labelText: 'اسم الوكيل',
-                                    //                   border:
-                                    //                       OutlineInputBorder(),
-                                    //                 ),
-                                    //               ),
-                                    //               SizedBox(
-                                    //                   height: defaultPadding),
-                                    //               TextFormField(
-                                    //                 controller: phoneController,
-                                    //                 decoration: InputDecoration(
-                                    //                   labelText: 'رقم الهاتف',
-                                    //                   border:
-                                    //                       OutlineInputBorder(),
-                                    //                 ),
-                                    //                 keyboardType:
-                                    //                     TextInputType.phone,
-                                    //               ),
-                                    //               SizedBox(
-                                    //                   height: defaultPadding),
-                                    //               TextFormField(
-                                    //                 controller:
-                                    //                     adressController,
-                                    //                 decoration: InputDecoration(
-                                    //                   labelText: 'العنوان',
-                                    //                   border:
-                                    //                       OutlineInputBorder(),
-                                    //                 ),
-                                    //               ),
-                                    //               SizedBox(
-                                    //                   height: defaultPadding),
-                                    //               Row(
-                                    //                 mainAxisAlignment:
-                                    //                     MainAxisAlignment
-                                    //                         .spaceBetween,
-                                    //                 children: [
-                                    //                   ElevatedButton(
-                                    //                     onPressed: () async {
-                                    //                       if (nameController
-                                    //                               .text
-                                    //                               .isEmpty ||
-                                    //                           phoneController
-                                    //                               .text
-                                    //                               .isEmpty ||
-                                    //                           adressController
-                                    //                               .text
-                                    //                               .isEmpty) {
-                                    //                         snackBar(context,
-                                    //                             'الرجاء ملئ جميع الحقول');
-                                    //                       } else {
-                                    //                         await Provider.of<
-                                    //                                     ResellerController>(
-                                    //                                 context,
-                                    //                                 listen:
-                                    //                                     false)
-                                    //                             .addReseller(
-                                    //                                 nameController
-                                    //                                     .text
-                                    //                                     .toString(),
-                                    //                                 phoneController
-                                    //                                     .text
-                                    //                                     .toString(),
-                                    //                                 adressController
-                                    //                                     .text
-                                    //                                     .toString(),
-                                    //                                 context);
-                                    //                       }
-                                    //                     },
-                                    //                     child: Text('اضافة'),
-                                    //                   ),
-                                    //                   InkWell(
-                                    //                     child: Text(
-                                    //                       "الغاء",
-                                    //                       style: TextStyle(
-                                    //                           color:
-                                    //                               Colors.red),
-                                    //                     ),
-                                    //                     onTap: () {
-                                    //                       Navigator.of(context)
-                                    //                           .pop();
-                                    //                     },
-                                    //                   )
-                                    //                 ],
-                                    //               ),
-                                    //             ]))),
+                                    Card(
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(
+                                                defaultPadding),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Header(
+                                                    title: 'اضافة تسديد',
+                                                  ),
+                                                  SizedBox(
+                                                      height: defaultPadding),
+                                                  Consumer<ResellerController>(
+                                                    builder:
+                                                        (BuildContext context,
+                                                            value,
+                                                            Widget? child) {
+                                                      return DropdownButtonFormField<
+                                                          dynamic>(
+                                                        decoration:
+                                                            InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10),
+                                                          ),
+                                                          labelText: "الوكيل",
+                                                          fillColor: Theme.of(
+                                                                  context)
+                                                              .scaffoldBackgroundColor,
+                                                        ),
+                                                        onChanged:
+                                                            (dynamic value) {
+                                                          resslrid = value.id
+                                                              .toString();
+                                                        },
+                                                        items: value.resellerss
+                                                            .map((dynamic
+                                                                companies) {
+                                                          return DropdownMenuItem<
+                                                              dynamic>(
+                                                            value: companies,
+                                                            child: Text(
+                                                                companies
+                                                                    .fullName!),
+                                                          );
+                                                        }).toList(),
+                                                      );
+                                                    },
+                                                  ),
+                                                  SizedBox(
+                                                      height: defaultPadding),
+                                                  TextFormField(
+                                                    controller: costController,
+                                                    decoration: InputDecoration(
+                                                      labelText: 'المبلغ',
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                    ),
+                                                    keyboardType:
+                                                        TextInputType.phone,
+                                                  ),
+                                                  SizedBox(
+                                                      height: defaultPadding),
+                                                  TextFormField(
+                                                    controller:
+                                                        namberController,
+                                                    decoration: InputDecoration(
+                                                      labelText: 'رقم التسديد',
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      height: defaultPadding),
+                                                  TextFormField(
+                                                    controller:
+                                                        uSDController,
+                                                    decoration: InputDecoration(
+                                                      labelText: 'سعر الصرف',
+                                                      border:
+                                                          OutlineInputBorder(),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                      height: defaultPadding),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      ElevatedButton(
+                                                        onPressed: () async {
+                                                          // if (nameController
+                                                          //         .text
+                                                          //         .isEmpty ||
+                                                          //     phoneController
+                                                          //         .text
+                                                          //         .isEmpty ||
+                                                          //     adressController
+                                                          //         .text
+                                                          //         .isEmpty) {
+                                                          //   snackBar(context,
+                                                          //       'الرجاء ملئ جميع الحقول');
+                                                          // } else {
+                                                            await Provider.of<
+                                                                        TrapPayController>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .addReseller(
+                                                                    costController
+                                                                        .text
+                                                                        .toString(),
+                                                                    namberController
+                                                                        .text
+                                                                        .toString(),
+                                                                    uSDController
+                                                                        .text
+                                                                        .toString(),resslrid,
+                                                                    context);
+                                                          // }
+                                                        },
+                                                        child: Text('اضافة'),
+                                                      ),
+                                                      InkWell(
+                                                        child: Text(
+                                                          "الغاء",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.red),
+                                                        ),
+                                                        onTap: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                      )
+                                                    ],
+                                                  ),
+                                                ]))),
                                   ],
                                 ),
                               );
@@ -237,6 +282,32 @@ class TrapPayPage extends StatelessWidget {
                                                     .data![index].createdAt
                                                     .toString()
                                                     .substring(0, 10)),
+                                                    TextButton(onPressed: ()async{
+                                                      SmartDialog.showLoading();
+                                                      try {
+                                                    //  await generateAndOpenPdf();
+                                                     await generatePdfWeb();
+                                                      } catch (e) {
+                                                        showDialog(context: context, builder: (v){
+                                                          return AlertDialog(
+                                                            title: Text('Error'),
+                                                            content: Padding(
+                                                              padding: const EdgeInsets.all(8.0),
+                                                              child: Column(
+                                                                children: [
+                                                                  Text(e.toString(),softWrap: true,),
+                                                                  TextField(
+                                                                    controller: TextEditingController(text: e.toString()),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            );
+
+                                                        });
+                                                      }
+                                                     SmartDialog.dismiss();
+                                                    }, child: Text("طباعة الفاتورة")),
                                                 InkWell(
                                                   hoverColor:
                                                       Colors.transparent,

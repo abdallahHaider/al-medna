@@ -47,14 +47,16 @@ class TrapPayController extends ChangeNotifier {
     }
 
   }
-  Future addReseller(String name,String phone_number,String address,BuildContext context)async{
+  Future addReseller(String name,String phone_number,String address,String rId,BuildContext context)async{
     http.Response x;
     try {
       SmartDialog.showLoading();
      x =  await postApi("/api/trap_pay/create", {
-        "full_name": name,
-        "address": address,
-        "phone_number": phone_number,
+        "cost": name,
+        "reseller_id": rId,
+        "pay_number": phone_number,
+        "IQD_to_USD":address,
+        "RAS_to_USD":"0"
       });
        notifyListeners();
              Navigator.pop(context);
