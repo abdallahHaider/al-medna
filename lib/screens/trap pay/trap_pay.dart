@@ -22,6 +22,7 @@ class _TrapPayPageState extends State<TrapPayPage> {
   final namberController = TextEditingController();
 
   final uSDController = TextEditingController();
+  ScrollController scrollController = ScrollController();
 
   @override
   void dispose() {
@@ -106,161 +107,137 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 4, horizontal: 8),
-                                        child: SizedBox(
-                                          width: double.infinity,
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: DataTable(
-                                              columnSpacing: defaultPadding,
-                                              columns: [
-                                                DataColumn(
-                                                  label: Text("اسم الوكيل"),
-                                                ),
-                                                DataColumn(
-                                                  label: Text("رقم الوصل"),
-                                                ),
-                                                DataColumn(
-                                                  label: Text("المبلغ"),
-                                                ),
-                                                DataColumn(
-                                                  label: Text("سعر الصرف"),
-                                                ),
-                                                DataColumn(
-                                                  label: Text(" التاريخ"),
-                                                ),
-                                                DataColumn(
-                                                  label: Text("الفاتورة"),
-                                                ),
-                                                DataColumn(
-                                                  label: Text("الاجراء"),
-                                                ),
-                                              ],
-                                              rows: List.generate(
-                                                  snapshot.data!.length,
-                                                  (index) => DataRow(cells: [
-                                                        DataCell(
-                                                          Text(
-                                                            snapshot
-                                                                .data![index]
-                                                                .resellerId
-                                                                .toString(),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Text(
-                                                            snapshot
-                                                                .data![index].id
-                                                                .toString(),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Text(
-                                                            snapshot
-                                                                .data![index]
-                                                                .cost
-                                                                .toString(),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Text(
-                                                            snapshot
-                                                                .data![index]
-                                                                .iqdToUsd
-                                                                .toString(),
-                                                          ),
-                                                        ),
-                                                        DataCell(
-                                                          Text(snapshot
+                                        child: Scrollbar(
+                                          controller: scrollController,
+                                          child: DataTable(
+                                            columnSpacing: defaultPadding,
+                                            columns: [
+                                              DataColumn(
+                                                label: Text("اسم الوكيل"),
+                                              ),
+                                              DataColumn(
+                                                label: Text("رقم الوصل"),
+                                              ),
+                                              DataColumn(
+                                                label: Text("المبلغ"),
+                                              ),
+                                              DataColumn(
+                                                label: Text("سعر الصرف"),
+                                              ),
+                                              DataColumn(
+                                                label: Text(" التاريخ"),
+                                              ),
+                                              DataColumn(
+                                                label: Text("الفاتورة"),
+                                              ),
+                                              DataColumn(
+                                                label: Text("الاجراء"),
+                                              ),
+                                            ],
+                                            rows: List.generate(
+                                                snapshot.data!.length,
+                                                (index) => DataRow(cells: [
+                                                      DataCell(
+                                                        Text(
+                                                          snapshot
                                                               .data![index]
-                                                              .createdAt
-                                                              .toString()
-                                                              .substring(
-                                                                  0, 10)),
+                                                              .resellerId
+                                                              .toString(),
                                                         ),
-                                                        DataCell(
-                                                          TextButton(
-                                                              onPressed:
-                                                                  () async {
-                                                                SmartDialog
-                                                                    .showLoading();
-                                                                try {
-                                                                  //  await generateAndOpenPdf();
-                                                                  // await Provider.of<
-                                                                  //             ResellerController>(
-                                                                  //         context,
-                                                                  //         listen:
-                                                                  //             false)
-                                                                  //     .getDbetPayinfo(snapshot
-                                                                  //         .data![
-                                                                  //             index]
-                                                                  //         .id
-                                                                  //         .toString());
-                                                                  // int totlcost = Provider.of<
-                                                                  //             ResellerController>(
-                                                                  //         context,
-                                                                  //         listen:
-                                                                  //             false)
-                                                                  //     .totlCost;
-                                                                  generatePdfWeb(
-                                                                      snapshot
-                                                                          .data![
-                                                                              index]
-                                                                          .resellerId
-                                                                          .toString(),
-                                                                      snapshot
-                                                                          .data![
-                                                                              index]
-                                                                          .cost,
-                                                                      snapshot
-                                                                          .data![
-                                                                              index]
-                                                                          .id
-                                                                          .toString(),
-                                                                      snapshot
-                                                                          .data![
-                                                                              index]
-                                                                          .createdAt
-                                                                          .toString()
-                                                                          .substring(
-                                                                              0,
-                                                                              10),
-                                                                      snapshot
-                                                                          .data![
-                                                                              index]
-                                                                          .nowdebt);
-                                                                } catch (e) {}
-                                                                SmartDialog
-                                                                    .dismiss();
-                                                              },
-                                                              child: Text(
-                                                                  "طباعة الفاتورة")),
+                                                      ),
+                                                      DataCell(
+                                                        Text(
+                                                          snapshot
+                                                              .data![index].id
+                                                              .toString(),
                                                         ),
-                                                        DataCell(
-                                                          ElevatedButton(
-                                                            style: ButtonStyle(
-                                                              backgroundColor:
-                                                                  WidgetStateProperty
-                                                                      .all(
-                                                                Colors.red,
-                                                              ),
-                                                              foregroundColor:
-                                                                  WidgetStateProperty
-                                                                      .all(Colors
-                                                                          .white),
-                                                            ),
-                                                            onPressed: () {
-                                                              deletPay(
-                                                                  context,
-                                                                  snapshot,
-                                                                  index);
+                                                      ),
+                                                      DataCell(
+                                                        Text(
+                                                          snapshot
+                                                              .data![index]
+                                                              .cost
+                                                              .toString(),
+                                                        ),
+                                                      ),
+                                                      DataCell(
+                                                        Text(
+                                                          snapshot
+                                                              .data![index]
+                                                              .iqdToUsd
+                                                              .toString(),
+                                                        ),
+                                                      ),
+                                                      DataCell(
+                                                        Text(snapshot
+                                                            .data![index]
+                                                            .createdAt
+                                                            .toString()
+                                                            .substring(
+                                                                0, 10)),
+                                                      ),
+                                                      DataCell(
+                                                        TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              SmartDialog
+                                                                  .showLoading();
+                                                              try {
+                                                              await  generatePdfWeb(
+                                                                    snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .resellerId
+                                                                        .toString(),
+                                                                    snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .cost,
+                                                                    snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .id
+                                                                        .toString(),
+                                                                    snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .createdAt
+                                                                        .toString()
+                                                                        .substring(
+                                                                            0,
+                                                                            10),
+                                                                    snapshot
+                                                                        .data![
+                                                                            index]
+                                                                        .nowdebt);
+                                                              } catch (e) {
+                                                                
+                                                              }
+                                                              SmartDialog
+                                                                  .dismiss();
                                                             },
                                                             child: Text(
-                                                              "حذف التسديد",
+                                                                "طباعة الفاتورة")),
+                                                      ),
+                                                      DataCell(
+                                                          PopupMenuButton(
+                                                        itemBuilder:
+                                                            (context) => [
+                                                          PopupMenuItem(
+                                                            child: Text(
+                                                              "حذف",
                                                             ),
+                                                            onTap: () {
+                                                              deletPay(
+                                                                context,
+                                                                snapshot,
+                                                                index,
+                                                              );
+                                                            },
                                                           ),
-                                                        ),
-                                                      ])),
-                                            ),
+                                                        ],
+                                                      )),
+                                                    ])),
                                           ),
                                         ),
                                       ),

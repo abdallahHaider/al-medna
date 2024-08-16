@@ -32,12 +32,20 @@ class _AddTrapPageState extends State<AddTrapPage> {
   final childrenPrice = TextEditingController();
   final infantsCount = TextEditingController();
   final infantsPrice = TextEditingController();
+  final notesController = TextEditingController();
 
   String resslrid = "";
   String trapid = "";
   String transportsid = "";
   int remainingTravelers = 0;
   double totalCost = 0;
+
+    @override
+  void dispose() {
+    Provider.of<HotelController>(context).dispose();
+    Provider.of<ResellerController>(context).dispose();
+    super.dispose();
+  }
 
   void _calculateTotalCost() {
     final double doubleRoomCost = (int.tryParse(doubleRoomCount.text) ?? 0) *
@@ -58,10 +66,23 @@ class _AddTrapPageState extends State<AddTrapPage> {
           quadrupleRoomCost +
           childrenCost +
           infantsCost;
-      remainingTravelers = int.tryParse(quantity.text) ?? 0;
-      remainingTravelers -= (int.tryParse(doubleRoomCount.text) ?? 0) * 2;
-      remainingTravelers -= (int.tryParse(tripleRoomCount.text) ?? 0) * 3;
-      remainingTravelers -= (int.tryParse(quadrupleRoomCount.text) ?? 0) * 4;
+
+      int totalTravelers = int.tryParse(quantity.text) ?? 0;
+      int travelersInDoubleRooms =
+          (int.tryParse(doubleRoomCount.text) ?? 0) * 2;
+      int travelersInTripleRooms =
+          (int.tryParse(tripleRoomCount.text) ?? 0) * 3;
+      int travelersInQuadrupleRooms =
+          (int.tryParse(quadrupleRoomCount.text) ?? 0) * 4;
+      int totalChildren = int.tryParse(childrenCount.text) ?? 0;
+      int totalInfants = int.tryParse(infantsCount.text) ?? 0;
+
+      remainingTravelers = totalTravelers -
+          (travelersInDoubleRooms +
+              travelersInTripleRooms +
+              travelersInQuadrupleRooms +
+              totalChildren +
+              totalInfants);
       remainingTravelers = remainingTravelers < 0 ? 0 : remainingTravelers;
     });
   }
@@ -83,6 +104,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
             _buildRoomTable(),
             SizedBox(height: defaultPadding),
             _buildFinancials(),
+            SizedBox(height: defaultPadding),
+            _buildNotesField(),
             SizedBox(height: defaultPadding),
             _buildActionButtons(context),
           ],
@@ -224,6 +247,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
         0: FlexColumnWidth(2),
         1: FlexColumnWidth(1),
         2: FlexColumnWidth(1),
+        3: FlexColumnWidth(1),
+        4: FlexColumnWidth(2),
       },
       border: TableBorder.all(color: Colors.grey),
       children: [
@@ -231,8 +256,10 @@ class _AddTrapPageState extends State<AddTrapPage> {
           decoration: BoxDecoration(color: Colors.blueGrey[50]),
           children: [
             _buildTableCell('النوع'),
-            _buildTableCell('السعر'),
-            _buildTableCell('عدد'),
+            _buildTableCell('السعر لكل فرد'),
+            _buildTableCell('عدد الافراد'),
+            _buildTableCell('الغرف'),
+            _buildTableCell('السعر الاجمالي'),
           ],
         ),
         _buildRoomTableRow('غرفه ثنائية', doubleRoomPrice, doubleRoomCount, 2),
@@ -250,116 +277,126 @@ class _AddTrapPageState extends State<AddTrapPage> {
       TextEditingController priceController,
       TextEditingController countController,
       int multiplier) {
+    int roomCount =
+        ((int.tryParse(countController.text) ?? 0) / multiplier).ceil();
+    int remainingBeds = (int.tryParse(countController.text) ?? 0) % multiplier;
+    String roomComment =
+        remainingBeds > 0 ? 'متبقي ${multiplier - remainingBeds} أسرّة' : '';
+    double total = (int.tryParse(countController.text) ?? 0) *
+        (double.tryParse(priceController.text) ?? 0);
+
     return TableRow(
       children: [
-        _buildTableCell(label, isHeader: false),
-        _buildTableCellW(
-          TextFormField(
-            controller: priceController,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'السعر',
-            ),
-            keyboardType: TextInputType.number,
-            onChanged: (value) => _calculateTotalCost(),
-          ),
-          isHeader: false,
-        ),
-        _buildTableCellW(
-          TextFormField(
-            controller: countController,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: 'عدد',
-            ),
-            keyboardType: TextInputType.number,
-            onChanged: (value) => _calculateTotalCost(),
-          ),
-          isHeader: false,
-        ),
+        _buildTableCell(label),
+        _buildEditableTableCell(priceController),
+        _buildEditableTableCell(countController),
+        _buildTableCell('$roomCount $roomComment'),
+        _buildTableCell(total.toStringAsFixed(2)),
       ],
     );
   }
 
-  Widget _buildTableCell(String text, {bool isHeader = true}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+  Widget _buildEditableTableCell(TextEditingController controller) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.white,width: 0),
+          gapPadding: 0
         ),
       ),
+      keyboardType: TextInputType.number,
+      onChanged: (value) => _calculateTotalCost(),
     );
   }
 
-  Widget _buildTableCellW(Widget child, {bool isHeader = true}) {
+  Widget _buildTableCell(String content) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: child,
+      padding: EdgeInsets.all(8.0),
+      child: Text(content),
     );
   }
 
   Widget _buildFinancials() {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: TextFormField(
-            controller: rasToUsd,
-            decoration: InputDecoration(
-              labelText: 'الريال مقابل الدولار',
-              border: OutlineInputBorder(),
+        Row(
+          children: [
+            // Expanded(
+            //   child: TextFormField(
+            //     controller: rasToUsd,
+            //     decoration: InputDecoration(
+            //       labelText: 'سعر الصرف ريال',
+            //       border: OutlineInputBorder(),
+            //     ),
+            //   ),
+            // ),
+            SizedBox(width: defaultPadding),
+            Expanded(
+              child: TextFormField(
+                controller: iqdToUsd,
+                decoration: InputDecoration(
+                  labelText: 'سعر الصرف دينار',
+                  border: OutlineInputBorder(),
+                ),
+              ),
             ),
-          ),
+            SizedBox(width: defaultPadding),
+            Expanded(child: Text(
+          'السعر الكلي: $totalCost',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),),
+          ],
         ),
-        SizedBox(width: defaultPadding),
-        Expanded(
-          child: TextFormField(
-            controller: iqdToUsd,
-            decoration: InputDecoration(
-              labelText: 'الدينار مقابل الدولار',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ),
-        SizedBox(width: defaultPadding),
-        Expanded(
-          child: Text(
-            'التكلفة الاجمالية: \$ $totalCost',
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        ),
+        // SizedBox(height: defaultPadding),
+        // Text(
+        //   'السعر الكلي: $totalCost',
+        //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        // ),
       ],
+    );
+  }
+
+  Widget _buildNotesField() {
+    return TextFormField(
+      controller: notesController,
+      decoration: InputDecoration(
+        labelText: 'ملاحظات',
+        border: OutlineInputBorder(),
+      ),
     );
   }
 
   Widget _buildActionButtons(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ElevatedButton(
-          style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.green),
-              foregroundColor: WidgetStateProperty.all(Colors.white)),
-          onPressed: () async {
-            // Submit Logic
-            _saveTrapDetails();
-          },
-          child: Text('اضافة'),
-        ),
-        SizedBox(width: defaultPadding),
         TextButton(
-          style:
-              ButtonStyle(foregroundColor: WidgetStateProperty.all(Colors.red)),
           onPressed: () {
-            Navigator.of(context).pop();
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (context) => TrapPage(),
+            //   ),
+            // );
+             Provider.of<Rootwidget>(context, listen: false).getWidet(TrapPage());
           },
           child: Text('الغاء'),
+        ),
+        SizedBox(width: defaultPadding),
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all(primaryColor),
+            foregroundColor: WidgetStateProperty.all(Colors.white)
+          ),
+          onPressed: () {
+            _saveTrapDetails();
+          },
+          child: Text('حفظ'),
         ),
       ],
     );
   }
-
-  void _saveTrapDetails() async {
+    void _saveTrapDetails() async {
     // Implement save logic here
     // You can gather the data from the controllers and make API requests
     final trapDetails = {
@@ -406,3 +443,4 @@ class _AddTrapPageState extends State<AddTrapPage> {
     // Optionally, navigate back or clear the form
   }
 }
+
