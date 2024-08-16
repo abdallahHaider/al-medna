@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: true,
         title: 'شركة المدينة المنورة',
         theme: ThemeData(
             primaryColor: primaryColor,
