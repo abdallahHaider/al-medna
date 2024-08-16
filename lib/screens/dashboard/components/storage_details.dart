@@ -11,12 +11,14 @@ class StorageDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
+    return Card(
+      // padding: EdgeInsets.all(defaultPadding),
+      // decoration: BoxDecoration(
+      //   color: secondaryColor,
+      //   borderRadius: const BorderRadius.all(Radius.circular(10)),
+      // ),
+      elevation: 5,
+      color: secondaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

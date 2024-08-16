@@ -51,44 +51,39 @@ class TrapController extends ChangeNotifier {
     }
   }
 
-  Future addtrap(
-      String duration,
-      String quantity,
-      String price_per_one,
-      String RAS_to_USD,
-      String IQD_to_USD,
-      BuildContext context,
-      String resslrid,
-      String transportsid,
-      String trapid) async {
+  Future addtrap(Map<String,dynamic> trapDetails ) async {
     http.Response x;
     try {
       SmartDialog.showLoading();
       print('22222222222222');
 
-      x = await postApi("/api/trap/create", {
-        "hotel_id": trapid,
-        "reseller_id": resslrid,
-        "duration": duration,
-        "quantity": quantity,
-        "price_per_one": price_per_one,
-        "RAS_to_USD": RAS_to_USD,
-        "IQD_to_USD": IQD_to_USD,
-        "transport": transportsid,
-      });
+      x = await postApi("/api/trap/create", trapDetails
+      // {
+        
+        // "hotel_id": trapid,
+        // "reseller_id": resslrid,
+        // "duration": duration,
+        // "quantity": quantity,
+        // "price_per_one": price_per_one,
+        // "RAS_to_USD": RAS_to_USD,
+        // "IQD_to_USD": IQD_to_USD,
+        // "transport": transportsid,
+      // }
+      );
 
       print(x.body);
     } catch (e) {
-      snackBar(context, e.toString());
+      // snackBar(context, e.toString());
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
       notifyListeners();
-      snackBar(context, "تم اضافة الرحلة بنجاح");
+      // snackBar(context, "تم اضافة الرحلة بنجاح");
     } else {
-      snackBar(context, jsonDecode(x.body));
+      // snackBar(context, jsonDecode(x.body));
+      throw "فشل ارسال البيانات";
     }
   }
 

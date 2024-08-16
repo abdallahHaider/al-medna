@@ -15,55 +15,55 @@ class RecentFiles extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(defaultPadding),
-      decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            "اخر العمليات",
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          Consumer<ActionController>(builder: (e, a, s) {
-            return FutureBuilder(
-                future: a.fetchData(),
-                builder: (gg, bb) {
-                  if (bb.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (bb.hasError) {
-                    return ErorrWidget();
-                  } else {
-                    return SizedBox(
-                      width: double.infinity,
-                      child: DataTable(
-                        columnSpacing: defaultPadding,
-                        // minWidth: 600,
-                        columns: [
-                          DataColumn(
-                            label: Text("اسم العملية"),
-                          ),
-                          DataColumn(
-                            label: Text("تاريخ الانشاء"),
-                          ),
-                          DataColumn(
-                            label: Text("ملاحظات"),
-                          ),
-                        ],
+    return Card(
+      elevation: 5,
+      color: secondaryColor,
+      child: Padding(
+        padding: EdgeInsets.all(defaultPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              "اخر العمليات",
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            Consumer<ActionController>(builder: (e, a, s) {
+              return FutureBuilder(
+                  future: a.fetchData(),
+                  builder: (gg, bb) {
+                    if (bb.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (bb.hasError) {
+                      return ErorrWidget();
+                    } else {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: DataTable(
+                          columnSpacing: defaultPadding,
+                          // minWidth: 600,
+                          columns: [
+                            DataColumn(
+                              label: Text("اسم العملية"),
+                            ),
+                            DataColumn(
+                              label: Text("تاريخ الانشاء"),
+                            ),
+                            DataColumn(
+                              label: Text("ملاحظات"),
+                            ),
+                          ],
 
-                        rows: List.generate(
-                          bb.data!.length,
-                          (index) => recentFileDataRow(bb.data![index]),
+                          rows: List.generate(
+                            bb.data!.length,
+                            (index) => recentFileDataRow(bb.data![index]),
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                });
-          }),
-        ],
+                      );
+                    }
+                  });
+            }),
+          ],
+        ),
       ),
     );
   }
@@ -85,8 +85,7 @@ DataRow recentFileDataRow(RecentFile fileInfo) {
               ),
               child: SvgPicture.asset(
                 fileInfo.icon!,
-                colorFilter: ColorFilter.mode(
-                    fileInfo.color ?? Colors.black, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
               ),
             ),
             Padding(

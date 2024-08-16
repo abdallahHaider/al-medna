@@ -56,9 +56,9 @@ class HotelController extends ChangeNotifier{
         "phone_number": phone_number,
       });
        notifyListeners();
-             Navigator.pop(context);
+            //  Navigator.pop(context);
 
-      snackBar(context, "تم اضافة الوكيل بنجاح");
+      snackBar(context, "تم اضافة الفندق بنجاح");
     } catch (e) {
         snackBar(context, e.toString());
       throw e;
@@ -80,8 +80,9 @@ class HotelController extends ChangeNotifier{
       });
        notifyListeners();
              Navigator.pop(context);
+             notifyListeners();
 
-      snackBar(context, "تم حذف الوكيل بنجاح");
+      snackBar(context, "تم حذف الفندق بنجاح");
     } catch (e) {
         snackBar(context, e.toString());
       throw e;

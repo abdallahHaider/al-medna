@@ -61,6 +61,7 @@ class ResellerController extends ChangeNotifier{
       });
       //  notifyListeners();
       //        Navigator.pop(context);
+      notifyListeners();
 
       snackBar(context, "تم اضافة الوكيل بنجاح");
     } catch (e) {
@@ -84,7 +85,7 @@ class ResellerController extends ChangeNotifier{
       });
        notifyListeners();
              Navigator.pop(context);
-
+             notifyListeners();
       snackBar(context, "تم حذف الوكيل بنجاح");
     } catch (e) {
         snackBar(context, e.toString());

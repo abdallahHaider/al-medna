@@ -1,12 +1,7 @@
 import 'dart:convert';
-
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/recent_file.dart';
-import 'package:admin/models/reseller.dart';
-import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:http/http.dart' as http;
 
 class ActionController extends ChangeNotifier {
   Future<List> fetchData() async {
@@ -19,7 +14,8 @@ class ActionController extends ChangeNotifier {
       print(jsonDecode(x.body));
       final List actions = [];
       for (var i in data['data']) {
-        actions.add(RecentFile(date:i['created_at'],
+        actions.add(RecentFile(
+            date: i['created_at'],
             icon: i['type'] == "reseller"
                 ? "assets/icons/menu_tran.svg"
                 : "assets/icons/menu_task.svg",

@@ -12,6 +12,7 @@ class TrapPay {
     int? id;
     String? resellerId;
     String? payNumber;
+    int? cost;
     int? rasToUsd;
     int? iqdToUsd;
     DateTime? createdAt;
@@ -20,6 +21,7 @@ class TrapPay {
         this.id,
         this.resellerId,
         this.payNumber,
+        this.cost,
         this.rasToUsd,
         this.iqdToUsd,
         this.createdAt,
@@ -29,6 +31,7 @@ class TrapPay {
         id: json["id"],
         resellerId: json["reseller_id"],
         payNumber: json["pay_number"],
+        cost: json["cost"],
         rasToUsd: json["RAS_to_USD"],
         iqdToUsd: json["IQD_to_USD"],
         createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
@@ -38,6 +41,7 @@ class TrapPay {
         "id": id,
         "reseller_id": resellerId,
         "pay_number": payNumber,
+        "cost": cost,
         "RAS_to_USD": rasToUsd,
         "IQD_to_USD": iqdToUsd,
         "created_at": createdAt?.toIso8601String(),

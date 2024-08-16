@@ -6,7 +6,6 @@ import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'controllers/hotel_controller.dart';
@@ -51,7 +50,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Admin Panel',
+        title: 'شركة المدينة المنورة',
         theme: ThemeData(
             primaryColor: primaryColor,
             // iconButtonTheme:IconButtonThemeData(style: ButtonStyle(foregroundColor:WidgetStateProperty() )) ,

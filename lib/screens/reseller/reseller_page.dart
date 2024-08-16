@@ -5,7 +5,6 @@ import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/reseller_controller.dart';
@@ -287,7 +286,7 @@ class ResellerPage extends StatelessWidget {
                                                                 "حذف الوكيل",
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        10),
+                                                                        10,color: Colors.white),
                                                               ),
                                                             ),
                                                             decoration: BoxDecoration(
