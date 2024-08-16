@@ -24,38 +24,32 @@ class MyFiles extends StatelessWidget {
               "الاحصائيات العامة",
               style: Theme.of(context).textTheme.titleMedium,
             ),
-
           ],
         ),
         SizedBox(height: defaultPadding),
-
-    Consumer<GeneralInformationController>(builder: (e, a, s) {
-            return FutureBuilder(
-                future: a.fetchData(),
-                builder: (gg, bb) {
-                  if (bb.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  } else if (bb.hasError) {
-                    return ErorrWidget();
-                  } else  {
-                    return   Responsive(
-          mobile: FileInfoCardGridView(
-            crossAxisCount: _size.width < 650 ? 2 : 4,
-            childAspectRatio: _size.width < 650 && _size.width > 350 ? 1.3 : 1,
-           demo:  bb.data!
-          ),
-          tablet: FileInfoCardGridView(           demo:  bb.data!
-),
-          desktop: FileInfoCardGridView(
-            childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,           demo:  bb.data!
-
-          ),
-        );
-                  }
-                });
-          }),
-
-      
+        Consumer<GeneralInformationController>(builder: (e, a, s) {
+          return FutureBuilder(
+              future: a.fetchData(),
+              builder: (gg, bb) {
+                if (bb.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (bb.hasError) {
+                  return ErorrWidget();
+                } else {
+                  return Responsive(
+                    mobile: FileInfoCardGridView(
+                        crossAxisCount: _size.width < 650 ? 2 : 4,
+                        childAspectRatio:
+                            _size.width < 650 && _size.width > 350 ? 1.3 : 1,
+                        demo: bb.data!),
+                    tablet: FileInfoCardGridView(demo: bb.data!),
+                    desktop: FileInfoCardGridView(
+                        childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
+                        demo: bb.data!),
+                  );
+                }
+              });
+        }),
       ],
     );
   }

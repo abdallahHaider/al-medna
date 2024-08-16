@@ -124,7 +124,6 @@ class ResellerProfiel extends StatelessWidget {
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
                           } else if (snapshot.hasData) {
-                            
                             return Card(
                               // height: double.maxFinite,
                               // width: double.infinity,
@@ -143,7 +142,7 @@ class ResellerProfiel extends StatelessWidget {
                                   DataColumn(
                                     label: Text("المبلغ"),
                                   ),
-                                     DataColumn(
+                                  DataColumn(
                                     label: Text("سعر الصرف"),
                                   ),
                                   DataColumn(
@@ -152,8 +151,7 @@ class ResellerProfiel extends StatelessWidget {
                                 ],
                                 rows: List.generate(
                                     snapshot.data!.length,
-                                    (index) => DataRow(
-                                      cells: [
+                                    (index) => DataRow(cells: [
                                           DataCell(
                                             Text(
                                               snapshot.data![index].resellerId

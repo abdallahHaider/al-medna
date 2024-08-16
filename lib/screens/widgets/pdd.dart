@@ -6,11 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Future<void> generatePdfWeb(
-  String name,
-  String cost,
-  String id,
-  String dede,
-) async {
+    String name, double cost, String id, String dede, double totleCost) async {
   final pdf = pw.Document();
   final fonddata = await rootBundle.load("assets/fonts/Cairo-Light.ttf");
   final costmfond = pw.Font.ttf(fonddata);
@@ -34,7 +30,8 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 70,
             bottom: 155 + size,
-            child: pw.Text(cost, textDirection: pw.TextDirection.rtl)),
+            child:
+                pw.Text(cost.toString(), textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 50,
             bottom: 173 + size,
@@ -50,20 +47,24 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 190,
             bottom: 100 + size,
-            child: pw.Text(cost, textDirection: pw.TextDirection.rtl)),
+            child:
+                pw.Text(cost.toString(), textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 250,
             bottom: 100 + size,
-            child: pw.Text("0000", textDirection: pw.TextDirection.rtl)),
+            child: pw.Text((totleCost).toString(),
+                textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 340,
             bottom: 100 + size,
-            child: pw.Text("0000", textDirection: pw.TextDirection.rtl)),
+            child: pw.Text((totleCost - cost).toString(),
+                textDirection: pw.TextDirection.rtl)),
         ///////////////////
         pw.Positioned(
             right: 70,
             bottom: 155,
-            child: pw.Text(cost, textDirection: pw.TextDirection.rtl)),
+            child:
+                pw.Text(cost.toString(), textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 50,
             bottom: 173,
@@ -79,15 +80,18 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 190,
             bottom: 100,
-            child: pw.Text(cost, textDirection: pw.TextDirection.rtl)),
+            child:
+                pw.Text(cost.toString(), textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 250,
             bottom: 100,
-            child: pw.Text("0000", textDirection: pw.TextDirection.rtl)),
+            child: pw.Text((totleCost).toString(),
+                textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 340,
             bottom: 100,
-            child: pw.Text("0000", textDirection: pw.TextDirection.rtl)),
+            child: pw.Text((totleCost - cost).toString(),
+                textDirection: pw.TextDirection.rtl)),
       ])),
     ),
   );
@@ -103,7 +107,7 @@ Future<void> generatePdfWeb(
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();
-  final file = File("${output.path}/example.pdf");
+  final file = File("${output.path}/$name.pdf");
   await file.writeAsBytes(await pdf.save());
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");

@@ -1,6 +1,8 @@
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/my_files.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utl/constants.dart';
 
@@ -45,7 +47,14 @@ class FileInfoCard extends StatelessWidget {
                         info.color ?? Colors.black, BlendMode.srcIn),
                   ),
                 ),
-                IconButton(icon:Icon(Icons.add), color: Colors.black,onPressed: (){},)
+                IconButton(
+                  icon: Icon(Icons.add),
+                  color: Colors.black,
+                  onPressed: () {
+                    Provider.of<Rootwidget>(context, listen: false)
+                        .getWidet(info.widget);
+                  },
+                )
               ],
             ),
             Text(
@@ -53,7 +62,6 @@ class FileInfoCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-        
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

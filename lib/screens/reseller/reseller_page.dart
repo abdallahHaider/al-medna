@@ -199,9 +199,7 @@ class ResellerPage extends StatelessWidget {
                                     } else if (snapshot.hasError) {
                                       return ErorrWidget();
                                     } else if (snapshot.hasData) {
-                                      return SizedBox(
-                                        height: double.maxFinite,
-                                        width: double.infinity,
+                                      return Expanded(
                                         child: DataTable(
                                           columnSpacing: defaultPadding,
                                           columns: [
@@ -286,7 +284,9 @@ class ResellerPage extends StatelessWidget {
                                                                 "حذف الوكيل",
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        10,color: Colors.white),
+                                                                        10,
+                                                                    color: Colors
+                                                                        .white),
                                                               ),
                                                             ),
                                                             decoration: BoxDecoration(

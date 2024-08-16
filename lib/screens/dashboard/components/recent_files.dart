@@ -95,7 +95,7 @@ DataRow recentFileDataRow(RecentFile fileInfo) {
           ],
         ),
       ),
-      DataCell(Text(fileInfo.date!)),
+      DataCell(Text(fileInfo.date!.toString().substring(0, 10))),
       DataCell(Text(fileInfo.size!)),
     ],
   );

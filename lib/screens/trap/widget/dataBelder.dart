@@ -50,7 +50,8 @@ class TrapTable extends StatelessWidget {
                 // DataCell(Text('${trap.rasToUsd ?? 0}')),
                 DataCell(Text('${trap.iqdToUsd ?? 0}')),
                 DataCell(Text(trap.transport == 'fly' ? 'جوي' : 'بري')),
-                DataCell(Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
+                DataCell(
+                    Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
                 DataCell(
                   Row(
                     children: [

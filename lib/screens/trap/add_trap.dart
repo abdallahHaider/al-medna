@@ -70,21 +70,23 @@ class _AddTrapPageState extends State<AddTrapPage> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Header(title: 'اضافة رحلة'),
-          SizedBox(height: defaultPadding),
-          _buildDropdowns(),
-          SizedBox(height: defaultPadding),
-          _buildTravelersField(),
-          SizedBox(height: defaultPadding),
-          _buildRoomTable(),
-          SizedBox(height: defaultPadding),
-          _buildFinancials(),
-          SizedBox(height: defaultPadding),
-          _buildActionButtons(context),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Header(title: 'اضافة رحلة'),
+            SizedBox(height: defaultPadding),
+            _buildDropdowns(),
+            SizedBox(height: defaultPadding),
+            _buildTravelersField(),
+            SizedBox(height: defaultPadding),
+            _buildRoomTable(),
+            SizedBox(height: defaultPadding),
+            _buildFinancials(),
+            SizedBox(height: defaultPadding),
+            _buildActionButtons(context),
+          ],
+        ),
       ),
     );
   }
@@ -393,9 +395,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
       // Show a success snackbar
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('تم حفظ التفاصيل بنجاح')),
-
       );
-       Provider.of<Rootwidget>(context,listen: false).getWidet(TrapPage());
+      Provider.of<Rootwidget>(context, listen: false).getWidet(TrapPage());
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.toString())),
