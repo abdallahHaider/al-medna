@@ -97,22 +97,22 @@ Future<void> generatePdfWeb(
     ),
   );
 
-  // حفظ ملف PDF على الويب
-  final bytes = await pdf.save();
-  final blob = html.Blob([bytes], 'application/pdf');
-  final url = html.Url.createObjectUrlFromBlob(blob);
-  final anchor = html.AnchorElement(href: url)
-    ..setAttribute("download", "example.pdf")
-    ..click();
-  html.Url.revokeObjectUrl(url);
+  // // حفظ ملف PDF على الويب
+  // final bytes = await pdf.save();
+  // final blob = html.Blob([bytes], 'application/pdf');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute("download", "example.pdf")
+  //   ..click();
+  // html.Url.revokeObjectUrl(url);
 
-  // // حفظ ملف PDF في جهازك
-  // final output = await getTemporaryDirectory();
-  // final file = File("${output.path}/$name.pdf");
-  // await file.writeAsBytes(await pdf.save());
+  // حفظ ملف PDF في جهازك
+  final output = await getTemporaryDirectory();
+  final file = File("${output.path}/$name.pdf");
+  await file.writeAsBytes(await pdf.save());
 
-  // print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
+  print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
-  // // فتح ملف PDF باستخدام تطبيق خارجي
-  // await OpenFilex.open(file.path);
+  // فتح ملف PDF باستخدام تطبيق خارجي
+  await OpenFilex.open(file.path);
 }

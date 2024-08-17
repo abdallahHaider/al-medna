@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:admin/models/reseller.dart';
 import 'package:admin/models/reseller_dbet.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:universal_html/html.dart' as html;
 
 Future<void> ResellerToPdf(
     Reseller reseller, ResellerDbet dbet, List traps) async {
@@ -168,22 +171,22 @@ Future<void> ResellerToPdf(
     ),
   );
 
-  // حفظ ملف PDF على الويب
-  final bytes = await pdf.save();
-  final blob = html.Blob([bytes], 'application/pdf');
-  final url = html.Url.createObjectUrlFromBlob(blob);
-  final anchor = html.AnchorElement(href: url)
-    ..setAttribute("download", "example.pdf")
-    ..click();
-  html.Url.revokeObjectUrl(url);
+  // // حفظ ملف PDF على الويب
+  // final bytes = await pdf.save();
+  // final blob = html.Blob([bytes], 'application/pdf');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute("download", "example.pdf")
+  //   ..click();
+  // html.Url.revokeObjectUrl(url);
 
-  // // حفظ ملف PDF في جهازك
-  // final output = await getTemporaryDirectory();
-  // final file = File("${output.path}/$name.pdf");
-  // await file.writeAsBytes(await pdf.save());
+  // حفظ ملف PDF في جهازك
+  final output = await getTemporaryDirectory();
+  final file = File("${output.path}/${reseller.fullName}.pdf");
+  await file.writeAsBytes(await pdf.save());
 
-  // print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
+  print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
-  // // فتح ملف PDF باستخدام تطبيق خارجي
-  // await OpenFilex.open(file.path);
+  // فتح ملف PDF باستخدام تطبيق خارجي
+  await OpenFilex.open(file.path);
 }
