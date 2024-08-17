@@ -22,214 +22,192 @@ class _HotelPageState extends State<HotelPage> {
 
   @override
   void dispose() {
-    Provider.of<HotelController>(context).dispose();
+    Provider.of<HotelController>(context, listen: false).dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Row(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Padding(
+            padding: const EdgeInsets.all(defaultPadding),
+            child: Header(
+              title: 'الفنادق',
+            ),
+          ),
           Expanded(
-            flex: 3,
-            child: Column(
+            child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
-                  child: Header(
-                    title: 'الفنادق',
-                  ),
-                ),
                 Expanded(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: Consumer<HotelController>(
-                          builder:
-                              (BuildContext context, value, Widget? child) {
-                            return FutureBuilder(
-                                future: value.fetchData(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  } else if (snapshot.hasError) {
-                                    return ErorrWidget();
-                                  } else if (snapshot.hasData) {
-                                    return Card(
-                                      elevation: 5,
-                                      color: secondaryColor,
-                                      margin: EdgeInsets.all(defaultPadding),
-                                      child: SizedBox(
-                                        height: double.maxFinite,
-                                        child: DataTable(
-                                            columns: [
-                                              DataColumn(
-                                                label: Text('اسم الفندق'),
-                                              ),
-                                              DataColumn(
-                                                label: Text('العنوان'),
-                                              ),
-                                              DataColumn(
-                                                label: Text('رقم الهاتف'),
-                                              ),
-                                              DataColumn(
-                                                label: Text('الاجراء'),
-                                              ),
-                                            ],
-                                            rows: List.generate(
-                                                snapshot.data!.length, (index) {
-                                              return DataRow(cells: [
-                                                DataCell(
-                                                  Text(
-                                                    snapshot
-                                                        .data![index].fullName
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                                DataCell(
-                                                  Text(
-                                                    snapshot
-                                                        .data![index].address,
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                                DataCell(
-                                                  Text(
-                                                    snapshot.data![index]
-                                                        .phoneNumber,
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.black,
-                                                    ),
-                                                  ),
-                                                ),
-                                                DataCell(ElevatedButton(
-                                                    style: ButtonStyle(
-                                                      backgroundColor:
-                                                          WidgetStateProperty
-                                                              .all(
-                                                        Colors.red,
-                                                      ),
-                                                      foregroundColor:
-                                                          WidgetStateProperty
-                                                              .all(
-                                                        Colors.white,
-                                                      ),
-                                                    ),
-                                                    onPressed: () {
-                                                      drletdHotel(context,
-                                                          snapshot, index);
-                                                    },
-                                                    child: Text("حذف"))),
-                                              ]);
-                                            })),
-                                      ),
-                                    );
-                                  } else {
-                                    return Center(
-                                        child: Text('لا يوجد فنادق بعد'));
-                                  }
-                                });
-                          },
-                        ),
-                      ),
-                      if (!Responsive.isMobile(context))
-                        Expanded(
-                          flex: 1,
-                          child: Card(
-                              color: secondaryColor,
-                              elevation: 5,
-                              child: Padding(
-                                  padding: const EdgeInsets.all(defaultPadding),
-                                  child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Header(
-                                          title: 'اضافة فندق',
+                  flex: 2,
+                  child: Consumer<HotelController>(
+                    builder: (BuildContext context, value, Widget? child) {
+                      return FutureBuilder(
+                          future: value.fetchData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: CircularProgressIndicator());
+                            } else if (snapshot.hasError) {
+                              return ErorrWidget();
+                            } else if (snapshot.hasData) {
+                              return Card(
+                                elevation: 5,
+                                color: secondaryColor,
+                                margin: EdgeInsets.all(defaultPadding),
+                                child: SizedBox(
+                                  height: double.maxFinite,
+                                  child: DataTable(
+                                      columns: [
+                                        DataColumn(
+                                          label: Text('اسم الفندق'),
                                         ),
-                                        SizedBox(height: defaultPadding),
-                                        TextFormField(
-                                          controller: nameController,
-                                          decoration: InputDecoration(
-                                            labelText: 'اسم الفندق',
-                                            border: OutlineInputBorder(),
-                                          ),
+                                        DataColumn(
+                                          label: Text('العنوان'),
                                         ),
-                                        SizedBox(height: defaultPadding),
-                                        TextFormField(
-                                          controller: phoneController,
-                                          decoration: InputDecoration(
-                                            labelText: 'رقم الهاتف',
-                                            border: OutlineInputBorder(),
-                                          ),
-                                          keyboardType: TextInputType.phone,
+                                        DataColumn(
+                                          label: Text('رقم الهاتف'),
                                         ),
-                                        SizedBox(height: defaultPadding),
-                                        TextFormField(
-                                          controller: adressController,
-                                          decoration: InputDecoration(
-                                            labelText: 'العنوان',
-                                            border: OutlineInputBorder(),
-                                          ),
+                                        DataColumn(
+                                          label: Text('الاجراء'),
                                         ),
-                                        SizedBox(height: defaultPadding),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            ElevatedButton(
-                                              onPressed: () async {
-                                                if (nameController
-                                                        .text.isEmpty ||
-                                                    phoneController
-                                                        .text.isEmpty ||
-                                                    adressController
-                                                        .text.isEmpty) {
-                                                  snackBar(context,
-                                                      'الرجاء ملئ جميع الحقول');
-                                                } else {
-                                                  await Provider.of<
-                                                              HotelController>(
-                                                          context,
-                                                          listen: false)
-                                                      .addReseller(
-                                                          nameController.text
-                                                              .toString(),
-                                                          phoneController.text
-                                                              .toString(),
-                                                          adressController.text
-                                                              .toString(),
-                                                          context);
-                                                }
-                                              },
-                                              child: Text('اضافة'),
+                                      ],
+                                      rows: List.generate(snapshot.data!.length,
+                                          (index) {
+                                        return DataRow(cells: [
+                                          DataCell(
+                                            Text(
+                                              snapshot.data![index].fullName
+                                                  .toString(),
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                      ]))),
-                        ),
-                    ],
+                                          ),
+                                          DataCell(
+                                            Text(
+                                              snapshot.data![index].address,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(
+                                            Text(
+                                              snapshot.data![index].phoneNumber,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          DataCell(ElevatedButton(
+                                              style: ButtonStyle(
+                                                backgroundColor:
+                                                    WidgetStateProperty.all(
+                                                  Colors.red,
+                                                ),
+                                                foregroundColor:
+                                                    WidgetStateProperty.all(
+                                                  Colors.white,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                drletdHotel(
+                                                    context, snapshot, index);
+                                              },
+                                              child: Text("حذف"))),
+                                        ]);
+                                      })),
+                                ),
+                              );
+                            } else {
+                              return Center(child: Text('لا يوجد فنادق بعد'));
+                            }
+                          });
+                    },
                   ),
                 ),
+                if (!Responsive.isMobile(context))
+                  Expanded(
+                    flex: 1,
+                    child: Card(
+                        color: secondaryColor,
+                        elevation: 5,
+                        child: Padding(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Header(
+                                    title: 'اضافة فندق',
+                                  ),
+                                  SizedBox(height: defaultPadding),
+                                  TextFormField(
+                                    controller: nameController,
+                                    decoration: InputDecoration(
+                                      labelText: 'اسم الفندق',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  SizedBox(height: defaultPadding),
+                                  TextFormField(
+                                    controller: phoneController,
+                                    decoration: InputDecoration(
+                                      labelText: 'رقم الهاتف',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                    keyboardType: TextInputType.phone,
+                                  ),
+                                  SizedBox(height: defaultPadding),
+                                  TextFormField(
+                                    controller: adressController,
+                                    decoration: InputDecoration(
+                                      labelText: 'العنوان',
+                                      border: OutlineInputBorder(),
+                                    ),
+                                  ),
+                                  SizedBox(height: defaultPadding),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          if (nameController.text.isEmpty ||
+                                              phoneController.text.isEmpty ||
+                                              adressController.text.isEmpty) {
+                                            snackBar(context,
+                                                'الرجاء ملئ جميع الحقول');
+                                          } else {
+                                            await Provider.of<HotelController>(
+                                                    context,
+                                                    listen: false)
+                                                .addReseller(
+                                                    nameController.text
+                                                        .toString(),
+                                                    phoneController.text
+                                                        .toString(),
+                                                    adressController.text
+                                                        .toString(),
+                                                    context);
+                                          }
+                                        },
+                                        child: Text('اضافة'),
+                                      ),
+                                    ],
+                                  ),
+                                ]))),
+                  ),
               ],
             ),
           ),
