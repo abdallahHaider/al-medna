@@ -25,7 +25,6 @@ class TrapPayController extends ChangeNotifier {
     try {
       var x = await getpi("/api/trap_pay/index?page=$page");
       var data = jsonDecode(x.body)["data"];
-      print(jsonDecode(x.body));
       final List resellers =
           data.map((json) => TrapPay.fromJson(json)).toList();
       resellerss = resellers;
@@ -43,7 +42,6 @@ class TrapPayController extends ChangeNotifier {
     try {
       var x = await getpi("/api/trap_pay/index");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
       final List resellers =
           data.map((json) => TrapPay.fromJson(json)).toList();
       resellerss = resellers;

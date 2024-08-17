@@ -1,6 +1,8 @@
+import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/models/reseller.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 Card cardResellerDetels(Reseller resellerID) {
   return Card(
@@ -8,54 +10,59 @@ Card cardResellerDetels(Reseller resellerID) {
       elevation: 5,
       child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(children: [
-            Row(
-              children: [
-                Text(
-                  "اسم الوكيل: ",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Text(
-                  resellerID.fullName!,
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "رقم الوكيل: ",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Text(
-                  resellerID.id.toString(),
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "رقم الهاتف: ",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Text(
-                  resellerID.phoneNumber!,
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "العنوان: ",
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-                Text(
-                  resellerID.address!,
-                  style: TextStyle(fontSize: 18, color: Colors.black),
-                ),
-              ],
-            ),
-          ])));
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "اسم الوكيل: ${resellerID.fullName!}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      Text(
+                        "رقم الوكيل: ${resellerID.id}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      Text(
+                        "رقم الهاتف: ${resellerID.phoneNumber}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      Text(
+                        "العنوان: ${resellerID.address}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                    ]),
+              ),
+              Expanded(
+                child: Consumer<ResellerController>(
+                    builder: (context, ref, child) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "مجموع الطلب: ${ref.resellerDbet.totalCostUsd}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      Text(
+                        "مجموع التسديدات: ${ref.resellerDbet.totalCostUsdPays}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      Text(
+                        "عدد التسديدات: ${ref.resellerDbet.countPays}",
+                        style: TextStyle(fontSize: 18, color: Colors.black),
+                      ),
+                      Text(
+                        "مجموع المتبقي: ${(ref.resellerDbet.totalCostUsdPays ?? 0) - (ref.resellerDbet.totalCostUsd ?? 0)}",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 18,
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+              )
+            ],
+          )));
 }

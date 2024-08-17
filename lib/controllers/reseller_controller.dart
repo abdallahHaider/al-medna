@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/reseller.dart';
+import 'package:admin/models/reseller_dbet.dart';
 import 'package:admin/models/trap.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import '../models/trap_pay.dart';
 class ResellerController extends ChangeNotifier {
   List resellerss = [];
   int totlCost = 0;
+  ResellerDbet resellerDbet = ResellerDbet();
 
   Future<List> fetchData() async {
     // Simulate fetching data (replace with your actual logic)
@@ -21,7 +23,6 @@ class ResellerController extends ChangeNotifier {
     try {
       var x = await getpi("/api/reseller/index");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
       resellerss = resellers;
@@ -39,7 +40,6 @@ class ResellerController extends ChangeNotifier {
     try {
       var x = await getpi("/api/reseller/index");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
       resellerss = resellers;
@@ -109,6 +109,20 @@ class ResellerController extends ChangeNotifier {
       final List Traps =
           data["data"].map((json) => Trap.fromJson(json)).toList();
       return Traps;
+    } catch (e) {
+      print(e);
+      throw "jjj";
+    }
+  }
+
+  Future getResellerinfodebt(String id) async {
+    try {
+      var x = await getpi("/api/trap/index?reseller_id=$id");
+      var data = jsonDecode(x.body);
+
+      resellerDbet = ResellerDbet.fromJson(data);
+      // print(Traps);
+      notifyListeners();
     } catch (e) {
       print(e);
       throw "jjj";

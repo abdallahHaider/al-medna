@@ -20,9 +20,15 @@ class StorageDetails extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // TextButton(
+          //     onPressed: () {
+          //       snackBar(context, "msg");
+          //     },
+          //     child: Text("fddddddddddd")),
           SizedBox(
             height: 400,
           )
+
           // Text(
           //   "Storage Details",
           //   style: TextStyle(

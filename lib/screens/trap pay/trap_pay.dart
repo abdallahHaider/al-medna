@@ -1,6 +1,6 @@
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/widgets/pdd.dart';
+import 'package:admin/pdf/pdd.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:flutter/material.dart';
@@ -139,8 +139,7 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                                 (index) => DataRow(cells: [
                                                       DataCell(
                                                         Text(
-                                                          snapshot
-                                                              .data![index]
+                                                          snapshot.data![index]
                                                               .resellerId
                                                               .toString(),
                                                         ),
@@ -155,15 +154,13 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                                       DataCell(
                                                         Text(
                                                           snapshot
-                                                              .data![index]
-                                                              .cost
+                                                              .data![index].cost
                                                               .toString(),
                                                         ),
                                                       ),
                                                       DataCell(
                                                         Text(
-                                                          snapshot
-                                                              .data![index]
+                                                          snapshot.data![index]
                                                               .iqdToUsd
                                                               .toString(),
                                                         ),
@@ -173,8 +170,7 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                                             .data![index]
                                                             .createdAt
                                                             .toString()
-                                                            .substring(
-                                                                0, 10)),
+                                                            .substring(0, 10)),
                                                       ),
                                                       DataCell(
                                                         TextButton(
@@ -183,7 +179,7 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                                               SmartDialog
                                                                   .showLoading();
                                                               try {
-                                                              await  generatePdfWeb(
+                                                                await generatePdfWeb(
                                                                     snapshot
                                                                         .data![
                                                                             index]
@@ -210,17 +206,14 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                                                         .data![
                                                                             index]
                                                                         .nowdebt);
-                                                              } catch (e) {
-                                                                
-                                                              }
+                                                              } catch (e) {}
                                                               SmartDialog
                                                                   .dismiss();
                                                             },
                                                             child: Text(
                                                                 "طباعة الفاتورة")),
                                                       ),
-                                                      DataCell(
-                                                          PopupMenuButton(
+                                                      DataCell(PopupMenuButton(
                                                         itemBuilder:
                                                             (context) => [
                                                           PopupMenuItem(

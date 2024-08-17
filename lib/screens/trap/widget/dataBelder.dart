@@ -1,9 +1,11 @@
+import 'package:admin/controllers/trap_controller%20.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TrapTable extends StatelessWidget {
   final List<dynamic> traps;
-  ScrollController scrollController=ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   TrapTable({required this.traps});
 
@@ -70,6 +72,30 @@ class TrapTable extends StatelessWidget {
                           color: Colors.red,
                           onPressed: () {
                             // Implement delete functionality
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('حذف'),
+                                    content:
+                                        Text('هل أنت متأكد من حذف هذا الرحلة'),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('لا'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                      ),
+                                      TextButton(
+                                          child: Text('نعم'),
+                                          onPressed: () {
+                                            Provider.of<TrapController>(context,
+                                                    listen: false)
+                                                .delete(trap.id, context);
+                                          }),
+                                    ],
+                                  );
+                                });
                           },
                         ),
                       ],

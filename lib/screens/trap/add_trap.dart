@@ -40,7 +40,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
   int remainingTravelers = 0;
   double totalCost = 0;
 
-    @override
+  @override
   void dispose() {
     Provider.of<HotelController>(context).dispose();
     Provider.of<ResellerController>(context).dispose();
@@ -68,12 +68,10 @@ class _AddTrapPageState extends State<AddTrapPage> {
           infantsCost;
 
       int totalTravelers = int.tryParse(quantity.text) ?? 0;
-      int travelersInDoubleRooms =
-          (int.tryParse(doubleRoomCount.text) ?? 0) * 2;
-      int travelersInTripleRooms =
-          (int.tryParse(tripleRoomCount.text) ?? 0) * 3;
+      int travelersInDoubleRooms = (int.tryParse(doubleRoomCount.text) ?? 0);
+      int travelersInTripleRooms = (int.tryParse(tripleRoomCount.text) ?? 0);
       int travelersInQuadrupleRooms =
-          (int.tryParse(quadrupleRoomCount.text) ?? 0) * 4;
+          (int.tryParse(quadrupleRoomCount.text) ?? 0);
       int totalChildren = int.tryParse(childrenCount.text) ?? 0;
       int totalInfants = int.tryParse(infantsCount.text) ?? 0;
 
@@ -83,7 +81,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
               travelersInQuadrupleRooms +
               totalChildren +
               totalInfants);
-      remainingTravelers = remainingTravelers < 0 ? 0 : remainingTravelers;
+      // remainingTravelers = remainingTravelers < 0 ? 0 : remainingTravelers;
     });
   }
 
@@ -234,7 +232,13 @@ class _AddTrapPageState extends State<AddTrapPage> {
         Expanded(
           child: Text(
             'المسافرين المتبقيين: $remainingTravelers',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: remainingTravelers < 0
+                    ? Colors.red
+                    : remainingTravelers == 0
+                        ? Colors.green
+                        : Colors.black),
           ),
         ),
       ],
@@ -301,9 +305,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
       controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white,width: 0),
-          gapPadding: 0
-        ),
+            borderSide: BorderSide(color: Colors.white, width: 0),
+            gapPadding: 0),
       ),
       keyboardType: TextInputType.number,
       onChanged: (value) => _calculateTotalCost(),
@@ -342,10 +345,12 @@ class _AddTrapPageState extends State<AddTrapPage> {
               ),
             ),
             SizedBox(width: defaultPadding),
-            Expanded(child: Text(
-          'السعر الكلي: $totalCost',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),),
+            Expanded(
+              child: Text(
+                'السعر الكلي: $totalCost',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ),
           ],
         ),
         // SizedBox(height: defaultPadding),
@@ -378,16 +383,16 @@ class _AddTrapPageState extends State<AddTrapPage> {
             //     builder: (context) => TrapPage(),
             //   ),
             // );
-             Provider.of<Rootwidget>(context, listen: false).getWidet(TrapPage());
+            Provider.of<Rootwidget>(context, listen: false)
+                .getWidet(TrapPage());
           },
           child: Text('الغاء'),
         ),
         SizedBox(width: defaultPadding),
         ElevatedButton(
           style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.all(primaryColor),
-            foregroundColor: WidgetStateProperty.all(Colors.white)
-          ),
+              backgroundColor: WidgetStateProperty.all(primaryColor),
+              foregroundColor: WidgetStateProperty.all(Colors.white)),
           onPressed: () {
             _saveTrapDetails();
           },
@@ -396,7 +401,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
       ],
     );
   }
-    void _saveTrapDetails() async {
+
+  void _saveTrapDetails() async {
     // Implement save logic here
     // You can gather the data from the controllers and make API requests
     final trapDetails = {
@@ -443,4 +449,3 @@ class _AddTrapPageState extends State<AddTrapPage> {
     // Optionally, navigate back or clear the form
   }
 }
-

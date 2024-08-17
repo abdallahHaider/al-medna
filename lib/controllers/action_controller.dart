@@ -11,7 +11,6 @@ class ActionController extends ChangeNotifier {
     try {
       var x = await getpi("/api/action/index");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
       final List actions = [];
       for (var i in data['data']) {
         actions.add(RecentFile(

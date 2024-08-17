@@ -1,10 +1,13 @@
 import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/models/reseller.dart';
+import 'package:admin/pdf/reseller_Pdf.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/reseller/widgets/cardResellerDetels.dart';
 import 'package:admin/screens/trap/widget/dataBelder.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
 class ResellerProfiel extends StatelessWidget {
@@ -12,6 +15,8 @@ class ResellerProfiel extends StatelessWidget {
   final Reseller resellerID;
   @override
   Widget build(BuildContext context) {
+    Provider.of<ResellerController>(context, listen: false)
+        .getResellerinfodebt(resellerID.id.toString());
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -24,173 +29,127 @@ class ResellerProfiel extends StatelessWidget {
                 height: defaultPadding,
               ),
               cardResellerDetels(resellerID),
-              TabBar(
-                  isScrollable: true,
-                  tabs: [Tab(text: "الرحلات"), Tab(text: "كشف الحساب")]),
+              Row(
+                children: [
+                  Expanded(
+                    child: TabBar(
+                        isScrollable: true,
+                        tabs: [Tab(text: "الرحلات"), Tab(text: "كشف الحساب")]),
+                  ),
+                  TextButton.icon(
+                    onPressed: () async {
+                      try {
+                        SmartDialog.showLoading();
+                        var globlDebt = await Provider.of<ResellerController>(
+                                context,
+                                listen: false)
+                            .resellerDbet;
+                        List traps = await Provider.of<ResellerController>(
+                                context,
+                                listen: false)
+                            .getResellerinfo(resellerID.id.toString());
+                        await ResellerToPdf(resellerID, globlDebt, traps);
+                      } catch (e) {
+                        snackBar(context, e.toString());
+                      } finally {
+                        SmartDialog.dismiss();
+                      }
+                    },
+                    label: Text("كشف كلي"),
+                    icon: Icon(Icons.picture_as_pdf),
+                  ),
+                ],
+              ),
               Expanded(
                 child: TabBarView(children: [
-                  Consumer<ResellerController>(
-                      builder: (context, resellerProvider, child) {
-                    resellerProvider.getResellerinfo(resellerID.id.toString());
-                    return FutureBuilder(
-                        future: resellerProvider
-                            .getResellerinfo(resellerID.id.toString()),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          } else if (snapshot.hasData) {
-                            return TrapTable(traps: snapshot.data!);
-                            // return SizedBox(
-                            //   // height: double.maxFinite,
-                            //   width: double.infinity,
-                            //   child: DataTable(
-                            //     columnSpacing: defaultPadding,
-                            //     columns: [
-                            //       DataColumn(
-                            //         label: Text("اسم الوكيل"),
-                            //       ),
-                            //       DataColumn(
-                            //         label: Text(" نوع الرحلة"),
-                            //       ),
-                            //       DataColumn(
-                            //         label: Text(" الايام"),
-                            //       ),
-                            //       DataColumn(
-                            //         label: Text("عدد المسافرين"),
-                            //       ),
-                            //       DataColumn(
-                            //         label: Text("السعر لكل مسافر"),
-                            //       ),
-                            //       DataColumn(
-                            //         label: Text("سعر الصرف"),
-                            //       ),
-                            //     ],
-                            //     rows: List.generate(
-                            //         snapshot.data!.length,
-                            //         (index) => DataRow(cells: [
-                            //               DataCell(
-                            //                 Text(
-                            //                   snapshot.data![index].resellerId
-                            //                       .toString(),
-                            //                 ),
-                            //               ),
-                            //               DataCell(
-                            //                 Text(
-                            //                   snapshot.data![index].transport
-                            //                               .toString() ==
-                            //                           "fly"
-                            //                       ? "جوي"
-                            //                       : "بري",
-                            //                 ),
-                            //               ),
-                            //               DataCell(
-                            //                 Text(
-                            //                   snapshot.data![index].duration
-                            //                       .toString(),
-                            //                 ),
-                            //               ),
-                            //               DataCell(
-                            //                 Text(
-                            //                   snapshot.data![index].quantity
-                            //                       .toString(),
-                            //                 ),
-                            //               ),
-                            //               DataCell(
-                            //                 Text(
-                            //                   snapshot.data![index].pricePerOne
-                            //                       .toString(),
-                            //                 ),
-                            //               ),
-                            //               DataCell(
-                            //                 Text(
-                            //                   snapshot.data![index].iqdToUsd
-                            //                       .toString(),
-                            //                 ),
-                            //               ),
-                            //             ])),
-                            //   ),
-                            // );
-                          } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        });
-                  }),
-                  Consumer<ResellerController>(
-                      builder: (context, resellerProvider, child) {
-                    return FutureBuilder(
-                        future: resellerProvider
-                            .getDbetPayinfo(resellerID.id.toString()),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return Text(snapshot.error.toString());
-                          } else if (snapshot.hasData) {
-                            return Card(
-                              // height: double.maxFinite,
-                              // width: double.infinity,
-                              color: secondaryColor,
-                              elevation: 5,
-                              margin: EdgeInsets.all(defaultPadding),
-                              child: DataTable(
-                                columnSpacing: defaultPadding,
-                                columns: [
-                                  DataColumn(
-                                    label: Text("اسم الوكيل"),
-                                  ),
-                                  DataColumn(
-                                    label: Text("رقم الوصل"),
-                                  ),
-                                  DataColumn(
-                                    label: Text("المبلغ"),
-                                  ),
-                                  DataColumn(
-                                    label: Text("سعر الصرف"),
-                                  ),
-                                  DataColumn(
-                                    label: Text("التاريخ"),
-                                  ),
-                                ],
-                                rows: List.generate(
-                                    snapshot.data!.length,
-                                    (index) => DataRow(cells: [
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].resellerId
-                                                  .toString(),
-                                            ),
+                  FutureBuilder(
+                      future: Provider.of<ResellerController>(context,
+                              listen: false)
+                          .getResellerinfo(resellerID.id.toString()),
+                      // future: resellerProvider
+                      //     .getResellerinfo(resellerID.id.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else if (snapshot.hasData) {
+                          return TrapTable(traps: snapshot.data!);
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      }),
+                  FutureBuilder(
+                      future: Provider.of<ResellerController>(context,
+                              listen: false)
+                          .getDbetPayinfo(resellerID.id.toString()),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else if (snapshot.hasData) {
+                          return Card(
+                            // height: double.maxFinite,
+                            // width: double.infinity,
+                            color: secondaryColor,
+                            elevation: 5,
+                            margin: EdgeInsets.all(defaultPadding),
+                            child: DataTable(
+                              columnSpacing: defaultPadding,
+                              columns: [
+                                DataColumn(
+                                  label: Text("اسم الوكيل"),
+                                ),
+                                DataColumn(
+                                  label: Text("رقم الوصل"),
+                                ),
+                                DataColumn(
+                                  label: Text("المبلغ"),
+                                ),
+                                DataColumn(
+                                  label: Text("سعر الصرف"),
+                                ),
+                                DataColumn(
+                                  label: Text("التاريخ"),
+                                ),
+                              ],
+                              rows: List.generate(
+                                  snapshot.data!.length,
+                                  (index) => DataRow(cells: [
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].resellerId
+                                                .toString(),
                                           ),
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].id
-                                                  .toString(),
-                                            ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].id.toString(),
                                           ),
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].cost
-                                                  .toString(),
-                                            ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].cost
+                                                .toString(),
                                           ),
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].iqdToUsd
-                                                  .toString(),
-                                            ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].iqdToUsd
+                                                .toString(),
                                           ),
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].createdAt
-                                                  .toString()
-                                                  .substring(0, 10),
-                                            ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].createdAt
+                                                .toString()
+                                                .substring(0, 10),
                                           ),
-                                        ])),
-                              ),
-                            );
-                          } else {
-                            return Center(child: CircularProgressIndicator());
-                          }
-                        });
-                  })
+                                        ),
+                                      ])),
+                            ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      })
                 ]),
               ),
             ],

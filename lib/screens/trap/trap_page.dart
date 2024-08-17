@@ -71,7 +71,7 @@ class _TrapPageState extends State<TrapPage> {
                             print(snapshot.data!);
                             return Column(
                               children: [
-                                globelIfo(snapshot),
+                                globelIfo(snapshot, context),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -247,7 +247,9 @@ class _TrapPageState extends State<TrapPage> {
                                 ),
                                 // dataBelder(snapshot,context),
 
-                                TrapTable(traps: snapshot.data!["resellers"],)
+                                TrapTable(
+                                  traps: snapshot.data!["resellers"],
+                                )
                               ],
                             );
                           } else {

@@ -17,7 +17,6 @@ class GeneralInformationController extends ChangeNotifier {
     try {
       var x = await getpi("/api/general_information");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
       final List actions = [];
 
       actions.add(CloudStorageInfo(

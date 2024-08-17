@@ -15,17 +15,12 @@ class TrapController extends ChangeNotifier {
     Transport(name: "جوي", id: "fly"),
   ];
 
-  Future<Map> fetchData(String time,int page) async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-    print("///////////////////////////////////////");
-    print(time);
-
+  Future<Map> fetchData(String time, int page) async {
     try {
       Map hap = {};
-      var x = await getpi("/api/trap/index?page=$page${time==""?"":time}");
+      var x =
+          await getpi("/api/trap/index?page=$page${time == "" ? "" : time}");
       var data = jsonDecode(x.body)["data"];
-      print(jsonDecode(x.body));
       final List resellers = [];
       for (int i = 0; i < data.length; i++) {
         var x = Trap.fromJson(data[i]);
@@ -40,9 +35,8 @@ class TrapController extends ChangeNotifier {
       hap['total_cost_RAS_pays'] = jsonDecode(x.body)['total_cost_RAS_pays'];
       hap['start_date'] = jsonDecode(x.body)['start_date'];
       hap['end_date'] = jsonDecode(x.body)['end_date'];
-      hap['count_trap']=jsonDecode(x.body)['count_trap'];
-      hap['count_pays']=jsonDecode(x.body)['count_pays'];
-
+      hap['count_trap'] = jsonDecode(x.body)['count_trap'];
+      hap['count_pays'] = jsonDecode(x.body)['count_pays'];
 
       return hap;
     } catch (e) {
@@ -51,27 +45,23 @@ class TrapController extends ChangeNotifier {
     }
   }
 
-  Future addtrap(Map<String,dynamic> trapDetails ) async {
+  Future addtrap(Map<String, dynamic> trapDetails) async {
     http.Response x;
     try {
       SmartDialog.showLoading();
-      print('22222222222222');
-
       x = await postApi("/api/trap/create", trapDetails
-      // {
-        
-        // "hotel_id": trapid,
-        // "reseller_id": resslrid,
-        // "duration": duration,
-        // "quantity": quantity,
-        // "price_per_one": price_per_one,
-        // "RAS_to_USD": RAS_to_USD,
-        // "IQD_to_USD": IQD_to_USD,
-        // "transport": transportsid,
-      // }
-      );
+          // {
 
-      print(x.body);
+          // "hotel_id": trapid,
+          // "reseller_id": resslrid,
+          // "duration": duration,
+          // "quantity": quantity,
+          // "price_per_one": price_per_one,
+          // "RAS_to_USD": RAS_to_USD,
+          // "IQD_to_USD": IQD_to_USD,
+          // "transport": transportsid,
+          // }
+          );
     } catch (e) {
       // snackBar(context, e.toString());
       throw e;
@@ -95,8 +85,7 @@ class TrapController extends ChangeNotifier {
         "id": id,
       });
       notifyListeners();
-      Navigator.pop(context);
-
+      Navigator.of(context).pop();
       snackBar(context, "تم حذف الرحله بنجاح");
     } catch (e) {
       snackBar(context, e.toString());
@@ -109,7 +98,8 @@ class TrapController extends ChangeNotifier {
       snackBar(context, jsonDecode(x.body));
     }
   }
-  void updete(){
+
+  void updete() {
     notifyListeners();
   }
 }
