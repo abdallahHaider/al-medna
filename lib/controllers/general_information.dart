@@ -32,7 +32,9 @@ class GeneralInformationController extends ChangeNotifier {
           numOfFiles: data['traps'],
           color: Colors.yellow,
           svgSrc: 'assets/icons/menu_task.svg',
-          widget: AddTrapPage()));
+          widget: AddTrapPage(
+            isEdidt: false,
+          )));
       actions.add(
         CloudStorageInfo(
             title: 'عدد الفنادق',

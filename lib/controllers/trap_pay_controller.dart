@@ -64,19 +64,23 @@ class TrapPayController extends ChangeNotifier {
         "IQD_to_USD": address,
         "RAS_to_USD": "0"
       });
-      notifyListeners();
-      // Navigator.pop(context);
 
-      snackBar(context, "تم اضافة التسديد بنجاح");
+      print(x.body);
     } catch (e) {
-      snackBar(context, e.toString());
+      print(e);
+      snackBar(context, e.toString(), true);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
+
     if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      snackBar(context, "تم اضافة التسديد بنجاح", false);
     } else {
-      snackBar(context, jsonDecode(x.body));
+      snackBar(context, jsonDecode(x.body), true);
+      print(x.body);
+      throw "fddd";
     }
   }
 
@@ -85,21 +89,19 @@ class TrapPayController extends ChangeNotifier {
     try {
       SmartDialog.showLoading();
       x = await postApi("/api/trap_pay/delete", {
-        "reseller_id": id,
+        "id": id,
       });
-      notifyListeners();
-      Navigator.pop(context);
-
-      snackBar(context, "تم حذف التسديد بنجاح");
     } catch (e) {
-      snackBar(context, e.toString());
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
+    print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      Navigator.pop(context);
     } else {
-      snackBar(context, jsonDecode(x.body));
+      throw jsonDecode(x.body);
     }
   }
 }

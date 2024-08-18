@@ -187,7 +187,7 @@ class _HotelPageState extends State<HotelPage> {
                                               phoneController.text.isEmpty ||
                                               adressController.text.isEmpty) {
                                             snackBar(context,
-                                                'الرجاء ملئ جميع الحقول');
+                                                'الرجاء ملئ جميع الحقول', true);
                                           } else {
                                             await Provider.of<HotelController>(
                                                     context,

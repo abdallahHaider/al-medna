@@ -20,7 +20,8 @@ class TrapController extends ChangeNotifier {
       Map hap = {};
       var x =
           await getpi("/api/trap/index?page=$page${time == "" ? "" : time}");
-      var data = jsonDecode(x.body)["data"];
+      var data = jsonDecode(x.body)["data"]["data"];
+      print(x.body);
       final List resellers = [];
       for (int i = 0; i < data.length; i++) {
         var x = Trap.fromJson(data[i]);
@@ -49,30 +50,34 @@ class TrapController extends ChangeNotifier {
     http.Response x;
     try {
       SmartDialog.showLoading();
-      x = await postApi("/api/trap/create", trapDetails
-          // {
-
-          // "hotel_id": trapid,
-          // "reseller_id": resslrid,
-          // "duration": duration,
-          // "quantity": quantity,
-          // "price_per_one": price_per_one,
-          // "RAS_to_USD": RAS_to_USD,
-          // "IQD_to_USD": IQD_to_USD,
-          // "transport": transportsid,
-          // }
-          );
+      x = await postApi("/api/trap/create", trapDetails);
     } catch (e) {
-      // snackBar(context, e.toString());
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
       notifyListeners();
-      // snackBar(context, "تم اضافة الرحلة بنجاح");
     } else {
-      // snackBar(context, jsonDecode(x.body));
+      print(x.body);
+      throw "فشل ارسال البيانات";
+    }
+  }
+
+  Future updateTrap(Map<String, dynamic> trapDetails) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await putApi("/api/trap/update", trapDetails);
+    } catch (e) {
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+    } else {
+      print(x.body);
       throw "فشل ارسال البيانات";
     }
   }
@@ -86,16 +91,16 @@ class TrapController extends ChangeNotifier {
       });
       notifyListeners();
       Navigator.of(context).pop();
-      snackBar(context, "تم حذف الرحله بنجاح");
+      snackBar(context, "تم حذف الرحله بنجاح", false);
     } catch (e) {
-      snackBar(context, e.toString());
+      snackBar(context, e.toString(), false);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
     } else {
-      snackBar(context, jsonDecode(x.body));
+      snackBar(context, jsonDecode(x.body), false);
     }
   }
 

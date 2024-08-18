@@ -71,53 +71,57 @@ Trap trapFromJson(String str) => Trap.fromJson(json.decode(str));
 String trapToJson(Trap data) => json.encode(data.toJson());
 
 class Trap {
-    int? id;
-    String? resellerId;
-    String? hotelId;
-    int? duration;
-    int? quantity;
-    int? price;
-    int? coupleRoom;
-    int? tripleRoom;
-    int? quadrupleRoom;
-    int? child;
-    int? veryChild;
-    int? priceCoupleRoom;
-    int? priceTripleRoom;
-    int? priceQuadrupleRoom;
-    int? priceChild;
-    int? priceVeryChild;
-    int? pricePerOne;
-    int? rasToUsd;
-    int? iqdToUsd;
-    String? transport;
-    DateTime? createdAt;
+  int? id;
+  String? resellerId;
+  String? hotelId;
+  int? duration;
+  int? quantity;
+  int? price;
+  int? coupleRoom;
+  int? tripleRoom;
+  int? quadrupleRoom;
+  int? child;
+  int? veryChild;
+  int? priceCoupleRoom;
+  int? priceTripleRoom;
+  int? priceQuadrupleRoom;
+  int? priceChild;
+  int? priceVeryChild;
+  int? pricePerOne;
+  int? rasToUsd;
+  int? iqdToUsd;
+  String? type;
+  String? transport;
+  DateTime? createdAt;
+  double? nowDebt;
 
-    Trap({
-        this.id,
-        this.resellerId,
-        this.hotelId,
-        this.duration,
-        this.quantity,
-        this.price,
-        this.coupleRoom,
-        this.tripleRoom,
-        this.quadrupleRoom,
-        this.child,
-        this.veryChild,
-        this.priceCoupleRoom,
-        this.priceTripleRoom,
-        this.priceQuadrupleRoom,
-        this.priceChild,
-        this.priceVeryChild,
-        this.pricePerOne,
-        this.rasToUsd,
-        this.iqdToUsd,
-        this.transport,
-        this.createdAt,
-    });
+  Trap({
+    this.id,
+    this.resellerId,
+    this.hotelId,
+    this.duration,
+    this.quantity,
+    this.price,
+    this.coupleRoom,
+    this.tripleRoom,
+    this.quadrupleRoom,
+    this.child,
+    this.type,
+    this.veryChild,
+    this.priceCoupleRoom,
+    this.priceTripleRoom,
+    this.priceQuadrupleRoom,
+    this.priceChild,
+    this.priceVeryChild,
+    this.pricePerOne,
+    this.rasToUsd,
+    this.iqdToUsd,
+    this.transport,
+    this.createdAt,
+    this.nowDebt,
+  });
 
-    factory Trap.fromJson(Map<String, dynamic> json) => Trap(
+  factory Trap.fromJson(Map<String, dynamic> json) => Trap(
         id: json["id"],
         resellerId: json["reseller_id"].toString(),
         hotelId: json["hotel_id"].toString(),
@@ -138,10 +142,14 @@ class Trap {
         rasToUsd: json["RAS_to_USD"],
         iqdToUsd: json["IQD_to_USD"],
         transport: json["transport"],
-        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    );
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        nowDebt: json["now_debt"],
+        type: json["type"],
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "reseller_id": resellerId,
         "hotel_id": hotelId,
@@ -163,6 +171,5 @@ class Trap {
         "IQD_to_USD": iqdToUsd,
         "transport": transport,
         "created_at": createdAt,
-    };
+      };
 }
-

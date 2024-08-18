@@ -3,6 +3,7 @@ import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/trap_controller%20.dart';
 import 'package:admin/screens/trap/trap_page.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,43 @@ import 'package:provider/provider.dart';
 import '../dashboard/components/header.dart';
 
 class AddTrapPage extends StatefulWidget {
-  AddTrapPage({super.key});
+  AddTrapPage({
+    super.key,
+    this.duration,
+    this.quantity,
+    this.pricePerOne,
+    this.iqdToUsd,
+    this.doubleRoomPrice,
+    this.tripleRoomPrice,
+    this.quadrupleRoomPrice,
+    this.doubleRoomCount,
+    this.tripleRoomCount,
+    this.quadrupleRoomCount,
+    this.childrenCount,
+    this.childrenPrice,
+    this.infantsCount,
+    this.infantsPrice,
+    this.notesController,
+    required this.isEdidt,
+    this.trapId,
+  });
+  final bool isEdidt;
+  final int? trapId;
+  final String? duration;
+  final String? quantity;
+  final String? pricePerOne;
+  final String? iqdToUsd;
+  final String? doubleRoomPrice;
+  final String? tripleRoomPrice;
+  final String? quadrupleRoomPrice;
+  final String? doubleRoomCount;
+  final String? tripleRoomCount;
+  final String? quadrupleRoomCount;
+  final String? childrenCount;
+  final String? childrenPrice;
+  final String? infantsCount;
+  final String? infantsPrice;
+  final String? notesController;
 
   @override
   State<AddTrapPage> createState() => _AddTrapPageState();
@@ -39,6 +76,26 @@ class _AddTrapPageState extends State<AddTrapPage> {
   String transportsid = "";
   int remainingTravelers = 0;
   double totalCost = 0;
+
+  @override
+  void initState() {
+    duration.text = widget.duration ?? "";
+    quantity.text = widget.quantity ?? "";
+    pricePerOne.text = widget.pricePerOne ?? "";
+    iqdToUsd.text = widget.iqdToUsd ?? "";
+    doubleRoomPrice.text = widget.doubleRoomPrice ?? "";
+    tripleRoomPrice.text = widget.tripleRoomPrice ?? "";
+    quadrupleRoomPrice.text = widget.quadrupleRoomPrice ?? "";
+    doubleRoomCount.text = widget.doubleRoomCount ?? "";
+    tripleRoomCount.text = widget.tripleRoomCount ?? "";
+    quadrupleRoomCount.text = widget.quadrupleRoomCount ?? "";
+    childrenCount.text = widget.childrenCount ?? "";
+    childrenPrice.text = widget.childrenPrice ?? "";
+    infantsCount.text = widget.infantsCount ?? "";
+    infantsPrice.text = widget.infantsPrice ?? "";
+    notesController.text = widget.notesController ?? "";
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -339,7 +396,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
               child: TextFormField(
                 controller: iqdToUsd,
                 decoration: InputDecoration(
-                  labelText: 'سعر الصرف دينار',
+                  labelText: 'رقم العقد',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -403,47 +460,90 @@ class _AddTrapPageState extends State<AddTrapPage> {
   }
 
   void _saveTrapDetails() async {
-    // Implement save logic here
-    // You can gather the data from the controllers and make API requests
-    final trapDetails = {
-      'reseller_id': resslrid,
-      'hotel_id': trapid,
-      'transport': transportsid,
-      'duration': duration.text,
-      'quantity': quantity.text,
-      'price': pricePerOne.text,
-      'RAS_to_USD': "0",
-      'IQD_to_USD': iqdToUsd.text,
-      /////////////
-      'price_couple_room': doubleRoomPrice.text,
-      'price_triple_room': tripleRoomPrice.text,
-      'price_quadruple_room': quadrupleRoomPrice.text,
-      'couple_room': doubleRoomCount.text,
-      'triple_room': tripleRoomCount.text,
-      'quadruple_room': quadrupleRoomCount.text,
-      // 'childrenCount': childrenCount.text,
-      // 'infantsCount': infantsCount.text,
-      // 'totalCost': totalCost,
-      ////
-      "child": childrenCount.text,
-      "very_child": infantsCount.text,
-      "price_child": childrenPrice.text,
-      "price_very_child": infantsPrice.text,
-    };
+    Map<String, dynamic> trapDetails = {};
+    if (widget.isEdidt) {
+      trapDetails = {
+        'trap_id': widget.trapId,
+        // 'reseller_id': resslrid,
+        // 'hotel_id': trapid,
+        // 'transport': transportsid,
+        if (duration.text.isNotEmpty) 'duration': duration.text,
+        // pricePerOne.text.isNotEmpty ? 'price' : pricePerOne.text: "",
+        // 'RAS_to_USD': "0",
+        // 'IQD_to_USD': iqdToUsd.text.isNotEmpty ? iqdToUsd.text : "0",
+        /////////////
+        if (doubleRoomPrice.text.isNotEmpty)
+          'price_couple_room': doubleRoomPrice.text,
+        if (tripleRoomPrice.text.isNotEmpty)
+          'price_triple_room': tripleRoomPrice.text,
+        if (quadrupleRoomPrice.text.isNotEmpty)
+          'price_quadruple_room': quadrupleRoomPrice.text,
+        if (doubleRoomCount.text.isNotEmpty)
+          'couple_room': doubleRoomCount.text,
+        if (tripleRoomCount.text.isNotEmpty)
+          'triple_room': tripleRoomCount.text,
+        if (quadrupleRoomCount.text.isNotEmpty)
+          'quadruple_room': quadrupleRoomCount.text,
+        // 'childrenCount': childrenCount.text,
+        // 'infantsCount': infantsCount.text,
+        // 'totalCost': totalCost,
+        ////
+        if (childrenCount.text.isNotEmpty) "child": childrenCount.text,
+        if (infantsCount.text.isNotEmpty) "very_child": infantsCount.text,
+        if (childrenPrice.text.isNotEmpty) "price_child": childrenPrice.text,
+        if (infantsPrice.text.isNotEmpty) "price_very_child": infantsPrice.text,
+      };
+    } else {
+      trapDetails = {
+        'reseller_id': resslrid,
+        'hotel_id': trapid,
+        'transport': transportsid,
+        'duration': duration.text.isNotEmpty ? duration.text : "0",
+        'quantity': quantity.text,
+        'price': pricePerOne.text,
+        'RAS_to_USD': "0",
+        'IQD_to_USD': "0",
+        /////////////
+        'price_couple_room': doubleRoomPrice.text,
+        'price_triple_room': tripleRoomPrice.text,
+        'price_quadruple_room': quadrupleRoomPrice.text,
+        'couple_room': doubleRoomCount.text,
+        'triple_room': tripleRoomCount.text,
+        'quadruple_room': quadrupleRoomCount.text,
+        // 'childrenCount': childrenCount.text,
+        // 'infantsCount': infantsCount.text,
+        // 'totalCost': totalCost,
+        ////
+        "child": childrenCount.text,
+        "very_child": infantsCount.text,
+        "price_child": childrenPrice.text,
+        "price_very_child": infantsPrice.text,
+        "number_trap": iqdToUsd.text,
+      };
+    }
+
     try {
       // Assuming you have a method in your TrapController to handle saving
-      await Provider.of<TrapController>(context, listen: false)
-          .addtrap(trapDetails);
+      if (widget.isEdidt) {
+        await Provider.of<TrapController>(context, listen: false)
+            .updateTrap(trapDetails);
+      } else {
+        await Provider.of<TrapController>(context, listen: false)
+            .addtrap(trapDetails);
+      }
 
-      // Show a success snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('تم حفظ التفاصيل بنجاح')),
-      );
+      // // Show a success snackbar
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text()),
+      // );
+      snackBar(context, 'تم حفظ التفاصيل بنجاح', false);
       Provider.of<Rootwidget>(context, listen: false).getWidet(TrapPage());
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      // print(e);
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(content: Text(e.toString())),
+      // );
+      snackBar(context, e.toString(), true);
     }
 
     // Optionally, navigate back or clear the form

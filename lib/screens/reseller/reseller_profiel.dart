@@ -3,7 +3,7 @@ import 'package:admin/models/reseller.dart';
 import 'package:admin/pdf/reseller_Pdf.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/reseller/widgets/cardResellerDetels.dart';
-import 'package:admin/screens/trap/widget/dataBelder.dart';
+import 'package:admin/screens/reseller/widgets/trap_tibel.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class ResellerProfiel extends StatelessWidget {
                             .getResellerinfo(resellerID.id.toString());
                         await ResellerToPdf(resellerID, globlDebt, traps);
                       } catch (e) {
-                        snackBar(context, e.toString());
+                        snackBar(context, e.toString(), true);
                       } finally {
                         SmartDialog.dismiss();
                       }
@@ -72,7 +72,7 @@ class ResellerProfiel extends StatelessWidget {
                         if (snapshot.hasError) {
                           return Text(snapshot.error.toString());
                         } else if (snapshot.hasData) {
-                          return TrapTable(traps: snapshot.data!);
+                          return TrapTableReseller(traps: snapshot.data!);
                         } else {
                           return Center(child: CircularProgressIndicator());
                         }

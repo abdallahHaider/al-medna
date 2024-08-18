@@ -35,7 +35,9 @@ List demoMyFiles = [
     svgSrc: "assets/icons/menu_task.svg",
     totalStorage: "رحلة",
     color: Color(0xFFFFA113),
-    widget: AddTrapPage(),
+    widget: AddTrapPage(
+      isEdidt: false,
+    ),
   ),
   CloudStorageInfo(
     title: "عدد الفنادق",

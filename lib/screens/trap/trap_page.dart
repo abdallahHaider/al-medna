@@ -88,7 +88,9 @@ class _TrapPageState extends State<TrapPage> {
                                       onPressed: () {
                                         Provider.of<Rootwidget>(context,
                                                 listen: false)
-                                            .getWidet(AddTrapPage());
+                                            .getWidet(AddTrapPage(
+                                          isEdidt: false,
+                                        ));
                                       },
                                       label: Text("اضافة رحلة"),
                                       icon: Icon(Icons.add),

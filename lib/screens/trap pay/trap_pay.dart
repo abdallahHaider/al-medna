@@ -1,6 +1,7 @@
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/pdf/pdd.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:flutter/material.dart';
@@ -283,16 +284,22 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                   children: [
                                     ElevatedButton(
                                       onPressed: () async {
-                                        await Provider.of<TrapPayController>(
-                                                context,
-                                                listen: false)
-                                            .addReseller(
-                                                costController.text.toString(),
-                                                namberController.text
-                                                    .toString(),
-                                                uSDController.text.toString(),
-                                                resslrid,
-                                                context);
+                                        try {
+                                          await Provider.of<TrapPayController>(
+                                                  context,
+                                                  listen: false)
+                                              .addReseller(
+                                                  costController.text
+                                                      .toString(),
+                                                  namberController.text
+                                                      .toString(),
+                                                  uSDController.text.toString(),
+                                                  resslrid,
+                                                  context);
+                                        } catch (e) {
+                                          print(e);
+                                        }
+
                                         // }
                                       },
                                       child: Text('اضافة'),
@@ -343,11 +350,17 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                 children: [
                                   ElevatedButton(
                                     onPressed: () async {
-                                      await Provider.of<TrapPayController>(
-                                              context,
-                                              listen: false)
-                                          .delete(snapshot.data![index].id,
-                                              context);
+                                      try {
+                                        await Provider.of<TrapPayController>(
+                                                context,
+                                                listen: false)
+                                            .delete(snapshot.data![index].id,
+                                                context);
+                                        snackBar(context,
+                                            "تم حذف التسديد بنجاح", false);
+                                      } catch (e) {
+                                        snackBar(context, e.toString(), true);
+                                      }
                                     },
                                     child: Text('حذف'),
                                   ),

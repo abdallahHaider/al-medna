@@ -64,16 +64,16 @@ class ResellerController extends ChangeNotifier {
       //        Navigator.pop(context);
       notifyListeners();
 
-      snackBar(context, "تم اضافة الوكيل بنجاح");
+      snackBar(context, "تم اضافة الوكيل بنجاح", false);
     } catch (e) {
-      snackBar(context, e.toString());
+      snackBar(context, e.toString(), true);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
     } else {
-      snackBar(context, jsonDecode(x.body));
+      snackBar(context, jsonDecode(x.body), true);
     }
   }
 
@@ -87,16 +87,16 @@ class ResellerController extends ChangeNotifier {
       notifyListeners();
       Navigator.pop(context);
       notifyListeners();
-      snackBar(context, "تم حذف الوكيل بنجاح");
+      snackBar(context, "تم حذف الوكيل بنجاح", false);
     } catch (e) {
-      snackBar(context, e.toString());
+      snackBar(context, e.toString(), true);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
     } else {
-      snackBar(context, jsonDecode(x.body));
+      snackBar(context, jsonDecode(x.body), true);
     }
   }
 
@@ -107,11 +107,11 @@ class ResellerController extends ChangeNotifier {
       print(jsonDecode(x.body));
 
       final List Traps =
-          data["data"].map((json) => Trap.fromJson(json)).toList();
+          data["data"]["data"].map((json) => Trap.fromJson(json)).toList();
       return Traps;
     } catch (e) {
       print(e);
-      throw "jjj";
+      throw "حدثت مشكلة في جلب البيانات";
     }
   }
 

@@ -56,16 +56,16 @@ class HotelController extends ChangeNotifier {
       notifyListeners();
       //  Navigator.pop(context);
 
-      snackBar(context, "تم اضافة الفندق بنجاح");
+      snackBar(context, "تم اضافة الفندق بنجاح", false);
     } catch (e) {
-      snackBar(context, e.toString());
+      snackBar(context, e.toString(), false);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
     } else {
-      snackBar(context, jsonDecode(x.body));
+      snackBar(context, jsonDecode(x.body), true);
     }
   }
 
@@ -80,16 +80,16 @@ class HotelController extends ChangeNotifier {
       Navigator.pop(context);
       notifyListeners();
 
-      snackBar(context, "تم حذف الفندق بنجاح");
+      snackBar(context, "تم حذف الفندق بنجاح", false);
     } catch (e) {
-      snackBar(context, e.toString());
+      snackBar(context, e.toString(), true);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
     } else {
-      snackBar(context, jsonDecode(x.body));
+      snackBar(context, jsonDecode(x.body), true);
     }
   }
 }

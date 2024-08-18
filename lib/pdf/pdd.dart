@@ -4,7 +4,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:universal_html/html.dart' as html;
 
 Future<void> generatePdfWeb(
     String name, double cost, String id, String dede, double totleCost) async {

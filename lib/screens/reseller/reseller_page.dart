@@ -189,7 +189,8 @@ class ResellerPage extends StatelessWidget {
                               if (nameController.text.isEmpty ||
                                   phoneController.text.isEmpty ||
                                   adressController.text.isEmpty) {
-                                snackBar(context, 'الرجاء ملئ جميع الحقول');
+                                snackBar(
+                                    context, 'الرجاء ملئ جميع الحقول', true);
                               } else {
                                 await Provider.of<ResellerController>(context,
                                         listen: false)
