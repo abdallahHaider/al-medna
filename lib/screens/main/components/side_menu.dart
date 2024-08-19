@@ -1,5 +1,6 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
+import 'package:admin/screens/wallet/wallet_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -18,60 +19,72 @@ class SideMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
-        
         children: [
-         SizedBox(
-          width: 200,
-          height: 200,
-           child: Image.asset(
-                      "assets/images/logo.png",
+          SizedBox(
+            width: 200,
+            height: 200,
+            child: Image.asset(
+              "assets/images/logo.png",
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "شركة المدينة المنورة للحج والعمرة",
+                style: TextStyle(fontSize: 12),
               ),
-         ),
-          
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const  Text("شركة المدينة المنورة للحج والعمرة",style: TextStyle(fontSize: 12),),
-          ],
-        ),
+            ],
+          ),
           Divider(),
           DrawerListTile(
             title: "الرئيسية",
             svgSrc: "assets/icons/menu_dashboard.svg",
             press: () {
-              Provider.of<Rootwidget>(context,listen: false).getWidet(DashboardScreen());
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(DashboardScreen());
             },
           ),
           DrawerListTile(
             title: "الوكلاء",
             svgSrc: "assets/icons/menu_tran.svg",
             press: () {
-              Provider.of<Rootwidget>(context,listen: false).getWidet(ResellerPage());
-
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(ResellerPage());
             },
           ),
           DrawerListTile(
             title: "الرحلات",
             svgSrc: "assets/icons/menu_task.svg",
             press: () {
-              Provider.of<Rootwidget>(context,listen: false).getWidet(TrapPage());
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(TrapPage());
             },
           ),
           DrawerListTile(
             title: "تسديدات الرحلات",
             svgSrc: "assets/icons/menu_doc.svg",
             press: () {
-              Provider.of<Rootwidget>(context,listen: false).getWidet(TrapPayPage());
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(TrapPayPage());
             },
           ),
           DrawerListTile(
             title: "الفنادق",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context,listen: false).getWidet(HotelPage());
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(HotelPage());
             },
           ),
-          
+          DrawerListTile(
+            title: "الخزنة",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(WalletPage());
+            },
+          ),
         ],
       ),
     );
