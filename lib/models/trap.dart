@@ -74,20 +74,20 @@ class Trap {
   int? id;
   String? resellerId;
   String? hotelId;
-  int? duration;
-  int? quantity;
-  int? price;
-  int? coupleRoom;
-  int? tripleRoom;
-  int? quadrupleRoom;
-  int? child;
-  int? veryChild;
-  int? priceCoupleRoom;
-  int? priceTripleRoom;
-  int? priceQuadrupleRoom;
-  int? priceChild;
-  int? priceVeryChild;
-  int? pricePerOne;
+  String? duration;
+  String? quantity;
+  double? price;
+  String? coupleRoom;
+  String? tripleRoom;
+  String? quadrupleRoom;
+  String? child;
+  String? veryChild;
+  double? priceCoupleRoom;
+  double? priceTripleRoom;
+  double? priceQuadrupleRoom;
+  double? priceChild;
+  double? priceVeryChild;
+  double? pricePerOne;
   int? rasToUsd;
   int? iqdToUsd;
   String? type;
@@ -125,27 +125,39 @@ class Trap {
         id: json["id"],
         resellerId: json["reseller_id"].toString(),
         hotelId: json["hotel_id"].toString(),
-        duration: json["duration"],
-        quantity: json["quantity"],
-        price: json["price"],
-        coupleRoom: json["couple_room"],
-        tripleRoom: json["triple_room"],
-        quadrupleRoom: json["quadruple_room"],
-        child: json["child"],
-        veryChild: json["very_child"],
-        priceCoupleRoom: json["price_couple_room"],
-        priceTripleRoom: json["price_triple_room"],
-        priceQuadrupleRoom: json["price_quadruple_room"],
-        priceChild: json["price_child"],
-        priceVeryChild: json["price_very_child"],
-        pricePerOne: json["price_per_one"],
+        duration: json["duration"].toString(),
+        quantity: json["quantity"].toString(),
+        price: json["price"] == null
+            ? null
+            : double.parse(json["price"].toString()),
+        coupleRoom: json["couple_room"].toString(),
+        tripleRoom: json["triple_room"].toString(),
+        quadrupleRoom: json["quadruple_room"].toString(),
+        child: json["child"].toString(),
+        veryChild: json["very_child"].toString(),
+        priceCoupleRoom: json["price_couple_room"] == null
+            ? null
+            : double.parse(json["price_couple_room"].toString()),
+        priceTripleRoom: json["price_triple_room"] == null
+            ? null
+            : double.parse(json["price_triple_room"].toString()),
+        priceQuadrupleRoom: json["price_quadruple_room"] == null
+            ? null
+            : double.parse(json["price_quadruple_room"].toString()),
+        priceChild: json["price_child"] == null
+            ? null
+            : double.parse(json["price_child"].toString()),
+        priceVeryChild: json["price_very_child"] == null
+            ? null
+            : double.parse(json["price_very_child"].toString()),
+        // pricePerOne: double.parse(json["price_per_one"].toString()),
         rasToUsd: json["RAS_to_USD"],
         iqdToUsd: json["IQD_to_USD"],
         transport: json["transport"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
-        nowDebt: json["now_debt"],
+        nowDebt: double.parse(json["now_debt"].toString()),
         type: json["type"],
       );
 

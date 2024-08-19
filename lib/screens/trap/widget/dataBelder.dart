@@ -43,7 +43,7 @@ class _TrapTableState extends State<TrapTable> {
               DataColumn(label: Text('اجمالي المبلغ بالدولار')),
               DataColumn(label: Text('المتبقي')),
               // DataColumn(label: Text('قيمة الريال بالنسبة للدولار')),
-              DataColumn(label: Text('قيمة الدينار بالنسبة للدولار')),
+              // DataColumn(label: Text('قيمة الدينار بالنسبة للدولار')),
               DataColumn(label: Text('وسيلة النقل')),
               DataColumn(label: Text('تاريخ الإنشاء')),
               DataColumn(label: Text('إجراءات')),
@@ -64,7 +64,7 @@ class _TrapTableState extends State<TrapTable> {
                   DataCell(Text('${trap.price ?? 0}')),
                   DataCell(Text('${trap.nowDebt ?? 0}')),
                   // DataCell(Text('${trap.rasToUsd ?? 0}')),
-                  DataCell(Text('${trap.iqdToUsd ?? 0}')),
+                  // DataCell(Text('${trap.iqdToUsd ?? 0}')),
                   DataCell(Text(trap.transport == 'fly' ? 'جوي' : 'بري')),
                   DataCell(
                       Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
