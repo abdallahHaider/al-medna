@@ -90,7 +90,7 @@ class _TrapPayPageState extends State<TrapPayPage> {
                                 ConnectionState.waiting) {
                               return Center(child: CircularProgressIndicator());
                             } else if (snapshot.hasError) {
-                              return ErorrWidget();
+                              return MyErrorWidget();
                             } else if (snapshot.hasData) {
                               return Card(
                                 color: secondaryColor,

@@ -66,7 +66,7 @@ class _TrapPageState extends State<TrapPage> {
                               ConnectionState.waiting) {
                             return Center(child: CircularProgressIndicator());
                           } else if (snapshot.hasError) {
-                            return ErorrWidget();
+                            return MyErrorWidget();
                           } else if (snapshot.hasData) {
                             print(snapshot.data!);
                             return Column(

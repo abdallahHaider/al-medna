@@ -48,7 +48,7 @@ class ResellerPage extends StatelessWidget {
                             ConnectionState.waiting) {
                           return Center(child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
-                          return ErorrWidget();
+                          return MyErrorWidget();
                         } else if (snapshot.hasData) {
                           return DataTable(
                             columnSpacing: defaultPadding,

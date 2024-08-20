@@ -55,7 +55,7 @@ class _HotelPageState extends State<HotelPage> {
                                 ConnectionState.waiting) {
                               return Center(child: CircularProgressIndicator());
                             } else if (snapshot.hasError) {
-                              return ErorrWidget();
+                              return MyErrorWidget();
                             } else if (snapshot.hasData) {
                               return Card(
                                 elevation: 5,

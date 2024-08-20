@@ -1,8 +1,8 @@
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 
-class ErorrWidget extends StatelessWidget {
-  const ErorrWidget({
+class MyErrorWidget extends StatelessWidget {
+  const MyErrorWidget({
     super.key,
   });
 
@@ -13,8 +13,8 @@ class ErorrWidget extends StatelessWidget {
             color: Colors.red,
             // margin: EdgeInsets.all(50),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 150, vertical: 50),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 150, vertical: 50),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

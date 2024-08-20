@@ -34,7 +34,7 @@ class MyFiles extends StatelessWidget {
                 if (bb.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (bb.hasError) {
-                  return ErorrWidget();
+                  return MyErrorWidget();
                 } else {
                   return Responsive(
                     mobile: FileInfoCardGridView(

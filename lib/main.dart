@@ -2,6 +2,7 @@ import 'package:admin/controllers/action_controller.dart';
 import 'package:admin/controllers/general_information.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/controllers/trap_pay_controller.dart';
+import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => TrapPayController(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => WalletProvider()..getWallet(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,

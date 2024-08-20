@@ -40,6 +40,7 @@ dependencies:
   universal_html: ^2.2.4
   syncfusion_flutter_pdf: ^26.2.9
   rename_app: ^1.6.1
+  spelling_number: ^0.0.4
 
 dev_dependencies:
   flutter_test:
