@@ -33,7 +33,7 @@ class ResellerController extends ChangeNotifier {
     }
   }
 
-  Future getfetchData() async {
+  Future getFetchData() async {
     // Simulate fetching data (replace with your actual logic)
     // await Future.delayed(Duration(seconds: 1));
 

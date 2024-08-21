@@ -31,13 +31,13 @@ class MyApp extends StatelessWidget {
           create: (context) => Rootwidget(),
         ),
         ChangeNotifierProvider(
-          create: (context) => ResellerController()..getfetchData(),
+          create: (context) => ResellerController()..getFetchData(),
         ),
         ChangeNotifierProvider(
           create: (context) => ActionController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => HotelController()..getfetchData(),
+          create: (context) => HotelController()..getFetchData(),
         ),
         ChangeNotifierProvider(
           create: (context) => GeneralInformationController(),
