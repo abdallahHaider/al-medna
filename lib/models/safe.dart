@@ -13,9 +13,9 @@ class Safe {
   String? type;
   String? numberKade;
   String? owner;
-  var cost;
+  var costUSD;
   String? note;
-  var iqdToUsd;
+  var costIQD;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -24,9 +24,9 @@ class Safe {
     this.type,
     this.numberKade,
     this.owner,
-    this.cost,
+    this.costUSD,
     this.note,
-    this.iqdToUsd,
+    this.costIQD,
     this.createdAt,
     this.updatedAt,
   });
@@ -36,9 +36,9 @@ class Safe {
         type: json["type"],
         numberKade: json["number_kade"],
         owner: json["owner"],
-        cost: json["cost"] as double,
+        costUSD: json["cost_USD"] == null ? null : json["cost_USD"] as double,
         note: json["note"],
-        iqdToUsd: json["IQD_to_USD"] as double,
+        costIQD: json["cost_IQD"] == null ? null : json["cost_IQD"] as double,
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -52,9 +52,9 @@ class Safe {
         "type": type,
         "number_kade": numberKade,
         "owner": owner,
-        "cost": cost,
+        "cost": costUSD,
         "note": note,
-        "IQD_to_USD": iqdToUsd,
+        "IQD_to_USD": costIQD,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };

@@ -8,25 +8,33 @@ class MyTextField extends StatelessWidget {
     this.labelText,
     this.enabled,
     this.onChanged,
+    this.keyboardType,
+    this.maxLines,
+    this.decoration,
   });
 
   final TextEditingController? controller;
   final String? labelText;
   final bool? enabled; // default is true
   var onChanged;
+  final TextInputType? keyboardType;
+  final int? maxLines;
+  final InputDecoration? decoration;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        border: OutlineInputBorder(),
-      ),
+      decoration: decoration ??
+          InputDecoration(
+            labelText: labelText,
+            border: OutlineInputBorder(),
+          ),
       enabled: enabled,
       minLines: 1,
-      maxLines: 5,
+      maxLines: maxLines ?? 2,
       onChanged: onChanged,
+      keyboardType: keyboardType,
     );
   }
 }

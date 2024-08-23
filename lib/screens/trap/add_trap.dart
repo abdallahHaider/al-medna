@@ -70,6 +70,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
   final infantsCount = TextEditingController();
   final infantsPrice = TextEditingController();
   final notesController = TextEditingController();
+  final hotelController = TextEditingController();
 
   String resslrid = "";
   String trapid = "";
@@ -200,29 +201,40 @@ class _AddTrapPageState extends State<AddTrapPage> {
               ),
             ),
             SizedBox(width: defaultPadding),
+            // Expanded(
+            //   child: Consumer<HotelController>(
+            //     builder: (BuildContext context, value, Widget? child) {
+            //       return DropdownButtonFormField<dynamic>(
+            //         decoration: InputDecoration(
+            //           border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(10),
+            //           ),
+            //           labelText: "الفندق",
+            //         ),
+            //         onChanged: (dynamic value) {
+            //           setState(() {
+            //             trapid = value.id.toString();
+            //           });
+            //         },
+            //         items: value.hotels.map((dynamic companies) {
+            //           return DropdownMenuItem<dynamic>(
+            //             value: companies,
+            //             child: Text(companies.fullName!),
+            //           );
+            //         }).toList(),
+            //       );
+            //     },
+            //   ),
+            // ),
+            // SizedBox(
+            //     width: 200, child: _buildEditableTableCell(hotelController)),
             Expanded(
-              child: Consumer<HotelController>(
-                builder: (BuildContext context, value, Widget? child) {
-                  return DropdownButtonFormField<dynamic>(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: "الفندق",
-                    ),
-                    onChanged: (dynamic value) {
-                      setState(() {
-                        trapid = value.id.toString();
-                      });
-                    },
-                    items: value.hotels.map((dynamic companies) {
-                      return DropdownMenuItem<dynamic>(
-                        value: companies,
-                        child: Text(companies.fullName!),
-                      );
-                    }).toList(),
-                  );
-                },
+              child: TextFormField(
+                controller: hotelController,
+                decoration: InputDecoration(
+                  labelText: 'الفندق',
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
           ],
@@ -496,7 +508,9 @@ class _AddTrapPageState extends State<AddTrapPage> {
     } else {
       trapDetails = {
         'reseller_id': resslrid,
-        'hotel_id': trapid,
+        'hotel_name': hotelController.text.isNotEmpty
+            ? hotelController.text.toString()
+            : "_",
         'transport': transportsid,
         'duration': duration.text.isNotEmpty ? duration.text : "0",
         'quantity': quantity.text,

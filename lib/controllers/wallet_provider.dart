@@ -14,6 +14,9 @@ class WalletProvider extends ChangeNotifier {
   String numberWord = "";
   bool isLoading = false;
   List wallets = [];
+  var wallet_IQD = 0;
+  var wallet_USD = 0;
+  int page = 1;
 
   @override
   void dispose() {
@@ -22,15 +25,16 @@ class WalletProvider extends ChangeNotifier {
   }
 
   Future<void> getWallet() async {
-    print("1111111111111111");
     isLoading = true;
     notifyListeners();
     try {
-      var x = await getpi("/api/safe_doc/index");
+      var x = await getpi("/api/safe_doc/index?page=$page");
       print(x.body);
       var data = jsonDecode(x.body);
       wallets =
-          data["data"]["data"].map((josn) => Safe.fromJson(josn)).toList();
+          data["data"]["data"].map((json) => Safe.fromJson(json)).toList();
+      wallet_IQD = data["cost_IQD"];
+      wallet_USD = data["cost_USD"];
       isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -42,8 +46,10 @@ class WalletProvider extends ChangeNotifier {
     }
   }
 
-  Future Addpay(String type, String numberKade, String owner, String cost,
-      String ItoU, String note, BuildContext context) async {
+  Future Addpay(String type, String numberKade, String owner, String costIQD,
+      String costUSD, String note, BuildContext context) async {
+    print(costIQD);
+    print(costUSD);
     SmartDialog.showLoading();
     http.Response x;
     try {
@@ -51,8 +57,11 @@ class WalletProvider extends ChangeNotifier {
         "type": type,
         "number_kade": numberKade,
         "owner": owner,
-        "cost": cost,
-        "IQD_to_USD": ItoU,
+        if (costIQD.isNotEmpty) "cost_IQD": costIQD,
+        // costIQD.isEmpty ? "" : ,
+        costUSD.isEmpty ? "" : "cost_USD": costUSD,
+        // "cost_USD": "11111",
+        "IQD_to_USD": "0",
         "note": note,
       });
       print(x.body);
@@ -72,14 +81,27 @@ class WalletProvider extends ChangeNotifier {
     }
   }
 
-  void setNumberWord(String value) {
+  void setNumberWord(String value, String type) {
     int x = 0;
     if (value.isNotEmpty) {
       x = int.parse(value);
       numberWord = SpellingNumber(lang: 'ar').convert(x);
       numberWord =
-          "${numberWord} فقط لا غير"; // Add the phrase "only no other" to the word
+          "${numberWord} $type فقط لا غير "; // Add the phrase "only no other" to the word
       notifyListeners();
+    }
+  }
+
+  void clearNumberWord() {
+    numberWord = "";
+    notifyListeners();
+  }
+
+  void getPage(int lockage) {
+    if (page > 0) {
+      page = page + lockage;
+      print(page);
+      getWallet();
     }
   }
 }
