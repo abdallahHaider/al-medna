@@ -81,6 +81,29 @@ class WalletProvider extends ChangeNotifier {
     }
   }
 
+  Future deletWallet(int id, BuildContext context) async {
+    SmartDialog.showLoading();
+    http.Response x;
+    try {
+      x = await postApi("/api/safe_doc/delete", {"safe_id": id});
+      print(x.body);
+      if (x.statusCode == 200) {
+        getWallet();
+        notifyListeners();
+        snackBar(context, "تمت الحذف بنجاح", false);
+        Navigator.pop(context);
+      } else {
+        snackBar(context, jsonDecode(x.body)["message"], true);
+      }
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      print(e);
+      errorMessage = e.toString();
+    } finally {
+      SmartDialog.dismiss();
+    }
+  }
+
   void setNumberWord(String value, String type) {
     int x = 0;
     if (value.isNotEmpty) {

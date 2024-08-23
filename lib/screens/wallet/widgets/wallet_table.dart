@@ -1,8 +1,9 @@
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/pdf/safe_pdf.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-Widget walletTable(WalletProvider controller) {
+Widget walletTable(WalletProvider controller, BuildContext context) {
   return SizedBox(
     width: double.maxFinite,
     child: Card(
@@ -53,8 +54,40 @@ Widget walletTable(WalletProvider controller) {
                               },
                               icon: Icon(Icons.picture_as_pdf)),
                           IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.delete_forever))
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('حذف'),
+                                        content: Text(
+                                            'هل أنت متأكد من حذف هذا الرحلة'),
+                                        actions: [
+                                          TextButton(
+                                            child: Text('لا'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                              child: Text('نعم'),
+                                              onPressed: () {
+                                                Provider.of<WalletProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .deletWallet(
+                                                        controller
+                                                            .wallets[index].id,
+                                                        context);
+                                              }),
+                                        ],
+                                      );
+                                    });
+                              },
+                              icon: Icon(
+                                Icons.delete_forever,
+                                color: Colors.red,
+                              ))
                         ],
                       ))
                     ])),

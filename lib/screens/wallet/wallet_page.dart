@@ -18,7 +18,7 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   @override
   void initState() {
-    // Provider.of<WalletProvider>(context, listen: false).getWallet();
+    Provider.of<WalletProvider>(context, listen: false).getWallet();
     super.initState();
   }
 
@@ -101,7 +101,7 @@ class _WalletPageState extends State<WalletPage> {
                           } else if (controller.isError) {
                             return Center(child: MyErrorWidget());
                           } else {
-                            return walletTable(controller);
+                            return walletTable(controller, context);
                           }
                         },
                       ),
