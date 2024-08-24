@@ -36,9 +36,13 @@ class Safe {
         type: json["type"],
         numberKade: json["number_kade"],
         owner: json["owner"],
-        costUSD: json["cost_USD"] == null ? null : json["cost_USD"] as double,
+        costUSD: json["cost_USD"] == null
+            ? null
+            : double.parse(json["cost_USD"].toString()),
         note: json["note"],
-        costIQD: json["cost_IQD"] == null ? null : json["cost_IQD"] as double,
+        costIQD: json["cost_IQD"] == null
+            ? null
+            : double.parse(json["cost_IQD"].toString()),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),

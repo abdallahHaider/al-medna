@@ -92,8 +92,8 @@ class _WalletActionState extends State<WalletAction> {
         //   });
         // },
         // ),
-        const SizedBox(height: 16),
-        _buildTextField(controller: kadeCostController, label: "رقم القيد"),
+        // const SizedBox(height: 16),
+        // _buildTextField(controller: kadeCostController, label: "رقم القيد"),
         const SizedBox(height: 16),
         _buildTextField(controller: ownerController, label: "الاسم"),
         const SizedBox(height: 16),
@@ -203,7 +203,7 @@ class _WalletActionState extends State<WalletAction> {
           onPressed: () {
             Provider.of<WalletProvider>(context, listen: false).Addpay(
               type,
-              kadeCostController.text,
+              "0",
               ownerController.text,
               // dinarCostController.text.isNotEmpty
               dinarCostController.text,

@@ -78,7 +78,10 @@ class _WalletPageState extends State<WalletPage> {
                                       .getPage(-1);
                                 },
                                 child: Text("الصفحة السابقة")),
-                            Text("الصفحة :"),
+                            Consumer<WalletProvider>(
+                                builder: (context, walletProvider, child) {
+                              return Text("الصفحة : ${walletProvider.page}");
+                            }),
                             TextButton(
                                 onPressed: () {
                                   Provider.of<WalletProvider>(context,

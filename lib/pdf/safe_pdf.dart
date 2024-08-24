@@ -79,8 +79,7 @@ Future<void> safePdf(Safe safe) async {
             pw.Row(
               mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
               children: [
-                _buildTextField(
-                    label: 'رقم القيد : ' + safe.numberKade.toString()),
+                _buildTextField(label: 'رقم القيد : ' + safe.id.toString()),
                 _buildTextField(
                     label:
                         'التاريخ: ${safe.createdAt.toString().substring(0, 10)}'),
@@ -232,9 +231,9 @@ pw.Widget _buildTextField({required String label}) {
 }
 
 String setNumberWord(String value, String type) {
-  int x = 0;
+  double x = 0;
   if (value.isNotEmpty) {
-    x = int.parse(value);
+    x = double.parse(value);
     return "${SpellingNumber(lang: 'ar').convert(x)} $type فقط لا غير "; // Add the phrase "only no other" to the word
   } else {
     return "";
