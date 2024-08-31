@@ -39,13 +39,14 @@ class _TrapTableState extends State<TrapTable> {
               DataColumn(label: Text('افراد ثنائية')),
               DataColumn(label: Text('افراد ثلاثية')),
               DataColumn(label: Text('افراد رباعية')),
-              // DataColumn(label: Text('السعر بالدولار لكل مسافر')),
+              DataColumn(label: Text('المسافر الخاص')),
               DataColumn(label: Text('اجمالي المبلغ بالدولار')),
               DataColumn(label: Text('المتبقي')),
               // DataColumn(label: Text('قيمة الريال بالنسبة للدولار')),
               // DataColumn(label: Text('قيمة الدينار بالنسبة للدولار')),
               DataColumn(label: Text('وسيلة النقل')),
               DataColumn(label: Text('تاريخ الإنشاء')),
+              DataColumn(label: Text('الملاحظة')),
               DataColumn(label: Text('إجراءات')),
             ],
             rows: widget.traps.map((trap) {
@@ -60,7 +61,7 @@ class _TrapTableState extends State<TrapTable> {
                   DataCell(Text('${trap.coupleRoom ?? 0}')),
                   DataCell(Text('${trap.tripleRoom ?? 0}')),
                   DataCell(Text('${trap.quadrupleRoom ?? 0}')),
-                  // DataCell(Text('\$${trap.pricePerOne ?? 0}')),
+                  DataCell(Text('${trap.vip_travel ?? 0}')),
                   DataCell(Text('${trap.price ?? 0}')),
                   DataCell(Text('${trap.nowDebt ?? 0}')),
                   // DataCell(Text('${trap.rasToUsd ?? 0}')),
@@ -68,6 +69,32 @@ class _TrapTableState extends State<TrapTable> {
                   DataCell(Text(trap.transport == 'fly' ? 'جوي' : 'بري')),
                   DataCell(
                       Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
+                  DataCell(SizedBox(
+                    width: 100,
+                    child: TextButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Text('ملاحظات'),
+                            content: Text(trap.note ?? ''),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('حسناً'),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: Text(
+                        trap.note.toString(),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  )),
                   DataCell(
                     Row(
                       children: [
@@ -80,18 +107,22 @@ class _TrapTableState extends State<TrapTable> {
                               duration: trap.duration.toString(),
                               quantity: trap.quantity.toString(),
                               iqdToUsd: trap.iqdToUsd.toString(),
-                              // doubleRoomPrice: trap.coupleRoom,
-                              // tripleRoomPrice: trap.tripleRoom,
-                              // quadrupleRoomPrice: trap.tripleRoom,
+                              doubleRoomPrice: trap.priceCoupleRoom.toString(),
+                              tripleRoomPrice: trap.priceTripleRoom.toString(),
+                              quadrupleRoomPrice:
+                                  trap.priceQuadrupleRoom.toString(),
                               doubleRoomCount: trap.coupleRoom.toString(),
                               tripleRoomCount: trap.tripleRoom.toString(),
                               quadrupleRoomCount: trap.quadrupleRoom.toString(),
                               childrenCount: trap.child.toString(),
-                              // childrenPrice: trap.,
+                              childrenPrice: trap.priceChild.toString(),
                               infantsCount: trap.veryChild.toString(),
                               isEdidt: true,
-                              // infantsPrice: trap.resellerId,
-                              // notesController: trap.createdAt,
+                              infantsPrice: trap.priceVeryChild.toString(),
+                              notesController: trap.note.toString(),
+                              vipController: trap.vip_travel.toString(),
+                              priceVipController:
+                                  trap.price_vip_travel.toString(),
                             ));
                           },
                         ),

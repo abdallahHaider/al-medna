@@ -12,7 +12,7 @@ class TrapPayController extends ChangeNotifier {
   int page = 1;
 
   void addpage(int mepage) {
-    if (page > 1) {
+    if (page > 0) {
       page = page + mepage;
       notifyListeners();
     }
@@ -35,33 +35,34 @@ class TrapPayController extends ChangeNotifier {
     }
   }
 
-  Future getfetchData() async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
+  // Future getfetchData() async {
+  //   // Simulate fetching data (replace with your actual logic)
+  //   // await Future.delayed(Duration(seconds: 1));
 
-    try {
-      var x = await getpi("/api/trap_pay/index");
-      var data = jsonDecode(x.body);
-      final List resellers =
-          data.map((json) => TrapPay.fromJson(json)).toList();
-      resellerss = resellers;
-      notifyListeners();
-    } catch (e) {
-      print(e);
-      throw "jjj";
-    }
-  }
+  //   try {
+  //     var x = await getpi("/api/trap_pay/index");
+  //     var data = jsonDecode(x.body);
+  //     final List resellers =
+  //         data.map((json) => TrapPay.fromJson(json)).toList();
+  //     resellerss = resellers;
+  //     notifyListeners();
+  //   } catch (e) {
+  //     print(e);
+  //     throw "jjj";
+  //   }
+  // }
 
-  Future addReseller(String name, String phone_number, String address,
-      String rId, BuildContext context) async {
+  Future addReseller(String costUSD, String costIQD, String IQD_to_USD,
+      String reseller_id, BuildContext context) async {
     http.Response x;
     try {
       SmartDialog.showLoading();
       x = await postApi("/api/trap_pay/create", {
-        "cost": name,
-        "reseller_id": rId,
+        "cost_USD": costUSD,
+        "cost_IQD": costIQD,
+        "reseller_id": reseller_id,
         "pay_number": "0",
-        "IQD_to_USD": address,
+        "IQD_to_USD": IQD_to_USD,
         "RAS_to_USD": "0"
       });
 
@@ -102,6 +103,25 @@ class TrapPayController extends ChangeNotifier {
       Navigator.pop(context);
     } else {
       throw jsonDecode(x.body);
+    }
+  }
+
+  Future updatePay(String id, cost) async {
+    print("11111111111111111111111111111111111");
+    print(id);
+    http.Response x;
+    try {
+      x = await postApi("/api/trap_pay/update", {
+        "id": id,
+        "cost": cost,
+      });
+    } catch (e) {
+      throw e;
+    }
+    if (x.statusCode == 200) {
+      notifyListeners();
+    } else {
+      throw jsonDecode(x.body)["message"];
     }
   }
 }

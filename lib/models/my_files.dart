@@ -1,4 +1,3 @@
-import 'package:admin/screens/hotel/hotel_page.dart';
 import 'package:admin/screens/reseller/reseller_page.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/trap/add_trap.dart';
@@ -39,14 +38,14 @@ List demoMyFiles = [
       isEdidt: false,
     ),
   ),
-  CloudStorageInfo(
-    title: "عدد الفنادق",
-    numOfFiles: 1328,
-    svgSrc: "assets/icons/menu_store.svg",
-    totalStorage: "فندق",
-    color: Color(0xFFA4CDFF),
-    widget: HotelPage(),
-  ),
+  // CloudStorageInfo(
+  //   title: "عدد الفنادق",
+  //   numOfFiles: 1328,
+  //   svgSrc: "assets/icons/menu_store.svg",
+  //   totalStorage: "فندق",
+  //   color: Color(0xFFA4CDFF),
+  //   widget: HotelPage(),
+  // ),
   CloudStorageInfo(
     title: "عدد الفواتير",
     numOfFiles: 5328,

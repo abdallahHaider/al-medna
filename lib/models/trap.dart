@@ -94,6 +94,9 @@ class Trap {
   String? transport;
   DateTime? createdAt;
   double? nowDebt;
+  String? note;
+  int? vip_travel;
+  double? price_vip_travel;
 
   Trap({
     this.id,
@@ -119,6 +122,9 @@ class Trap {
     this.transport,
     this.createdAt,
     this.nowDebt,
+    this.note,
+    this.vip_travel,
+    this.price_vip_travel,
   });
 
   factory Trap.fromJson(Map<String, dynamic> json) => Trap(
@@ -159,6 +165,11 @@ class Trap {
             : DateTime.parse(json["created_at"]),
         nowDebt: double.parse(json["now_debt"].toString()),
         type: json["type"],
+        note: json["note"].toString(),
+        vip_travel: json["vip_travel"],
+        price_vip_travel: json["price_vip_travel"] == null
+            ? null
+            : double.parse(json["price_vip_travel"].toString()),
       );
 
   Map<String, dynamic> toJson() => {

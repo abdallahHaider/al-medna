@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../dashboard/dashboard_screen.dart';
-import '../../hotel/hotel_page.dart';
 import '../../reseller/reseller_page.dart';
 import '../../trap/trap_page.dart';
 
@@ -69,14 +68,14 @@ class SideMenu extends StatelessWidget {
                   .getWidet(TrapPayPage());
             },
           ),
-          DrawerListTile(
-            title: "الفنادق",
-            svgSrc: "assets/icons/menu_store.svg",
-            press: () {
-              Provider.of<Rootwidget>(context, listen: false)
-                  .getWidet(HotelPage());
-            },
-          ),
+          // DrawerListTile(
+          //   title: "الفنادق",
+          //   svgSrc: "assets/icons/menu_store.svg",
+          //   press: () {
+          //     Provider.of<Rootwidget>(context, listen: false)
+          //         .getWidet(HotelPage());
+          //   },
+          // ),
           DrawerListTile(
             title: "الخزنة",
             svgSrc: "assets/icons/menu_store.svg",

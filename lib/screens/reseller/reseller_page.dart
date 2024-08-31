@@ -1,7 +1,7 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/reseller/reseller_profiel.dart';
-import 'package:admin/screens/widgets/snakbar.dart';
+import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,7 @@ class ResellerPage extends StatelessWidget {
   final nameController = TextEditingController();
   final adressController = TextEditingController();
   final phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -150,61 +151,68 @@ class ResellerPage extends StatelessWidget {
                       color: secondaryColor,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Header(
-                          title: 'اضافة وكيل',
-                        ),
-                        SizedBox(height: defaultPadding),
-                        TextFormField(
-                          controller: nameController,
-                          decoration: InputDecoration(
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Header(
+                            title: 'اضافة وكيل',
+                          ),
+                          SizedBox(height: defaultPadding),
+                          MyTextField(
+                            controller: nameController,
                             labelText: 'اسم الوكيل',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        SizedBox(height: defaultPadding),
-                        TextFormField(
-                          controller: phoneController,
-                          decoration: InputDecoration(
-                            labelText: 'رقم الهاتف',
-                            border: OutlineInputBorder(),
-                          ),
-                          keyboardType: TextInputType.phone,
-                        ),
-                        SizedBox(height: defaultPadding),
-                        TextFormField(
-                          controller: adressController,
-                          decoration: InputDecoration(
-                            labelText: 'العنوان',
-                            border: OutlineInputBorder(),
-                          ),
-                        ),
-                        SizedBox(height: defaultPadding),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              if (nameController.text.isEmpty ||
-                                  phoneController.text.isEmpty ||
-                                  adressController.text.isEmpty) {
-                                snackBar(
-                                    context, 'الرجاء ملئ جميع الحقول', true);
-                              } else {
-                                await Provider.of<ResellerController>(context,
-                                        listen: false)
-                                    .addReseller(
-                                        nameController.text.toString(),
-                                        phoneController.text.toString(),
-                                        adressController.text.toString(),
-                                        context);
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'برجاء ادخال اسم الوكيل';
                               }
+                              return null;
                             },
-                            child: Text('اضافة'),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: defaultPadding),
+                          MyTextField(
+                            controller: phoneController,
+                            labelText: 'رقم الهاتف',
+                            keyboardType: TextInputType.phone,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'يرجى ادخال رقم الهاتف';
+                              } else if (value.length < 10 ||
+                                  value.length > 11 ||
+                                  !RegExp(r'^\d{11}$').hasMatch(value)) {
+                                return 'يرجى ادخال رقم هاتف صحيح';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: defaultPadding),
+                          MyTextField(
+                            controller: adressController,
+                            labelText: 'العنوان',
+                            validator: (value) =>
+                                value!.isEmpty ? 'ادخل العنوان' : null,
+                          ),
+                          SizedBox(height: defaultPadding),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  await Provider.of<ResellerController>(context,
+                                          listen: false)
+                                      .addReseller(
+                                          nameController.text.toString(),
+                                          phoneController.text.toString(),
+                                          adressController.text.toString(),
+                                          context);
+                                }
+                              },
+                              child: Text('اضافة'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

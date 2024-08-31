@@ -3,6 +3,7 @@ import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/trap_controller%20.dart';
 import 'package:admin/screens/trap/trap_page.dart';
+import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,8 @@ class AddTrapPage extends StatefulWidget {
     this.infantsCount,
     this.infantsPrice,
     this.notesController,
+    this.vipController,
+    this.priceVipController,
     required this.isEdidt,
     this.trapId,
   });
@@ -48,6 +51,8 @@ class AddTrapPage extends StatefulWidget {
   final String? infantsCount;
   final String? infantsPrice;
   final String? notesController;
+  final String? vipController;
+  final String? priceVipController;
 
   @override
   State<AddTrapPage> createState() => _AddTrapPageState();
@@ -71,12 +76,16 @@ class _AddTrapPageState extends State<AddTrapPage> {
   final infantsPrice = TextEditingController();
   final notesController = TextEditingController();
   final hotelController = TextEditingController();
+  final vipController = TextEditingController();
+  final priceVipController = TextEditingController();
 
   String resslrid = "";
   String trapid = "";
   String transportsid = "";
   int remainingTravelers = 0;
   double totalCost = 0;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -95,6 +104,9 @@ class _AddTrapPageState extends State<AddTrapPage> {
     infantsCount.text = widget.infantsCount ?? "";
     infantsPrice.text = widget.infantsPrice ?? "";
     notesController.text = widget.notesController ?? "";
+    vipController.text = widget.vipController ?? "";
+    priceVipController.text = widget.priceVipController ?? "";
+    _calculateTotalCost();
     super.initState();
   }
 
@@ -117,13 +129,16 @@ class _AddTrapPageState extends State<AddTrapPage> {
         (double.tryParse(childrenPrice.text) ?? 0);
     final double infantsCost = (int.tryParse(infantsCount.text) ?? 0) *
         (double.tryParse(infantsPrice.text) ?? 0);
+    final double vip = (int.tryParse(vipController.text) ?? 0) *
+        (double.tryParse(priceVipController.text) ?? 0);
 
     setState(() {
       totalCost = doubleRoomCost +
           tripleRoomCost +
           quadrupleRoomCost +
           childrenCost +
-          infantsCost;
+          infantsCost +
+          vip;
 
       int totalTravelers = int.tryParse(quantity.text) ?? 0;
       int travelersInDoubleRooms = (int.tryParse(doubleRoomCount.text) ?? 0);
@@ -132,14 +147,15 @@ class _AddTrapPageState extends State<AddTrapPage> {
           (int.tryParse(quadrupleRoomCount.text) ?? 0);
       int totalChildren = int.tryParse(childrenCount.text) ?? 0;
       int totalInfants = int.tryParse(infantsCount.text) ?? 0;
+      int totalvip = int.tryParse(vipController.text) ?? 0;
 
       remainingTravelers = totalTravelers -
           (travelersInDoubleRooms +
               travelersInTripleRooms +
               travelersInQuadrupleRooms +
               totalChildren +
-              totalInfants);
-      // remainingTravelers = remainingTravelers < 0 ? 0 : remainingTravelers;
+              totalInfants +
+              totalvip);
     });
   }
 
@@ -148,23 +164,26 @@ class _AddTrapPageState extends State<AddTrapPage> {
     return Padding(
       padding: const EdgeInsets.all(defaultPadding),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Header(title: 'اضافة رحلة'),
-            SizedBox(height: defaultPadding),
-            _buildDropdowns(),
-            SizedBox(height: defaultPadding),
-            _buildTravelersField(),
-            SizedBox(height: defaultPadding),
-            _buildRoomTable(),
-            SizedBox(height: defaultPadding),
-            _buildFinancials(),
-            SizedBox(height: defaultPadding),
-            _buildNotesField(),
-            SizedBox(height: defaultPadding),
-            _buildActionButtons(context),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Header(title: 'اضافة رحلة'),
+              SizedBox(height: defaultPadding),
+              _buildDropdowns(),
+              SizedBox(height: defaultPadding),
+              _buildTravelersField(),
+              SizedBox(height: defaultPadding),
+              _buildRoomTable(),
+              SizedBox(height: defaultPadding),
+              _buildFinancials(),
+              SizedBox(height: defaultPadding),
+              _buildNotesField(),
+              SizedBox(height: defaultPadding),
+              _buildActionButtons(context),
+            ],
+          ),
         ),
       ),
     );
@@ -196,38 +215,13 @@ class _AddTrapPageState extends State<AddTrapPage> {
                         child: Text(companies.fullName!),
                       );
                     }).toList(),
+                    validator: (value) =>
+                        value == null ? 'يرجى اختبار الوكيل ' : null,
                   );
                 },
               ),
             ),
             SizedBox(width: defaultPadding),
-            // Expanded(
-            //   child: Consumer<HotelController>(
-            //     builder: (BuildContext context, value, Widget? child) {
-            //       return DropdownButtonFormField<dynamic>(
-            //         decoration: InputDecoration(
-            //           border: OutlineInputBorder(
-            //             borderRadius: BorderRadius.circular(10),
-            //           ),
-            //           labelText: "الفندق",
-            //         ),
-            //         onChanged: (dynamic value) {
-            //           setState(() {
-            //             trapid = value.id.toString();
-            //           });
-            //         },
-            //         items: value.hotels.map((dynamic companies) {
-            //           return DropdownMenuItem<dynamic>(
-            //             value: companies,
-            //             child: Text(companies.fullName!),
-            //           );
-            //         }).toList(),
-            //       );
-            //     },
-            //   ),
-            // ),
-            // SizedBox(
-            //     width: 200, child: _buildEditableTableCell(hotelController)),
             Expanded(
               child: TextFormField(
                 controller: hotelController,
@@ -263,6 +257,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
                         child: Text(companies.name),
                       );
                     }).toList(),
+                    validator: (value) =>
+                        value == null ? 'يرجى ادخال نوع الرحلة' : null,
                   );
                 },
               ),
@@ -341,6 +337,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
             'غرفه رباعية', quadrupleRoomPrice, quadrupleRoomCount, 4),
         _buildRoomTableRow('عدد الأطفال', childrenPrice, childrenCount, 1),
         _buildRoomTableRow('عدد الرضع', infantsPrice, infantsCount, 1),
+        _buildRoomTableRow(
+            'المسافر الخاص', priceVipController, vipController, 1),
       ],
     );
   }
@@ -361,16 +359,17 @@ class _AddTrapPageState extends State<AddTrapPage> {
     return TableRow(
       children: [
         _buildTableCell(label),
-        _buildEditableTableCell(priceController),
-        _buildEditableTableCell(countController),
+        _buildEditableTableCell(priceController, countController),
+        _buildEditableTableCell(countController, priceController),
         _buildTableCell('$roomCount $roomComment'),
         _buildTableCell(total.toStringAsFixed(2)),
       ],
     );
   }
 
-  Widget _buildEditableTableCell(TextEditingController controller) {
-    return TextField(
+  Widget _buildEditableTableCell(
+      TextEditingController controller, TextEditingController target) {
+    return MyTextField(
       controller: controller,
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -379,6 +378,12 @@ class _AddTrapPageState extends State<AddTrapPage> {
       ),
       keyboardType: TextInputType.number,
       onChanged: (value) => _calculateTotalCost(),
+      validator: (value) {
+        if (value!.isEmpty && target.text.isNotEmpty) {
+          return 'هذا الحقل مطلوب';
+        }
+        return null;
+      },
     );
   }
 
@@ -394,24 +399,22 @@ class _AddTrapPageState extends State<AddTrapPage> {
       children: [
         Row(
           children: [
-            // Expanded(
-            //   child: TextFormField(
-            //     controller: rasToUsd,
-            //     decoration: InputDecoration(
-            //       labelText: 'سعر الصرف ريال',
-            //       border: OutlineInputBorder(),
-            //     ),
-            //   ),
-            // ),
             SizedBox(width: defaultPadding),
             Expanded(
-              child: TextFormField(
-                controller: iqdToUsd,
-                decoration: InputDecoration(
-                  labelText: 'رقم العقد',
-                  border: OutlineInputBorder(),
-                ),
-              ),
+              child: MyTextField(
+                  controller: iqdToUsd,
+                  labelText: "رقم العقد",
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'يرجى ادخال رقم العقد';
+                    }
+                    final x = int.tryParse(value);
+                    if (x == null) {
+                      return ' يرجى ادخال رقم صحيح';
+                    }
+                    return null;
+                  }),
             ),
             SizedBox(width: defaultPadding),
             Expanded(
@@ -422,11 +425,6 @@ class _AddTrapPageState extends State<AddTrapPage> {
             ),
           ],
         ),
-        // SizedBox(height: defaultPadding),
-        // Text(
-        //   'السعر الكلي: $totalCost',
-        //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        // ),
       ],
     );
   }
@@ -447,11 +445,6 @@ class _AddTrapPageState extends State<AddTrapPage> {
       children: [
         TextButton(
           onPressed: () {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => TrapPage(),
-            //   ),
-            // );
             Provider.of<Rootwidget>(context, listen: false)
                 .getWidet(TrapPage());
           },
@@ -463,7 +456,9 @@ class _AddTrapPageState extends State<AddTrapPage> {
               backgroundColor: WidgetStateProperty.all(primaryColor),
               foregroundColor: WidgetStateProperty.all(Colors.white)),
           onPressed: () {
-            _saveTrapDetails();
+            if (_formKey.currentState!.validate()) {
+              _saveTrapDetails();
+            }
           },
           child: Text('حفظ'),
         ),
@@ -504,6 +499,10 @@ class _AddTrapPageState extends State<AddTrapPage> {
         if (infantsCount.text.isNotEmpty) "very_child": infantsCount.text,
         if (childrenPrice.text.isNotEmpty) "price_child": childrenPrice.text,
         if (infantsPrice.text.isNotEmpty) "price_very_child": infantsPrice.text,
+        if (infantsPrice.text.isNotEmpty) "note": notesController.text,
+        if (infantsPrice.text.isNotEmpty) "vip_travel": vipController.text,
+        if (infantsPrice.text.isNotEmpty)
+          "price_vip_travel": priceVipController.text,
       };
     } else {
       trapDetails = {
@@ -533,11 +532,13 @@ class _AddTrapPageState extends State<AddTrapPage> {
         "price_child": childrenPrice.text,
         "price_very_child": infantsPrice.text,
         "number_trap": iqdToUsd.text,
+        "note": notesController.text,
+        "vip_travel": vipController.text,
+        "price_vip_travel": priceVipController.text,
       };
     }
 
     try {
-      // Assuming you have a method in your TrapController to handle saving
       if (widget.isEdidt) {
         await Provider.of<TrapController>(context, listen: false)
             .updateTrap(trapDetails);
@@ -545,21 +546,10 @@ class _AddTrapPageState extends State<AddTrapPage> {
         await Provider.of<TrapController>(context, listen: false)
             .addtrap(trapDetails);
       }
-
-      // // Show a success snackbar
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text()),
-      // );
       snackBar(context, 'تم حفظ التفاصيل بنجاح', false);
       Provider.of<Rootwidget>(context, listen: false).getWidet(TrapPage());
     } catch (e) {
-      // print(e);
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(content: Text(e.toString())),
-      // );
       snackBar(context, e.toString(), true);
     }
-
-    // Optionally, navigate back or clear the form
   }
 }
