@@ -33,10 +33,10 @@ class ResellerDbet {
   factory ResellerDbet.fromJson(Map<String, dynamic> json) => ResellerDbet(
         countTrap: json["count_trap"],
         countPays: json["count_pays"],
-        totalCostUsd: json["total_cost_USD"],
+        totalCostUsd: double.parse(json["total_cost_USD"].toString()),
         // totalCostIqd: double.parse(json["total_cost_IQD"].toString()),
         // totalCostRas: json["total_cost_RAS"],
-        totalCostUsdPays: json["total_cost_USD_pays"],
+        totalCostUsdPays: double.parse(json["total_cost_USD_pays"].toString()),
         // totalCostIqdPays: json["total_cost_IQD_pays"] as double,
         // totalCostRasPays: json["total_cost_RAS_pays"],
       );
