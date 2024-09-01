@@ -1,3 +1,4 @@
+import 'package:admin/controllers/accounts_controller.dart';
 import 'package:admin/controllers/action_controller.dart';
 import 'package:admin/controllers/general_information.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
@@ -50,7 +51,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => WalletProvider()..getWallet(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AccountsController(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: true,

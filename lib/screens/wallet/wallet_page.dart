@@ -102,6 +102,7 @@ class _WalletPageState extends State<WalletPage> {
                             return const Center(
                                 child: CircularProgressIndicator());
                           } else if (controller.isError) {
+                            // print(s)
                             return Center(child: MyErrorWidget());
                           } else {
                             return walletTable(controller, context);
