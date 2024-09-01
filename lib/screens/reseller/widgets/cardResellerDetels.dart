@@ -41,11 +41,11 @@ Card cardResellerDetels(Reseller resellerID) {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "مجموع الطلب: ${ref.resellerDbet.totalCostUsd}",
+                        "مجموع الطلب: ${ref.resellerDbet.totalCostUsd!.toStringAsFixed(2)}",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                       Text(
-                        "مجموع التسديدات: ${ref.resellerDbet.totalCostUsdPays}",
+                        "مجموع التسديدات: ${ref.resellerDbet.totalCostUsdPays!.toStringAsFixed(2)}",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                       Text(
@@ -53,7 +53,7 @@ Card cardResellerDetels(Reseller resellerID) {
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                       Text(
-                        "مجموع المتبقي: ${(ref.resellerDbet.totalCostUsdPays ?? 0) - (ref.resellerDbet.totalCostUsd ?? 0)}",
+                        "مجموع المتبقي: ${((ref.resellerDbet.totalCostUsdPays ?? 0) - (ref.resellerDbet.totalCostUsd ?? 0)).toStringAsFixed(2)}",
                         style: TextStyle(
                           color: Colors.red,
                           fontSize: 18,

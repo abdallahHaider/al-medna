@@ -12,12 +12,12 @@ String resellerDbetToJson(ResellerDbet data) => json.encode(data.toJson());
 class ResellerDbet {
   int? countTrap;
   int? countPays;
-  int? totalCostUsd;
-  int? totalCostIqd;
-  int? totalCostRas;
-  int? totalCostUsdPays;
-  int? totalCostIqdPays;
-  int? totalCostRasPays;
+  double? totalCostUsd;
+  double? totalCostIqd;
+  double? totalCostRas;
+  double? totalCostUsdPays;
+  double? totalCostIqdPays;
+  double? totalCostRasPays;
 
   ResellerDbet({
     this.countTrap,
@@ -34,11 +34,11 @@ class ResellerDbet {
         countTrap: json["count_trap"],
         countPays: json["count_pays"],
         totalCostUsd: json["total_cost_USD"],
-        totalCostIqd: json["total_cost_IQD"],
-        totalCostRas: json["total_cost_RAS"],
+        // totalCostIqd: double.parse(json["total_cost_IQD"].toString()),
+        // totalCostRas: json["total_cost_RAS"],
         totalCostUsdPays: json["total_cost_USD_pays"],
-        totalCostIqdPays: json["total_cost_IQD_pays"],
-        totalCostRasPays: json["total_cost_RAS_pays"],
+        // totalCostIqdPays: json["total_cost_IQD_pays"] as double,
+        // totalCostRasPays: json["total_cost_RAS_pays"],
       );
 
   Map<String, dynamic> toJson() => {

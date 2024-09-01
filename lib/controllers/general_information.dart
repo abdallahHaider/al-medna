@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/my_files.dart';
-import 'package:admin/screens/hotel/hotel_page.dart';
 import 'package:admin/screens/reseller/reseller_page.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/trap/add_trap.dart';
@@ -35,15 +34,15 @@ class GeneralInformationController extends ChangeNotifier {
           widget: AddTrapPage(
             isEdidt: false,
           )));
-      actions.add(
-        CloudStorageInfo(
-            title: 'عدد الفنادق',
-            totalStorage: 'فندق',
-            numOfFiles: data['hotels'],
-            svgSrc: 'assets/icons/menu_store.svg',
-            color: Color.fromARGB(255, 87, 162, 215),
-            widget: HotelPage()),
-      );
+      // actions.add(
+      //   CloudStorageInfo(
+      //       title: 'عدد الفنادق',
+      //       totalStorage: 'فندق',
+      //       numOfFiles: data['hotels'],
+      //       svgSrc: 'assets/icons/menu_store.svg',
+      //       color: Color.fromARGB(255, 87, 162, 215),
+      //       widget: HotelPage()),
+      // );
       actions.add(CloudStorageInfo(
           svgSrc: 'assets/icons/menu_doc.svg',
           title: 'عدد الفواتير',

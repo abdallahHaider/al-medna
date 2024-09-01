@@ -1,4 +1,6 @@
+import 'package:admin/controllers/wallet_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../utl/constants.dart';
 
@@ -10,59 +12,67 @@ class StorageDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      // padding: EdgeInsets.all(defaultPadding),
-      // decoration: BoxDecoration(
-      //   color: secondaryColor,
-      //   borderRadius: const BorderRadius.all(Radius.circular(10)),
-      // ),
       elevation: 5,
       color: secondaryColor,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // TextButton(
-          //     onPressed: () {
-          //       snackBar(context, "msg");
-          //     },
-          //     child: Text("fddddddddddd")),
-          SizedBox(
-            height: 400,
-          )
-
-          // Text(
-          //   "Storage Details",
-          //   style: TextStyle(
-          //     fontSize: 18,
-          //     fontWeight: FontWeight.w500,
-          //   ),
-          // ),
-          // SizedBox(height: defaultPadding),
-          // Chart(),
-          // StorageInfoCard(
-          //   svgSrc: "assets/icons/Documents.svg",
-          //   title: "Documents Files",
-          //   amountOfFiles: "1.3GB",
-          //   numOfFiles: 1328,
-          // ),
-          // StorageInfoCard(
-          //   svgSrc: "assets/icons/media.svg",
-          //   title: "Media Files",
-          //   amountOfFiles: "15.3GB",
-          //   numOfFiles: 1328,
-          // ),
-          // StorageInfoCard(
-          //   svgSrc: "assets/icons/folder.svg",
-          //   title: "Other Files",
-          //   amountOfFiles: "1.3GB",
-          //   numOfFiles: 1328,
-          // ),
-          // StorageInfoCard(
-          //   svgSrc: "assets/icons/unknown.svg",
-          //   title: "Unknown",
-          //   amountOfFiles: "1.3GB",
-          //   numOfFiles: 140,
-          // ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.account_balance,
+              size: 100,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            Text(
+              'الرصيد بالدينار',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.money),
+                Consumer<WalletProvider>(
+                  builder: (context, storage, child) {
+                    return Text(
+                      '${storage.wallet_IQD}',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            Text(
+              'الرصيد بالدولار',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.attach_money),
+                Consumer<WalletProvider>(
+                  builder: (context, storage, child) {
+                    return Text(
+                      '${storage.wallet_USD}',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

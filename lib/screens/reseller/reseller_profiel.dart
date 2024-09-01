@@ -1,5 +1,6 @@
 import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/models/reseller.dart';
+import 'package:admin/models/reseller_dbet.dart';
 import 'package:admin/pdf/reseller_Pdf.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/reseller/widgets/cardResellerDetels.dart';
@@ -10,13 +11,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ResellerProfiel extends StatelessWidget {
+class ResellerProfiel extends StatefulWidget {
   const ResellerProfiel({super.key, required this.resellerID});
   final Reseller resellerID;
+
+  @override
+  State<ResellerProfiel> createState() => _ResellerProfielState();
+}
+
+class _ResellerProfielState extends State<ResellerProfiel> {
+  @override
+  void initState() {
+    Provider.of<ResellerController>(context, listen: false).resellerDbet =
+        ResellerDbet(
+      countPays: 0,
+      countTrap: 0,
+      totalCostUsd: 0,
+      totalCostUsdPays: 0,
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<ResellerController>(context, listen: false)
-        .getResellerinfodebt(resellerID.id.toString());
+        .getResellerinfodebt(widget.resellerID.id.toString());
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -28,7 +47,7 @@ class ResellerProfiel extends StatelessWidget {
               SizedBox(
                 height: defaultPadding,
               ),
-              cardResellerDetels(resellerID),
+              cardResellerDetels(widget.resellerID),
               Row(
                 children: [
                   Expanded(
@@ -47,8 +66,9 @@ class ResellerProfiel extends StatelessWidget {
                         List traps = await Provider.of<ResellerController>(
                                 context,
                                 listen: false)
-                            .getResellerinfo(resellerID.id.toString());
-                        await ResellerToPdf(resellerID, globlDebt, traps);
+                            .getResellerinfo(widget.resellerID.id.toString());
+                        await ResellerToPdf(
+                            widget.resellerID, globlDebt, traps);
                       } catch (e) {
                         snackBar(context, e.toString(), true);
                       } finally {
@@ -65,7 +85,7 @@ class ResellerProfiel extends StatelessWidget {
                   FutureBuilder(
                       future: Provider.of<ResellerController>(context,
                               listen: false)
-                          .getResellerinfo(resellerID.id.toString()),
+                          .getResellerinfo(widget.resellerID.id.toString()),
                       // future: resellerProvider
                       //     .getResellerinfo(resellerID.id.toString()),
                       builder: (context, snapshot) {
@@ -80,7 +100,7 @@ class ResellerProfiel extends StatelessWidget {
                   FutureBuilder(
                       future: Provider.of<ResellerController>(context,
                               listen: false)
-                          .getDbetPayinfo(resellerID.id.toString()),
+                          .getDbetPayinfo(widget.resellerID.id.toString()),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
                           return Text(snapshot.error.toString());

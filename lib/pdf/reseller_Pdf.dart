@@ -120,12 +120,13 @@ Future<void> ResellerToPdf(
                   children: [
                     pw.Padding(
                       padding: pw.EdgeInsets.symmetric(horizontal: 5),
-                      child: pw.Text(traps[index].nowDebt.toString(),
+                      child: pw.Text(traps[index].nowDebt.toStringAsFixed(2),
                           textDirection: pw.TextDirection.rtl),
                     ),
                     pw.Padding(
                       padding: pw.EdgeInsets.symmetric(horizontal: 5),
-                      child: pw.Text(ispay ? traps[index].price.toString() : "",
+                      child: pw.Text(
+                          ispay ? traps[index].price.toStringAsFixed(2) : "",
                           textDirection: pw.TextDirection.rtl),
                     ),
                     pw.Padding(
@@ -135,7 +136,8 @@ Future<void> ResellerToPdf(
                     ),
                     pw.Padding(
                       padding: pw.EdgeInsets.symmetric(horizontal: 5),
-                      child: pw.Text(ispay ? "" : traps[index].price.toString(),
+                      child: pw.Text(
+                          ispay ? "" : traps[index].price.toStringAsFixed(2),
                           textDirection: pw.TextDirection.rtl),
                     ),
                     pw.Padding(
@@ -180,7 +182,7 @@ Future<void> ResellerToPdf(
                     padding:
                         pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     child: pw.Text(
-                        "${(dbet.totalCostUsdPays ?? 0) - (dbet.totalCostUsd ?? 0)}",
+                        "${((dbet.totalCostUsdPays ?? 0) - (dbet.totalCostUsd ?? 0)).toStringAsFixed(2)}",
                         style: pw.TextStyle(fontSize: 20),
                         textDirection: pw.TextDirection.rtl),
                   ),
@@ -195,7 +197,8 @@ Future<void> ResellerToPdf(
                   pw.Container(
                     padding:
                         pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: pw.Text("${dbet.totalCostUsdPays}",
+                    child: pw.Text(
+                        "${dbet.totalCostUsdPays!.toStringAsFixed(2)}",
                         style: pw.TextStyle(fontSize: 20),
                         textDirection: pw.TextDirection.rtl),
                   ),
@@ -210,7 +213,7 @@ Future<void> ResellerToPdf(
                   pw.Container(
                     padding:
                         pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: pw.Text("-${dbet.totalCostUsd}",
+                    child: pw.Text("-${dbet.totalCostUsd!.toStringAsFixed(2)}",
                         style: pw.TextStyle(fontSize: 20),
                         textDirection: pw.TextDirection.rtl),
                   ),

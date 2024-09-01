@@ -56,7 +56,7 @@ class _TrapTableResellerState extends State<TrapTableReseller> {
                 cells: [
                   DataCell(Text("${ispay ? trap.id ?? '' : ""}")),
                   DataCell(Text("${!ispay ? trap.id ?? '' : ""}")),
-                  DataCell(Text('${trap.price ?? 0}')),
+                  DataCell(Text('${trap.price.toStringAsFixed(2) ?? 0}')),
                   // DataCell(Text('${trap.iqdToUsd ?? 0}')),
                   DataCell(Text(ispay ? "" : trap.hotelId ?? '')),
                   DataCell(Text('${ispay ? "" : trap.duration ?? 0}')),
@@ -74,7 +74,7 @@ class _TrapTableResellerState extends State<TrapTableReseller> {
                       : trap.transport == 'fly'
                           ? 'جوي'
                           : 'بري')),
-                  DataCell(Text('${trap.nowDebt ?? 0}')),
+                  DataCell(Text('${trap.nowDebt.toStringAsFixed(2) ?? 0}')),
                   DataCell(
                       Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
                   DataCell(

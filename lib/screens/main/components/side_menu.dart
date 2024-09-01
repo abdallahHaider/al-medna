@@ -1,4 +1,6 @@
 import 'package:admin/controllers/rootWidget.dart';
+import 'package:admin/screens/accounts/accounts_page.dart';
+import 'package:admin/screens/bank/bank.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/wallet/wallet_page.dart';
 import 'package:flutter/material.dart';
@@ -68,20 +70,28 @@ class SideMenu extends StatelessWidget {
                   .getWidet(TrapPayPage());
             },
           ),
-          // DrawerListTile(
-          //   title: "الفنادق",
-          //   svgSrc: "assets/icons/menu_store.svg",
-          //   press: () {
-          //     Provider.of<Rootwidget>(context, listen: false)
-          //         .getWidet(HotelPage());
-          //   },
-          // ),
           DrawerListTile(
             title: "الخزنة",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(WalletPage());
+            },
+          ),
+          DrawerListTile(
+            title: "البنك",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(BankPage());
+            },
+          ),
+          DrawerListTile(
+            title: "حسابات البنوك والمصارف",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(AccountsPage());
             },
           ),
         ],
