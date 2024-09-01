@@ -26,7 +26,7 @@ class WalletProvider extends ChangeNotifier {
 
   Future<void> getWallet() async {
     isLoading = true;
-    notifyListeners();
+    // notifyListeners();
     try {
       var x = await getpi("/api/safe_doc/index?page=$page");
       print(x.body);
