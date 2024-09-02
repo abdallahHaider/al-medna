@@ -18,132 +18,22 @@ class ResellerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Header(
-              title: 'الوكلاء',
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 2,
-                child: Container(
-                  padding: EdgeInsets.all(defaultPadding),
-                  margin: EdgeInsets.all(defaultPadding),
-                  decoration: BoxDecoration(
-                    color: secondaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  ),
-                  child: FutureBuilder(
-                      future: Provider.of<ResellerController>(context,
-                              listen: false)
-                          .fetchData(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return MyErrorWidget();
-                        } else if (snapshot.hasData) {
-                          return DataTable(
-                            columnSpacing: defaultPadding,
-                            columns: [
-                              DataColumn(
-                                label: Text('التسلسل'),
-                              ),
-                              DataColumn(
-                                label: Text("اسم الوكيل"),
-                              ),
-                              DataColumn(
-                                label: Text("رقم الهاتف"),
-                              ),
-                              DataColumn(
-                                label: Text("العنوان"),
-                              ),
-                              DataColumn(
-                                label: Text("الاجراء"),
-                              ),
-                            ],
-                            rows: List.generate(
-                                snapshot.data!.length,
-                                (index) => DataRow(cells: [
-                                      DataCell(
-                                        Text(
-                                          (index + 1).toString(),
-                                        ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          snapshot.data![index].fullName
-                                              .toString(),
-                                        ),
-                                        onTap: () => Provider.of<Rootwidget>(
-                                                context,
-                                                listen: false)
-                                            .getWidet(ResellerProfiel(
-                                                resellerID:
-                                                    snapshot.data![index])),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          snapshot.data![index].phoneNumber
-                                              .toString(),
-                                        ),
-                                      ),
-                                      DataCell(
-                                        Text(
-                                          snapshot.data![index].address
-                                              .toString(),
-                                        ),
-                                      ),
-                                      DataCell(
-                                        InkWell(
-                                          hoverColor: Colors.transparent,
-                                          onTap: () {
-                                            dletedReseller(
-                                                context, snapshot, index);
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 10),
-                                            child: Container(
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 3.5),
-                                                child: Text(
-                                                  "حذف الوكيل",
-                                                  style: TextStyle(
-                                                      fontSize: 10,
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                              decoration: BoxDecoration(
-                                                  color: Colors.red,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          30)),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ])),
-                          );
-                        } else {
-                          return Center(child: Text('لا يوجد وكلاء بعد'));
-                        }
-                      }),
-                ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Header(
+                title: 'الوكلاء',
               ),
-              if (!Responsive.isMobile(context))
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
                 Expanded(
+                  flex: 2,
                   child: Container(
                     padding: EdgeInsets.all(defaultPadding),
                     margin: EdgeInsets.all(defaultPadding),
@@ -151,74 +41,188 @@ class ResellerPage extends StatelessWidget {
                       color: secondaryColor,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Header(
-                            title: 'اضافة وكيل',
-                          ),
-                          SizedBox(height: defaultPadding),
-                          MyTextField(
-                            controller: nameController,
-                            labelText: 'اسم الوكيل',
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'برجاء ادخال اسم الوكيل';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: defaultPadding),
-                          MyTextField(
-                            controller: phoneController,
-                            labelText: 'رقم الهاتف',
-                            keyboardType: TextInputType.phone,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'يرجى ادخال رقم الهاتف';
-                              } else if (value.length < 10 ||
-                                  value.length > 11 ||
-                                  !RegExp(r'^\d{11}$').hasMatch(value)) {
-                                return 'يرجى ادخال رقم هاتف صحيح';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: defaultPadding),
-                          MyTextField(
-                            controller: adressController,
-                            labelText: 'العنوان',
-                            validator: (value) =>
-                                value!.isEmpty ? 'ادخل العنوان' : null,
-                          ),
-                          SizedBox(height: defaultPadding),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  await Provider.of<ResellerController>(context,
-                                          listen: false)
-                                      .addReseller(
-                                          nameController.text.toString(),
-                                          phoneController.text.toString(),
-                                          adressController.text.toString(),
-                                          context);
-                                }
-                              },
-                              child: Text('اضافة'),
+                    child: FutureBuilder(
+                        future: Provider.of<ResellerController>(context,
+                                listen: false)
+                            .fetchData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return MyErrorWidget();
+                          } else if (snapshot.hasData) {
+                            return DataTable(
+                              columnSpacing: defaultPadding,
+                              columns: [
+                                DataColumn(
+                                  label: Text('التسلسل'),
+                                ),
+                                DataColumn(
+                                  label: Text("اسم الوكيل"),
+                                ),
+                                DataColumn(
+                                  label: Text("رقم الهاتف"),
+                                ),
+                                DataColumn(
+                                  label: Text("العنوان"),
+                                ),
+                                DataColumn(
+                                  label: Text("الاجراء"),
+                                ),
+                              ],
+                              rows: List.generate(
+                                  snapshot.data!.length,
+                                  (index) => DataRow(cells: [
+                                        DataCell(
+                                          Text(
+                                            (index + 1).toString(),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].fullName
+                                                .toString(),
+                                          ),
+                                          onTap: () => Provider.of<Rootwidget>(
+                                                  context,
+                                                  listen: false)
+                                              .getWidet(ResellerProfiel(
+                                                  resellerID:
+                                                      snapshot.data![index])),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].phoneNumber
+                                                .toString(),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].address
+                                                .toString(),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          InkWell(
+                                            hoverColor: Colors.transparent,
+                                            onTap: () {
+                                              dletedReseller(
+                                                  context, snapshot, index);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 10),
+                                              child: Container(
+                                                child: Padding(
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 15,
+                                                      vertical: 3.5),
+                                                  child: Text(
+                                                    "حذف الوكيل",
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                                decoration: BoxDecoration(
+                                                    color: Colors.red,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            30)),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ])),
+                            );
+                          } else {
+                            return Center(child: Text('لا يوجد وكلاء بعد'));
+                          }
+                        }),
+                  ),
+                ),
+                if (!Responsive.isMobile(context))
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.all(defaultPadding),
+                      margin: EdgeInsets.all(defaultPadding),
+                      decoration: BoxDecoration(
+                        color: secondaryColor,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Header(
+                              title: 'اضافة وكيل',
                             ),
-                          ),
-                        ],
+                            SizedBox(height: defaultPadding),
+                            MyTextField(
+                              controller: nameController,
+                              labelText: 'اسم الوكيل',
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'برجاء ادخال اسم الوكيل';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: defaultPadding),
+                            MyTextField(
+                              controller: phoneController,
+                              labelText: 'رقم الهاتف',
+                              keyboardType: TextInputType.phone,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'يرجى ادخال رقم الهاتف';
+                                } else if (value.length < 10 ||
+                                    value.length > 11 ||
+                                    !RegExp(r'^\d{11}$').hasMatch(value)) {
+                                  return 'يرجى ادخال رقم هاتف صحيح';
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: defaultPadding),
+                            MyTextField(
+                              controller: adressController,
+                              labelText: 'العنوان',
+                              validator: (value) =>
+                                  value!.isEmpty ? 'ادخل العنوان' : null,
+                            ),
+                            SizedBox(height: defaultPadding),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    await Provider.of<ResellerController>(
+                                            context,
+                                            listen: false)
+                                        .addReseller(
+                                            nameController.text.toString(),
+                                            phoneController.text.toString(),
+                                            adressController.text.toString(),
+                                            context);
+                                  }
+                                },
+                                child: Text('اضافة'),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

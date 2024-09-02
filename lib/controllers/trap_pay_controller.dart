@@ -65,8 +65,6 @@ class TrapPayController extends ChangeNotifier {
         "IQD_to_USD": IQD_to_USD,
         "RAS_to_USD": "0"
       });
-
-      print(x.body);
     } catch (e) {
       print(e);
       snackBar(context, e.toString(), true);
@@ -97,7 +95,6 @@ class TrapPayController extends ChangeNotifier {
     } finally {
       SmartDialog.dismiss();
     }
-    print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
       notifyListeners();
       Navigator.pop(context);
@@ -107,8 +104,6 @@ class TrapPayController extends ChangeNotifier {
   }
 
   Future updatePay(String id, cost) async {
-    print("11111111111111111111111111111111111");
-    print(id);
     http.Response x;
     try {
       x = await postApi("/api/trap_pay/update", {

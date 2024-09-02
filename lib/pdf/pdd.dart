@@ -52,13 +52,12 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 250,
             bottom: 100 + size,
-            child: pw.Text((totleCost).toString(),
+            child: pw.Text((totleCost + cost).toString(),
                 textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 340,
             bottom: 100 + size,
-            child: pw.Text((totleCost - cost).toString(),
-                textDirection: pw.TextDirection.rtl)),
+            child: pw.Text("-$totleCost", textDirection: pw.TextDirection.rtl)),
         ///////////////////
         pw.Positioned(
             right: 70,
@@ -85,25 +84,24 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 250,
             bottom: 100,
-            child: pw.Text((totleCost).toString(),
+            child: pw.Text((totleCost + cost).toString(),
                 textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 340,
             bottom: 100,
-            child: pw.Text((totleCost - cost).toString(),
-                textDirection: pw.TextDirection.rtl)),
+            child: pw.Text("-$totleCost", textDirection: pw.TextDirection.rtl)),
       ])),
     ),
   );
 
   // // حفظ ملف PDF على الويب
   // final bytes = await pdf.save();
-  // final blob = html.Blob([bytes], 'application/pdf');
-  // final url = html.Url.createObjectUrlFromBlob(blob);
-  // final anchor = html.AnchorElement(href: url)
+  // final blob = Blob([bytes], 'application/pdf');
+  // final url = Url.createObjectUrlFromBlob(blob);
+  // final anchor = AnchorElement(href: url)
   //   ..setAttribute("download", "example.pdf")
   //   ..click();
-  // html.Url.revokeObjectUrl(url);
+  // Url.revokeObjectUrl(url);
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();

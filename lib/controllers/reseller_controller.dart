@@ -104,7 +104,6 @@ class ResellerController extends ChangeNotifier {
     try {
       var x = await getpi("/api/trap/index?reseller_id=$id");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
 
       final List Traps =
           data["data"]["data"].map((json) => Trap.fromJson(json)).toList();
@@ -133,7 +132,6 @@ class ResellerController extends ChangeNotifier {
     try {
       var x = await getpi("/api/trap_pay/index?reseller_id=$id");
       var data = jsonDecode(x.body);
-      print(jsonDecode(x.body));
       totlCost = data["total_cost_USD_pays"];
       final List Traps =
           data["data"].map((json) => TrapPay.fromJson(json)).toList();

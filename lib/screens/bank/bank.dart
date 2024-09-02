@@ -1,4 +1,5 @@
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/widgets/action_bank_card.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +21,12 @@ class _BankPageState extends State<BankPage> {
             child: Header(title: "البنك"),
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Expanded(
                 flex: 2,
-                child: Container(
+                child: Card(
                     color: Colors.white,
                     child: DataTable(
                       columns: [
@@ -51,7 +54,7 @@ class _BankPageState extends State<BankPage> {
               ),
               Expanded(
                 flex: 1,
-                child: Container(color: Colors.white, child: SizedBox()),
+                child: ActionBankCard(),
               ),
             ],
           ),

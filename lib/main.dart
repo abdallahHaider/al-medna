@@ -1,7 +1,9 @@
 import 'package:admin/controllers/accounts_controller.dart';
+import 'package:admin/controllers/action_bank_controller.dart';
 import 'package:admin/controllers/action_controller.dart';
 import 'package:admin/controllers/general_information.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
+import 'package:admin/controllers/transactions.dart';
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/screens/main/main_screen.dart';
@@ -54,6 +56,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AccountsController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ActionBankController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TransactionsController(),
         ),
       ],
       child: MaterialApp(

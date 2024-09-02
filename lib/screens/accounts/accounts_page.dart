@@ -1,4 +1,6 @@
 import 'package:admin/controllers/accounts_controller.dart';
+import 'package:admin/controllers/rootWidget.dart';
+import 'package:admin/screens/accounts/acconunt_profael.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
@@ -23,6 +25,7 @@ class _AccountsPageState extends State<AccountsPage> {
   @override
   void initState() {
     Provider.of<AccountsController>(context, listen: false).getBank();
+    Provider.of<AccountsController>(context, listen: false).getSmallBank();
     super.initState();
   }
 
@@ -61,9 +64,20 @@ class _AccountsPageState extends State<AccountsPage> {
                           rows: List.generate(
                               accountsController.banks.length,
                               (index) => DataRow(cells: [
-                                    DataCell(Text(accountsController
-                                        .banks[index].name
-                                        .toString())),
+                                    DataCell(TextButton(
+                                      onPressed: () {
+                                        Provider.of<Rootwidget>(context,
+                                                listen: false)
+                                            .getWidet(AcconuntProfael_page(
+                                          id: accountsController.banks[index].id
+                                              .toString(),
+                                          isBank: true,
+                                        ));
+                                      },
+                                      child: Text(accountsController
+                                          .banks[index].name
+                                          .toString()),
+                                    )),
                                     DataCell(Text((index + 1).toString())),
                                     DataCell(Text(accountsController
                                         .banks[index].createdAt
@@ -144,12 +158,113 @@ class _AccountsPageState extends State<AccountsPage> {
                   title: "الصيرفات",
                 ),
               ),
-              Expanded(
-                  child: DataTable(columns: [
-                DataColumn(label: Text('الاسم')),
-                DataColumn(label: Text('المبلغ')),
-                DataColumn(label: Text('تاريخ الانشاء')),
-              ], rows: [])),
+              Expanded(child: Consumer<AccountsController>(builder: (
+                BuildContext context,
+                accountsController,
+                child,
+              ) {
+                return SizedBox(
+                    width: double.maxFinite,
+                    child: Card(
+                        color: Colors.white,
+                        child: DataTable(
+                          columns: [
+                            DataColumn(label: Text('الاسم')),
+                            DataColumn(label: Text('المبلغ')),
+                            DataColumn(label: Text('التاريخ')),
+                            DataColumn(label: Text('الاجراء')),
+                          ],
+                          rows: List.generate(
+                              accountsController.SmallBank.length,
+                              (index) => DataRow(cells: [
+                                    DataCell(TextButton(
+                                      onPressed: () {
+                                        Provider.of<Rootwidget>(context,
+                                                listen: false)
+                                            .getWidet(AcconuntProfael_page(
+                                          id: accountsController
+                                              .SmallBank[index].id
+                                              .toString(),
+                                          isBank: false,
+                                        ));
+                                      },
+                                      child: Text(accountsController
+                                          .SmallBank[index].name
+                                          .toString()),
+                                    )),
+                                    DataCell(Text((index + 1).toString())),
+                                    DataCell(Text(accountsController
+                                        .SmallBank[index].createdAt
+                                        .toString()
+                                        .substring(0, 10))),
+                                    DataCell(Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text('حذف'),
+                                                      content: Text(
+                                                          'هل أنت متأكد من حذف هذا الصيرفة'),
+                                                      actions: [
+                                                        TextButton(
+                                                          child: Text('لا'),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                        TextButton(
+                                                            child: Text('نعم'),
+                                                            onPressed:
+                                                                () async {
+                                                              try {
+                                                                SmartDialog
+                                                                    .showLoading();
+                                                                await Provider.of<
+                                                                            AccountsController>(
+                                                                        context,
+                                                                        listen:
+                                                                            false)
+                                                                    .deletSmallbank(
+                                                                  accountsController
+                                                                      .SmallBank[
+                                                                          index]
+                                                                      .id,
+                                                                );
+                                                                Navigator.pop(
+                                                                    context);
+                                                                snackBar(
+                                                                    context,
+                                                                    "تم الحذف بنجاح",
+                                                                    false);
+                                                              } catch (e) {
+                                                                snackBar(
+                                                                    context,
+                                                                    e.toString(),
+                                                                    true);
+                                                              } finally {
+                                                                SmartDialog
+                                                                    .dismiss();
+                                                              }
+                                                            }),
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            icon: Icon(
+                                              Icons.delete_forever,
+                                              color: Colors.red,
+                                            ))
+                                      ],
+                                    ))
+                                  ])),
+                        )));
+              })),
             ],
           ),
         ),
@@ -246,13 +361,21 @@ class _AccountsPageState extends State<AccountsPage> {
                         child: ElevatedButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              // await Provider.of<ResellerController>(context,
-                              //         listen: false)
-                              //     .addReseller(
-                              //         nameController.text.toString(),
-                              //         phoneController.text.toString(),
-                              //         adressController.text.toString(),
-                              //         context);
+                              try {
+                                SmartDialog.showLoading();
+                                await Provider.of<AccountsController>(context,
+                                        listen: false)
+                                    .addSmallBank(accountsBanknameController
+                                        .text
+                                        .toString());
+                                accountsBanknameController.clear();
+                                snackBar(context, "تمت الاضافة بنجاح", false);
+                              } catch (e) {
+                                print(e);
+                                snackBar(context, e.toString(), true);
+                              } finally {
+                                SmartDialog.dismiss();
+                              }
                             }
                           },
                           child: Text('اضافة'),

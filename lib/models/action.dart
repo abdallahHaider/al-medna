@@ -9,3 +9,28 @@ class TypeAction {
         TypeAction(name: 'سند صرف', id: 'debt'),
       ];
 }
+
+class TypeAction2 {
+  final String name;
+  final String id;
+
+  TypeAction2({required this.name, required this.id});
+
+  static List<TypeAction2> get actions => [
+        TypeAction2(name: 'ايداع', id: 'pay'),
+        TypeAction2(name: 'حوالة', id: 'debt'),
+      ];
+}
+
+class TypeAction3 {
+  final String name;
+  final String id;
+
+  TypeAction3({required this.name, required this.id});
+
+  static List<TypeAction3> get actions => [
+        TypeAction3(name: 'البنك', id: 'f_bank'),
+        TypeAction3(name: 'الصيرفة', id: 'f_small_bank'),
+        TypeAction3(name: 'الخزنة', id: ''),
+      ];
+}

@@ -29,7 +29,6 @@ class WalletProvider extends ChangeNotifier {
     // notifyListeners();
     try {
       var x = await getpi("/api/safe_doc/index?page=$page");
-      print(x.body);
       var data = jsonDecode(x.body);
       wallets =
           data["data"]["data"].map((json) => Safe.fromJson(json)).toList();
@@ -48,8 +47,6 @@ class WalletProvider extends ChangeNotifier {
 
   Future Addpay(String type, String numberKade, String owner, String costIQD,
       String costUSD, String note, BuildContext context) async {
-    print(costIQD);
-    print(costUSD);
     SmartDialog.showLoading();
     http.Response x;
     try {
@@ -64,7 +61,6 @@ class WalletProvider extends ChangeNotifier {
         "IQD_to_USD": "0",
         "note": note,
       });
-      print(x.body);
       if (x.statusCode == 200) {
         notifyListeners();
         getWallet();
@@ -123,7 +119,6 @@ class WalletProvider extends ChangeNotifier {
   void getPage(int lockage) {
     if (page > 0) {
       page = page + lockage;
-      print(page);
       getWallet();
     }
   }
