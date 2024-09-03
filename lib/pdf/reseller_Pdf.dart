@@ -182,7 +182,7 @@ Future<void> ResellerToPdf(
                     padding:
                         pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                     child: pw.Text(
-                        "${((dbet.totalCostUsdPays ?? 0) - (dbet.totalCostUsd ?? 0)).toStringAsFixed(2)}",
+                        "${((double.tryParse(dbet.totalCostUsdPays!) ?? 0) - (double.tryParse(dbet.totalCostUsd!) ?? 0)).toStringAsFixed(2)}",
                         style: pw.TextStyle(fontSize: 20),
                         textDirection: pw.TextDirection.rtl),
                   ),
@@ -197,8 +197,7 @@ Future<void> ResellerToPdf(
                   pw.Container(
                     padding:
                         pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: pw.Text(
-                        "${dbet.totalCostUsdPays!.toStringAsFixed(2)}",
+                    child: pw.Text("${dbet.totalCostUsdPays!}",
                         style: pw.TextStyle(fontSize: 20),
                         textDirection: pw.TextDirection.rtl),
                   ),
@@ -213,19 +212,12 @@ Future<void> ResellerToPdf(
                   pw.Container(
                     padding:
                         pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                    child: pw.Text("-${dbet.totalCostUsd!.toStringAsFixed(2)}",
+                    child: pw.Text("-${dbet.totalCostUsd!}",
                         style: pw.TextStyle(fontSize: 20),
                         textDirection: pw.TextDirection.rtl),
                   ),
                 ]),
               ),
-              // pw.Text("مجموع التسديدات  : ${dbet.totalCostUsdPays}",
-              //     textDirection: pw.TextDirection.rtl),
-              // pw.Text("عدد التسديدات : ${dbet.countPays}",
-              //     textDirection: pw.TextDirection.rtl),
-              // pw.Text(
-              //     "مجموع المتبقي : ${(dbet.totalCostUsdPays ?? 0) - (dbet.totalCostUsd ?? 0)}",
-              //     textDirection: pw.TextDirection.rtl),
             ])
       ])),
     ),

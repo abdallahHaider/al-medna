@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 Widget walletTable(WalletProvider controller, BuildContext context) {
   ScrollController scrollController = ScrollController();
   return SizedBox(
-    width: double.maxFinite,
+    // width: double.maxFinite,
     child: Card(
       color: Colors.white,
       child: Scrollbar(

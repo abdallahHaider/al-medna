@@ -14,6 +14,8 @@ class ActionBankController extends ChangeNotifier {
   String isIQD = "";
   String fromID = "";
   String toID = "";
+  bool isfrom = true;
+  bool isTo = true;
 
   void setType(String type) {
     print("111111111111111111111111111111");
@@ -21,16 +23,20 @@ class ActionBankController extends ChangeNotifier {
     if (type == "البنك") {
       this.type = "bank";
       getFromdata();
+      isfrom = true;
     }
     if (type == "الصيرفة") {
       this.type = "small_bank";
       getFromdata();
+      isfrom = true;
     }
     if (type == "الخزنة") {
       this.type = "";
       mineActions.clear();
       getFromdata();
+      isfrom = false;
     }
+    notifyListeners();
   }
 
   void setTypeTO(String type) {
@@ -39,17 +45,21 @@ class ActionBankController extends ChangeNotifier {
     if (type == "البنك") {
       this.typeTO = "bank";
       getTodata();
+      isTo = true;
     }
     if (type == "الصيرفة") {
       this.typeTO = "small_bank";
 
       getTodata();
+      isTo = true;
     }
     if (type == "الخزنة") {
       this.typeTO = "";
       mineActionsTO.clear();
       getTodata();
+      isTo = false;
     }
+    notifyListeners();
   }
 
   Future getFromdata() async {
@@ -61,6 +71,7 @@ class ActionBankController extends ChangeNotifier {
       print(x.body);
       var data = jsonDecode(x.body);
       mineActions = data.map((json) => MineAction.fromJson(json)).toList();
+      fromID = mineActions.first.id.toString();
       notifyListeners();
     } catch (e) {
       print(e);
@@ -77,6 +88,7 @@ class ActionBankController extends ChangeNotifier {
       print(x.body);
       var data = jsonDecode(x.body);
       mineActionsTO = data.map((json) => MineAction.fromJson(json)).toList();
+      toID = mineActionsTO.first.id.toString();
       notifyListeners();
     } catch (e) {
       print(e);
@@ -85,6 +97,14 @@ class ActionBankController extends ChangeNotifier {
   }
 
   Future addpay(String cost, String Kade) async {
+    print(cost);
+    print(Kade);
+    print(toID);
+    print(fromID);
+    print(type);
+    print(typeTO);
+    print(isTo);
+
     Response x;
     try {
       x = await postApi("/api/transactions/create", {
@@ -92,8 +112,8 @@ class ActionBankController extends ChangeNotifier {
         if (type == "small_bank") "f_small_bank": fromID,
         if (typeTO == "bank") "t_bank": toID,
         if (typeTO == "small_bank") "t_small_bank": toID,
-        if (isIQD == "f") "cost_USD": cost,
-        if (isIQD == "t") "cost_IQD": cost,
+        if (isIQD == "t") "cost_USD": cost,
+        if (isIQD == "f") "cost_IQD": cost,
         "number_kade": Kade,
       });
       print(x.body);

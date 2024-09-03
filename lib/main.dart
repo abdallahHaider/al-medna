@@ -69,9 +69,7 @@ class MyApp extends StatelessWidget {
         title: 'شركة المدينة المنورة',
         theme: ThemeData(
             primaryColor: primaryColor,
-            // iconButtonTheme:IconButtonThemeData(style: ButtonStyle(foregroundColor:WidgetStateProperty() )) ,
             fontFamily: 'Alexandria',
-            // textTheme: GoogleFonts.alexandriaTextTheme(),
             brightness: Brightness.light),
         home: Directionality(
           textDirection: TextDirection.rtl,

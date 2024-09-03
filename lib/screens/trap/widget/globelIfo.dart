@@ -38,22 +38,13 @@ Padding globelIfo(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                          "التلكفة الاجمالية بالدولار : ${snapshot.data!['total_cost_USD'].toString()}"),
+                          "التلكفة الاجمالية بالدولار : ${double.tryParse(snapshot.data!['total_cost_USD'].toString())!.toStringAsFixed(0)}"),
                       Divider(),
                       Text(
-                          "المبلغ المدفوع بالدولار: ${snapshot.data!['total_cost_USD_pays'].toString()}"),
+                          "المبلغ المدفوع بالدولار: ${double.tryParse(snapshot.data!['total_cost_USD_pays'].toString())!.toStringAsFixed(2)}"),
                       Divider(),
                       Text(
-                          "المتبقي : ${snapshot.data!['total_cost_USD'] - snapshot.data!['total_cost_USD_pays']}"),
-                      // Text(
-                      //   "الارباح بالدينار: ${(snapshot.data!['total_cost_IQD_pays'] - snapshot.data!['total_cost_IQD']).toString()}",
-                      //   style: TextStyle(
-                      //       color: snapshot.data!['total_cost_IQD_pays'] -
-                      //                   snapshot.data!['total_cost_IQD'] <
-                      //               0
-                      //           ? Colors.red
-                      //           : Colors.green),
-                      // ),
+                          "المتبقي : ${double.tryParse((snapshot.data!['total_cost_USD'] - snapshot.data!['total_cost_USD_pays']).toString())!.toStringAsFixed(2)}"),
                     ]),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,88 +66,6 @@ Padding globelIfo(
             SizedBox(
               height: defaultPadding,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //           "التلكفة الاجمالية بالدولار : ${snapshot.data!['total_cost_USD'].toString()}"),
-            //       // Text(
-            //       //     "التلكفة الاجمالية بالدينار : ${snapshot.data!['total_cost_IQD'].toString()}"),
-            //       // Text(
-            //       //     "التلكفة الاجمالية بالريل السعودي : ${snapshot.data!['total_cost_RAS'].toString()}"),
-            //     ],
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: Divider(),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //           "المبلغ المدفوع بالدولار: ${snapshot.data!['total_cost_USD_pays'].toString()}"),
-            //       // Text(
-            //       //     "المبلغ المدفوع بالدينار: ${snapshot.data!['total_cost_IQD_pays'].toString()}"),
-            //       // Text(
-            //       //     "المبلغ المدفوع بالريل السعودي: ${snapshot.data!['total_cost_RAS_pays'].toString()}"),
-            //     ],
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: Divider(),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text(
-            //         "الارباح بالدينار: ${(snapshot.data!['total_cost_IQD_pays'] - snapshot.data!['total_cost_IQD']).toString()}",
-            //         style: TextStyle(
-            //             color: snapshot.data!['total_cost_IQD_pays'] -
-            //                         snapshot.data!['total_cost_IQD'] <
-            //                     0
-            //                 ? Colors.red
-            //                 : Colors.green),
-            //       ),
-            //       // Text(
-            //       //   "الارباح بالريال: ${(snapshot.data!['total_cost_RAS_pays'] - snapshot.data!['total_cost_RAS']).toString()}",
-            //       //   style: TextStyle(
-            //       //       color: snapshot.data!['total_cost_RAS_pays'] -
-            //       //                   snapshot.data!['total_cost_RAS'] <
-            //       //               0
-            //       //           ? Colors.red
-            //       //           : Colors.green),
-            //       // ),
-            //     ],
-            //   ),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: Divider(),
-            // ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 12),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text('عدد التسديدات :' +
-            //           snapshot.data!['count_pays'].toString()),
-            //       Text(
-            //           "المدة الزمنية : ${snapshot.data!['start_date'] == null ? "لا يوجد" : " من " + snapshot.data!['start_date'] + " الى " + snapshot.data!['end_date']}"),
-            //       Text('عدد الرحلات :' + snapshot.data!['count_trap'].toString()),
-            //     ],
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: 10,
-            // )
           ],
         ),
       ),

@@ -26,8 +26,8 @@ class _ResellerProfielState extends State<ResellerProfiel> {
         ResellerDbet(
       countPays: 0,
       countTrap: 0,
-      totalCostUsd: 0,
-      totalCostUsdPays: 0,
+      totalCostUsd: "0",
+      totalCostUsdPays: "0",
     );
     super.initState();
   }
@@ -51,9 +51,10 @@ class _ResellerProfielState extends State<ResellerProfiel> {
               Row(
                 children: [
                   Expanded(
-                    child: TabBar(
-                        isScrollable: true,
-                        tabs: [Tab(text: "الرحلات"), Tab(text: "كشف الحساب")]),
+                    child: TabBar(isScrollable: true, tabs: [
+                      Tab(text: "الرحلات"),
+                      // Tab(text: "كشف الحساب")
+                    ]),
                   ),
                   TextButton.icon(
                     onPressed: () async {
@@ -97,79 +98,79 @@ class _ResellerProfielState extends State<ResellerProfiel> {
                           return Center(child: CircularProgressIndicator());
                         }
                       }),
-                  FutureBuilder(
-                      future: Provider.of<ResellerController>(context,
-                              listen: false)
-                          .getDbetPayinfo(widget.resellerID.id.toString()),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else if (snapshot.hasData) {
-                          return Card(
-                            // height: double.maxFinite,
-                            // width: double.infinity,
-                            color: secondaryColor,
-                            elevation: 5,
-                            margin: EdgeInsets.all(defaultPadding),
-                            child: DataTable(
-                              columnSpacing: defaultPadding,
-                              columns: [
-                                DataColumn(
-                                  label: Text("اسم الوكيل"),
-                                ),
-                                DataColumn(
-                                  label: Text("رقم الوصل"),
-                                ),
-                                DataColumn(
-                                  label: Text("المبلغ"),
-                                ),
-                                DataColumn(
-                                  label: Text("سعر الصرف"),
-                                ),
-                                DataColumn(
-                                  label: Text("التاريخ"),
-                                ),
-                              ],
-                              rows: List.generate(
-                                  snapshot.data!.length,
-                                  (index) => DataRow(cells: [
-                                        DataCell(
-                                          Text(
-                                            snapshot.data![index].resellerId
-                                                .toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            snapshot.data![index].id.toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            snapshot.data![index].cost
-                                                .toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            snapshot.data![index].iqdToUsd
-                                                .toString(),
-                                          ),
-                                        ),
-                                        DataCell(
-                                          Text(
-                                            snapshot.data![index].createdAt
-                                                .toString()
-                                                .substring(0, 10),
-                                          ),
-                                        ),
-                                      ])),
-                            ),
-                          );
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      })
+                  // FutureBuilder(
+                  //     future: Provider.of<ResellerController>(context,
+                  //             listen: false)
+                  //         .getDbetPayinfo(widget.resellerID.id.toString()),
+                  //     builder: (context, snapshot) {
+                  //       if (snapshot.hasError) {
+                  //         return Text(snapshot.error.toString());
+                  //       } else if (snapshot.hasData) {
+                  //         return Card(
+                  //           // height: double.maxFinite,
+                  //           // width: double.infinity,
+                  //           color: secondaryColor,
+                  //           elevation: 5,
+                  //           margin: EdgeInsets.all(defaultPadding),
+                  //           child: DataTable(
+                  //             columnSpacing: defaultPadding,
+                  //             columns: [
+                  //               DataColumn(
+                  //                 label: Text("اسم الوكيل"),
+                  //               ),
+                  //               DataColumn(
+                  //                 label: Text("رقم الوصل"),
+                  //               ),
+                  //               DataColumn(
+                  //                 label: Text("المبلغ"),
+                  //               ),
+                  //               DataColumn(
+                  //                 label: Text("سعر الصرف"),
+                  //               ),
+                  //               DataColumn(
+                  //                 label: Text("التاريخ"),
+                  //               ),
+                  //             ],
+                  //             rows: List.generate(
+                  //                 snapshot.data!.length,
+                  //                 (index) => DataRow(cells: [
+                  //                       DataCell(
+                  //                         Text(
+                  //                           snapshot.data![index].resellerId
+                  //                               .toString(),
+                  //                         ),
+                  //                       ),
+                  //                       DataCell(
+                  //                         Text(
+                  //                           snapshot.data![index].id.toString(),
+                  //                         ),
+                  //                       ),
+                  //                       DataCell(
+                  //                         Text(
+                  //                           snapshot.data![index].cost
+                  //                               .toString(),
+                  //                         ),
+                  //                       ),
+                  //                       DataCell(
+                  //                         Text(
+                  //                           snapshot.data![index].iqdToUsd
+                  //                               .toString(),
+                  //                         ),
+                  //                       ),
+                  //                       DataCell(
+                  //                         Text(
+                  //                           snapshot.data![index].createdAt
+                  //                               .toString()
+                  //                               .substring(0, 10),
+                  //                         ),
+                  //                       ),
+                  //                     ])),
+                  //           ),
+                  //         );
+                  //       } else {
+                  //         return Center(child: CircularProgressIndicator());
+                  //       }
+                  //     })
                 ]),
               ),
             ],

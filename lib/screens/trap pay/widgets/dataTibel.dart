@@ -11,126 +11,141 @@ import 'package:provider/provider.dart';
 Consumer<TrapPayController> dataTibel() {
   return Consumer<TrapPayController>(
     builder: (BuildContext context, value, Widget? child) {
-      return FutureBuilder(
-          future: value.fetchData(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return MyErrorWidget();
-            } else if (snapshot.hasData) {
-              return Card(
-                color: secondaryColor,
-                elevation: 5,
-                margin: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  child: DataTable(
-                    columnSpacing: defaultPadding,
-                    columns: [
-                      DataColumn(
-                        label: Text("اسم الوكيل"),
-                      ),
-                      DataColumn(
-                        label: Text("رقم الوصل"),
-                      ),
-                      DataColumn(
-                        label: Text("المبلغ"),
-                      ),
-                      // DataColumn(
-                      //   label: Text("سعر الصرف"),
-                      // ),
-                      DataColumn(
-                        label: Text(" التاريخ"),
-                      ),
-                      DataColumn(
-                        label: Text("الفاتورة"),
-                      ),
-                      DataColumn(
-                        label: Text("الاجراء"),
-                      ),
-                    ],
-                    rows: List.generate(
-                        snapshot.data!.length,
-                        (index) => DataRow(cells: [
-                              DataCell(
-                                Text(
-                                  snapshot.data![index].resellerId.toString(),
-                                ),
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            FutureBuilder(
+                future: value.fetchData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return MyErrorWidget();
+                  } else if (snapshot.hasData) {
+                    return SizedBox(
+                      width: double.maxFinite,
+                      child: Card(
+                        color: secondaryColor,
+                        elevation: 5,
+                        margin:
+                            EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 8),
+                          child: DataTable(
+                            columnSpacing: defaultPadding,
+                            columns: [
+                              DataColumn(
+                                label: Text("اسم الوكيل"),
                               ),
-                              DataCell(
-                                Text(
-                                  snapshot.data![index].id.toString(),
-                                ),
+                              DataColumn(
+                                label: Text("رقم الوصل"),
                               ),
-                              DataCell(
-                                Text(
-                                  snapshot.data![index].cost.toString(),
-                                ),
+                              DataColumn(
+                                label: Text("المبلغ"),
                               ),
-                              // DataCell(
-                              //   Text(
-                              //     snapshot.data![index].iqdToUsd.toString(),
-                              //   ),
+                              // DataColumn(
+                              //   label: Text("سعر الصرف"),
                               // ),
-                              DataCell(
-                                Text(snapshot.data![index].createdAt
-                                    .toString()
-                                    .substring(0, 10)),
+                              DataColumn(
+                                label: Text(" التاريخ"),
                               ),
-                              DataCell(
-                                TextButton(
-                                    onPressed: () async {
-                                      SmartDialog.showLoading();
-                                      try {
-                                        await generatePdfWeb(
-                                            snapshot.data![index].resellerId
-                                                .toString(),
-                                            snapshot.data![index].cost,
-                                            snapshot.data![index].id.toString(),
-                                            snapshot.data![index].createdAt
-                                                .toString()
-                                                .substring(0, 10),
-                                            snapshot.data![index].nowdebt);
-                                      } catch (e) {}
-                                      SmartDialog.dismiss();
-                                    },
-                                    child: Text("طباعة الفاتورة")),
+                              DataColumn(
+                                label: Text("الفاتورة"),
                               ),
-                              DataCell(PopupMenuButton(
-                                itemBuilder: (context) => [
-                                  PopupMenuItem(
-                                    child: Text(
-                                      "تعديل",
-                                    ),
-                                    onTap: () {
-                                      editPay(
-                                          context, snapshot.data![index].id);
-                                    },
-                                  ),
-                                  PopupMenuItem(
-                                    child: Text(
-                                      "حذف",
-                                    ),
-                                    onTap: () {
-                                      deletPay(
-                                        context,
-                                        snapshot,
-                                        index,
-                                      );
-                                    },
-                                  ),
-                                ],
-                              )),
-                            ])),
-                  ),
-                ),
-              );
-            } else {
-              return Center(child: Text('لا يوجد تسديد بعد'));
-            }
-          });
+                              DataColumn(
+                                label: Text("الاجراء"),
+                              ),
+                            ],
+                            rows: List.generate(
+                                snapshot.data!.length,
+                                (index) => DataRow(cells: [
+                                      DataCell(
+                                        Text(
+                                          snapshot.data![index].resellerId
+                                              .toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          snapshot.data![index].id.toString(),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                          snapshot.data![index].cost.toString(),
+                                        ),
+                                      ),
+                                      // DataCell(
+                                      //   Text(
+                                      //     snapshot.data![index].iqdToUsd.toString(),
+                                      //   ),
+                                      // ),
+                                      DataCell(
+                                        Text(snapshot.data![index].createdAt
+                                            .toString()
+                                            .substring(0, 10)),
+                                      ),
+                                      DataCell(
+                                        TextButton(
+                                            onPressed: () async {
+                                              SmartDialog.showLoading();
+                                              try {
+                                                await generatePdfWeb(
+                                                    snapshot
+                                                        .data![index].resellerId
+                                                        .toString(),
+                                                    snapshot.data![index].cost,
+                                                    snapshot.data![index].id
+                                                        .toString(),
+                                                    snapshot
+                                                        .data![index].createdAt
+                                                        .toString()
+                                                        .substring(0, 10),
+                                                    snapshot
+                                                        .data![index].nowdebt);
+                                              } catch (e) {}
+                                              SmartDialog.dismiss();
+                                            },
+                                            child: Text("طباعة الفاتورة")),
+                                      ),
+                                      DataCell(PopupMenuButton(
+                                        itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: Text(
+                                              "تعديل",
+                                            ),
+                                            onTap: () {
+                                              editPay(context,
+                                                  snapshot.data![index].id);
+                                            },
+                                          ),
+                                          PopupMenuItem(
+                                            child: Text(
+                                              "حذف",
+                                            ),
+                                            onTap: () {
+                                              deletPay(
+                                                context,
+                                                snapshot,
+                                                index,
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      )),
+                                    ])),
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Center(child: Text('لا يوجد تسديد بعد'));
+                  }
+                }),
+          ],
+        ),
+      );
     },
   );
 }

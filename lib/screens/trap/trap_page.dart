@@ -69,190 +69,209 @@ class _TrapPageState extends State<TrapPage> {
                             return MyErrorWidget();
                           } else if (snapshot.hasData) {
                             print(snapshot.data!);
-                            return Column(
-                              children: [
-                                globelIfo(snapshot, context),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            WidgetStateProperty.all(
-                                                primaryColor),
-                                        foregroundColor:
-                                            WidgetStateProperty.all(
-                                                Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        Provider.of<Rootwidget>(context,
-                                                listen: false)
-                                            .getWidet(AddTrapPage(
-                                          isEdidt: false,
-                                        ));
-                                      },
-                                      label: Text("اضافة رحلة"),
-                                      icon: Icon(Icons.add),
-                                    ),
-                                    Expanded(
-                                      child: SizedBox(),
-                                    ),
-                                    TextButton(
+                            return SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  globelIfo(snapshot, context),
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton.icon(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStateProperty.all(
+                                                  primaryColor),
+                                          foregroundColor:
+                                              WidgetStateProperty.all(
+                                                  Colors.white),
+                                        ),
                                         onPressed: () {
-                                          if (page > 1) {
-                                            page -= 1;
+                                          Provider.of<Rootwidget>(context,
+                                                  listen: false)
+                                              .getWidet(AddTrapPage(
+                                            isEdidt: false,
+                                          ));
+                                        },
+                                        label: Text("اضافة رحلة"),
+                                        icon: Icon(Icons.add),
+                                      ),
+                                      Expanded(
+                                        child: SizedBox(),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            if (page > 1) {
+                                              page -= 1;
+                                              Provider.of<TrapController>(
+                                                      context,
+                                                      listen: false)
+                                                  .updete();
+                                            }
+                                          },
+                                          child: Text("الصفحة السابقة")),
+                                      Text("الصفحة :$page"),
+                                      TextButton(
+                                          onPressed: () {
+                                            page += 1;
                                             Provider.of<TrapController>(context,
                                                     listen: false)
                                                 .updete();
-                                          }
-                                        },
-                                        child: Text("الصفحة السابقة")),
-                                    Text("الصفحة :$page"),
-                                    TextButton(
+                                          },
+                                          child: Text("الصفحة التالية")),
+                                      Expanded(child: SizedBox()),
+                                      TextButton.icon(
                                         onPressed: () {
-                                          page += 1;
-                                          Provider.of<TrapController>(context,
-                                                  listen: false)
-                                              .updete();
-                                        },
-                                        child: Text("الصفحة التالية")),
-                                    Expanded(child: SizedBox()),
-                                    TextButton.icon(
-                                      onPressed: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (c) => AlertDialog(
-                                                  title: Text("حدد تاريخ"),
-                                                  content: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      TextField(
-                                                        controller:
-                                                            _startDateController,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          labelText: "تاريخ من",
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          filled: true,
+                                          showDialog(
+                                              context: context,
+                                              builder: (c) => AlertDialog(
+                                                    title: Text("حدد تاريخ"),
+                                                    content: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: [
+                                                        TextField(
+                                                          controller:
+                                                              _startDateController,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelText:
+                                                                "تاريخ من",
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            filled: true,
+                                                          ),
+                                                          onTap: () async {
+                                                            final DateTime?
+                                                                picker =
+                                                                await showDatePicker(
+                                                              context: context,
+                                                              initialDate:
+                                                                  DateTime
+                                                                      .now(),
+                                                              firstDate:
+                                                                  DateTime(
+                                                                      2000),
+                                                              lastDate: DateTime
+                                                                      .now()
+                                                                  .add(Duration(
+                                                                      days:
+                                                                          100)),
+                                                            );
+                                                            if (picker !=
+                                                                null) {
+                                                              // setState(() {
+                                                              _startDateController
+                                                                      .text =
+                                                                  picker
+                                                                      .toString()
+                                                                      .substring(
+                                                                          0,
+                                                                          10);
+                                                              // });
+                                                            }
+                                                          },
                                                         ),
-                                                        onTap: () async {
-                                                          final DateTime?
-                                                              picker =
-                                                              await showDatePicker(
-                                                            context: context,
-                                                            initialDate:
-                                                                DateTime.now(),
-                                                            firstDate:
-                                                                DateTime(2000),
-                                                            lastDate: DateTime
-                                                                    .now()
-                                                                .add(Duration(
-                                                                    days: 100)),
-                                                          );
-                                                          if (picker != null) {
-                                                            // setState(() {
-                                                            _startDateController
-                                                                    .text =
-                                                                picker
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 10);
-                                                            // });
-                                                          }
-                                                        },
-                                                      ),
-                                                      TextField(
-                                                        controller:
-                                                            _endDateController,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          labelText:
-                                                              "تاريخ الى",
-                                                          border:
-                                                              OutlineInputBorder(),
-                                                          filled: true,
+                                                        TextField(
+                                                          controller:
+                                                              _endDateController,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            labelText:
+                                                                "تاريخ الى",
+                                                            border:
+                                                                OutlineInputBorder(),
+                                                            filled: true,
+                                                          ),
+                                                          onTap: () async {
+                                                            final DateTime?
+                                                                picker =
+                                                                await showDatePicker(
+                                                              context: context,
+                                                              initialDate:
+                                                                  DateTime
+                                                                      .now(),
+                                                              firstDate:
+                                                                  DateTime(
+                                                                      2000),
+                                                              lastDate: DateTime
+                                                                      .now()
+                                                                  .add(Duration(
+                                                                      days:
+                                                                          100)),
+                                                            );
+                                                            if (picker !=
+                                                                null) {
+                                                              // setState(() {
+                                                              _endDateController
+                                                                      .text =
+                                                                  picker
+                                                                      .toString()
+                                                                      .substring(
+                                                                          0,
+                                                                          10);
+                                                              // });
+                                                            }
+                                                          },
                                                         ),
-                                                        onTap: () async {
-                                                          final DateTime?
-                                                              picker =
-                                                              await showDatePicker(
-                                                            context: context,
-                                                            initialDate:
-                                                                DateTime.now(),
-                                                            firstDate:
-                                                                DateTime(2000),
-                                                            lastDate: DateTime
-                                                                    .now()
-                                                                .add(Duration(
-                                                                    days: 100)),
-                                                          );
-                                                          if (picker != null) {
-                                                            // setState(() {
-                                                            _endDateController
-                                                                    .text =
-                                                                picker
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 10);
-                                                            // });
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: Text("الغاء"),
+                                                      ],
                                                     ),
-                                                    TextButton(
-                                                      onPressed: () async {
-                                                        if (_startDateController
-                                                                .text.isEmpty ||
-                                                            _endDateController
-                                                                .text.isEmpty) {
-                                                          ScaffoldMessenger.of(
-                                                                  context)
-                                                              .showSnackBar(
-                                                            SnackBar(
-                                                                content: Text(
-                                                                    "من فضلك ادخل تاريخ من و الى")),
-                                                          );
-                                                        } else {
-                                                          page = 1;
-                                                          Provider.of<TrapController>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .updete();
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
                                                           Navigator.of(context)
                                                               .pop();
-                                                        }
-                                                      },
-                                                      child: Text("حسنا"),
-                                                    ),
-                                                  ],
-                                                ));
-                                      },
-                                      label: Text("بحث متقدم"),
-                                      icon: Icon(Icons.search),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: defaultPadding,
-                                ),
-                                // dataBelder(snapshot,context),
+                                                        },
+                                                        child: Text("الغاء"),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () async {
+                                                          if (_startDateController
+                                                                  .text
+                                                                  .isEmpty ||
+                                                              _endDateController
+                                                                  .text
+                                                                  .isEmpty) {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              SnackBar(
+                                                                  content: Text(
+                                                                      "من فضلك ادخل تاريخ من و الى")),
+                                                            );
+                                                          } else {
+                                                            page = 1;
+                                                            Provider.of<TrapController>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .updete();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          }
+                                                        },
+                                                        child: Text("حسنا"),
+                                                      ),
+                                                    ],
+                                                  ));
+                                        },
+                                        label: Text("بحث متقدم"),
+                                        icon: Icon(Icons.search),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: defaultPadding,
+                                  ),
+                                  // dataBelder(snapshot,context),
 
-                                TrapTable(
-                                  traps: snapshot.data!["resellers"],
-                                )
-                              ],
+                                  TrapTable(
+                                    traps: snapshot.data!["resellers"],
+                                  )
+                                ],
+                              ),
                             );
                           } else {
                             return Center(child: Text('لا توجد بيانات'));

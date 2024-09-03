@@ -3,6 +3,7 @@ import 'package:admin/screens/accounts/accounts_page.dart';
 import 'package:admin/screens/bank/bank.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/wallet/wallet_page.dart';
+import 'package:admin/screens/widgets/action_bank_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -79,7 +80,7 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "البنك",
+            title: "البنوك",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
               Provider.of<Rootwidget>(context, listen: false)
@@ -87,11 +88,19 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "حسابات البنوك والمصارف",
+            title: "المصارف",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(AccountsPage());
+            },
+          ),
+          DrawerListTile(
+            title: "اضافة عملية",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(ActionBankCard());
             },
           ),
         ],

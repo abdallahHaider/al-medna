@@ -74,12 +74,12 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                                         ),
                                         DataCell(
                                           Text(accountsController
-                                              .mySmallBank[index].costUsd
+                                              .mySmallBank[index].costIqd
                                               .toString()),
                                         ),
                                         DataCell(
                                           Text(accountsController
-                                              .mySmallBank[index].costIqd
+                                              .mySmallBank[index].costUsd
                                               .toString()),
                                         ),
                                         DataCell(

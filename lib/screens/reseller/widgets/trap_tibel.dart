@@ -56,7 +56,7 @@ class _TrapTableResellerState extends State<TrapTableReseller> {
                 cells: [
                   DataCell(Text("${ispay ? trap.id ?? '' : ""}")),
                   DataCell(Text("${!ispay ? trap.id ?? '' : ""}")),
-                  DataCell(Text('${trap.price.toStringAsFixed(2) ?? 0}')),
+                  DataCell(Text('${trap.price ?? 0}')),
                   // DataCell(Text('${trap.iqdToUsd ?? 0}')),
                   DataCell(Text(ispay ? "" : trap.hotelId ?? '')),
                   DataCell(Text('${ispay ? "" : trap.duration ?? 0}')),
@@ -74,7 +74,7 @@ class _TrapTableResellerState extends State<TrapTableReseller> {
                       : trap.transport == 'fly'
                           ? 'جوي'
                           : 'بري')),
-                  DataCell(Text('${trap.nowDebt.toStringAsFixed(2) ?? 0}')),
+                  DataCell(Text('${trap.nowDebt ?? 0}')),
                   DataCell(
                       Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
                   DataCell(
@@ -89,18 +89,22 @@ class _TrapTableResellerState extends State<TrapTableReseller> {
                               duration: trap.duration.toString(),
                               quantity: trap.quantity.toString(),
                               iqdToUsd: trap.iqdToUsd.toString(),
-                              // doubleRoomPrice: trap.coupleRoom,
-                              // tripleRoomPrice: trap.tripleRoom,
-                              // quadrupleRoomPrice: trap.tripleRoom,
+                              doubleRoomPrice: trap.priceCoupleRoom.toString(),
+                              tripleRoomPrice: trap.priceTripleRoom.toString(),
+                              quadrupleRoomPrice:
+                                  trap.priceQuadrupleRoom.toString(),
                               doubleRoomCount: trap.coupleRoom.toString(),
                               tripleRoomCount: trap.tripleRoom.toString(),
                               quadrupleRoomCount: trap.quadrupleRoom.toString(),
                               childrenCount: trap.child.toString(),
-                              // childrenPrice: trap.,
+                              childrenPrice: trap.priceChild.toString(),
                               infantsCount: trap.veryChild.toString(),
                               isEdidt: true,
-                              // infantsPrice: trap.resellerId,
-                              // notesController: trap.createdAt,
+                              infantsPrice: trap.priceVeryChild.toString(),
+                              notesController: trap.note.toString(),
+                              vipController: trap.vip_travel.toString(),
+                              priceVipController:
+                                  trap.price_vip_travel.toString(),
                             ));
                           },
                         ),

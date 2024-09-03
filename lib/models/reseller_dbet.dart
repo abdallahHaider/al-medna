@@ -1,21 +1,12 @@
-// To parse this JSON data, do
-//
-//     final resellerDbet = resellerDbetFromJson(jsonString);
-
-import 'dart:convert';
-
-ResellerDbet resellerDbetFromJson(String str) =>
-    ResellerDbet.fromJson(json.decode(str));
-
-String resellerDbetToJson(ResellerDbet data) => json.encode(data.toJson());
+import 'package:admin/models/trap.dart';
 
 class ResellerDbet {
   int? countTrap;
   int? countPays;
-  double? totalCostUsd;
+  String? totalCostUsd;
   double? totalCostIqd;
   double? totalCostRas;
-  double? totalCostUsdPays;
+  String? totalCostUsdPays;
   double? totalCostIqdPays;
   double? totalCostRasPays;
 
@@ -33,10 +24,10 @@ class ResellerDbet {
   factory ResellerDbet.fromJson(Map<String, dynamic> json) => ResellerDbet(
         countTrap: json["count_trap"],
         countPays: json["count_pays"],
-        totalCostUsd: double.parse(json["total_cost_USD"].toString()),
+        totalCostUsd: formatPrice(json["total_cost_USD"]),
         // totalCostIqd: double.parse(json["total_cost_IQD"].toString()),
         // totalCostRas: json["total_cost_RAS"],
-        totalCostUsdPays: double.parse(json["total_cost_USD_pays"].toString()),
+        totalCostUsdPays: formatPrice(json["total_cost_USD_pays"]),
         // totalCostIqdPays: json["total_cost_IQD_pays"] as double,
         // totalCostRasPays: json["total_cost_RAS_pays"],
       );
