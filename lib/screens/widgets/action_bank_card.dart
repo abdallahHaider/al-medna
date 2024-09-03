@@ -149,6 +149,11 @@ class ActionBankCard extends StatelessWidget {
                           return 'Please enter cost';
                         }
                       },
+                      onChanged: (v) {
+                        Provider.of<ActionBankController>(context,
+                                listen: false)
+                            .setNumberWord(_costController.text, '');
+                      },
                     ),
                   ),
                   SizedBox(width: 16),
@@ -176,6 +181,18 @@ class ActionBankCard extends StatelessWidget {
                   //   ),
                   // ),
                 ],
+              ),
+              SizedBox(height: 16),
+              Consumer<ActionBankController>(
+                builder: (context, walletProvider, child) {
+                  return MyTextField(
+                    controller: TextEditingController(
+                      text: walletProvider.numberWord,
+                    ),
+                    enabled: false,
+                    labelText: "المبلغ كتابة",
+                  );
+                },
               ),
 
               SizedBox(height: 24), // More spacing before the button

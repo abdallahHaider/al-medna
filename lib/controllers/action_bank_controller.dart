@@ -4,6 +4,7 @@ import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/mine_action.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:spelling_number/spelling_number.dart';
 
 class ActionBankController extends ChangeNotifier {
   List<dynamic> mineActions = [];
@@ -16,6 +17,7 @@ class ActionBankController extends ChangeNotifier {
   String toID = "";
   bool isfrom = true;
   bool isTo = true;
+  String numberWord = "";
 
   void setType(String type) {
     print("111111111111111111111111111111");
@@ -125,6 +127,17 @@ class ActionBankController extends ChangeNotifier {
     } catch (e) {
       print(e);
       throw "حصل خطا في ارسال البيانات";
+    }
+  }
+
+  void setNumberWord(String value, String type) {
+    int x = 0;
+    if (value.isNotEmpty) {
+      x = int.parse(value);
+      numberWord = SpellingNumber(lang: 'ar').convert(x);
+      numberWord =
+          "${numberWord} $type فقط لا غير "; // Add the phrase "only no other" to the word
+      notifyListeners();
     }
   }
 }
