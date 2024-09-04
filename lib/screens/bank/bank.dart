@@ -44,8 +44,7 @@ class _BankPageState extends State<BankPage> {
                 flex: 2,
                 child: Card(
                     color: Colors.white,
-                    child:
-                        Expanded(child: Consumer<AccountsController>(builder: (
+                    child: Consumer<AccountsController>(builder: (
                       BuildContext context,
                       accountsController,
                       child,
@@ -144,7 +143,7 @@ class _BankPageState extends State<BankPage> {
                                   ))
                                 ])),
                       );
-                    }))),
+                    })),
               ),
               SizedBox(
                 width: defaultPadding,

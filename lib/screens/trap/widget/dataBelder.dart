@@ -26,6 +26,7 @@ class _TrapTableState extends State<TrapTable> {
       child: Scrollbar(
         controller: scrollController,
         child: SingleChildScrollView(
+          controller: scrollController,
           scrollDirection: Axis.horizontal,
           child: DataTable(
             columns: const [
