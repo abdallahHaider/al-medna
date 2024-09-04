@@ -178,14 +178,30 @@ class _MovementPageState extends State<MovementPage> {
                     await Provider.of<CompanyController>(context, listen: false)
                         .addMove(
                       widget.id,
-                      _nameController.text,
-                      _numberTController.text,
-                      _cosrTController.text,
-                      _hotelNameController.text,
-                      _roomController.text,
-                      _numberdayController.text,
-                      _costdayController.text,
-                      _dadeController.text,
+                      _nameController.text.isNotEmpty
+                          ? _nameController.text
+                          : "0",
+                      _numberTController.text.isNotEmpty
+                          ? _numberTController.text
+                          : "0",
+                      _cosrTController.text.isNotEmpty
+                          ? _cosrTController.text
+                          : "0",
+                      _hotelNameController.text.isNotEmpty
+                          ? _hotelNameController.text
+                          : "0",
+                      _roomController.text.isNotEmpty
+                          ? _roomController.text
+                          : "0",
+                      _numberdayController.text.isNotEmpty
+                          ? _numberdayController.text
+                          : "0",
+                      _costdayController.text.isNotEmpty
+                          ? _costdayController.text
+                          : "0",
+                      _dadeController.text.isNotEmpty
+                          ? _dadeController.text
+                          : "0",
                     );
                     snackBar(context, "تمت العملية بمجاح", false);
                   } catch (e) {

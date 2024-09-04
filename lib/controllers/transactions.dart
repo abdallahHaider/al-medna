@@ -73,7 +73,7 @@ class TransactionsController extends ChangeNotifier {
   Future deletSmallbank(id) async {
     Response x;
     try {
-      x = await postApi("/api/transactions/delete", {"id": id});
+      x = await postApi("/api/transactions/delete", {"transaction_id": id});
       if (x.statusCode == 200) {
         // getmyBank();
         notifyListeners();
