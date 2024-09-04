@@ -71,7 +71,7 @@ class _AccountsPageState extends State<AccountsPage> {
                                               id: accountsController
                                                   .SmallBank[index].id
                                                   .toString(),
-                                              isBank: false,
+                                              isBank: "S",
                                             ));
                                           },
                                           child: Text(accountsController

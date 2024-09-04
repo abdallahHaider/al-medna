@@ -30,6 +30,11 @@ class ActionBankController extends ChangeNotifier {
       getFromdata();
       isfrom = true;
     }
+    if (type == "الشركات") {
+      this.type = "company";
+      getFromdata();
+      isfrom = true;
+    }
     if (type == "الخزنة") {
       this.type = "";
       mineActions.clear();
@@ -53,6 +58,13 @@ class ActionBankController extends ChangeNotifier {
       getTodata();
       isTo = true;
     }
+
+    if (type == "الشركات") {
+      this.typeTO = "company";
+      getTodata();
+      isTo = true;
+    }
+
     if (type == "الخزنة") {
       this.typeTO = "";
       mineActionsTO.clear();
@@ -111,6 +123,7 @@ class ActionBankController extends ChangeNotifier {
         if (type == "bank") "f_bank": fromID,
         if (type == "small_bank") "f_small_bank": fromID,
         if (typeTO == "bank") "t_bank": toID,
+        if (typeTO == "company") "t_company": toID,
         if (typeTO == "small_bank") "t_small_bank": toID,
         if (isIQD == "t") "cost_USD": cost,
         if (isIQD == "f") "cost_IQD": cost,

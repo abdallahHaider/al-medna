@@ -9,7 +9,7 @@ class AcconuntProfael_page extends StatefulWidget {
   const AcconuntProfael_page(
       {super.key, required this.id, required this.isBank});
   final String id;
-  final bool isBank;
+  final String isBank;
 
   @override
   State<AcconuntProfael_page> createState() => _AcconuntProfael_pageState();
@@ -18,12 +18,15 @@ class AcconuntProfael_page extends StatefulWidget {
 class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
   @override
   void initState() {
-    if (widget.isBank) {
+    if (widget.isBank == "B") {
       Provider.of<TransactionsController>(context, listen: false)
           .getmyBank(widget.id);
-    } else {
+    } else if (widget.isBank == "S") {
       Provider.of<TransactionsController>(context, listen: false)
           .getmySmallBank(widget.id);
+    } else {
+      Provider.of<TransactionsController>(context, listen: false)
+          .getCompany(widget.id);
     }
 
     super.initState();
@@ -53,7 +56,9 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                               columns: [
                                 DataColumn(label: Text('المرسل')),
                                 DataColumn(label: Text('المستلم')),
-                                DataColumn(label: Text('المبلغ بالدينار')),
+                                widget.isBank != "C"
+                                    ? DataColumn(label: Text('المبلغ بالدينار'))
+                                    : DataColumn(label: Text('المبلغ بالريال')),
                                 DataColumn(label: Text('المبلغ بالدولار')),
                                 DataColumn(label: Text('رقم القيد')),
                                 DataColumn(label: Text('التاريخ')),
@@ -73,9 +78,13 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                                               .toString()),
                                         ),
                                         DataCell(
-                                          Text(accountsController
-                                              .mySmallBank[index].costIqd
-                                              .toString()),
+                                          Text(widget.isBank != "C"
+                                              ? accountsController
+                                                  .mySmallBank[index].costIqd
+                                                  .toString()
+                                              : accountsController
+                                                  .mySmallBank[index].costRAS
+                                                  .toString()),
                                         ),
                                         DataCell(
                                           Text(accountsController
@@ -121,17 +130,16 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                                                                   try {
                                                                     SmartDialog
                                                                         .showLoading();
-                                                                    // await Provider.of<
-                                                                    //             AccountsController>(
-                                                                    //         context,
-                                                                    //         listen:
-                                                                    //             false)
-                                                                    //     .deletSmallbank(
-                                                                    //   accountsController
-                                                                    //       .SmallBank[
-                                                                    //           index]
-                                                                    //       .id,
-                                                                    // );
+                                                                    await Provider.of<TransactionsController>(
+                                                                            context,
+                                                                            listen:
+                                                                                false)
+                                                                        .deletSmallbank(
+                                                                      accountsController
+                                                                          .mySmallBank[
+                                                                              index]
+                                                                          .id,
+                                                                    );
                                                                     Navigator.pop(
                                                                         context);
                                                                     snackBar(
@@ -204,7 +212,7 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                     height: defaultPadding,
                   ),
                   Text(
-                    'الرصيد بالدولار',
+                    widget.isBank != "C" ? 'الرصيد بالدولار' : "المبلغ بالريال",
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
                   Row(

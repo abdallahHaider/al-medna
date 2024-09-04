@@ -1,3 +1,5 @@
+import 'package:admin/models/trap.dart';
+
 class Transactions {
   Transactions({
     required this.id,
@@ -7,6 +9,7 @@ class Transactions {
     // required this.tSmallBank,
     required this.costUsd,
     required this.costIqd,
+    required this.costRAS,
     required this.senderName,
     required this.getterName,
     required this.numberKade,
@@ -21,6 +24,7 @@ class Transactions {
   // final dynamic tSmallBank;
   final dynamic costUsd;
   final dynamic costIqd;
+  final dynamic costRAS;
   final String? senderName;
   final String? getterName;
   final String? numberKade;
@@ -36,6 +40,7 @@ class Transactions {
       // tSmallBank: json["t_small_bank"],
       costUsd: json["cost_USD"] ?? "",
       costIqd: json["cost_IQD"] ?? "",
+      costRAS: formatPrice(json["cost_RAS"]),
       senderName: json["sender_name"],
       getterName: json["getter_name"],
       numberKade: json["number_kade"],

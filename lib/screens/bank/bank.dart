@@ -67,7 +67,7 @@ class _BankPageState extends State<BankPage> {
                                           .getWidet(AcconuntProfael_page(
                                         id: accountsController.banks[index].id
                                             .toString(),
-                                        isBank: true,
+                                        isBank: "B",
                                       ));
                                     },
                                     child: Text(accountsController

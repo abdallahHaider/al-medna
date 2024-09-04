@@ -13,7 +13,6 @@ class ActionBankCard extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final _namberKedeController = TextEditingController();
   final _costController = TextEditingController();
-  // final _dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

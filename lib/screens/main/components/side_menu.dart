@@ -1,6 +1,7 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/accounts/accounts_page.dart';
 import 'package:admin/screens/bank/bank.dart';
+import 'package:admin/screens/campany/campany_page.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/wallet/wallet_page.dart';
 import 'package:admin/screens/widgets/action_bank_card.dart';
@@ -101,6 +102,14 @@ class SideMenu extends StatelessWidget {
             press: () {
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(ActionBankCard());
+            },
+          ),
+          DrawerListTile(
+            title: "الشركات ",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(CampanyPage());
             },
           ),
         ],

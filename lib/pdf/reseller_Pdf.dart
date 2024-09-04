@@ -136,8 +136,7 @@ Future<void> ResellerToPdf(
                     ),
                     pw.Padding(
                       padding: pw.EdgeInsets.symmetric(horizontal: 5),
-                      child: pw.Text(
-                          ispay ? "" : traps[index].price.toStringAsFixed(2),
+                      child: pw.Text(ispay ? "" : traps[index].price,
                           textDirection: pw.TextDirection.rtl),
                     ),
                     pw.Padding(
