@@ -281,7 +281,6 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.money),
                       Consumer<CompanyController>(
                         builder: (context, storage, child) {
                           return Text(
@@ -305,7 +304,6 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.attach_money),
                       Consumer<CompanyController>(
                         builder: (context, storage, child) {
                           return Text(
@@ -322,18 +320,17 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                     height: defaultPadding,
                   ),
                   Text(
-                    'مجموع الفنادق',
+                    'مجموع حساب الفنادق',
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.attach_money),
                       Consumer<CompanyController>(
                         builder: (context, storage, child) {
                           return Text(
-                            '${storage.total_room_price_per_night}',
+                            '${storage.total_room_price_per_night}ر.ع',
                             style: TextStyle(
                               fontSize: 20,
                             ),

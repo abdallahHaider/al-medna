@@ -46,3 +46,4 @@ app.*.map.json
 /android/app/release
 pubspec.lock
 macos/Flutter/GeneratedPluginRegistrant.swift
+lib/screens/campany/company_profiel.dart
