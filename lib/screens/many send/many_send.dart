@@ -175,7 +175,7 @@ class _AddPayState extends State<AddPay> {
                       border: OutlineInputBorder(),
                     ),
                     // value: TypeAction.actions.isEmpty ? null : null,
-                    items: TypeAction.actions.map((dynamic toElement) {
+                    items: TypeAction4.actions.map((dynamic toElement) {
                       return DropdownMenuItem(
                         child: Text(toElement.name),
                         value: toElement,

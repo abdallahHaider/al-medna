@@ -10,6 +10,18 @@ class TypeAction {
       ];
 }
 
+class TypeAction4 {
+  final String name;
+  final String id;
+
+  TypeAction4({required this.name, required this.id});
+
+  static List<TypeAction4> get actions => [
+        TypeAction4(name: 'وارد', id: 'pay'),
+        TypeAction4(name: 'صادر', id: 'debt'),
+      ];
+}
+
 class TypeAction2 {
   final String name;
   final String id;
