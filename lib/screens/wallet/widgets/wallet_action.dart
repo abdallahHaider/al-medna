@@ -202,6 +202,7 @@ class _WalletActionState extends State<WalletAction> {
         child: ElevatedButton(
           onPressed: () {
             Provider.of<WalletProvider>(context, listen: false).Addpay(
+              false,
               type,
               "0",
               ownerController.text,

@@ -85,4 +85,25 @@ class TransactionsController extends ChangeNotifier {
       throw "حصل خطا في ارسال البيانات";
     }
   }
+
+  Future SendLocalPay(String id, String amount, String name) async {
+    Response x;
+    try {
+      x = await postApi("/api/transactions/create/company", {
+        "company_id": id,
+        "sender_name": name,
+        "cost_RAS": amount,
+      });
+      if (x.statusCode == 200 || x.statusCode == 201) {
+        getCompany(id);
+        // notifyListeners();
+      } else {
+        print(x.body);
+        throw jsonDecode(x.body);
+      }
+    } catch (e) {
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    }
+  }
 }

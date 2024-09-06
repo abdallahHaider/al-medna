@@ -18,7 +18,7 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   @override
   void initState() {
-    Provider.of<WalletProvider>(context, listen: false).getWallet();
+    Provider.of<WalletProvider>(context, listen: false).getWallet(false);
     super.initState();
   }
 
@@ -76,7 +76,7 @@ class _WalletPageState extends State<WalletPage> {
                                   onPressed: () {
                                     Provider.of<WalletProvider>(context,
                                             listen: false)
-                                        .getPage(-1);
+                                        .getPage(-1, false);
                                   },
                                   child: Text("الصفحة السابقة")),
                               Consumer<WalletProvider>(
@@ -87,7 +87,7 @@ class _WalletPageState extends State<WalletPage> {
                                   onPressed: () {
                                     Provider.of<WalletProvider>(context,
                                             listen: false)
-                                        .getPage(1);
+                                        .getPage(1, false);
                                   },
                                   child: Text("الصفحة التالية")),
                               Expanded(child: SizedBox()),

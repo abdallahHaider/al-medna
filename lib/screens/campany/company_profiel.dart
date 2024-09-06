@@ -274,29 +274,6 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                     height: defaultPadding,
                   ),
                   Text(
-                    'المجموع الكلي',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${storage.total}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: defaultPadding,
-                  ),
-                  Text(
                     'مجموع التاشيرات',
                     style: TextStyle(fontSize: 18, color: Colors.grey),
                   ),
@@ -338,6 +315,29 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                         },
                       ),
                     ],
+                  ),
+                  Text(
+                    'المجموع الكلي',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Consumer<CompanyController>(
+                        builder: (context, storage, child) {
+                          return Text(
+                            '${storage.total}',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
                   ),
                 ],
               ),

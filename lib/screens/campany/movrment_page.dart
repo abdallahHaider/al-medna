@@ -181,23 +181,23 @@ class _MovementPageState extends State<MovementPage> {
                       _nameController.text.isNotEmpty
                           ? _nameController.text
                           : "0",
-                      _numberTController.text.isNotEmpty
-                          ? _numberTController.text
-                          : "0",
                       _cosrTController.text.isNotEmpty
                           ? _cosrTController.text
                           : "0",
+                      _numberTController.text.isNotEmpty
+                          ? _numberTController.text
+                          : "0",
                       _hotelNameController.text.isNotEmpty
                           ? _hotelNameController.text
-                          : "0",
-                      _roomController.text.isNotEmpty
-                          ? _roomController.text
                           : "0",
                       _numberdayController.text.isNotEmpty
                           ? _numberdayController.text
                           : "0",
                       _costdayController.text.isNotEmpty
                           ? _costdayController.text
+                          : "0",
+                      _roomController.text.isNotEmpty
+                          ? _roomController.text
                           : "0",
                       _dadeController.text.isNotEmpty
                           ? _dadeController.text

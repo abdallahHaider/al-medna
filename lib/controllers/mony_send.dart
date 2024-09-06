@@ -8,7 +8,7 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:spelling_number/spelling_number.dart';
 
-class WalletProvider extends ChangeNotifier {
+class MonySend extends ChangeNotifier {
   bool isError = false;
   String errorMessage = '';
   String numberWord = "";
@@ -24,15 +24,11 @@ class WalletProvider extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> getWallet(bool isSafeDoc) async {
+  Future<void> getWallet() async {
     isLoading = true;
     // notifyListeners();
     try {
-      var x = await getpi(
-          "/api/safe_doc/index${isSafeDoc ? "/non" : ""}?page=$page");
-      if (x.statusCode != 200) {
-        print(x.body);
-      }
+      var x = await getpi("/api/safe_doc/index?page=$page");
       var data = jsonDecode(x.body);
       wallets =
           data["data"]["data"].map((json) => Safe.fromJson(json)).toList();
@@ -49,13 +45,12 @@ class WalletProvider extends ChangeNotifier {
     }
   }
 
-  Future Addpay(bool isSafeDoc, String type, String numberKade, String owner,
-      String costIQD, String costUSD, String note, BuildContext context) async {
+  Future Addpay(String type, String numberKade, String owner, String costIQD,
+      String costUSD, String note, BuildContext context) async {
     SmartDialog.showLoading();
     http.Response x;
     try {
       x = await postApi("/api/safe_doc/create", {
-        "is_safeDoc": isSafeDoc,
         "type": type,
         "number_kade": numberKade,
         "owner": owner,
@@ -67,16 +62,10 @@ class WalletProvider extends ChangeNotifier {
         "note": note,
       });
       if (x.statusCode == 200) {
-        // notifyListeners();
-        if (isSafeDoc) {
-          getWallet(true);
-        } else {
-          getWallet(false);
-        }
-
+        notifyListeners();
+        getWallet();
         snackBar(context, "تمت العملية بنجاح", false);
       } else {
-        print(x.body);
         snackBar(context, jsonDecode(x.body)["message"], true);
       }
     } catch (e) {
@@ -88,18 +77,14 @@ class WalletProvider extends ChangeNotifier {
     }
   }
 
-  Future deletWallet(bool isSafeDoc, int id, BuildContext context) async {
+  Future deletWallet(int id, BuildContext context) async {
     SmartDialog.showLoading();
     http.Response x;
     try {
       x = await postApi("/api/safe_doc/delete", {"safe_id": id});
       print(x.body);
       if (x.statusCode == 200) {
-        if (isSafeDoc) {
-          getWallet(true);
-        } else {
-          getWallet(false);
-        }
+        getWallet();
         notifyListeners();
         snackBar(context, "تمت الحذف بنجاح", false);
         Navigator.pop(context);
@@ -131,14 +116,10 @@ class WalletProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getPage(int lockage, bool isSafeDoc) {
+  void getPage(int lockage) {
     if (page > 0) {
       page = page + lockage;
-      if (isSafeDoc) {
-        getWallet(true);
-      } else {
-        getWallet(false);
-      }
+      getWallet();
     }
   }
 }

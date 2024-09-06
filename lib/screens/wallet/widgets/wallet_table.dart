@@ -84,6 +84,7 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
                                                             context,
                                                             listen: false)
                                                         .deletWallet(
+                                                            false,
                                                             controller
                                                                 .wallets[index]
                                                                 .id,

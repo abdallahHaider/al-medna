@@ -1,4 +1,5 @@
 import 'package:admin/controllers/transactions.dart';
+import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -232,12 +233,86 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                       ),
                     ],
                   ),
+
+                  if (widget.isBank == "C")
+                    LoclPay(
+                      id: widget.id,
+                    )
                 ],
               ),
             ),
           ),
         ),
       ],
+    );
+  }
+}
+
+class LoclPay extends StatelessWidget {
+  LoclPay({
+    super.key,
+    required this.id,
+  });
+  final String id;
+  final costController = TextEditingController();
+  final senderController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 40,
+          ),
+          Divider(),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'سداد مباشر',
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          MyTextField(
+            controller: senderController,
+            labelText: "اسم المرسل",
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          MyTextField(
+            controller: costController,
+            labelText: "المبلغ بالريال",
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ElevatedButton(
+              onPressed: () async {
+                try {
+                  SmartDialog.showLoading();
+                  await Provider.of<TransactionsController>(context,
+                          listen: false)
+                      .SendLocalPay(
+                          id, costController.text, senderController.text);
+                  snackBar(context, "تم الاضافة بنجاح", false);
+                  costController.clear();
+                  senderController.clear();
+                } catch (e) {
+                  print(e);
+                  snackBar(context, e.toString(), true);
+                } finally {
+                  SmartDialog.dismiss();
+                }
+              },
+              child: Text("اضافة"))
+        ],
+      ),
     );
   }
 }
