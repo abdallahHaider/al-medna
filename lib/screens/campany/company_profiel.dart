@@ -339,6 +339,52 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                   SizedBox(
                     height: defaultPadding,
                   ),
+                  Text(
+                    'المجموع التسديد',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Consumer<CompanyController>(
+                        builder: (context, storage, child) {
+                          return Text(
+                            '${storage.pay}',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
+                  Text(
+                    'المجموع المتبقي',
+                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Consumer<CompanyController>(
+                        builder: (context, storage, child) {
+                          return Text(
+                            '${storage.rest}',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: defaultPadding,
+                  ),
                 ],
               ),
             ),

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:admin/models/trap.dart';
+
 TrapPay trapPayFromJson(String str) => TrapPay.fromJson(json.decode(str));
 
 String trapPayToJson(TrapPay data) => json.encode(data.toJson());
@@ -12,7 +14,7 @@ class TrapPay {
   int? id;
   String? resellerId;
   String? payNumber;
-  double? cost;
+  String? cost;
   double? rasToUsd;
   double? iqdToUsd;
   double? nowdebt;
@@ -33,7 +35,7 @@ class TrapPay {
         id: json["id"],
         resellerId: json["reseller_id"],
         payNumber: json["pay_number"],
-        cost: double.parse(json["cost"].toString()),
+        cost: formatPrice(json["cost"]),
         rasToUsd: double.tryParse(json["RAS_to_USD"].toString()),
         iqdToUsd: double.parse(json["IQD_to_USD"].toString()),
         nowdebt: double.parse(json["now_debt"].toString()),

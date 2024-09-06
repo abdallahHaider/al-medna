@@ -1,6 +1,7 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/accounts/accounts_page.dart';
 import 'package:admin/screens/bank/bank.dart';
+import 'package:admin/screens/budget/budget_page.dart';
 import 'package:admin/screens/campany/campany_page.dart';
 import 'package:admin/screens/many%20send/many_send.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
@@ -119,6 +120,14 @@ class SideMenu extends StatelessWidget {
             press: () {
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(ManySendPage());
+            },
+          ),
+          DrawerListTile(
+            title: "الميزانية ",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(BudgetPage());
             },
           ),
         ],

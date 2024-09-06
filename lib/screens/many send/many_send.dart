@@ -1,10 +1,7 @@
-import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/models/action.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/many%20send/many_taybl.dart';
-import 'package:admin/screens/wallet/widgets/wallet_action.dart';
-import 'package:admin/screens/wallet/widgets/wallet_table.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
@@ -131,15 +128,24 @@ class _ManySendPageState extends State<ManySendPage> {
   }
 }
 
-class AddPay extends StatelessWidget {
+class AddPay extends StatefulWidget {
   AddPay({
     super.key,
   });
 
+  @override
+  State<AddPay> createState() => _AddPayState();
+}
+
+class _AddPayState extends State<AddPay> {
   final TextEditingController costUSD = TextEditingController();
+
   final TextEditingController costDIQ = TextEditingController();
+
   final TextEditingController description = TextEditingController();
+
   final TextEditingController name = TextEditingController();
+
   String type = "";
 
   @override

@@ -12,6 +12,8 @@ class CompanyController extends ChangeNotifier {
   String total_price_t = "";
   String total_room_price_per_night = "";
   String total = "";
+  String pay = "";
+  String rest = "";
   int page = 1;
 
   Future getCompanys() async {
@@ -87,6 +89,8 @@ class CompanyController extends ChangeNotifier {
       total_price_t = data["total_price_t"].toString();
       total_room_price_per_night =
           data["total_room_price_per_night"].toString();
+      pay = data["pay"].toString();
+      rest = data["rest"].toString();
 
       myCompanys = data["data"].map((json) => Companyy.fromJson(json)).toList();
       notifyListeners();
