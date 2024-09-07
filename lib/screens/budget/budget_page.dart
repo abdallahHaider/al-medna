@@ -21,81 +21,195 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Header(title: "الميزانية"),
-        ),
-        Expanded(
-          child: Row(
+      backgroundColor: const Color(0xFFF3F3F3),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(100),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
+              Header(title: "الميزانية"),
+              const SizedBox(height: 20),
+              Consumer<BudgetController>(builder: (context, watch, child) {
+                if (watch.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                return Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: buildCapitalContainer(
+                              "رأس المال بل دولار", context, "usd"),
+                        ),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: buildCapitalContainer(
+                              "رأس المال بل دينار", context, "iqd"),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            child: buildTableContainer(
+                                context,
+                                " جدول الميزانية بل دولار",
+                                "additional",
+                                names_usd),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            child: buildTableContainer(
+                                context,
+                                " جدول الميزانية بل دينار",
+                                "additional_iqd",
+                                names_iqd),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
-                ),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const Text(
-                    "الاحمالي بالدولار",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(height: 10),
-                  Consumer<BudgetController>(
-                      builder: (context, watch, child) => Text(
-                            "${watch.budget["usd"].toString()}",
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          )),
-                  const SizedBox(height: 10),
-                ]),
-              ),
-              Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(100),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
-                ),
-                child: Column(mainAxisSize: MainAxisSize.min, children: [
-                  const Text(
-                    "الاحمالي بالدينار",
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(height: 10),
-                  Consumer<BudgetController>(
-                      builder: (context, watch, child) => Text(
-                            "${watch.budget["iqd"].toString()}",
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          )),
-                  const SizedBox(height: 10),
-                ]),
-              )
+                );
+              }),
             ],
           ),
         ),
-      ]),
+      ),
+    );
+  }
+
+  Widget buildCapitalContainer(
+      String title, BuildContext context, String currency) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Container(
+        padding: const EdgeInsets.all(30),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.blue.shade400],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Consumer<BudgetController>(builder: (context, watch, child) {
+              double currencyValue = (watch.budget[currency] is int)
+                  ? (watch.budget[currency] as int).toDouble()
+                  : watch.budget[currency] ?? 0.0;
+
+              return Text(
+                currencyValue.toStringAsFixed(2),
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTableContainer(BuildContext context, String tableName,
+      String additionalKey, List<String> names) {
+    return Card(
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              tableName,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Consumer<BudgetController>(builder: (context, watch, child) {
+              List<Map<String, dynamic>> additionalData =
+                  (watch.budget[additionalKey] as List)
+                      .map((item) => Map<String, dynamic>.from(item))
+                      .toList();
+
+              return DataTable(
+                columnSpacing: 20.0,
+                headingTextStyle: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
+                columns: const [
+                  DataColumn(label: Text('ت')),
+                  DataColumn(label: Text('الاسم')),
+                  DataColumn(label: Text('النوع')),
+                  DataColumn(label: Text('المبلغ')),
+                ],
+                rows: List.generate(
+                  additionalData.length,
+                  (index) {
+                    String key = additionalData[index].keys.first;
+                    dynamic value = additionalData[index][key];
+
+                    double amount = (value is int) ? value.toDouble() : value;
+
+                    return DataRow(cells: [
+                      DataCell(Text((index + 1).toString())),
+                      DataCell(Text(names[index])),
+                      DataCell(Text(amount <= 0 ? "دائن" : "مدين")),
+                      DataCell(Text(amount.abs().toStringAsFixed(2))),
+                    ]);
+                  },
+                ),
+              );
+            }),
+          ],
+        ),
+      ),
     );
   }
 }
+
+List<String> names_usd = [
+  'الرحلات',
+  'الخزنه',
+  'شركات السعودي',
+  'المصارف',
+  'البنوك',
+];
+
+List<String> names_iqd = [
+  'الخزنه',
+  'المصارف',
+  'البنوك',
+];

@@ -11,9 +11,9 @@ class CompanyController extends ChangeNotifier {
 
   String total_price_t = "";
   String total_room_price_per_night = "";
-  String total = "";
-  String pay = "";
-  String rest = "";
+  String total = "0";
+  String pay = "0";
+  String rest = "0";
   int page = 1;
 
   Future getCompanys() async {
