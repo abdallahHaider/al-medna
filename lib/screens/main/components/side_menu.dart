@@ -3,6 +3,7 @@ import 'package:admin/screens/accounts/accounts_page.dart';
 import 'package:admin/screens/bank/bank.dart';
 import 'package:admin/screens/budget/budget_page.dart';
 import 'package:admin/screens/campany/campany_page.dart';
+import 'package:admin/screens/hotel/hotel_page.dart';
 import 'package:admin/screens/many%20send/many_send.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/wallet/wallet_page.dart';
@@ -130,7 +131,14 @@ class SideMenu extends StatelessWidget {
                   .getWidet(BudgetPage());
             },
           ),
-          
+          DrawerListTile(
+            title: "الفنادق",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(HotelPage());
+            },
+          ),
         ],
       ),
     );

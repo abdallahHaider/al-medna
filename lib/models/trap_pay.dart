@@ -17,7 +17,7 @@ class TrapPay {
   String? cost;
   double? rasToUsd;
   double? iqdToUsd;
-  double? nowdebt;
+  String? nowdebt;
   DateTime? createdAt;
 
   TrapPay({
@@ -38,7 +38,7 @@ class TrapPay {
         cost: formatPrice(json["cost"]),
         rasToUsd: double.tryParse(json["RAS_to_USD"].toString()),
         iqdToUsd: double.parse(json["IQD_to_USD"].toString()),
-        nowdebt: double.parse(json["now_debt"].toString()),
+        nowdebt: formatPrice(json["now_debt"]),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),

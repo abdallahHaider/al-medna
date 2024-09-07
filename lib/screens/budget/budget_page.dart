@@ -20,7 +20,6 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF3F3F3),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
