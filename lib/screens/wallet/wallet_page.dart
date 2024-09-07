@@ -32,145 +32,150 @@ class _WalletPageState extends State<WalletPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Header(title: "الخزنة"),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                    flex: 2,
-                    child: Column(
+        child: Column(
+          children: [
+            // Header
+            Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Header(title: "الخزنة"),
+            ),
+
+            // Wallet balance section moved to the top
+            Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Card(
+                elevation: 5,
+                color: secondaryColor,
+                child: SizedBox(
+                  height: 100,
+                  child: Consumer<WalletProvider>(
+                      builder: (context, walletProvider, child) {
+                    return Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(defaultPadding),
-                          child: Row(
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        WidgetStateProperty.all(primaryColor),
-                                    shape: WidgetStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                    ),
-                                    foregroundColor:
-                                        WidgetStateProperty.all(Colors.white),
-                                  ),
-                                  onPressed: () {
-                                    Provider.of<Rootwidget>(context,
-                                            listen: false)
-                                        .getWidet(WalletAction());
-                                  },
-                                  child: Text("اضافة عملية")),
-                              Expanded(
-                                child: SizedBox(),
+                              Text(
+                                "الرصيد الحالي في الخزنة بالدينار",
+                                style: TextStyle(fontSize: 16),
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    Provider.of<WalletProvider>(context,
-                                            listen: false)
-                                        .getPage(-1, false);
-                                  },
-                                  child: Text("الصفحة السابقة")),
-                              Consumer<WalletProvider>(
-                                  builder: (context, walletProvider, child) {
-                                return Text("الصفحة : ${walletProvider.page}");
-                              }),
-                              TextButton(
-                                  onPressed: () {
-                                    Provider.of<WalletProvider>(context,
-                                            listen: false)
-                                        .getPage(1, false);
-                                  },
-                                  child: Text("الصفحة التالية")),
-                              Expanded(child: SizedBox()),
+                              Text(
+                                "${walletProvider.wallet_IQD} دينار",
+                                style: TextStyle(fontSize: 24),
+                              ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: defaultPadding,
-                        ),
-                        Consumer<WalletProvider>(
-                          builder: (context, controller, child) {
-                            if (controller.isLoading) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            } else if (controller.isError) {
-                              // print(s)
-                              return Center(child: MyErrorWidget());
-                            } else {
-                              return walletTable(controller, context);
-                            }
-                          },
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "الرصيد الحالي في الخزنة بالدولار",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                "${walletProvider.wallet_USD} دولار",
+                                style: TextStyle(fontSize: 24),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    )),
-                SizedBox(
-                  width: defaultPadding,
+                    );
+                  }),
                 ),
-                Expanded(
-                  // child: WalletAction(),
-                  child: Card(
-                    elevation: 5,
-                    color: secondaryColor,
-                    child: SizedBox(
-                      height: 500,
-                      child: Consumer<WalletProvider>(
-                          builder: (context, walletProvider, child) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "الرصيد الحالي في الخزنة بالدينار",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  Text(
-                                    "${walletProvider.wallet_IQD} دينار",
-                                    style: TextStyle(fontSize: 24),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "الرصيد الحالي في الخزنة بالدولار",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  Text(
-                                    "${walletProvider.wallet_USD} دولار",
-                                    style: TextStyle(fontSize: 24),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
-                  ),
-                ),
-              ],
+              ),
             ),
-          )
-        ]),
+
+            // Rest of the content
+            Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(
+                      flex: 1,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(defaultPadding),
+                            child: Row(
+                              children: [
+                                ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          WidgetStateProperty.all(primaryColor),
+                                      shape: WidgetStateProperty.all(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                      ),
+                                      foregroundColor:
+                                          WidgetStateProperty.all(Colors.white),
+                                    ),
+                                    onPressed: () {
+                                      Provider.of<Rootwidget>(context,
+                                              listen: false)
+                                          .getWidet(WalletAction());
+                                    },
+                                    child: Text("اضافة عملية")),
+                                Expanded(
+                                  child: SizedBox(),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Provider.of<WalletProvider>(context,
+                                              listen: false)
+                                          .getPage(-1, false);
+                                    },
+                                    child: Text("الصفحة السابقة")),
+                                Consumer<WalletProvider>(
+                                    builder: (context, walletProvider, child) {
+                                  return Text(
+                                      "الصفحة : ${walletProvider.page}");
+                                }),
+                                TextButton(
+                                    onPressed: () {
+                                      Provider.of<WalletProvider>(context,
+                                              listen: false)
+                                          .getPage(1, false);
+                                    },
+                                    child: Text("الصفحة التالية")),
+                                Expanded(child: SizedBox()),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: defaultPadding,
+                          ),
+                          Consumer<WalletProvider>(
+                            builder: (context, controller, child) {
+                              if (controller.isLoading) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              } else if (controller.isError) {
+                                return Center(child: MyErrorWidget());
+                              } else {
+                                return walletTable(controller, context);
+                              }
+                            },
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

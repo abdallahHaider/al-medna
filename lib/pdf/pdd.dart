@@ -105,7 +105,7 @@ Future<void> generatePdfWeb(
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();
-  final file = File("${output.path}/$name.pdf");
+  final file = File("${output.path}/${name+DateTime.now().second.toString()}.pdf");
   await file.writeAsBytes(await pdf.save());
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");

@@ -109,7 +109,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                     width: 50,
                   ),
                   Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                       crossAxisAlignment: CrossAxisAlignment.center,
                        mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
