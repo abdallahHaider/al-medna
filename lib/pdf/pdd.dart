@@ -6,7 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Future<void> generatePdfWeb(
-    String name, double cost, String id, String dede, double totleCost) async {
+    String name, String cost, String id, String dede, double totleCost) async {
   final pdf = pw.Document();
   final fonddata = await rootBundle.load("assets/fonts/Cairo-Light.ttf");
   final costmfond = pw.Font.ttf(fonddata);
@@ -52,7 +52,7 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 250,
             bottom: 100 + size,
-            child: pw.Text((totleCost + cost).toString(),
+            child: pw.Text((totleCost + double.parse(cost)).toString(),
                 textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 340,
@@ -84,7 +84,7 @@ Future<void> generatePdfWeb(
         pw.Positioned(
             right: 250,
             bottom: 100,
-            child: pw.Text((totleCost + cost).toString(),
+            child: pw.Text((totleCost + double.parse(cost)).toString(),
                 textDirection: pw.TextDirection.rtl)),
         pw.Positioned(
             right: 340,
@@ -105,7 +105,8 @@ Future<void> generatePdfWeb(
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();
-  final file = File("${output.path}/${name+DateTime.now().second.toString()}.pdf");
+  final file =
+      File("${output.path}/${name + DateTime.now().second.toString()}.pdf");
   await file.writeAsBytes(await pdf.save());
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");

@@ -3,6 +3,7 @@ import 'package:admin/pdf/pdd.dart';
 import 'package:admin/screens/trap%20pay/widgets/deletPay.dart';
 import 'package:admin/screens/trap%20pay/widgets/edit_pay.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -104,8 +105,13 @@ Consumer<TrapPayController> dataTibel() {
                                                         .substring(0, 10),
                                                     snapshot
                                                         .data![index].nowdebt);
-                                              } catch (e) {}
-                                              SmartDialog.dismiss();
+                                              } catch (e) {
+                                                print(e);
+                                                snackBar(context, e.toString(),
+                                                    true);
+                                              } finally {
+                                                SmartDialog.dismiss();
+                                              }
                                             },
                                             child: Text("طباعة الفاتورة")),
                                       ),
