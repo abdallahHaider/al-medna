@@ -83,14 +83,15 @@ class CompanyController extends ChangeNotifier {
     Response x;
     try {
       x = await getpi("/api/company_program/index?page=$page&id=$id");
+      // print(x.body);
       var data = jsonDecode(x.body);
-      print(x.body);
+
       total = data["total"].toString();
       total_price_t = data["total_price_t"].toString();
       total_room_price_per_night =
           data["total_room_price_per_night"].toString();
       pay = data["pay"].toString();
-      // rest = data["rest"].toString();
+      rest = data["rest"].toString();
 
       myCompanys = data["data"].map((json) => Companyy.fromJson(json)).toList();
       notifyListeners();
@@ -98,6 +99,7 @@ class CompanyController extends ChangeNotifier {
       print(e);
       throw "حصل خطا في ارسال البيانات";
     }
+    // print(x.body);
   }
 
   Future addMove(
@@ -118,7 +120,7 @@ class CompanyController extends ChangeNotifier {
         "group_number": group_number,
         "number_t": number_t,
         "price_t": price_t,
-        "hotel_name": hotel_name,
+        "hotel_id": hotel_name,
         "rooms": rooms,
         "nights": nights,
         "room_price_per_night": room_price_per_night,

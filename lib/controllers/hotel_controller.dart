@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
+import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/models/reseller.dart';
+// import 'package:admin/screens/hotel/hotel_profile.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -9,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 class HotelController extends ChangeNotifier {
   List hotels = [];
+  List hotelbuy = [];
 
   Future<List> fetchData() async {
     // Simulate fetching data (replace with your actual logic)
@@ -16,11 +19,13 @@ class HotelController extends ChangeNotifier {
 
     try {
       var x = await getpi("/api/hotel/index");
+      print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
       return resellers;
     } catch (e) {
+      print("11111111111111111111");
       print(e);
       throw "jjj";
     }
@@ -53,17 +58,18 @@ class HotelController extends ChangeNotifier {
         "address": address,
         "phone_number": phone_number,
       });
-      notifyListeners();
-      //  Navigator.pop(context);
 
-      snackBar(context, "تم اضافة الفندق بنجاح", false);
+      //  Navigator.pop(context);
     } catch (e) {
       snackBar(context, e.toString(), false);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
+    print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
     }
@@ -74,22 +80,38 @@ class HotelController extends ChangeNotifier {
     try {
       SmartDialog.showLoading();
       x = await postApi("/api/hotel/delete", {
-        "hotel_id": id,
+        "id": id,
       });
-      notifyListeners();
-      Navigator.pop(context);
-      notifyListeners();
-
-      snackBar(context, "تم حذف الفندق بنجاح", false);
     } catch (e) {
       snackBar(context, e.toString(), true);
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
+    print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      Navigator.pop(context);
+      snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future getHotelBuy(id) async {
+    // Simulate fetching data (replace with your actual logic)
+    // await Future.delayed(Duration(seconds: 1));
+
+    try {
+      var x = await getpi("/api/hotel_tick/index?hotel_id=$id");
+      print(x.body);
+      var data = jsonDecode(x.body);
+      hotelbuy = data["data"].map((json) => HotelBuy.fromJson(json)).toList();
+      print(x.body);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw "jjj";
     }
   }
 }

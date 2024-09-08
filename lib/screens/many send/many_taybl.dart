@@ -1,4 +1,5 @@
 import 'package:admin/controllers/wallet_provider.dart';
+import 'package:admin/screens/widgets/show_note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,8 +46,23 @@ Widget manyTaybel(WalletProvider controller, BuildContext context) {
                         DataCell(Text(controller.wallets[index].createdAt
                             .toString()
                             .substring(0, 10))),
-                        DataCell(
-                            Text(controller.wallets[index].note.toString())),
+                        DataCell(TextButton(
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (
+                                    BuildContext context,
+                                  ) {
+                                    return ShowNote(
+                                        title: controller.wallets[index].owner,
+                                        note: controller.wallets[index].note);
+                                  });
+                            },
+                            child: Text(
+                                controller.wallets[index].note.length >= 10
+                                    ? controller.wallets[index].note
+                                        .substring(0, 10)
+                                    : controller.wallets[index].note))),
                         DataCell(IconButton(
                             onPressed: () {
                               showDialog(

@@ -1,4 +1,6 @@
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/hotel/hotel_profile.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
@@ -20,10 +22,16 @@ class _HotelPageState extends State<HotelPage> {
 
   final phoneController = TextEditingController();
 
+  // @override
+  // void dispose() {
+  //   Provider.of<HotelController>(context, listen: false).dispose();
+  //   super.dispose();
+  // }
+
   @override
-  void dispose() {
-    Provider.of<HotelController>(context, listen: false).dispose();
-    super.dispose();
+  void initState() {
+    Provider.of<HotelController>(context, listen: false).fetchData();
+    super.initState();
   }
 
   @override
@@ -82,12 +90,23 @@ class _HotelPageState extends State<HotelPage> {
                                           (index) {
                                         return DataRow(cells: [
                                           DataCell(
-                                            Text(
-                                              snapshot.data![index].fullName
-                                                  .toString(),
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
+                                            TextButton(
+                                              onPressed: () {
+                                                Provider.of<Rootwidget>(context,
+                                                        listen: false)
+                                                    .getWidet(HotelProfile(
+                                                  hotelId: snapshot
+                                                      .data![index].id
+                                                      .toString(),
+                                                ));
+                                              },
+                                              child: Text(
+                                                snapshot.data![index].fullName
+                                                    .toString(),
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.black,
+                                                ),
                                               ),
                                             ),
                                           ),

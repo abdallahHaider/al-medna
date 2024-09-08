@@ -1,18 +1,19 @@
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/pdf/safe_pdf.dart';
+import 'package:admin/screens/widgets/show_note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 Widget walletTable(WalletProvider controller, BuildContext context) {
   ScrollController scrollController = ScrollController();
   return SizedBox(
-    // width: double.maxFinite,
+    width: double.maxFinite,
     child: Card(
       color: Colors.white,
       child: Scrollbar(
         controller: scrollController,
         child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
+          // scrollDirection: Axis.horizontal,
           controller: scrollController,
           child: DataTable(
             columns: [
@@ -52,8 +53,28 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
                           DataCell(Text(controller.wallets[index].createdAt
                               .toString()
                               .substring(0, 10))),
-                          DataCell(
-                              Text(controller.wallets[index].note.toString())),
+                          DataCell(TextButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (
+                                      BuildContext context,
+                                    ) {
+                                      return ShowNote(
+                                        title: controller.wallets[index].owner
+                                            .toString(),
+                                        note: controller.wallets[index].note
+                                            .toString(),
+                                      );
+                                    });
+                              },
+                              child: Text(
+                                  controller.wallets[index].note.length >= 10
+                                      ? controller.wallets[index].note
+                                          .toString()
+                                          .substring(0, 10)
+                                      : controller.wallets[index].note
+                                          .toString()))),
                           DataCell(Row(
                             children: [
                               IconButton(

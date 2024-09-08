@@ -1,4 +1,5 @@
 import 'package:admin/controllers/company_controller.dart';
+import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class _MovementPageState extends State<MovementPage> {
 
   final _nameController = TextEditingController();
 
-  final _hotelNameController = TextEditingController();
+  // final _hotelNameController = TextEditingController();
 
   final _roomController = TextEditingController();
 
@@ -31,6 +32,7 @@ class _MovementPageState extends State<MovementPage> {
   final _costdayController = TextEditingController();
   final _dadeController = TextEditingController();
   DateTime? _selectedDate;
+  String trapid = "";
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +73,42 @@ class _MovementPageState extends State<MovementPage> {
               Row(
                 children: [
                   Expanded(
-                    child: MyTextField(
-                      controller: _hotelNameController,
-                      labelText: 'اسم الفندق',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter cost';
-                        }
+                    child: Consumer<HotelController>(
+                      builder: (BuildContext context, value, Widget? child) {
+                        return DropdownButtonFormField<dynamic>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: "الفندق",
+                          ),
+                          onChanged: (dynamic value) {
+                            // setState(() {
+                            trapid = value.id.toString();
+                            // });
+                          },
+                          items: value.hotels.map((dynamic companies) {
+                            return DropdownMenuItem<dynamic>(
+                              value: companies,
+                              child: Text(companies.fullName!),
+                            );
+                          }).toList(),
+                        );
                       },
                     ),
                   ),
+
+                  // Expanded(
+                  //   child: MyTextField(
+                  //     controller: _hotelNameController,
+                  //     labelText: 'اسم الفندق',
+                  //     validator: (value) {
+                  //       if (value!.isEmpty) {
+                  //         return 'Please enter cost';
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
                   SizedBox(
                     width: 16,
                   ),
@@ -187,9 +215,7 @@ class _MovementPageState extends State<MovementPage> {
                       _numberTController.text.isNotEmpty
                           ? _numberTController.text
                           : "0",
-                      _hotelNameController.text.isNotEmpty
-                          ? _hotelNameController.text
-                          : "0",
+                      trapid,
                       _numberdayController.text.isNotEmpty
                           ? _numberdayController.text
                           : "0",
