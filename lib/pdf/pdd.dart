@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:pdf/pdf.dart'; // لاستيراد PdfPageFormat
-import 'package:universal_html/html.dart';
+import 'package:pdf/pdf.dart';
+// import 'package:universal_html/html.dart';
 
 Future<void> generatePdfWeb(
-    String name, String cost, String id, String dede, String totleCost) async {
+    String name, String cost, String id, String date, String totalCost) async {
   final pdf = pw.Document();
 
   // تحميل الخط من assets
@@ -50,7 +53,7 @@ Future<void> generatePdfWeb(
           pw.Positioned(
               right: 70,
               bottom: 190 + size,
-              child: pw.Text(dede, textDirection: pw.TextDirection.rtl)),
+              child: pw.Text(date, textDirection: pw.TextDirection.rtl)),
           pw.Positioned(
               right: 95,
               bottom: 210 + size,
@@ -68,13 +71,13 @@ Future<void> generatePdfWeb(
               right: 300,
               bottom: 100 + size,
               child: pw.Text(
-                  (double.parse(totleCost) + double.parse(cost)).toString(),
+                  (double.parse(totalCost) + double.parse(cost)).toString(),
                   textDirection: pw.TextDirection.rtl)),
           pw.Positioned(
               right: 400,
               bottom: 100 + size,
               child:
-                  pw.Text("-$totleCost", textDirection: pw.TextDirection.rtl)),
+                  pw.Text("-$totalCost", textDirection: pw.TextDirection.rtl)),
 
           ///////////////////
           pw.Positioned(
@@ -85,7 +88,7 @@ Future<void> generatePdfWeb(
           pw.Positioned(
               right: 70,
               bottom: 228,
-              child: pw.Text(dede, textDirection: pw.TextDirection.rtl)),
+              child: pw.Text(date, textDirection: pw.TextDirection.rtl)),
           pw.Positioned(
               right: 95,
               bottom: 248,
@@ -103,35 +106,35 @@ Future<void> generatePdfWeb(
               right: 300,
               bottom: 110,
               child: pw.Text(
-                  (double.parse(totleCost) + double.parse(cost)).toString(),
+                  (double.parse(totalCost) + double.parse(cost)).toString(),
                   textDirection: pw.TextDirection.rtl)),
           pw.Positioned(
               right: 400,
               bottom: 110,
               child:
-                  pw.Text("-$totleCost", textDirection: pw.TextDirection.rtl)),
+                  pw.Text("-$totalCost", textDirection: pw.TextDirection.rtl)),
         ],
       ),
     ),
   );
 
-  // // حفظ ملف PDF في جهازك
-  // final output = await getTemporaryDirectory();
-  // final file =
-  //     File("${output.path}/${name + DateTime.now().second.toString()}.pdf");
-  // await file.writeAsBytes(await pdf.save());
+  // حفظ ملف PDF في جهازك
+  final output = await getTemporaryDirectory();
+  final file =
+      File("${output.path}/${name + DateTime.now().second.toString()}.pdf");
+  await file.writeAsBytes(await pdf.save());
 
-  // print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
+  print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
-  // // فتح ملف PDF باستخدام تطبيق خارجي
-  // await OpenFilex.open(file.path);
+  // فتح ملف PDF باستخدام تطبيق خارجي
+  await OpenFilex.open(file.path);
 
-  // حفظ ملف PDF على الويب
-  final bytes = await pdf.save();
-  final blob = Blob([bytes], 'application/pdf');
-  final url = Url.createObjectUrlFromBlob(blob);
-  final anchor = AnchorElement(href: url)
-    ..setAttribute("download", "example.pdf")
-    ..click();
-  Url.revokeObjectUrl(url);
+  // // حفظ ملف PDF على الويب
+  // final bytes = await pdf.save();
+  // final blob = Blob([bytes], 'application/pdf');
+  // final url = Url.createObjectUrlFromBlob(blob);
+  // final anchor = AnchorElement(href: url)
+  //   ..setAttribute("download", "example.pdf")
+  //   ..click();
+  // Url.revokeObjectUrl(url);
 }

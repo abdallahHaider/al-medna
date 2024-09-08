@@ -90,7 +90,7 @@ class CompanyController extends ChangeNotifier {
       total_room_price_per_night =
           data["total_room_price_per_night"].toString();
       pay = data["pay"].toString();
-      rest = data["rest"].toString();
+      // rest = data["rest"].toString();
 
       myCompanys = data["data"].map((json) => Companyy.fromJson(json)).toList();
       notifyListeners();

@@ -33,9 +33,8 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
-      
       children: [
-         Expanded(
+        Expanded(
           flex: 0,
           child: Card(
             elevation: 5,
@@ -50,179 +49,176 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                     width: 50,
                   ),
                   Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                    'مجموع التاشيرات',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${storage.total_price_t}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                    ],
-                  ),
-                  
-                  SizedBox(
-                    width: 50,
-                  ),
-                  Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
                       Text(
-                    'مجموع حساب الفنادق',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${storage.total_room_price_per_night}ر.ع',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
+                        'مجموع التاشيرات',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
-                    ],
-                  ),
-                    ],
-                  ),
-                      SizedBox(
-                    width: 50,
-                  ),
-                  Column(
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                    'المجموع الكلي',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${storage.total}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Consumer<CompanyController>(
+                            builder: (context, storage, child) {
+                              return Text(
+                                '${storage.total_price_t}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
                     ],
                   ),
                   SizedBox(
                     width: 50,
                   ),
                   Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                    'المجموع التسديد',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${storage.pay}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
+                        'مجموع حساب الفنادق',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
-                    ],
-                  ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Consumer<CompanyController>(
+                            builder: (context, storage, child) {
+                              return Text(
+                                '${storage.total_room_price_per_night}ر.ع',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                   SizedBox(
                     width: 50,
                   ),
                   Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                   Text(
-                    'المجموع المتبقي',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${storage.rest}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
+                      Text(
+                        'المجموع الكلي',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Consumer<CompanyController>(
+                            builder: (context, storage, child) {
+                              return Text(
+                                '${storage.total}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ],
-                  ),
-                 ],
                   ),
                   SizedBox(
                     width: 50,
                   ),
                   Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                       mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                       Text(
-                    'المجموع المتبقي بل الدولار',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
-                  ),
-                  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Consumer<CompanyController>(
-                        builder: (context, storage, child) {
-                          return Text(
-                            '${(double.parse(storage.rest)/3.72).toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          );
-                        },
+                      Text(
+                        'المجموع التسديد',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Consumer<CompanyController>(
+                            builder: (context, storage, child) {
+                              return Text(
+                                '${storage.pay}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),
-
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'المجموع المتبقي',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Consumer<CompanyController>(
+                            builder: (context, storage, child) {
+                              return Text(
+                                '${storage.rest}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                 
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'المجموع المتبقي بل الدولار',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Consumer<CompanyController>(
+                            builder: (context, storage, child) {
+                              return Text(
+                                '${(double.parse(storage.rest) / 3.72).toStringAsFixed(2)}',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     width: 50,
                   ),
@@ -236,232 +232,231 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
           child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
-                  width: double.maxFinite,
+                  // width: double.maxFinite,
                   child: Column(
+                children: [
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
                     children: [
                       SizedBox(
-                        height: 20,
+                        width: 20,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                Provider.of<Rootwidget>(context, listen: false)
-                                    .getWidet(MovementPage(
-                                  id: widget.id,
-                                ));
-                              },
-                              child: Text("اضافة حركة")),
-                          ElevatedButton(
-                              onPressed: () {
-                                Provider.of<Rootwidget>(context, listen: false)
-                                    .getWidet(AcconuntProfael_page(
-                                  id: widget.id,
-                                  isBank: "C",
-                                ));
-                              },
-                              child: Text("الحوالات")),
-                          Expanded(
-                            child: SizedBox(),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Provider.of<CompanyController>(context,
-                                        listen: false)
-                                    .updete(widget.id, -1);
-                              },
-                              child: Text("الصفحة السابقة")),
-                          Consumer(
-                            builder: (context,
-                                CompanyController companyController, child) {
-                              return Text(
-                                "الصفحة الحالية: ${companyController.page}",
-                              );
-                            },
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                Provider.of<CompanyController>(context,
-                                        listen: false)
-                                    .updete(widget.id, 1);
-                              },
-                              child: Text("الصفحة التالية")),
-                          Expanded(child: SizedBox()),
-                        ],
+                      ElevatedButton(
+                          onPressed: () {
+                            Provider.of<Rootwidget>(context, listen: false)
+                                .getWidet(MovementPage(
+                              id: widget.id,
+                            ));
+                          },
+                          child: Text("اضافة حركة")),
+                      ElevatedButton(
+                          onPressed: () {
+                            Provider.of<Rootwidget>(context, listen: false)
+                                .getWidet(AcconuntProfael_page(
+                              id: widget.id,
+                              isBank: "C",
+                            ));
+                          },
+                          child: Text("الحوالات")),
+                      Expanded(
+                        child: SizedBox(),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20,vertical: 20),
-                        width: double.infinity,
-                          color: Colors.white,
-                          child: Center(
-                            child: Consumer<CompanyController>(builder: (
-                              BuildContext context,
-                              accountsController,
-                              Widget? child,
-                              
-                            ) {
-                              return Scrollbar(
-                                controller: _scrollController,
-                                child: SingleChildScrollView(
-                                  controller: _scrollController,
-                                  scrollDirection: Axis.horizontal,
-                                  child: SingleChildScrollView(
-                                    scrollDirection: Axis.vertical,
-                                    child: DataTable(
-                                      columns: [
-                                        DataColumn(label: Text('المجموعة')),
-                                        DataColumn(label: Text('التاشيرة')),
-                                        DataColumn(label: Text('السعر')),
-                                        DataColumn(label: Text('السعر الكلي')),
-                                        DataColumn(label: Text('الفندق')),
-                                        DataColumn(label: Text('الغرف')),
-                                        DataColumn(label: Text('الليالي')),
-                                        DataColumn(label: Text('سعر غرفة')),
-                                        DataColumn(label: Text('الاجمالي')),
-                                        DataColumn(label: Text('التاريخ')),
-                                        DataColumn(label: Text('الاجراء')),
-                                      ],
-                                      rows: List.generate(
-                                          accountsController.myCompanys.length,
-                                          (index) => DataRow(cells: [
-                                                // DataCell(
-                                                //   Text(accountsController
-                                                //       .myCompanys[index].groupNumber
-                                                //       .toString()),
-                                                // ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index]
-                                                      .groupNumber
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index].numberT
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index].priceT
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index]
-                                                      .totalPriceT
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index].hotelName
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index].rooms
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index].nights
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index]
-                                                      .roomPricePerNight
-                                                      .toString()),
-                                                ),
-                                                DataCell(
-                                                  Text(accountsController
-                                                      .myCompanys[index]
-                                                      .totalPriceHotel
-                                                      .toString()),
-                                                ),
-                                                // DataCell(Text((index + 1).toString())),
-                                                DataCell(Text(accountsController
-                                                    .myCompanys[index].createdAt
-                                                    .toString()
-                                                    .substring(0, 10))),
-                                                DataCell(Row(
-                                                  children: [
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          showDialog(
-                                                              context: context,
-                                                              builder:
-                                                                  (BuildContext
-                                                                      context) {
-                                                                return AlertDialog(
-                                                                  title:
-                                                                      Text('حذف'),
-                                                                  content: Text(
-                                                                      'هل أنت متأكد من حذف هذا الصيرفة'),
-                                                                  actions: [
-                                                                    TextButton(
-                                                                      child: Text(
-                                                                          'لا'),
-                                                                      onPressed:
-                                                                          () {
-                                                                        Navigator.of(
-                                                                                context)
-                                                                            .pop();
-                                                                      },
-                                                                    ),
-                                                                    TextButton(
-                                                                        child: Text(
-                                                                            'نعم'),
-                                                                        onPressed:
-                                                                            () async {
-                                                                          try {
-                                                                            SmartDialog
-                                                                                .showLoading();
-                                                                            await Provider.of<CompanyController>(context, listen: false)
-                                                                                .deletCompanyPor(
-                                                                              accountsController.myCompanys[index].id,
-                                                                            );
-                                                                            Navigator.pop(
-                                                                                context);
-                                                                            snackBar(
-                                                                                context,
-                                                                                "تم الحذف بنجاح",
-                                                                                false);
-                                                                          } catch (e) {
-                                                                            print(
-                                                                                e);
-                                                                            snackBar(
-                                                                                context,
-                                                                                e.toString(),
-                                                                                true);
-                                                                          } finally {
-                                                                            SmartDialog
-                                                                                .dismiss();
-                                                                          }
-                                                                        }),
-                                                                  ],
-                                                                );
-                                                              });
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.delete_forever,
-                                                          color: Colors.red,
-                                                        ))
-                                                  ],
-                                                ))
-                                              ])),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }),
-                          )),
+                      TextButton(
+                          onPressed: () {
+                            Provider.of<CompanyController>(context,
+                                    listen: false)
+                                .updete(widget.id, -1);
+                          },
+                          child: Text("الصفحة السابقة")),
+                      Consumer(
+                        builder: (context, CompanyController companyController,
+                            child) {
+                          return Text(
+                            "الصفحة الحالية: ${companyController.page}",
+                          );
+                        },
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Provider.of<CompanyController>(context,
+                                    listen: false)
+                                .updete(widget.id, 1);
+                          },
+                          child: Text("الصفحة التالية")),
+                      Expanded(child: SizedBox()),
                     ],
-                  ))),
+                  ),
+                  Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      // width: double.infinity,
+                      color: Colors.white,
+                      child: Center(
+                        child: Consumer<CompanyController>(builder: (
+                          BuildContext context,
+                          accountsController,
+                          Widget? child,
+                        ) {
+                          return Scrollbar(
+                            controller: _scrollController,
+                            child: SingleChildScrollView(
+                              controller: _scrollController,
+                              scrollDirection: Axis.horizontal,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.vertical,
+                                child: DataTable(
+                                  columns: [
+                                    DataColumn(label: Text('المجموعة')),
+                                    DataColumn(label: Text('التاشيرة')),
+                                    DataColumn(label: Text('السعر')),
+                                    DataColumn(label: Text('السعر الكلي')),
+                                    DataColumn(label: Text('الفندق')),
+                                    DataColumn(label: Text('الغرف')),
+                                    DataColumn(label: Text('الليالي')),
+                                    DataColumn(label: Text('سعر غرفة')),
+                                    DataColumn(label: Text('الاجمالي')),
+                                    DataColumn(label: Text('التاريخ')),
+                                    DataColumn(label: Text('الاجراء')),
+                                  ],
+                                  rows: List.generate(
+                                      accountsController.myCompanys.length,
+                                      (index) => DataRow(cells: [
+                                            // DataCell(
+                                            //   Text(accountsController
+                                            //       .myCompanys[index].groupNumber
+                                            //       .toString()),
+                                            // ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].groupNumber
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].numberT
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].priceT
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].totalPriceT
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].hotelName
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].rooms
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index].nights
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index]
+                                                  .roomPricePerNight
+                                                  .toString()),
+                                            ),
+                                            DataCell(
+                                              Text(accountsController
+                                                  .myCompanys[index]
+                                                  .totalPriceHotel
+                                                  .toString()),
+                                            ),
+                                            // DataCell(Text((index + 1).toString())),
+                                            DataCell(Text(accountsController
+                                                .myCompanys[index].createdAt
+                                                .toString()
+                                                .substring(0, 10))),
+                                            DataCell(Row(
+                                              children: [
+                                                IconButton(
+                                                    onPressed: () {
+                                                      showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                              context) {
+                                                            return AlertDialog(
+                                                              title:
+                                                                  Text('حذف'),
+                                                              content: Text(
+                                                                  'هل أنت متأكد من حذف هذا الصيرفة'),
+                                                              actions: [
+                                                                TextButton(
+                                                                  child: Text(
+                                                                      'لا'),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.of(
+                                                                            context)
+                                                                        .pop();
+                                                                  },
+                                                                ),
+                                                                TextButton(
+                                                                    child: Text(
+                                                                        'نعم'),
+                                                                    onPressed:
+                                                                        () async {
+                                                                      try {
+                                                                        SmartDialog
+                                                                            .showLoading();
+                                                                        await Provider.of<CompanyController>(context,
+                                                                                listen: false)
+                                                                            .deletCompanyPor(
+                                                                          accountsController
+                                                                              .myCompanys[index]
+                                                                              .id,
+                                                                        );
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                        snackBar(
+                                                                            context,
+                                                                            "تم الحذف بنجاح",
+                                                                            false);
+                                                                      } catch (e) {
+                                                                        print(
+                                                                            e);
+                                                                        snackBar(
+                                                                            context,
+                                                                            e.toString(),
+                                                                            true);
+                                                                      } finally {
+                                                                        SmartDialog
+                                                                            .dismiss();
+                                                                      }
+                                                                    }),
+                                                              ],
+                                                            );
+                                                          });
+                                                    },
+                                                    icon: Icon(
+                                                      Icons.delete_forever,
+                                                      color: Colors.red,
+                                                    ))
+                                              ],
+                                            ))
+                                          ])),
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                      )),
+                ],
+              ))),
         ),
-       
       ],
     );
   }
