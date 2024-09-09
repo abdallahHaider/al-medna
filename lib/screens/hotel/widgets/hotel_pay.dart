@@ -2,6 +2,8 @@ import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 
+/// صفحة الخاصة بتسديدات الفندق
+
 class HotelPay extends StatelessWidget {
   const HotelPay({
     super.key,

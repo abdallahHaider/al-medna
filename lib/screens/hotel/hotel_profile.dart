@@ -4,6 +4,8 @@ import 'package:admin/screens/hotel/widgets/hotel_pay.dart';
 import 'package:admin/screens/hotel/widgets/hotel_sale.dart';
 import 'package:flutter/material.dart';
 
+/// صفحة الام للفنادق والجذر الاساسي
+
 class HotelProfile extends StatefulWidget {
   const HotelProfile({super.key, required this.hotelId});
 

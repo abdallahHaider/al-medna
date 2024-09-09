@@ -5,6 +5,8 @@ import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+/// صفحة الخاصة شراء الفندق
+
 class HotelBuyPage extends StatefulWidget {
   const HotelBuyPage({
     super.key,

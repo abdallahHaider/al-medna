@@ -1,5 +1,7 @@
 import 'package:admin/controllers/hotel_controller.dart';
+import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/models/hotel_buy.dart';
+import 'package:admin/models/type_cost.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -19,14 +21,19 @@ class HotelSale extends StatefulWidget {
 class _HotelSaleState extends State<HotelSale> {
   final _nameController = TextEditingController();
 
-  final _priceController = TextEditingController();
-
+  final _priceUSDController = TextEditingController();
+  // final _priceRASController = TextEditingController();
   final _numberController = TextEditingController();
+  final _roomController = TextEditingController();
+  final _reselrID = TextEditingController();
+  String curreny = "";
+
+  /// صفحة الخاصة بيع الفندق
 
   @override
   void initState() {
     Provider.of<HotelController>(context, listen: false)
-        .getHotelBuy(widget.hotelId);
+        .getHotelSale(widget.hotelId);
     super.initState();
   }
 
@@ -47,13 +54,12 @@ class _HotelSaleState extends State<HotelSale> {
                 color: secondaryColor,
                 child: DataTable(
                     columns: [
-                      DataColumn(label: Text('التاريخ')),
+                      DataColumn(label: Text('اسم المشتري')),
                       DataColumn(label: Text('الغرف')),
                       DataColumn(label: Text('الليالي')),
                       DataColumn(label: Text('سعر الغرفة')),
                       DataColumn(label: Text('المبلغ الكلي')),
-                      DataColumn(label: Text('اسم الشركة')),
-                      DataColumn(label: Text('رقم الحركة')),
+                      DataColumn(label: Text('التاريخ')),
                       DataColumn(label: Text('الاجراء')),
                     ],
                     rows:
@@ -62,7 +68,7 @@ class _HotelSaleState extends State<HotelSale> {
                       return DataRow(cells: [
                         DataCell(
                           Text(
-                            hotelBuy.createdAt.toString().substring(0, 10),
+                            hotelBuy.reseller.toString(),
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -98,7 +104,7 @@ class _HotelSaleState extends State<HotelSale> {
                         ),
                         DataCell(
                           Text(
-                            hotelBuy.totalPrice.toString(),
+                            "${hotelBuy.totalPrice} ${hotelBuy.curreny == "usd" ? "دولار" : "ريال"}",
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -107,16 +113,7 @@ class _HotelSaleState extends State<HotelSale> {
                         ),
                         DataCell(
                           Text(
-                            hotelBuy.company.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.companyProgramId.toString(),
+                            hotelBuy.createdAt.toString().substring(0, 10),
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.black,
@@ -132,9 +129,10 @@ class _HotelSaleState extends State<HotelSale> {
                                 Colors.white,
                               ),
                             ),
-                            onPressed: () {
-                              // drletdHotel(
-                              //     context, snapshot, index);
+                            onPressed: () async {
+                              await Provider.of<HotelController>(context,
+                                      listen: false)
+                                  .deleted(hotelBuy.id.toString(), context);
                             },
                             child: Text("حذف"))),
                       ]);
@@ -167,8 +165,45 @@ class _HotelSaleState extends State<HotelSale> {
                 SizedBox(
                   height: 20,
                 ),
+                Consumer<ResellerController>(
+                  builder: (BuildContext context, value, Widget? child) {
+                    return DropdownButtonFormField<dynamic>(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: "الوكيل",
+                      ),
+                      onChanged: (dynamic value) {
+                        _reselrID.text = value.id.toString();
+                        _nameController.clear();
+                      },
+                      items: value.resellerss.map((dynamic companies) {
+                        return DropdownMenuItem<dynamic>(
+                          value: companies,
+                          child: Text(companies.fullName!),
+                        );
+                      }).toList(),
+                      validator: (value) =>
+                          value == null ? 'يرجى اختبار الوكيل ' : null,
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 MyTextField(
                   controller: _nameController,
+                  labelText: 'اسم المشتري',
+                  onChanged: (v) {
+                    _reselrID.clear();
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                MyTextField(
+                  controller: _roomController,
                   labelText: 'عدد الغرف',
                 ),
                 SizedBox(
@@ -181,9 +216,32 @@ class _HotelSaleState extends State<HotelSale> {
                 SizedBox(
                   height: 10,
                 ),
+                DropdownButtonFormField<dynamic>(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    labelText: "العملة",
+                  ),
+                  onChanged: (dynamic value) {
+                    curreny = value.id.toString();
+                    // _nameController.clear();
+                  },
+                  items: TypeCost2.costs.map((dynamic companies) {
+                    return DropdownMenuItem<dynamic>(
+                      value: companies,
+                      child: Text(companies.name!),
+                    );
+                  }).toList(),
+                  validator: (value) =>
+                      value == null ? 'يرجى اختبار الوكيل ' : null,
+                ),
                 MyTextField(
-                  controller: _priceController,
-                  labelText: 'السعر لكل غرفة',
+                  controller: _priceUSDController,
+                  labelText: 'سعر الغرفة',
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 SizedBox(
                   height: 20,
@@ -191,12 +249,16 @@ class _HotelSaleState extends State<HotelSale> {
                 ElevatedButton(
                     onPressed: () {
                       Provider.of<HotelController>(context, listen: false)
-                          .addBuyHotel(
-                              widget.hotelId,
-                              _nameController.text,
-                              _priceController.text,
-                              _numberController.text,
-                              context);
+                          .addSaleHotel(
+                        widget.hotelId,
+                        _roomController.text.toString(),
+                        _priceUSDController.text.toString(),
+                        curreny,
+                        _numberController.text.toString(),
+                        context,
+                        _reselrID.text.toString(),
+                        _nameController.text.toString(),
+                      );
                     },
                     child: Text("اضافة"))
               ],

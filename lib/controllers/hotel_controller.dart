@@ -77,6 +77,7 @@ class HotelController extends ChangeNotifier {
   }
 
   Future delete(int id, BuildContext context) async {
+    print(id);
     http.Response x;
     try {
       SmartDialog.showLoading();
@@ -100,9 +101,6 @@ class HotelController extends ChangeNotifier {
   }
 
   Future getHotelBuy(id) async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-
     try {
       var x = await getpi("/api/hotel_tick/index/buy?hotel_id=$id");
       print(x.body);
@@ -126,10 +124,9 @@ class HotelController extends ChangeNotifier {
         "hotel_id": hotel_id,
         "rooms": rooms,
         "nights": nights,
+        "curreny": "RAS",
         "room_price_per_night": room_price_per_night,
       });
-
-      //  Navigator.pop(context);
     } catch (e) {
       snackBar(context, e.toString(), false);
       throw e;
@@ -140,6 +137,81 @@ class HotelController extends ChangeNotifier {
     if (x.statusCode == 200 || x.statusCode == 201) {
       getHotelBuy(hotel_id);
       snackBar(context, "تم اضافة الفندق بنجاح", false);
+    } else {
+      snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future getHotelSale(id) async {
+    try {
+      var x = await getpi("/api/hotel_tick/index/pay?hotel_id=$id");
+      print(x.body);
+      var data = jsonDecode(x.body);
+      total_cost = data["total_cost"].toString();
+      hotelbuy = data["data"].map((json) => HotelBuy.fromJson(json)).toList();
+      print(x.body);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw "jjj";
+    }
+  }
+
+  Future addSaleHotel(
+      hotel_id,
+      String rooms,
+      String room_price_per_night,
+      String RAS,
+      String nights,
+      BuildContext context,
+      String reseller_id,
+      String buyer_name) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_tick/create", {
+        if (reseller_id.isNotEmpty) "reseller_id": reseller_id,
+        if (buyer_name.isNotEmpty) "buyer_name": buyer_name,
+        "hotel_id": hotel_id,
+        "curreny": RAS,
+        "rooms": rooms,
+        "nights": nights,
+        "room_price_per_night": room_price_per_night,
+      });
+    } catch (e) {
+      snackBar(context, e.toString(), false);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    print(x.body);
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      getHotelSale(hotel_id);
+      snackBar(context, "تم اضافة الفندق بنجاح", false);
+    } else {
+      snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future deleted(String id, BuildContext context) async {
+    print(id);
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_tick/delete", {
+        "id": id,
+      });
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    print(x.body);
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      // Navigator.pop(context);
+      snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
     }

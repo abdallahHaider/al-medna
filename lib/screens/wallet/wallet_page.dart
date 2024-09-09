@@ -9,9 +9,6 @@ import 'package:admin/utl/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:admin/pdf/reseller_Pdf walt.dart'; // استيراد الدالة الخاصة بـ PDF
 
-import 'package:admin/models/reseller.dart';
-import 'package:admin/models/reseller_dbet.dart';
-
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
 
@@ -42,7 +39,6 @@ class _WalletPageState extends State<WalletPage> {
               padding: const EdgeInsets.all(defaultPadding),
               child: Header(title: "الخزنة"),
             ),
-
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: Card(
@@ -55,11 +51,9 @@ class _WalletPageState extends State<WalletPage> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildBalanceCard(
-                              "الرصيد الحالي في الخزنة بالدينار",
+                          _buildBalanceCard("الرصيد الحالي في الخزنة بالدينار",
                               "${walletProvider.wallet_IQD} دينار"),
-                          _buildBalanceCard(
-                              "الرصيد الحالي في الخزنة بالدولار",
+                          _buildBalanceCard("الرصيد الحالي في الخزنة بالدولار",
                               "${walletProvider.wallet_USD} دولار"),
                         ],
                       );
@@ -68,7 +62,6 @@ class _WalletPageState extends State<WalletPage> {
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: Row(
@@ -83,31 +76,24 @@ class _WalletPageState extends State<WalletPage> {
                           padding: const EdgeInsets.all(defaultPadding),
                           child: Row(
                             children: [
-                              _buildActionButton(
-                                  "اضافة عملية",
-                                  () {
-                                    Provider.of<Rootwidget>(context,
-                                            listen: false)
-                                        .getWidet(WalletAction());
-                                  },
-                                  primaryColor),
+                              _buildActionButton("اضافة عملية", () {
+                                Provider.of<Rootwidget>(context, listen: false)
+                                    .getWidet(WalletAction());
+                              }, primaryColor),
                               SizedBox(width: 10),
-                              _buildActionButton(
-                                  "طباعة كشف الحساب", () {
+                              _buildActionButton("طباعة كشف الحساب", () {
                                 final walletProvider =
-                                    Provider.of<WalletProvider>(
-                                        context, listen: false);
+                                    Provider.of<WalletProvider>(context,
+                                        listen: false);
                                 // استدعاء دالة الطباعة
                                 ResellerToPdfWalt(
-
                                   walletProvider.wallets, // البيانات للطباعة
                                   walletProvider.wallet_IQD.toString(),
                                   walletProvider.wallet_USD.toString(),
                                 );
                               }, primaryColor),
                               Spacer(),
-                              _buildPageNavigationButton(
-                                  "الصفحة السابقة", () {
+                              _buildPageNavigationButton("الصفحة السابقة", () {
                                 Provider.of<WalletProvider>(context,
                                         listen: false)
                                     .getPage(-1, false);
@@ -118,8 +104,7 @@ class _WalletPageState extends State<WalletPage> {
                                       "الصفحة : ${walletProvider.page}");
                                 },
                               ),
-                              _buildPageNavigationButton(
-                                  "الصفحة التالية", () {
+                              _buildPageNavigationButton("الصفحة التالية", () {
                                 Provider.of<WalletProvider>(context,
                                         listen: false)
                                     .getPage(1, false);

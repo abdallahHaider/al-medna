@@ -7,7 +7,8 @@ class HotelBuy {
   double? roomPricePerNight;
   double? totalPrice;
   dynamic companyProgramId;
-  dynamic resellerId;
+  dynamic reseller;
+  String? curreny;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -20,7 +21,8 @@ class HotelBuy {
     this.roomPricePerNight,
     this.totalPrice,
     this.companyProgramId,
-    this.resellerId,
+    this.reseller,
+    this.curreny,
     this.createdAt,
     this.updatedAt,
   });
@@ -34,7 +36,8 @@ class HotelBuy {
         roomPricePerNight: json["room_price_per_night"],
         totalPrice: json["total_price"],
         companyProgramId: json["company_program_id"] ?? "",
-        resellerId: json["reseller_id"],
+        reseller: json["reseller"],
+        curreny: json["curreny"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -50,7 +53,7 @@ class HotelBuy {
         "nights": nights,
         "room_price_per_night": roomPricePerNight,
         "company_program_id": companyProgramId,
-        "reseller_id": resellerId,
+        "reseller_id": reseller,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
       };
