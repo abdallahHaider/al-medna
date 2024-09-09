@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 class HotelController extends ChangeNotifier {
   List hotels = [];
   List hotelbuy = [];
+  String total_cost = "";
 
   Future<List> fetchData() async {
     // Simulate fetching data (replace with your actual logic)
@@ -103,15 +104,44 @@ class HotelController extends ChangeNotifier {
     // await Future.delayed(Duration(seconds: 1));
 
     try {
-      var x = await getpi("/api/hotel_tick/index?hotel_id=$id");
+      var x = await getpi("/api/hotel_tick/index/buy?hotel_id=$id");
       print(x.body);
       var data = jsonDecode(x.body);
+      total_cost = data["total_cost"].toString();
       hotelbuy = data["data"].map((json) => HotelBuy.fromJson(json)).toList();
       print(x.body);
       notifyListeners();
     } catch (e) {
       print(e);
       throw "jjj";
+    }
+  }
+
+  Future addBuyHotel(hotel_id, String rooms, String room_price_per_night,
+      String nights, BuildContext context) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_tick/create", {
+        "hotel_id": hotel_id,
+        "rooms": rooms,
+        "nights": nights,
+        "room_price_per_night": room_price_per_night,
+      });
+
+      //  Navigator.pop(context);
+    } catch (e) {
+      snackBar(context, e.toString(), false);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    print(x.body);
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      getHotelBuy(hotel_id);
+      snackBar(context, "تم اضافة الفندق بنجاح", false);
+    } else {
+      snackBar(context, jsonDecode(x.body), true);
     }
   }
 }
