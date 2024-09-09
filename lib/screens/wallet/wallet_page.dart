@@ -11,6 +11,7 @@ import 'package:admin/pdf/reseller_Pdf walt.dart'; // استيراد الدال�
 
 import 'package:admin/models/reseller.dart';
 import 'package:admin/models/reseller_dbet.dart';
+import 'edit_wallet_dialog.dart'; // استيراد واجهة التعديل
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});

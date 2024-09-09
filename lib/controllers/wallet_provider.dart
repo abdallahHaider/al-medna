@@ -7,6 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:spelling_number/spelling_number.dart';
+class Wallet {
+  final String id;
+  final String owner;
+  final double? costIQD;
+  final double? costUSD;
+  final String note;
+  final String type;
+  final DateTime createdAt;
+
+  Wallet({
+    required this.id,
+    required this.owner,
+    this.costIQD,
+    this.costUSD,
+    required this.note,
+    required this.type,
+    required this.createdAt,
+  });
+}
 
 class WalletProvider extends ChangeNotifier {
   bool isError = false;
