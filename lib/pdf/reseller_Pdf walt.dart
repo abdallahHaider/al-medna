@@ -23,7 +23,7 @@ Future<void> ResellerToPdfWalt(
         child: pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.end,
           children: [
-            pw.Text("كشف حساب",
+            pw.Text(" كشف حساب الصندوق الرئيسي",
                 style:
                     pw.TextStyle(fontSize: 24, fontBold: pw.Font.courierBold()),
                 textDirection: pw.TextDirection.rtl),
@@ -101,6 +101,8 @@ pw.TableRow _buildTableHeader() {
       _buildHeaderCell("المبلغ بالدولار"),
       _buildHeaderCell("المبلغ بالدينار"),
       _buildHeaderCell("الاسم"),
+            _buildHeaderCell("النوع"),
+
     ],
   );
 }
@@ -129,7 +131,7 @@ List<pw.TableRow> _buildTableRows(List traps) {
           _buildTableCell(trap.costUSD.toString()== "null" ?"":trap.costUSD.toString()),
           _buildTableCell(trap.costIQD.toString()== "null" ?"":trap.costIQD.toString()),
           _buildTableCell(trap.owner),
-          // _buildTableCell(trap.type =='pay'?"سحب":"إيداع" ),
+           _buildTableCell(trap.type =='pay'?"سحب":"إيداع" ),
         ],
       );
     },
@@ -143,8 +145,8 @@ pw.Widget _buildTableCell(String content,{pw.TextStyle ? textstyle}) {
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
     child: 
     pw.SizedBox(
-  child : pw.Text(content, textDirection: pw.TextDirection.rtl,style: textstyle?? pw.TextStyle (fontSize: 7)),
-width: 25
+  child : pw.Text(content, textDirection: pw.TextDirection.rtl,style: textstyle?? pw.TextStyle (fontSize: 9)),
+width: 60
 )
 
   );
