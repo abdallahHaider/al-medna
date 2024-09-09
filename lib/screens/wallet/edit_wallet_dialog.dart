@@ -49,14 +49,14 @@ class EditWalletDialog extends StatelessWidget {
         TextButton(
           child: Text('حفظ'),
           onPressed: () {
-            walletProvider.updateWallet(
-              wallet.id,
-              ownerController.text,
-              double.tryParse(costIQDController.text) ?? 0,
-              double.tryParse(costUSDController.text) ?? 0,
-              context,
-            );
-            Navigator.of(context).pop();
+            // walletProvider.updateWallet(
+            //   wallet.id,
+            //   ownerController.text,
+            //   double.tryParse(costIQDController.text) ?? 0,
+            //   double.tryParse(costUSDController.text) ?? 0,
+            //   context,
+            // );
+            // Navigator.of(context).pop();
           },
         ),
       ],

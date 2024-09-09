@@ -1,9 +1,9 @@
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/pdf/safe_pdf.dart';
+import 'package:admin/screens/wallet/edit_wallet_dialog.dart';
 import 'package:admin/screens/widgets/show_note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:admin/screens/wallet/widgets/edit_wallet_dialog.dart';
 
 Widget walletTable(WalletProvider controller, BuildContext context) {
   ScrollController scrollController = ScrollController();
