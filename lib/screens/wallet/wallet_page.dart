@@ -9,6 +9,9 @@ import 'package:admin/utl/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:admin/pdf/reseller_Pdf walt.dart'; // استيراد الدالة الخاصة بـ PDF
 
+import 'package:admin/models/reseller.dart';
+import 'package:admin/models/reseller_dbet.dart';
+
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
 
