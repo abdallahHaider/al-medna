@@ -13,19 +13,24 @@ Future<void> ResellerToPdfWalt(
   final fontData = await rootBundle.load("assets/fonts/Cairo-Light.ttf");
   final customFont = pw.Font.ttf(fontData);
   print(traps);
+
   pdf.addPage(
-    pw.Page(
+    pw.MultiPage(
       pageTheme: pw.PageTheme(
         theme: pw.ThemeData.withFont(base: customFont),
         margin: pw.EdgeInsets.all(20),
+        orientation: pw.PageOrientation.landscape, // تحويل الورقة للوضع الأفقي
+        pageFormat: PdfPageFormat.a4.landscape, // حجم الورقة بوضع أفقي
       ),
-      build: (pw.Context context) => pw.Center(
-        child: pw.Column(
+      build: (pw.Context context) => [
+        pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.end,
           children: [
-            pw.Text(" كشف حساب الصندوق الرئيسي",
-                style:
-                    pw.TextStyle(fontSize: 24, fontBold: pw.Font.courierBold()),
+            pw.Text("كشف حساب الصندوق - صفحة ${traps.indexOf(traps) + 1}",
+                style: pw.TextStyle(
+                  fontSize: 24,
+                  fontWeight: pw.FontWeight.bold,
+                ),
                 textDirection: pw.TextDirection.rtl),
             pw.SizedBox(height: 20),
 
@@ -43,13 +48,13 @@ Future<void> ResellerToPdfWalt(
             _buildSummary(wallet_IQD, wallet_USD),
           ],
         ),
-      ),
+      ],
     ),
   );
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();
-  final file = File("${output.path}/${'ص'}.pdf");
+  final file = File("${output.path}/كشف_حساب_الصندوق_الرئيسي.pdf");
   await file.writeAsBytes(await pdf.save());
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
@@ -93,6 +98,7 @@ pw.TableRow _buildTableHeader() {
         left: pw.BorderSide(),
         right: pw.BorderSide(),
       ),
+      color: PdfColors.grey300, // لون خلفية للرأس
     ),
     children: [
       _buildHeaderCell("الملاحظة"),
@@ -101,8 +107,7 @@ pw.TableRow _buildTableHeader() {
       _buildHeaderCell("المبلغ بالدولار"),
       _buildHeaderCell("المبلغ بالدينار"),
       _buildHeaderCell("الاسم"),
-            _buildHeaderCell("النوع"),
-
+      _buildHeaderCell("النوع"),
     ],
   );
 }
@@ -122,16 +127,18 @@ List<pw.TableRow> _buildTableRows(List traps) {
     traps.length,
     (index) {
       final trap = traps[index];
-      print(trap.type.toString ());
+      print(trap.type.toString());
       return pw.TableRow(
         children: [
-          _buildTableCell(trap.note ),
-        _buildTableCell(trap.createdAt.toString().substring(0,11) ),
-           _buildTableCell(trap.numberKade ?? ""),
-          _buildTableCell(trap.costUSD.toString()== "null" ?"":trap.costUSD.toString()),
-          _buildTableCell(trap.costIQD.toString()== "null" ?"":trap.costIQD.toString()),
+          _buildTableCell(trap.note),
+          _buildTableCell(trap.createdAt.toString().substring(0, 11)),
+          _buildTableCell(trap.numberKade ?? ""),
+          _buildTableCell(
+              trap.costUSD.toString() == "null" ? "" : trap.costUSD.toString()),
+          _buildTableCell(
+              trap.costIQD.toString() == "null" ? "" : trap.costIQD.toString()),
           _buildTableCell(trap.owner),
-           _buildTableCell(trap.type =='pay'?"سحب":"إيداع" ),
+          _buildTableCell(trap.type == 'pay' ? "إيداع" : "سحب"),
         ],
       );
     },
@@ -139,17 +146,14 @@ List<pw.TableRow> _buildTableRows(List traps) {
 }
 
 // دالة لإنشاء خلية الجدول
-pw.Widget _buildTableCell(String content,{pw.TextStyle ? textstyle}) {
+pw.Widget _buildTableCell(String content, {pw.TextStyle? textstyle}) {
   return pw.Padding(
-    
-    padding: pw.EdgeInsets.symmetric(horizontal: 5),
-    child: 
-    pw.SizedBox(
-  child : pw.Text(content, textDirection: pw.TextDirection.rtl,style: textstyle?? pw.TextStyle (fontSize: 9)),
-width: 60
-)
-
-  );
+      padding: pw.EdgeInsets.symmetric(horizontal: 5),
+      child: pw.SizedBox(
+          child: pw.Text(content,
+              textDirection: pw.TextDirection.rtl,
+              style: textstyle ?? pw.TextStyle(fontSize: 9)),
+          width: 60));
 }
 
 // دالة لبناء ملخص الحساب
