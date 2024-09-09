@@ -6,7 +6,7 @@ class HotelBuy {
   int? nights;
   double? roomPricePerNight;
   double? totalPrice;
-  int? companyProgramId;
+  dynamic companyProgramId;
   dynamic resellerId;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -33,7 +33,7 @@ class HotelBuy {
         nights: json["nights"],
         roomPricePerNight: json["room_price_per_night"],
         totalPrice: json["total_price"],
-        companyProgramId: json["company_program_id"],
+        companyProgramId: json["company_program_id"] ?? "",
         resellerId: json["reseller_id"],
         createdAt: json["created_at"] == null
             ? null
