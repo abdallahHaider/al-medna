@@ -124,7 +124,7 @@ class HotelController extends ChangeNotifier {
         "hotel_id": hotel_id,
         "rooms": rooms,
         "nights": nights,
-        "curreny": "RAS",
+        "curreny": "ras",
         "room_price_per_night": room_price_per_night,
       });
     } catch (e) {
@@ -143,6 +143,7 @@ class HotelController extends ChangeNotifier {
   }
 
   Future getHotelSale(id) async {
+    print(id);
     try {
       var x = await getpi("/api/hotel_tick/index/pay?hotel_id=$id");
       print(x.body);
