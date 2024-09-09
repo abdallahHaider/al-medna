@@ -10,13 +10,13 @@ import 'package:pdf/widgets.dart' as pw;
 Future<void> ResellerToPdf(
     Reseller reseller, ResellerDbet dbet, List traps) async {
   final pdf = pw.Document();
-  
+
   // تحميل الخط مرة واحدة
   final fontData = await rootBundle.load("assets/fonts/Cairo-Light.ttf");
   final customFont = pw.Font.ttf(fontData);
-  
+
   // تحديد أنماط النص بدون textDirection
-  final textStyle = pw.TextStyle(fontSize: 20);
+  // final textStyle = pw.TextStyle(fontSize: 20);
 
   pdf.addPage(
     pw.Page(
@@ -28,13 +28,16 @@ Future<void> ResellerToPdf(
         child: pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.end,
           children: [
-            pw.Text("كشف حساب", style: pw.TextStyle(fontSize: 24, fontBold: pw.Font.courierBold()), textDirection: pw.TextDirection.rtl),
+            pw.Text("كشف حساب",
+                style:
+                    pw.TextStyle(fontSize: 24, fontBold: pw.Font.courierBold()),
+                textDirection: pw.TextDirection.rtl),
             pw.SizedBox(height: 20),
-            
+
             // الصف العلوي لاسم الوكيل
             _buildAgentRow(reseller.fullName ?? "اسم غير متوفر"),
             pw.SizedBox(height: 20),
-            
+
             // الجدول الرئيسي
             pw.Table(
               border: pw.TableBorder.all(),
@@ -44,7 +47,7 @@ Future<void> ResellerToPdf(
               ],
             ),
             pw.SizedBox(height: 20),
-            
+
             // ملخص الحساب
             _buildSummary(dbet),
           ],
@@ -73,14 +76,18 @@ pw.Widget _buildAgentRow(String agentName) {
         child: pw.Container(
           decoration: pw.BoxDecoration(border: pw.Border.all()),
           padding: pw.EdgeInsets.all(10),
-          child: pw.Text(agentName, textAlign: pw.TextAlign.center, textDirection: pw.TextDirection.rtl),
+          child: pw.Text(agentName,
+              textAlign: pw.TextAlign.center,
+              textDirection: pw.TextDirection.rtl),
         ),
       ),
       pw.Expanded(
         child: pw.Container(
           decoration: pw.BoxDecoration(border: pw.Border.all()),
           padding: pw.EdgeInsets.all(10),
-          child: pw.Text("اسم الوكيل", textAlign: pw.TextAlign.center, textDirection: pw.TextDirection.rtl),
+          child: pw.Text("اسم الوكيل",
+              textAlign: pw.TextAlign.center,
+              textDirection: pw.TextDirection.rtl),
         ),
       ),
     ],
@@ -115,7 +122,8 @@ pw.TableRow _buildTableHeader() {
 pw.Widget _buildHeaderCell(String title) {
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
-    child: pw.Text(title, textDirection: pw.TextDirection.rtl, style: pw.TextStyle()),
+    child: pw.Text(title,
+        textDirection: pw.TextDirection.rtl, style: pw.TextStyle()),
   );
 }
 
@@ -156,7 +164,9 @@ pw.Widget _buildTableCell(String content) {
 
 // دالة لبناء ملخص الحساب
 pw.Widget _buildSummary(ResellerDbet dbet) {
-  final totalRemaining = ((double.tryParse(dbet.totalCostUsdPays!) ?? 0) - (double.tryParse(dbet.totalCostUsd!) ?? 0)).toString();
+  final totalRemaining = ((double.tryParse(dbet.totalCostUsdPays!) ?? 0) -
+          (double.tryParse(dbet.totalCostUsd!) ?? 0))
+      .toString();
 
   return pw.Row(
     mainAxisAlignment: pw.MainAxisAlignment.center,
@@ -176,7 +186,9 @@ pw.Widget _buildSummaryItem(String title, String value) {
     child: pw.Column(
       children: [
         pw.Text(title, textDirection: pw.TextDirection.rtl),
-        pw.Text(value, style: pw.TextStyle(fontSize: 20), textDirection: pw.TextDirection.rtl),
+        pw.Text(value,
+            style: pw.TextStyle(fontSize: 20),
+            textDirection: pw.TextDirection.rtl),
       ],
     ),
   );

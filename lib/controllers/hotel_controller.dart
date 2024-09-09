@@ -11,24 +11,38 @@ import 'package:http/http.dart' as http;
 
 class HotelController extends ChangeNotifier {
   List hotels = [];
+  List hotelsK = [];
+  List hotelsM = [];
   List hotelbuy = [];
   String total_cost = "";
+  bool isLading = true;
 
-  Future<List> fetchData() async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-
+  Future fetchData() async {
+    isLading = true;
+    notifyListeners();
     try {
       var x = await getpi("/api/hotel/index");
       print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
-      return resellers;
+      hotelsK.clear();
+      hotelsM.clear();
+      for (var i = 0; i < resellers.length; i++) {
+        if (resellers[i].address == "مكة") {
+          hotelsK.add(resellers[i]);
+        } else {
+          hotelsM.add(resellers[i]);
+        }
+      }
+      notifyListeners();
     } catch (e) {
       print("11111111111111111111");
       print(e);
       throw "jjj";
+    } finally {
+      isLading = false;
+      notifyListeners();
     }
   }
 
@@ -41,7 +55,13 @@ class HotelController extends ChangeNotifier {
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
+      // for (var i = 0; i < resellers.length; i++) {
+      //   if (resellers[i].address == "مكة") {
+      //     hotels.add(resellers[i]);
+      //   }
+      // }
       hotels = resellers;
+
       notifyListeners();
     } catch (e) {
       print(e);
@@ -69,7 +89,8 @@ class HotelController extends ChangeNotifier {
     }
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
-      notifyListeners();
+      fetchData();
+      // notifyListeners();
       snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);

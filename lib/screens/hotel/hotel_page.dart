@@ -1,9 +1,10 @@
 import 'package:admin/controllers/rootWidget.dart';
+import 'package:admin/models/hotel_type.dart';
+import 'package:admin/models/reseller.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/hotel/hotel_profile.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
-import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,6 +32,7 @@ class _HotelPageState extends State<HotelPage> {
   @override
   void initState() {
     Provider.of<HotelController>(context, listen: false).fetchData();
+    Provider.of<HotelController>(context, listen: false).getFetchData();
     super.initState();
   }
 
@@ -56,102 +58,19 @@ class _HotelPageState extends State<HotelPage> {
                   flex: 2,
                   child: Consumer<HotelController>(
                     builder: (BuildContext context, value, Widget? child) {
-                      return FutureBuilder(
-                          future: value.fetchData(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
-                            } else if (snapshot.hasError) {
-                              return MyErrorWidget();
-                            } else if (snapshot.hasData) {
-                              return Card(
-                                elevation: 5,
-                                color: secondaryColor,
-                                margin: EdgeInsets.all(defaultPadding),
-                                child: SizedBox(
-                                  height: double.maxFinite,
-                                  child: DataTable(
-                                      columns: [
-                                        DataColumn(
-                                          label: Text('اسم الفندق'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('العنوان'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('رقم الهاتف'),
-                                        ),
-                                        DataColumn(
-                                          label: Text('الاجراء'),
-                                        ),
-                                      ],
-                                      rows: List.generate(snapshot.data!.length,
-                                          (index) {
-                                        return DataRow(cells: [
-                                          DataCell(
-                                            TextButton(
-                                              onPressed: () {
-                                                Provider.of<Rootwidget>(context,
-                                                        listen: false)
-                                                    .getWidet(HotelProfile(
-                                                  hotelId: snapshot
-                                                      .data![index].id
-                                                      .toString(),
-                                                ));
-                                              },
-                                              child: Text(
-                                                snapshot.data![index].fullName
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].address,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                          DataCell(
-                                            Text(
-                                              snapshot.data![index].phoneNumber,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                          DataCell(ElevatedButton(
-                                              style: ButtonStyle(
-                                                backgroundColor:
-                                                    WidgetStateProperty.all(
-                                                  Colors.red,
-                                                ),
-                                                foregroundColor:
-                                                    WidgetStateProperty.all(
-                                                  Colors.white,
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                drletdHotel(
-                                                    context, snapshot, index);
-                                              },
-                                              child: Text("حذف"))),
-                                        ]);
-                                      })),
-                                ),
-                              );
-                            } else {
-                              return Center(child: Text('لا يوجد فنادق بعد'));
-                            }
-                          });
+                      if (value.isLading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return Column(
+                        children: [
+                          Expanded(
+                              child: hotelTable(value, context, value.hotelsK)),
+                          Expanded(
+                              child: hotelTable(value, context, value.hotelsM)),
+                        ],
+                      );
                     },
                   ),
                 ),
@@ -188,12 +107,27 @@ class _HotelPageState extends State<HotelPage> {
                                     keyboardType: TextInputType.phone,
                                   ),
                                   SizedBox(height: defaultPadding),
-                                  TextFormField(
-                                    controller: adressController,
+                                  DropdownButtonFormField<HotelType>(
                                     decoration: InputDecoration(
-                                      labelText: 'العنوان',
-                                      border: OutlineInputBorder(),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      labelText: "العملة",
                                     ),
+                                    onChanged: (value) {
+                                      adressController.text =
+                                          value!.name.toString();
+                                    },
+                                    items: HotelType.costs
+                                        .map((HotelType companies) {
+                                      return DropdownMenuItem<HotelType>(
+                                        value: companies,
+                                        child: Text(companies.name),
+                                      );
+                                    }).toList(),
+                                    validator: (value) => value == null
+                                        ? 'يرجى اختبار الوكيل '
+                                        : null,
                                   ),
                                   SizedBox(height: defaultPadding),
                                   Row(
@@ -235,8 +169,87 @@ class _HotelPageState extends State<HotelPage> {
     );
   }
 
+  Card hotelTable(HotelController value, BuildContext context, List hotels) {
+    return Card(
+      elevation: 5,
+      color: secondaryColor,
+      margin: EdgeInsets.all(defaultPadding),
+      child: SizedBox(
+        width: double.maxFinite,
+        child: DataTable(
+            columns: [
+              DataColumn(
+                label: Text('اسم الفندق'),
+              ),
+              DataColumn(
+                label: Text('العنوان'),
+              ),
+              DataColumn(
+                label: Text('رقم الهاتف'),
+              ),
+              DataColumn(
+                label: Text('الاجراء'),
+              ),
+            ],
+            rows: List.generate(hotels.length, (index) {
+              Reseller hotel = hotels[index];
+              return DataRow(cells: [
+                DataCell(
+                  TextButton(
+                    onPressed: () {
+                      Provider.of<Rootwidget>(context, listen: false)
+                          .getWidet(HotelProfile(
+                        hotelId: hotel.id.toString(),
+                      ));
+                    },
+                    child: Text(
+                      hotel.fullName.toString(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Text(
+                    hotel.address!,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                DataCell(
+                  Text(
+                    hotel.phoneNumber!,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                DataCell(ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(
+                        Colors.red,
+                      ),
+                      foregroundColor: WidgetStateProperty.all(
+                        Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      drletdHotel(context, hotel, index);
+                    },
+                    child: Text("حذف"))),
+              ]);
+            })),
+      ),
+    );
+  }
+
   Future<dynamic> drletdHotel(
-      BuildContext context, AsyncSnapshot<List<dynamic>> snapshot, int index) {
+      BuildContext context, Reseller snapshot, int index) {
     return showDialog(
         context: context,
         builder: (c) {
@@ -271,8 +284,7 @@ class _HotelPageState extends State<HotelPage> {
                                       await Provider.of<HotelController>(
                                               context,
                                               listen: false)
-                                          .delete(snapshot.data![index].id,
-                                              context);
+                                          .delete(snapshot.id!, context);
                                     },
                                     child: Text('حذف'),
                                   ),

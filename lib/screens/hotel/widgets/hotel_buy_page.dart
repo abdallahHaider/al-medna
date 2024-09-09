@@ -46,6 +46,7 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                 color: secondaryColor,
                 child: DataTable(
                     columns: [
+                      DataColumn(label: Text('الفندق')),
                       DataColumn(label: Text('التاريخ')),
                       DataColumn(label: Text('الغرف')),
                       DataColumn(label: Text('الليالي')),
@@ -59,6 +60,15 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                         List.generate(hotelController.hotelbuy.length, (index) {
                       HotelBuy hotelBuy = hotelController.hotelbuy[index];
                       return DataRow(cells: [
+                        DataCell(
+                          Text(
+                            hotelBuy.hotelId.toString(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
                         DataCell(
                           Text(
                             hotelBuy.createdAt.toString().substring(0, 10),
