@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
@@ -5,8 +6,11 @@ import 'package:admin/screens/wallet/widgets/wallet_action.dart';
 import 'package:admin/screens/wallet/widgets/wallet_table.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:admin/utl/constants.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:admin/pdf/reseller_Pdf walt.dart'; // استيراد الدالة الخاصة بـ PDF
+
+import 'package:admin/models/reseller.dart';
+import 'package:admin/models/reseller_dbet.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -34,13 +38,11 @@ class _WalletPageState extends State<WalletPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: Header(title: "الخزنة"),
             ),
 
-            // Wallet balance section moved to the top
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: Card(
@@ -49,52 +51,24 @@ class _WalletPageState extends State<WalletPage> {
                 child: SizedBox(
                   height: 100,
                   child: Consumer<WalletProvider>(
-                      builder: (context, walletProvider, child) {
-                    return Row(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "الرصيد الحالي في الخزنة بالدينار",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                "${walletProvider.wallet_IQD} دينار",
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "الرصيد الحالي في الخزنة بالدولار",
-                                style: TextStyle(fontSize: 16),
-                              ),
-                              Text(
-                                "${walletProvider.wallet_USD} دولار",
-                                style: TextStyle(fontSize: 24),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }),
+                    builder: (context, walletProvider, child) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildBalanceCard(
+                              "الرصيد الحالي في الخزنة بالدينار",
+                              "${walletProvider.wallet_IQD} دينار"),
+                          _buildBalanceCard(
+                              "الرصيد الحالي في الخزنة بالدولار",
+                              "${walletProvider.wallet_USD} دولار"),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ),
 
-            // Rest of the content
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: Row(
@@ -102,81 +76,116 @@ class _WalletPageState extends State<WalletPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                      flex: 1,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(defaultPadding),
-                            child: Row(
-                              children: [
-                                ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor:
-                                          WidgetStateProperty.all(primaryColor),
-                                      shape: WidgetStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                      ),
-                                      foregroundColor:
-                                          WidgetStateProperty.all(Colors.white),
-                                    ),
-                                    onPressed: () {
-                                      Provider.of<Rootwidget>(context,
-                                              listen: false)
-                                          .getWidet(WalletAction());
-                                    },
-                                    child: Text("اضافة عملية")),
-                                Expanded(
-                                  child: SizedBox(),
-                                ),
-                                TextButton(
-                                    onPressed: () {
-                                      Provider.of<WalletProvider>(context,
-                                              listen: false)
-                                          .getPage(-1, false);
-                                    },
-                                    child: Text("الصفحة السابقة")),
-                                Consumer<WalletProvider>(
-                                    builder: (context, walletProvider, child) {
+                    flex: 1,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(defaultPadding),
+                          child: Row(
+                            children: [
+                              _buildActionButton(
+                                  "اضافة عملية",
+                                  () {
+                                    Provider.of<Rootwidget>(context,
+                                            listen: false)
+                                        .getWidet(WalletAction());
+                                  },
+                                  primaryColor),
+                              SizedBox(width: 10),
+                              _buildActionButton(
+                                  "طباعة كشف الحساب", () {
+                                final walletProvider =
+                                    Provider.of<WalletProvider>(
+                                        context, listen: false);
+                                // استدعاء دالة الطباعة
+                                ResellerToPdfWalt(
+
+                                  walletProvider.wallets, // البيانات للطباعة
+                                  walletProvider.wallet_IQD.toString(),
+                                  walletProvider.wallet_USD.toString(),
+                                );
+                              }, primaryColor),
+                              Spacer(),
+                              _buildPageNavigationButton(
+                                  "الصفحة السابقة", () {
+                                Provider.of<WalletProvider>(context,
+                                        listen: false)
+                                    .getPage(-1, false);
+                              }),
+                              Consumer<WalletProvider>(
+                                builder: (context, walletProvider, child) {
                                   return Text(
                                       "الصفحة : ${walletProvider.page}");
-                                }),
-                                TextButton(
-                                    onPressed: () {
-                                      Provider.of<WalletProvider>(context,
-                                              listen: false)
-                                          .getPage(1, false);
-                                    },
-                                    child: Text("الصفحة التالية")),
-                                Expanded(child: SizedBox()),
-                              ],
-                            ),
+                                },
+                              ),
+                              _buildPageNavigationButton(
+                                  "الصفحة التالية", () {
+                                Provider.of<WalletProvider>(context,
+                                        listen: false)
+                                    .getPage(1, false);
+                              }),
+                              Spacer(),
+                            ],
                           ),
-                          SizedBox(
-                            height: defaultPadding,
-                          ),
-                          Consumer<WalletProvider>(
-                            builder: (context, controller, child) {
-                              if (controller.isLoading) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              } else if (controller.isError) {
-                                return Center(child: MyErrorWidget());
-                              } else {
-                                return walletTable(controller, context);
-                              }
-                            },
-                          ),
-                        ],
-                      )),
+                        ),
+                        SizedBox(height: defaultPadding),
+                        Consumer<WalletProvider>(
+                          builder: (context, controller, child) {
+                            if (controller.isLoading) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            } else if (controller.isError) {
+                              return Center(child: MyErrorWidget());
+                            } else {
+                              return walletTable(controller, context);
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildBalanceCard(String title, String amount) {
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(title, style: TextStyle(fontSize: 16)),
+          Text(amount, style: TextStyle(fontSize: 24)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton(String text, VoidCallback onPressed, Color color) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(color),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+      ),
+      onPressed: onPressed,
+      child: Text(text),
+    );
+  }
+
+  Widget _buildPageNavigationButton(String text, VoidCallback onPressed) {
+    return TextButton(
+      onPressed: onPressed,
+      child: Text(text),
     );
   }
 }

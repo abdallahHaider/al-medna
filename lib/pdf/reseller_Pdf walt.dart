@@ -1,23 +1,18 @@
 import 'dart:io';
-import 'package:admin/models/reseller.dart';
-import 'package:admin/models/reseller_dbet.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-Future<void> ResellerToPdf(
-    Reseller reseller, ResellerDbet dbet, List traps) async {
+Future<void> ResellerToPdfWalt(
+    List traps, String wallet_IQD, String wallet_USD) async {
   final pdf = pw.Document();
-  
+
   // تحميل الخط مرة واحدة
   final fontData = await rootBundle.load("assets/fonts/Cairo-Light.ttf");
   final customFont = pw.Font.ttf(fontData);
-  
-  // تحديد أنماط النص بدون textDirection
-  final textStyle = pw.TextStyle(fontSize: 20);
-
+  print(traps);
   pdf.addPage(
     pw.Page(
       pageTheme: pw.PageTheme(
@@ -28,13 +23,12 @@ Future<void> ResellerToPdf(
         child: pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.end,
           children: [
-            pw.Text("كشف حساب", style: pw.TextStyle(fontSize: 24, fontBold: pw.Font.courierBold()), textDirection: pw.TextDirection.rtl),
+            pw.Text("كشف حساب",
+                style:
+                    pw.TextStyle(fontSize: 24, fontBold: pw.Font.courierBold()),
+                textDirection: pw.TextDirection.rtl),
             pw.SizedBox(height: 20),
-            
-            // الصف العلوي لاسم الوكيل
-            _buildAgentRow(reseller.fullName ?? "اسم غير متوفر"),
-            pw.SizedBox(height: 20),
-            
+
             // الجدول الرئيسي
             pw.Table(
               border: pw.TableBorder.all(),
@@ -44,9 +38,9 @@ Future<void> ResellerToPdf(
               ],
             ),
             pw.SizedBox(height: 20),
-            
+
             // ملخص الحساب
-            _buildSummary(dbet),
+            _buildSummary(wallet_IQD, wallet_USD),
           ],
         ),
       ),
@@ -55,7 +49,7 @@ Future<void> ResellerToPdf(
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();
-  final file = File("${output.path}/${reseller.fullName ?? 'reseller'}.pdf");
+  final file = File("${output.path}/${'ص'}.pdf");
   await file.writeAsBytes(await pdf.save());
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
@@ -73,14 +67,16 @@ pw.Widget _buildAgentRow(String agentName) {
         child: pw.Container(
           decoration: pw.BoxDecoration(border: pw.Border.all()),
           padding: pw.EdgeInsets.all(10),
-          child: pw.Text(agentName, textAlign: pw.TextAlign.center, textDirection: pw.TextDirection.rtl),
+          child: pw.Text(agentName,
+              textAlign: pw.TextAlign.center,
+              textDirection: pw.TextDirection.rtl),
         ),
       ),
       pw.Expanded(
         child: pw.Container(
           decoration: pw.BoxDecoration(border: pw.Border.all()),
           padding: pw.EdgeInsets.all(10),
-          child: pw.Text("اسم الوكيل", textAlign: pw.TextAlign.center, textDirection: pw.TextDirection.rtl),
+          child: pw.Text('الصندوق الرئيسي'),
         ),
       ),
     ],
@@ -99,14 +95,12 @@ pw.TableRow _buildTableHeader() {
       ),
     ),
     children: [
-      _buildHeaderCell("المتبقي"),
-      _buildHeaderCell("السداد"),
-      _buildHeaderCell("رقم الفاتورة"),
-      _buildHeaderCell("مجموع الحساب"),
-      _buildHeaderCell("عدد المعتمرين"),
+      _buildHeaderCell("الملاحظة"),
       _buildHeaderCell("التاريخ"),
-      _buildHeaderCell("رقم الرحلة"),
-      _buildHeaderCell("ت"),
+      _buildHeaderCell("رقم القيد"),
+      _buildHeaderCell("المبلغ بالدولار"),
+      _buildHeaderCell("المبلغ بالدينار"),
+      _buildHeaderCell("الاسم"),
     ],
   );
 }
@@ -115,7 +109,8 @@ pw.TableRow _buildTableHeader() {
 pw.Widget _buildHeaderCell(String title) {
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
-    child: pw.Text(title, textDirection: pw.TextDirection.rtl, style: pw.TextStyle()),
+    child: pw.Text(title,
+        textDirection: pw.TextDirection.rtl, style: pw.TextStyle()),
   );
 }
 
@@ -125,21 +120,16 @@ List<pw.TableRow> _buildTableRows(List traps) {
     traps.length,
     (index) {
       final trap = traps[index];
-      final isPayment = trap.type == "trap_pay";
+      print(trap.type.toString ());
       return pw.TableRow(
-        decoration: pw.BoxDecoration(
-          color: isPayment ? null : PdfColors.grey400,
-          border: pw.Border.all(),
-        ),
         children: [
-          _buildTableCell(trap.nowDebt ?? ""),
-          _buildTableCell(isPayment ? trap.price ?? "" : ""),
-          _buildTableCell(isPayment ? trap.id.toString() : ""),
-          _buildTableCell(isPayment ? "" : trap.price ?? ""),
-          _buildTableCell(isPayment ? "" : trap.quantity.toString()),
-          _buildTableCell(trap.createdAt.toString().substring(0, 10)),
-          _buildTableCell(isPayment ? "" : trap.id.toString()),
-          _buildTableCell((index + 1).toString()),
+          _buildTableCell(trap.note ),
+        _buildTableCell(trap.createdAt.toString().substring(0,11) ),
+           _buildTableCell(trap.numberKade ?? ""),
+          _buildTableCell(trap.costUSD.toString()== "null" ?"":trap.costUSD.toString()),
+          _buildTableCell(trap.costIQD.toString()== "null" ?"":trap.costIQD.toString()),
+          _buildTableCell(trap.owner),
+          // _buildTableCell(trap.type =='pay'?"سحب":"إيداع" ),
         ],
       );
     },
@@ -147,23 +137,26 @@ List<pw.TableRow> _buildTableRows(List traps) {
 }
 
 // دالة لإنشاء خلية الجدول
-pw.Widget _buildTableCell(String content) {
+pw.Widget _buildTableCell(String content,{pw.TextStyle ? textstyle}) {
   return pw.Padding(
+    
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
-    child: pw.Text(content, textDirection: pw.TextDirection.rtl),
+    child: 
+    pw.SizedBox(
+  child : pw.Text(content, textDirection: pw.TextDirection.rtl,style: textstyle?? pw.TextStyle (fontSize: 7)),
+width: 25
+)
+
   );
 }
 
 // دالة لبناء ملخص الحساب
-pw.Widget _buildSummary(ResellerDbet dbet) {
-  final totalRemaining = ((double.tryParse(dbet.totalCostUsdPays!) ?? 0) - (double.tryParse(dbet.totalCostUsd!) ?? 0)).toString();
-
+pw.Widget _buildSummary(String wallet_IQD, String wallet_USD) {
   return pw.Row(
     mainAxisAlignment: pw.MainAxisAlignment.center,
     children: [
-      _buildSummaryItem("مجموع المتبقي", totalRemaining),
-      _buildSummaryItem("مجموع السداد", dbet.totalCostUsdPays!),
-      _buildSummaryItem("مجموع الطلب", "-${dbet.totalCostUsd!}"),
+      _buildSummaryItem("الرصيد بالدينار", wallet_IQD),
+      _buildSummaryItem("مجموع الرصيد بالدولار", wallet_USD),
     ],
   );
 }
@@ -176,7 +169,9 @@ pw.Widget _buildSummaryItem(String title, String value) {
     child: pw.Column(
       children: [
         pw.Text(title, textDirection: pw.TextDirection.rtl),
-        pw.Text(value, style: pw.TextStyle(fontSize: 20), textDirection: pw.TextDirection.rtl),
+        pw.Text(value,
+            style: pw.TextStyle(fontSize: 20),
+            textDirection: pw.TextDirection.rtl),
       ],
     ),
   );
