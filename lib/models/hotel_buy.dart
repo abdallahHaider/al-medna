@@ -1,11 +1,13 @@
+import 'package:admin/models/trap.dart';
+
 class HotelBuy {
   int? id;
   String? hotelId;
   String? company;
   int? rooms;
   int? nights;
-  double? roomPricePerNight;
-  double? totalPrice;
+  String? roomPricePerNight;
+  String? totalPrice;
   dynamic companyProgramId;
   dynamic reseller;
   String? curreny;
@@ -33,8 +35,8 @@ class HotelBuy {
         company: json["company"],
         rooms: json["rooms"],
         nights: json["nights"],
-        roomPricePerNight: json["room_price_per_night"],
-        totalPrice: json["total_price"],
+        roomPricePerNight: formatPrice(json["room_price_per_night"]),
+        totalPrice: formatPrice(json["total_price"]),
         companyProgramId: json["company_program_id"] ?? "",
         reseller: json["reseller"],
         curreny: json["curreny"],
