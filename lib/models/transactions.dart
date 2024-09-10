@@ -1,4 +1,4 @@
-import 'package:admin/models/trap.dart';
+import 'package:admin/models/format_price.dart';
 
 class Transactions {
   Transactions({

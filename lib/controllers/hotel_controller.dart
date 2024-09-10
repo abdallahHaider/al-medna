@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
+import 'package:admin/models/hotel.dart';
 import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/models/reseller.dart';
 // import 'package:admin/screens/hotel/hotel_profile.dart';
@@ -10,32 +11,41 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart' as http;
 
 class HotelController extends ChangeNotifier {
-List hotels = [];
-  List hotelsK = [];
+  List hotels = [];
   List hotelsM = [];
-  List soldHotelsK = []; // Add this property
-  List soldHotelsM = []; // Add this property
+  List hotelsPay = [];
+  List hotelsSale = [];
+  // List soldHotelsK = []; // Add this property
+  // List soldHotelsM = []; // Add this property
   List hotelbuy = [];
   String total_cost = "";
   bool isLading = true;
-  Future fetchData() async {
-    isLading = true;
-    notifyListeners();
+  bool isMagk = true;
+  bool isMagk2 = true;
+  Future fetchData(bool maka, bool type) async {
+    // isLading = true;
+    // notifyListeners();
     try {
-      var x = await getpi("/api/hotel/index");
+      var x = await getpi(
+          "/api/hotel/index/${type ? "buy" : "sell"}?type=${maka ? "مكة" : "المدينة"}");
       print(x.body);
       var data = jsonDecode(x.body);
-      final List resellers =
-          data.map((json) => Reseller.fromJson(json)).toList();
-      hotelsK.clear();
-      hotelsM.clear();
-      for (var i = 0; i < resellers.length; i++) {
-        if (resellers[i].address == "مكة") {
-          hotelsK.add(resellers[i]);
-        } else {
-          hotelsM.add(resellers[i]);
-        }
+      final List resellers = data.map((json) => Hotel.fromJson(json)).toList();
+      if (type) {
+        hotelsPay = resellers;
+      } else {
+        hotelsSale = resellers;
       }
+      // hotelsPay.clear();
+      // hotelsM.clear();
+
+      // for (var i = 0; i < resellers.length; i++) {
+      //   if (resellers[i].address == "مكة") {
+      //     hotelsK.add(resellers[i]);
+      //   } else {
+      //     hotelsM.add(resellers[i]);
+      //   }
+      // }
       notifyListeners();
     } catch (e) {
       print("11111111111111111111");
@@ -47,21 +57,19 @@ List hotels = [];
     }
   }
 
-  Future getFetchData() async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-
+  Future getFetchData(bool ismaka) async {
     try {
-      var x = await getpi("/api/hotel/index");
+      var x =
+          await getpi("/api/hotel/index?type=${ismaka ? "مكة" : "المدينة"}");
+      print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
-      // for (var i = 0; i < resellers.length; i++) {
-      //   if (resellers[i].address == "مكة") {
-      //     hotels.add(resellers[i]);
-      //   }
-      // }
-      hotels = resellers;
+      if (ismaka) {
+        hotels = resellers;
+      } else {
+        hotelsM = resellers;
+      }
 
       notifyListeners();
     } catch (e) {
@@ -90,7 +98,7 @@ List hotels = [];
     }
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
-      fetchData();
+      // fetchData();
       // notifyListeners();
       snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {

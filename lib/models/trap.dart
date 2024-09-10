@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:admin/models/format_price.dart';
+
 Trap trapFromJson(String str) => Trap.fromJson(json.decode(str));
 
 String trapToJson(Trap data) => json.encode(data.toJson());
@@ -127,14 +129,4 @@ class Trap {
         "transport": transport,
         "created_at": createdAt,
       };
-}
-
-String formatPrice(dynamic value) {
-  if (value is int) {
-    return value.toString();
-  } else if (value is double) {
-    return value.toStringAsFixed(2);
-  } else {
-    throw Exception('Unexpected value type');
-  }
 }

@@ -1,6 +1,6 @@
 import 'package:admin/screens/dashboard/components/header.dart';
-import 'package:admin/screens/hotel/widgets/hotel_buy_page.dart';
-import 'package:admin/screens/hotel/widgets/hotel_sale.dart';
+import 'package:admin/screens/hotel/hotel_buy_page.dart';
+import 'package:admin/screens/hotel/hotel_sale.dart';
 import 'package:flutter/material.dart';
 
 /// صفحة الام للفنادق والجذر الاساسي
@@ -21,9 +21,29 @@ class _HotelProfileState extends State<HotelProfile> {
       appBar: AppBar(
         title: Header(title: "حساب الفندق"),
       ),
-      body: widget.showBuy 
-        ? HotelBuyPage(hotelId: widget.hotelId) 
-        : HotelSale(hotelId: widget.hotelId),
+      // body: !widget.showBuy
+      //     ? HotelBuyPage(hotelId: widget.hotelId)
+      //     : HotelSale(hotelId: widget.hotelId),
+      body: DefaultTabController(
+          length: 2,
+          child: Column(
+            children: [
+              TabBar(
+                tabs: [
+                  Tab(text: "البيع"),
+                  Tab(text: "الشراء"),
+                ],
+              ),
+              Expanded(
+                child: TabBarView(
+                  children: [
+                    HotelSale(hotelId: widget.hotelId),
+                    HotelBuyPage(hotelId: widget.hotelId),
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

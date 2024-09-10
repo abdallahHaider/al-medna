@@ -43,8 +43,10 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
               Widget? child,
             ) {
               return Card(
-                color: secondaryColor,
+                color: Colors.grey,
                 child: DataTable(
+                    border: TableBorder.all(
+                        width: 1, style: BorderStyle.solid, color: Colors.grey),
                     columns: [
                       DataColumn(label: Text('الفندق')),
                       DataColumn(label: Text('التاريخ')),
@@ -172,42 +174,42 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                   height: 15,
                 ),
                 Divider(),
-                Text("انشاء حجز جديد"),
-                SizedBox(
-                  height: 20,
-                ),
-                MyTextField(
-                  controller: _nameController,
-                  labelText: 'عدد الغرف',
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                MyTextField(
-                  controller: _numberController,
-                  labelText: 'عدد الليالي',
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                MyTextField(
-                  controller: _priceController,
-                  labelText: 'السعر لكل غرفة',
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                    onPressed: () {
-                      Provider.of<HotelController>(context, listen: false)
-                          .addBuyHotel(
-                              widget.hotelId,
-                              _nameController.text,
-                              _priceController.text,
-                              _numberController.text,
-                              context);
-                    },
-                    child: Text("اضافة"))
+                // Text("انشاء حجز جديد"),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // MyTextField(
+                //   controller: _nameController,
+                //   labelText: 'عدد الغرف',
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // MyTextField(
+                //   controller: _numberController,
+                //   labelText: 'عدد الليالي',
+                // ),
+                // SizedBox(
+                //   height: 10,
+                // ),
+                // MyTextField(
+                //   controller: _priceController,
+                //   labelText: 'السعر لكل غرفة',
+                // ),
+                // SizedBox(
+                //   height: 20,
+                // ),
+                // ElevatedButton(
+                //     onPressed: () {
+                //       Provider.of<HotelController>(context, listen: false)
+                //           .addBuyHotel(
+                //               widget.hotelId,
+                //               _nameController.text,
+                //               _priceController.text,
+                //               _numberController.text,
+                //               context);
+                //     },
+                //     child: Text("اضافة"))
               ],
             ),
           ),

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ActionController(),
         ),
         ChangeNotifierProvider(
-          create: (context) => HotelController()..getFetchData(),
+          create: (context) => HotelController(),
         ),
         ChangeNotifierProvider(
           create: (context) => GeneralInformationController(),

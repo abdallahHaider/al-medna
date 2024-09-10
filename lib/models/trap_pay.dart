@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-import 'package:admin/models/trap.dart';
+import 'package:admin/models/format_price.dart';
 
 TrapPay trapPayFromJson(String str) => TrapPay.fromJson(json.decode(str));
 
