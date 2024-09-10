@@ -18,7 +18,7 @@ class HotelPay extends StatelessWidget {
         Expanded(
             flex: 2,
             child: Card(
-              color: secondaryColor,
+              color: const Color.fromARGB(255, 255, 2, 2),
               child: DataTable(columns: [
                 DataColumn(label: Text('النوع')),
                 DataColumn(label: Text('المبلغ')),
@@ -27,7 +27,7 @@ class HotelPay extends StatelessWidget {
             )),
         Expanded(
             child: Card(
-          color: secondaryColor,
+          color: const Color.fromARGB(255, 255, 0, 0),
           child: Column(
             children: [
               MyTextField(

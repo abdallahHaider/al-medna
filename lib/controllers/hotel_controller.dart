@@ -10,13 +10,14 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart' as http;
 
 class HotelController extends ChangeNotifier {
-  List hotels = [];
+List hotels = [];
   List hotelsK = [];
   List hotelsM = [];
+  List soldHotelsK = []; // Add this property
+  List soldHotelsM = []; // Add this property
   List hotelbuy = [];
   String total_cost = "";
   bool isLading = true;
-
   Future fetchData() async {
     isLading = true;
     notifyListeners();
