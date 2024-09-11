@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
-import 'package:universal_html/html.dart';
+// import 'package:universal_html/html.dart';
 
 Future<void> generatePdfWeb(
     String name, String cost, String id, String date, String totalCost) async {
@@ -115,23 +118,23 @@ Future<void> generatePdfWeb(
     ),
   );
 
-  // // حفظ ملف PDF في جهازك
-  // final output = await getTemporaryDirectory();
-  // final file =
-  //     File("${output.path}/${name + DateTime.now().second.toString()}.pdf");
-  // await file.writeAsBytes(await pdf.save());
+  // حفظ ملف PDF في جهازك
+  final output = await getTemporaryDirectory();
+  final file =
+      File("${output.path}/${name + DateTime.now().second.toString()}.pdf");
+  await file.writeAsBytes(await pdf.save());
 
-  // print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
+  print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
-  // // فتح ملف PDF باستخدام تطبيق خارجي
-  // await OpenFilex.open(file.path);
+  // فتح ملف PDF باستخدام تطبيق خارجي
+  await OpenFilex.open(file.path);
 
-  // حفظ ملف PDF على الويب
-  final bytes = await pdf.save();
-  final blob = Blob([bytes], 'application/pdf');
-  final url = Url.createObjectUrlFromBlob(blob);
-  final anchor = AnchorElement(href: url)
-    ..setAttribute("download", "example.pdf")
-    ..click();
-  Url.revokeObjectUrl(url);
+  // // حفظ ملف PDF على الويب
+  // final bytes = await pdf.save();
+  // final blob = Blob([bytes], 'application/pdf');
+  // final url = Url.createObjectUrlFromBlob(blob);
+  // final anchor = AnchorElement(href: url)
+  //   ..setAttribute("download", "example.pdf")
+  //   ..click();
+  // Url.revokeObjectUrl(url);
 }
