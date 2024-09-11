@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
+import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/models/mine_action.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:spelling_number/spelling_number.dart';
 
 class ActionBankController extends ChangeNotifier {
@@ -46,7 +48,7 @@ class ActionBankController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setTypeTO(String type) {
+  void setTypeTO(String type, BuildContext context) {
     print("111111111111111111111111111111");
     print(type);
     if (type == "البنك") {
@@ -71,6 +73,14 @@ class ActionBankController extends ChangeNotifier {
       this.typeTO = "";
       mineActionsTO.clear();
       getTodata();
+      isTo = false;
+    }
+    if (type == "الفنادق") {
+      print("444444444444");
+      this.typeTO = "1";
+      Provider.of<HotelController>(context, listen: false).getFetchData(true);
+      Provider.of<HotelController>(context, listen: false).getFetchData(false);
+      // getTodata();
       isTo = false;
     }
     notifyListeners();

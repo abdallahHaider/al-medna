@@ -1,4 +1,5 @@
 import 'package:admin/controllers/action_bank_controller.dart';
+import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/models/action.dart';
 import 'package:admin/models/type_cost.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
@@ -85,7 +86,7 @@ class ActionBankCard extends StatelessWidget {
                     child: _buildDropdown("الى", TypeAction3.actions, (value) {
                       print(value.id);
                       Provider.of<ActionBankController>(context, listen: false)
-                          .setTypeTO(value!.name);
+                          .setTypeTO(value!.name, context);
                     }),
                   ),
                   SizedBox(width: 16),
@@ -106,8 +107,81 @@ class ActionBankCard extends StatelessWidget {
                           : SizedBox(),
                     ),
                   ),
-                  // Expanded(child: SizedBox())
+                  Consumer<ActionBankController>(
+                    builder: (BuildContext context, value, Widget? child) {
+                      if (value.typeTO == "1") {
+                        return Expanded(
+                          child: Row(children: [
+                            Expanded(
+                              child: Consumer<HotelController>(
+                                builder: (BuildContext context, value,
+                                    Widget? child) {
+                                  return DropdownButtonFormField<dynamic>(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      labelText: "فندق مكة",
+                                    ),
+                                    onChanged: (dynamic value) {
+                                      // setState(() {
+                                      // trapid = value.id.toString();
+                                      Provider.of<ActionBankController>(context,
+                                              listen: false)
+                                          .toID = value.id.toString();
+                                      // });
+                                    },
+                                    items:
+                                        value.hotels.map((dynamic companies) {
+                                      return DropdownMenuItem<dynamic>(
+                                        value: companies,
+                                        child: Text(companies.fullName!),
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: Consumer<HotelController>(
+                                builder: (BuildContext context, value,
+                                    Widget? child) {
+                                  return DropdownButtonFormField<dynamic>(
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      labelText: "فندق مدينة",
+                                    ),
+                                    onChanged: (dynamic value) {
+                                      // setState(() {
+                                      // trapid = value.id.toString();
+                                      Provider.of<ActionBankController>(context,
+                                              listen: false)
+                                          .toID = value.id.toString();
+                                      // });
+                                    },
+                                    items:
+                                        value.hotelsM.map((dynamic companies) {
+                                      return DropdownMenuItem<dynamic>(
+                                        value: companies,
+                                        child: Text(companies.fullName!),
+                                      );
+                                    }).toList(),
+                                  );
+                                },
+                              ),
+                            )
+                          ]),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  )
                 ],
+
+                // Expanded(child: SizedBox())
               ),
 
               SizedBox(height: 16),

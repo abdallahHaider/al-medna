@@ -36,7 +36,7 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Expanded(
-            flex: 2,
+            flex: 4,
             child: Consumer<HotelController>(builder: (
               BuildContext context,
               HotelController hotelController,
@@ -61,94 +61,96 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                     rows:
                         List.generate(hotelController.hotelbuy.length, (index) {
                       HotelBuy hotelBuy = hotelController.hotelbuy[index];
-                      return DataRow(cells: [
-                        DataCell(
-                          Text(
-                            hotelBuy.hotelId.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.createdAt.toString().substring(0, 10),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.rooms.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.nights.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.roomPricePerNight.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.totalPrice.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.company.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(
-                          Text(
-                            hotelBuy.companyProgramId.toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        DataCell(ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                Colors.red,
-                              ),
-                              foregroundColor: WidgetStateProperty.all(
-                                Colors.white,
+                      return DataRow(
+                          color: WidgetStateProperty.all(Colors.white),
+                          cells: [
+                            DataCell(
+                              Text(
+                                hotelBuy.hotelId.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                            onPressed: () {
-                              // drletdHotel(
-                              //     context, snapshot, index);
-                            },
-                            child: Text("حذف"))),
-                      ]);
+                            DataCell(
+                              Text(
+                                hotelBuy.createdAt.toString().substring(0, 10),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.rooms.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.nights.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.roomPricePerNight.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.totalPrice.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.company.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.companyProgramId.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.all(
+                                    Colors.red,
+                                  ),
+                                  foregroundColor: WidgetStateProperty.all(
+                                    Colors.white,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  // drletdHotel(
+                                  //     context, snapshot, index);
+                                },
+                                child: Text("حذف"))),
+                          ]);
                     })),
               );
             })),

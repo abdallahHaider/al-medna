@@ -19,7 +19,7 @@ class _MovementPageState extends State<MovementPage> {
 
   final _nameController = TextEditingController();
 
-  // final _hotelNameController = TextEditingController();
+  final _hotelNameController = TextEditingController();
 
   final _roomController = TextEditingController();
 
@@ -33,6 +33,17 @@ class _MovementPageState extends State<MovementPage> {
   final _dadeController = TextEditingController();
   DateTime? _selectedDate;
   String trapid = "";
+
+  @override
+  void initState() {
+    Provider.of<HotelController>(context, listen: false).getFetchData(true);
+    Provider.of<HotelController>(context, listen: false).getFetchData(false);
+    setState(() {
+      _dadeController.text = DateTime.now().toString();
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,43 +83,67 @@ class _MovementPageState extends State<MovementPage> {
               // First Row: Two Dropdowns
               Row(
                 children: [
-                  // Expanded(
-                  //   child: Consumer<HotelController>(
-                  //     builder: (BuildContext context, value, Widget? child) {
-                  //       return DropdownButtonFormField<dynamic>(
-                  //         decoration: InputDecoration(
-                  //           border: OutlineInputBorder(
-                  //             borderRadius: BorderRadius.circular(10),
-                  //           ),
-                  //           labelText: "الفندق",
-                  //         ),
-                  //         onChanged: (dynamic value) {
-                  //           // setState(() {
-                  //           trapid = value.id.toString();
-                  //           // });
-                  //         },
-                  //         items: value.hotels.map((dynamic companies) {
-                  //           return DropdownMenuItem<dynamic>(
-                  //             value: companies,
-                  //             child: Text(companies.fullName!),
-                  //           );
-                  //         }).toList(),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-
-                  // Expanded(
-                  //   child: MyTextField(
-                  //     controller: _hotelNameController,
-                  //     labelText: 'اسم الفندق',
-                  //     validator: (value) {
-                  //       if (value!.isEmpty) {
-                  //         return 'Please enter cost';
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
+                  Expanded(
+                    child: Consumer<HotelController>(
+                      builder: (BuildContext context, value, Widget? child) {
+                        return DropdownButtonFormField<dynamic>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: "فندق مكة",
+                          ),
+                          onChanged: (dynamic value) {
+                            // setState(() {
+                            trapid = value.id.toString();
+                            // });
+                          },
+                          items: value.hotels.map((dynamic companies) {
+                            return DropdownMenuItem<dynamic>(
+                              value: companies,
+                              child: Text(companies.fullName!),
+                            );
+                          }).toList(),
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: Consumer<HotelController>(
+                      builder: (BuildContext context, value, Widget? child) {
+                        return DropdownButtonFormField<dynamic>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: "فندق مدينة",
+                          ),
+                          onChanged: (dynamic value) {
+                            // setState(() {
+                            trapid = value.id.toString();
+                            // });
+                          },
+                          items: value.hotelsM.map((dynamic companies) {
+                            return DropdownMenuItem<dynamic>(
+                              value: companies,
+                              child: Text(companies.fullName!),
+                            );
+                          }).toList(),
+                        );
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: MyTextField(
+                      controller: _hotelNameController,
+                      labelText: 'اسم الفندق',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter cost';
+                        }
+                      },
+                    ),
+                  ),
                   SizedBox(
                     width: 16,
                   ),
@@ -151,7 +186,7 @@ class _MovementPageState extends State<MovementPage> {
                   TableRow(
                     decoration: BoxDecoration(color: Colors.blueGrey[50]),
                     children: [
-                      _buildTableCell('النوع'),
+                      _buildTableCell('الفندق'),
                       _buildTableCell('عدد'),
                       _buildTableCell('السعر'),
                       // _buildTableCell('الغرف'),
@@ -163,33 +198,33 @@ class _MovementPageState extends State<MovementPage> {
                 ],
               ),
 
-              // SizedBox(height: 24), // More spacing before the button
-              // Table(
-              //   columnWidths: {
-              //     0: FlexColumnWidth(1),
-              //     1: FlexColumnWidth(1),
-              //     2: FlexColumnWidth(1),
-              //     3: FlexColumnWidth(1),
-              //     4: FlexColumnWidth(2),
-              //   },
-              //   border: TableBorder.all(color: Colors.grey),
-              //   children: [
-              //     TableRow(
-              //       decoration: BoxDecoration(color: Colors.blueGrey[50]),
-              //       children: [
-              //         _buildTableCell('النوع'),
-              //         _buildTableCell('عدد الليالي'),
-              //         _buildTableCell('عدد الغرف'),
+              SizedBox(height: 24), // More spacing before the button
+              Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(2),
+                },
+                border: TableBorder.all(color: Colors.grey),
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(color: Colors.blueGrey[50]),
+                    children: [
+                      _buildTableCell('النوع'),
+                      _buildTableCell('عدد الليالي'),
+                      _buildTableCell('عدد الغرف'),
 
-              //         _buildTableCell('السعر'),
-              //         // _buildTableCell('الغرف'),
-              //         _buildTableCell('السعر الاجمالي'),
-              //       ],
-              //     ),
-              //     _buildRoomTableRow1('الفندق', _costdayController,
-              //         _numberdayController, _roomController, 3),
-              //   ],
-              // ),
+                      _buildTableCell('السعر'),
+                      // _buildTableCell('الغرف'),
+                      _buildTableCell('السعر الاجمالي'),
+                    ],
+                  ),
+                  _buildRoomTableRow1('الفندق', _costdayController,
+                      _numberdayController, _roomController, 3),
+                ],
+              ),
 
               SizedBox(height: 24),
               // Submit Button
