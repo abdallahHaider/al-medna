@@ -1,6 +1,5 @@
 import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/models/hotel_buy.dart';
-import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +18,9 @@ class HotelBuyPage extends StatefulWidget {
 }
 
 class _HotelBuyPageState extends State<HotelBuyPage> {
-  final _nameController = TextEditingController();
-  final _priceController = TextEditingController();
-  final _numberController = TextEditingController();
+  // final _nameController = TextEditingController();
+  // final _priceController = TextEditingController();
+  // final _numberController = TextEditingController();
   @override
   void initState() {
     Provider.of<HotelController>(context, listen: false)

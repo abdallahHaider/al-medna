@@ -29,6 +29,7 @@ class _HotelProfileState extends State<HotelProfile> {
           child: Column(
             children: [
               TabBar(
+                isScrollable: true,
                 tabs: [
                   Tab(text: "البيع"),
                   Tab(text: "الشراء"),

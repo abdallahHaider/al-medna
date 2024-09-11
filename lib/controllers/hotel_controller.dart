@@ -15,16 +15,13 @@ class HotelController extends ChangeNotifier {
   List hotelsM = [];
   List hotelsPay = [];
   List hotelsSale = [];
-  // List soldHotelsK = []; // Add this property
-  // List soldHotelsM = []; // Add this property
   List hotelbuy = [];
   String total_cost = "";
   bool isLading = true;
   bool isMagk = true;
   bool isMagk2 = true;
+
   Future fetchData(bool maka, bool type) async {
-    // isLading = true;
-    // notifyListeners();
     try {
       var x = await getpi(
           "/api/hotel/index/${type ? "buy" : "sell"}?type=${maka ? "مكة" : "المدينة"}");
@@ -36,16 +33,6 @@ class HotelController extends ChangeNotifier {
       } else {
         hotelsSale = resellers;
       }
-      // hotelsPay.clear();
-      // hotelsM.clear();
-
-      // for (var i = 0; i < resellers.length; i++) {
-      //   if (resellers[i].address == "مكة") {
-      //     hotelsK.add(resellers[i]);
-      //   } else {
-      //     hotelsM.add(resellers[i]);
-      //   }
-      // }
       notifyListeners();
     } catch (e) {
       print("11111111111111111111");
@@ -68,7 +55,7 @@ class HotelController extends ChangeNotifier {
       if (ismaka) {
         hotels = resellers;
       } else {
-        hotelsM = resellers;
+        hotels = resellers;
       }
 
       notifyListeners();

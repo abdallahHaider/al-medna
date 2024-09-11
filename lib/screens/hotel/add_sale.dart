@@ -23,8 +23,8 @@ class _AddSaleState extends State<AddSale> {
 
   final _priceUSDController = TextEditingController();
   // final _priceRASController = TextEditingController();
-  final _numberController = TextEditingController();
-  final _roomController = TextEditingController();
+  // final _numberController = TextEditingController();
+  // final _roomController = TextEditingController();
   final _reselrID = TextEditingController();
   String curreny = "";
   @override

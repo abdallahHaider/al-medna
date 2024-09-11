@@ -20,6 +20,12 @@ class ActionBankController extends ChangeNotifier {
   bool isfrom = true;
   bool isTo = true;
   String numberWord = "";
+  bool isPay = true;
+
+  void setIsPay(bool v) {
+    isPay = v;
+    notifyListeners();
+  }
 
   void setType(String type) {
     print("111111111111111111111111111111");
@@ -75,10 +81,18 @@ class ActionBankController extends ChangeNotifier {
       getTodata();
       isTo = false;
     }
-    if (type == "الفنادق") {
+    if (type == 'فنادق مكة') {
       print("444444444444");
       this.typeTO = "1";
       Provider.of<HotelController>(context, listen: false).getFetchData(true);
+      // Provider.of<HotelController>(context, listen: false).getFetchData(false);
+      // getTodata();
+      isTo = false;
+    }
+    if (type == 'فنادق المدينة') {
+      print("444444444444");
+      this.typeTO = "1";
+      // Provider.of<HotelController>(context, listen: false).getFetchData(true);
       Provider.of<HotelController>(context, listen: false).getFetchData(false);
       // getTodata();
       isTo = false;
@@ -137,9 +151,10 @@ class ActionBankController extends ChangeNotifier {
         if (typeTO == "bank") "t_bank": toID,
         if (typeTO == "company") "t_company": toID,
         if (typeTO == "small_bank") "t_small_bank": toID,
+        if (typeTO == "1") "t_hotel": toID,
         if (isIQD == "t") "cost_USD": cost,
         if (isIQD == "f") "cost_IQD": cost,
-        "number_kade": Kade,
+        "number_kade": "0",
       });
       print(x.body);
       print(x.statusCode);

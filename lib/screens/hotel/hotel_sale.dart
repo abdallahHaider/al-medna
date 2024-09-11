@@ -1,8 +1,5 @@
 import 'package:admin/controllers/hotel_controller.dart';
-import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/models/hotel_buy.dart';
-import 'package:admin/models/type_cost.dart';
-import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,13 +16,13 @@ class HotelSale extends StatefulWidget {
 }
 
 class _HotelSaleState extends State<HotelSale> {
-  final _nameController = TextEditingController();
+  // final _nameController = TextEditingController();
 
-  final _priceUSDController = TextEditingController();
+  // final _priceUSDController = TextEditingController();
   // final _priceRASController = TextEditingController();
-  final _numberController = TextEditingController();
-  final _roomController = TextEditingController();
-  final _reselrID = TextEditingController();
+  // final _numberController = TextEditingController();
+  // final _roomController = TextEditingController();
+  // final _reselrID = TextEditingController();
   String curreny = "";
 
   /// صفحة الخاصة بيع الفندق

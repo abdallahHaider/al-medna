@@ -8,13 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
-class ActionBankCard extends StatelessWidget {
+class ActionBankCard extends StatefulWidget {
   ActionBankCard({super.key});
 
-  final _formKey = GlobalKey<FormState>();
-  final _namberKedeController = TextEditingController();
-  final _costController = TextEditingController();
+  @override
+  State<ActionBankCard> createState() => _ActionBankCardState();
+}
 
+class _ActionBankCardState extends State<ActionBankCard> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _namberKedeController = TextEditingController();
+
+  final _costController = TextEditingController();
+  bool isPay = true;
+  var typeAction2 = TypeAction2(name: 'ايداع', id: 'pay');
+  int typeAction3 = 0;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -29,21 +38,38 @@ class ActionBankCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // First Row: Two Dropdowns
               Row(
                 children: [
                   Expanded(
-                    child: _buildDropdown(
-                        "نوع العملية", TypeAction2.actions, (value) {}),
+                    child: _buildDropdown("نوع العملية", TypeAction2.actions,
+                        (value) {
+                      print(value);
+                      if (value.id == "pay") {
+                        // Provider.of<ActionBankController>(context,
+                        //         listen: false)
+                        //     .setIsPay(true);
+                        setState(() {
+                          isPay = true;
+                          typeAction2 = TypeAction2(name: 'ايداع', id: 'pay');
+                          typeAction3 = 0;
+                        });
+                      } else {
+                        // Provider.of<ActionBankController>(context,
+                        //         listen: false)
+                        //     .setIsPay(false);
+                        setState(() {
+                          isPay = false;
+                          typeAction2 = TypeAction2(name: 'حوالة', id: 'debt');
+                          typeAction3 = 1;
+                        });
+                      }
+                    }),
                   ),
                   SizedBox(width: 16),
-                  // Expanded(child: SizedBox()),
                   Expanded(child: SizedBox())
                 ],
               ),
-
               SizedBox(height: 16),
-              // First Row: Two Dropdowns
               Row(
                 children: [
                   Expanded(
@@ -69,21 +95,15 @@ class ActionBankCard extends StatelessWidget {
                           : SizedBox(),
                     ),
                   ),
-                  // Expanded(child: SizedBox())
                 ],
               ),
-
               SizedBox(height: 16),
-
-              // Second Row: One Dynamic Dropdown
-
-              SizedBox(height: 16),
-
-              // Third Row: Two Dropdowns
               Row(
                 children: [
                   Expanded(
-                    child: _buildDropdown("الى", TypeAction3.actions, (value) {
+                    child: _buildDropdown2(
+                        "الى", isPay ? TypeAction3.actions : TypeAction3.trans,
+                        (value) {
                       print(value.id);
                       Provider.of<ActionBankController>(context, listen: false)
                           .setTypeTO(value!.name, context);
@@ -104,89 +124,40 @@ class ActionBankCard extends StatelessWidget {
                                     .toID = value.id.toString();
                               },
                             )
-                          : SizedBox(),
+                          : ref.typeTO == "1"
+                              ? Consumer<HotelController>(
+                                  builder: (BuildContext context, value,
+                                      Widget? child) {
+                                    return DropdownButtonFormField<dynamic>(
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(),
+                                        labelText: "فندق",
+                                      ),
+                                      value: value.hotels.isEmpty
+                                          ? ""
+                                          : value.hotels.first,
+                                      onChanged: (dynamic value) {
+                                        Provider.of<ActionBankController>(
+                                                context,
+                                                listen: false)
+                                            .toID = value.id.toString();
+                                      },
+                                      items:
+                                          value.hotels.map((dynamic companies) {
+                                        return DropdownMenuItem<dynamic>(
+                                          value: companies,
+                                          child: Text(companies.fullName!),
+                                        );
+                                      }).toList(),
+                                    );
+                                  },
+                                )
+                              : SizedBox(),
                     ),
                   ),
-                  Consumer<ActionBankController>(
-                    builder: (BuildContext context, value, Widget? child) {
-                      if (value.typeTO == "1") {
-                        return Expanded(
-                          child: Row(children: [
-                            Expanded(
-                              child: Consumer<HotelController>(
-                                builder: (BuildContext context, value,
-                                    Widget? child) {
-                                  return DropdownButtonFormField<dynamic>(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      labelText: "فندق مكة",
-                                    ),
-                                    onChanged: (dynamic value) {
-                                      // setState(() {
-                                      // trapid = value.id.toString();
-                                      Provider.of<ActionBankController>(context,
-                                              listen: false)
-                                          .toID = value.id.toString();
-                                      // });
-                                    },
-                                    items:
-                                        value.hotels.map((dynamic companies) {
-                                      return DropdownMenuItem<dynamic>(
-                                        value: companies,
-                                        child: Text(companies.fullName!),
-                                      );
-                                    }).toList(),
-                                  );
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: Consumer<HotelController>(
-                                builder: (BuildContext context, value,
-                                    Widget? child) {
-                                  return DropdownButtonFormField<dynamic>(
-                                    decoration: InputDecoration(
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      labelText: "فندق مدينة",
-                                    ),
-                                    onChanged: (dynamic value) {
-                                      // setState(() {
-                                      // trapid = value.id.toString();
-                                      Provider.of<ActionBankController>(context,
-                                              listen: false)
-                                          .toID = value.id.toString();
-                                      // });
-                                    },
-                                    items:
-                                        value.hotelsM.map((dynamic companies) {
-                                      return DropdownMenuItem<dynamic>(
-                                        value: companies,
-                                        child: Text(companies.fullName!),
-                                      );
-                                    }).toList(),
-                                  );
-                                },
-                              ),
-                            )
-                          ]),
-                        );
-                      } else {
-                        return SizedBox();
-                      }
-                    },
-                  )
                 ],
-
-                // Expanded(child: SizedBox())
               ),
-
               SizedBox(height: 16),
-
-              // Fourth Row: One Dynamic Dropdown
               Row(
                 children: [
                   Expanded(
@@ -204,13 +175,9 @@ class ActionBankCard extends StatelessWidget {
                   ),
                   SizedBox(width: 16),
                   Expanded(child: SizedBox()),
-                  // Expanded(child: SizedBox())
                 ],
               ),
-
               SizedBox(height: 16),
-
-              // Fifth Row: Three Text Fields
               Row(
                 children: [
                   Expanded(
@@ -231,28 +198,17 @@ class ActionBankCard extends StatelessWidget {
                   ),
                   SizedBox(width: 16),
                   Expanded(
-                    child: MyTextField(
-                      controller: _namberKedeController,
-                      labelText: 'رقم القيد',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter namber kede';
-                        }
-                      },
-                    ),
+                    // child: MyTextField(
+                    //   controller: _namberKedeController,
+                    //   labelText: 'رقم القيد',
+                    //   validator: (value) {
+                    //     // if (value!.isEmpty) {
+                    //     //   return 'Please enter namber kede';
+                    //     // }
+                    //   },
+                    // ),
+                    child: SizedBox(),
                   ),
-                  // Expanded(child: SizedBox())
-                  // Expanded(
-                  //   child: MyTextField(
-                  //     controller: _dateController,
-                  //     labelText: 'اسم الملاحضة',
-                  //     validator: (value) {
-                  //       if (value!.isEmpty) {
-                  //         return 'Please enter date';
-                  //       }
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
               SizedBox(height: 16),
@@ -267,10 +223,7 @@ class ActionBankCard extends StatelessWidget {
                   );
                 },
               ),
-
-              SizedBox(height: 24), // More spacing before the button
-
-              // Submit Button
+              SizedBox(height: 24),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
@@ -303,7 +256,6 @@ class ActionBankCard extends StatelessWidget {
   }
 
   // ... (rest of the code remains the same)
-
   Widget _buildDropdown<T>(
       String labelText, List<T> items, ValueChanged<dynamic> onChanged) {
     return DropdownButtonFormField<dynamic>(
@@ -311,7 +263,9 @@ class ActionBankCard extends StatelessWidget {
         labelText: labelText,
         border: OutlineInputBorder(),
       ),
-      // value: items.isEmpty ? "" : items.first,
+      value: items.isEmpty ? "" : items[typeAction3],
+      // value:
+      // ,
       items: items.map((dynamic toElement) {
         return DropdownMenuItem(
           child: Text(toElement!.name.toString()),
@@ -325,6 +279,31 @@ class ActionBankCard extends StatelessWidget {
         }
         return null;
       },
+    );
+  }
+
+  Widget _buildDropdown2<T>(
+      String labelText, List<T> items, ValueChanged<dynamic> onChanged) {
+    return DropdownButtonFormField<dynamic>(
+      decoration: InputDecoration(
+        labelText: labelText,
+        border: OutlineInputBorder(),
+      ),
+      value: items.isEmpty ? "" : items.first,
+      hint: Text("data"),
+      items: items.map((dynamic toElement) {
+        return DropdownMenuItem(
+          child: Text(toElement!.name.toString()),
+          value: toElement,
+        );
+      }).toList(),
+      onChanged: onChanged,
+      // validator: (value) {
+      //   if (value == null) {
+      //     return 'Please select $labelText';
+      //   }
+      //   return null;
+      // },
     );
   }
 
