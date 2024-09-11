@@ -133,17 +133,17 @@ class _ActionBankCardState extends State<ActionBankCard> {
                                         border: OutlineInputBorder(),
                                         labelText: "فندق",
                                       ),
-                                      value: value.hotels.isEmpty
+                                      value: value.hotels2.isEmpty
                                           ? ""
-                                          : value.hotels.first,
+                                          : value.hotels2.first,
                                       onChanged: (dynamic value) {
                                         Provider.of<ActionBankController>(
                                                 context,
                                                 listen: false)
                                             .toID = value.id.toString();
                                       },
-                                      items:
-                                          value.hotels.map((dynamic companies) {
+                                      items: value.hotels2
+                                          .map((dynamic companies) {
                                         return DropdownMenuItem<dynamic>(
                                           value: companies,
                                           child: Text(companies.fullName!),

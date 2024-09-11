@@ -128,7 +128,9 @@ class _AddBuyState extends State<AddBuy> {
                       child: Center(
                         child: Text(
                           'عدد الغرف',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -136,7 +138,9 @@ class _AddBuyState extends State<AddBuy> {
                       child: Center(
                         child: Text(
                           'عدد الليالي',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -144,7 +148,9 @@ class _AddBuyState extends State<AddBuy> {
                       child: Center(
                         child: Text(
                           'سعر الغرفة',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -152,7 +158,9 @@ class _AddBuyState extends State<AddBuy> {
                       child: Center(
                         child: Text(
                           'مجموع السعر',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -172,7 +180,10 @@ class _AddBuyState extends State<AddBuy> {
                         child: MyTextField(
                       controller: price,
                     )),
-                    TableCell(child: MyTextField()),
+                    TableCell(
+                        child: MyTextField(
+                      enabled: false,
+                    )),
                   ],
                 ),
               ]),

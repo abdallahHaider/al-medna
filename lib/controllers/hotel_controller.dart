@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 
 class HotelController extends ChangeNotifier {
   List hotels = [];
+  List hotels2 = [];
   List hotelsM = [];
   List hotelsPay = [];
   List hotelsSale = [];
@@ -54,8 +55,11 @@ class HotelController extends ChangeNotifier {
           data.map((json) => Reseller.fromJson(json)).toList();
       if (ismaka) {
         hotels = resellers;
+        hotels2 = resellers;
       } else {
-        hotels = resellers;
+        hotels2 = resellers;
+        // hotels = resellers;
+        hotelsM = resellers;
       }
 
       notifyListeners();

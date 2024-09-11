@@ -35,6 +35,16 @@ class _AddSaleState extends State<AddSale> {
     super.initState();
   }
 
+  String Price = "0";
+  getPrice() {
+    // setState(() {
+    //   Price = (double.tryParse(rooms.text.isEmpty ? "0" : rooms.text)! *
+    //           double.tryParse(rooms.text.isEmpty ? "0" : rooms.text)! *
+    //           double.tryParse(rooms.text.isEmpty ? "0" : rooms.text)!)
+    //       .toString();
+    // });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,7 +183,9 @@ class _AddSaleState extends State<AddSale> {
                       child: Center(
                         child: Text(
                           'عدد الغرف',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -181,7 +193,9 @@ class _AddSaleState extends State<AddSale> {
                       child: Center(
                         child: Text(
                           'عدد الليالي',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -189,7 +203,9 @@ class _AddSaleState extends State<AddSale> {
                       child: Center(
                         child: Text(
                           'سعر الغرفة',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -197,7 +213,9 @@ class _AddSaleState extends State<AddSale> {
                       child: Center(
                         child: Text(
                           'مجموع السعر',
-                          style: TextStyle(fontSize: 16, color: Colors.blue),
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ),
@@ -208,16 +226,23 @@ class _AddSaleState extends State<AddSale> {
                     TableCell(
                         child: MyTextField(
                       controller: rooms,
+                      onChanged: getPrice(),
                     )),
                     TableCell(
                         child: MyTextField(
                       controller: day,
+                      onChanged: getPrice(),
                     )),
                     TableCell(
                         child: MyTextField(
                       controller: price,
+                      onChanged: getPrice(),
                     )),
-                    TableCell(child: MyTextField()),
+                    TableCell(
+                        child: MyTextField(
+                      controller: TextEditingController(text: Price),
+                      enabled: false,
+                    )),
                   ],
                 ),
               ]),
