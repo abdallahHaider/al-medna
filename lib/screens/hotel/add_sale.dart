@@ -21,7 +21,7 @@ class _AddSaleState extends State<AddSale> {
   final price = TextEditingController();
   final _nameController = TextEditingController();
 
-  final _priceUSDController = TextEditingController();
+  // final _priceUSDController = TextEditingController();
   // final _priceRASController = TextEditingController();
   // final _numberController = TextEditingController();
   // final _roomController = TextEditingController();
@@ -275,13 +275,13 @@ class _AddSaleState extends State<AddSale> {
                   },
                 ),
               ),
-              SizedBox(
-                width: 500,
-                child: MyTextField(
-                  controller: _priceUSDController,
-                  labelText: 'سعر الغرفة',
-                ),
-              ),
+              // SizedBox(
+              //   width: 500,
+              //   child: MyTextField(
+              //     // controller: _priceUSDController,
+              //     labelText: 'سعر الغرفة',
+              //   ),
+              // ),
             ],
           ),
           SizedBox(
