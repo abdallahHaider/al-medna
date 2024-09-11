@@ -16,21 +16,20 @@ class MovementPage extends StatefulWidget {
 
 class _MovementPageState extends State<MovementPage> {
   final _formKey = GlobalKey<FormState>();
-
   final _nameController = TextEditingController();
-
   final _hotelNameController = TextEditingController();
-
   final _roomController = TextEditingController();
-
   final _numberTController = TextEditingController();
-
   final _cosrTController = TextEditingController();
-
   final _numberdayController = TextEditingController();
-
   final _costdayController = TextEditingController();
   final _dadeController = TextEditingController();
+
+  ///
+  final _hotelNameM = TextEditingController();
+  final _nigetM = TextEditingController();
+  final _roomM = TextEditingController();
+  final _costM = TextEditingController();
   DateTime? _selectedDate;
   String trapid = "";
 
@@ -83,70 +82,46 @@ class _MovementPageState extends State<MovementPage> {
               // First Row: Two Dropdowns
               Row(
                 children: [
-                  Expanded(
-                    child: Consumer<HotelController>(
-                      builder: (BuildContext context, value, Widget? child) {
-                        return DropdownButtonFormField<dynamic>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            labelText: "فندق مكة",
-                          ),
-                          onChanged: (dynamic value) {
-                            // setState(() {
-                            trapid = value.id.toString();
-                            // });
-                          },
-                          items: value.hotels.map((dynamic companies) {
-                            return DropdownMenuItem<dynamic>(
-                              value: companies,
-                              child: Text(companies.fullName!),
-                            );
-                          }).toList(),
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: Consumer<HotelController>(
-                      builder: (BuildContext context, value, Widget? child) {
-                        return DropdownButtonFormField<dynamic>(
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            labelText: "فندق مدينة",
-                          ),
-                          onChanged: (dynamic value) {
-                            // setState(() {
-                            trapid = value.id.toString();
-                            // });
-                          },
-                          items: value.hotelsM.map((dynamic companies) {
-                            return DropdownMenuItem<dynamic>(
-                              value: companies,
-                              child: Text(companies.fullName!),
-                            );
-                          }).toList(),
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: MyTextField(
-                      controller: _hotelNameController,
-                      labelText: 'اسم الفندق',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter cost';
-                        }
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
+                  // _biledDrop(),
+                  // Expanded(
+                  //   child: Consumer<HotelController>(
+                  //     builder: (BuildContext context, value, Widget? child) {
+                  //       return DropdownButtonFormField<dynamic>(
+                  //         decoration: InputDecoration(
+                  //           border: OutlineInputBorder(
+                  //             borderRadius: BorderRadius.circular(10),
+                  //           ),
+                  //           labelText: "فندق مدينة",
+                  //         ),
+                  //         onChanged: (dynamic value) {
+                  //           // setState(() {
+                  //           trapid = value.id.toString();
+                  //           // });
+                  //         },
+                  //         items: value.hotelsM.map((dynamic companies) {
+                  //           return DropdownMenuItem<dynamic>(
+                  //             value: companies,
+                  //             child: Text(companies.fullName!),
+                  //           );
+                  //         }).toList(),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  // Expanded(
+                  //   child: MyTextField(
+                  //     controller: _hotelNameController,
+                  //     labelText: 'اسم الفندق',
+                  //     validator: (value) {
+                  //       if (value!.isEmpty) {
+                  //         return 'Please enter cost';
+                  //       }
+                  //     },
+                  //   ),
+                  // ),
+                  // SizedBox(
+                  //   width: 16,
+                  // ),
                   Expanded(
                     child: MyTextField(
                       controller: _dadeController,
@@ -212,7 +187,7 @@ class _MovementPageState extends State<MovementPage> {
                   TableRow(
                     decoration: BoxDecoration(color: Colors.blueGrey[50]),
                     children: [
-                      _buildTableCell('النوع'),
+                      _buildTableCell('فندق مكة'),
                       _buildTableCell('عدد الليالي'),
                       _buildTableCell('عدد الغرف'),
 
@@ -221,8 +196,35 @@ class _MovementPageState extends State<MovementPage> {
                       _buildTableCell('السعر الاجمالي'),
                     ],
                   ),
-                  _buildRoomTableRow1('الفندق', _costdayController,
+                  _buildRoomTableRow1(_hotelNameController, _costdayController,
                       _numberdayController, _roomController, 3),
+                ],
+              ),
+
+              SizedBox(height: 24),
+              Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                  3: FlexColumnWidth(1),
+                  4: FlexColumnWidth(2),
+                },
+                border: TableBorder.all(color: Colors.grey),
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(color: Colors.blueGrey[50]),
+                    children: [
+                      _buildTableCell('فندق المدينة'),
+                      _buildTableCell('عدد الليالي'),
+                      _buildTableCell('عدد الغرف'),
+
+                      _buildTableCell('السعر'),
+                      // _buildTableCell('الغرف'),
+                      _buildTableCell('السعر الاجمالي'),
+                    ],
+                  ),
+                  _buildRoomTableRow1(_hotelNameM, _nigetM, _roomM, _costM, 3),
                 ],
               ),
 
@@ -282,6 +284,26 @@ class _MovementPageState extends State<MovementPage> {
     );
   }
 
+  Expanded _biledDrop() {
+    return Expanded(
+      child: Consumer<HotelController>(
+        builder: (BuildContext context, value, Widget? child) {
+          return DropdownButtonFormField<dynamic>(
+            onChanged: (dynamic value) {
+              trapid = value.id.toString();
+            },
+            items: value.hotels.map((dynamic companies) {
+              return DropdownMenuItem<dynamic>(
+                value: companies,
+                child: Text(companies.fullName!),
+              );
+            }).toList(),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _buildTableCell(String content) {
     return Padding(
       padding: EdgeInsets.all(8.0),
@@ -319,7 +341,7 @@ class _MovementPageState extends State<MovementPage> {
   }
 
   TableRow _buildRoomTableRow1(
-      String label,
+      TextEditingController label,
       TextEditingController priceController,
       TextEditingController countController,
       TextEditingController countController1,
@@ -333,7 +355,9 @@ class _MovementPageState extends State<MovementPage> {
 
     return TableRow(
       children: [
-        _buildTableCell(label),
+        // _buildTableCell(label),
+        // _biledDrop(),
+        _buildEditableTableCell(label, TextEditingController(text: "1")),
         _buildEditableTableCell(priceController, countController),
         _buildEditableTableCell(countController, priceController),
         _buildEditableTableCell(

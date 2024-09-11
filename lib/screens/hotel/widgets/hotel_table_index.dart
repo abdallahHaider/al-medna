@@ -106,7 +106,7 @@ Card hotelTable(HotelController value, BuildContext context, List hotels,
                       onPressed: () {
                         Provider.of<Rootwidget>(context, listen: false)
                             .getWidet(HotelProfile(
-                          hotelId: hotel.id.toString(),
+                          hotelId: hotel,
                           showBuy: isBuying,
                         ));
                       },

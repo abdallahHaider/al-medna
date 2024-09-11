@@ -1,6 +1,8 @@
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/hotel/widgets/add_hotel.dart';
 import 'package:admin/screens/hotel/widgets/hotel_table_index.dart';
+import 'package:admin/screens/seller/seller_page.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -52,6 +54,13 @@ class _HotelPageState extends State<HotelPage> {
                     );
                   },
                   child: Text('إضافة فندق'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Provider.of<Rootwidget>(context, listen: false)
+                        .getWidet(sellerPage());
+                  },
+                  child: Text('إضافة مشتري'),
                 ),
               ],
             ),
