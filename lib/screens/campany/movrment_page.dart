@@ -187,7 +187,7 @@ class _MovementPageState extends State<MovementPage> {
                   TableRow(
                     decoration: BoxDecoration(color: Colors.blueGrey[50]),
                     children: [
-                      _buildTableCell('فندق مكة'),
+                      _buildTableCell('فندق المدينة'),
                       _buildTableCell('عدد الليالي'),
                       _buildTableCell('عدد الغرف'),
 
@@ -215,7 +215,7 @@ class _MovementPageState extends State<MovementPage> {
                   TableRow(
                     decoration: BoxDecoration(color: Colors.blueGrey[50]),
                     children: [
-                      _buildTableCell('فندق المدينة'),
+                      _buildTableCell('فندق مكة'),
                       _buildTableCell('عدد الليالي'),
                       _buildTableCell('عدد الغرف'),
 
@@ -242,30 +242,25 @@ class _MovementPageState extends State<MovementPage> {
                     SmartDialog.showLoading();
                     await Provider.of<CompanyController>(context, listen: false)
                         .addMove(
-                      widget.id,
-                      _nameController.text.isNotEmpty
-                          ? _nameController.text
-                          : "0",
-                      _cosrTController.text.isNotEmpty
-                          ? _cosrTController.text
-                          : "0",
-                      _numberTController.text.isNotEmpty
-                          ? _numberTController.text
-                          : "0",
-                      trapid,
-                      _numberdayController.text.isNotEmpty
-                          ? _numberdayController.text
-                          : "0",
-                      _costdayController.text.isNotEmpty
-                          ? _costdayController.text
-                          : "0",
-                      _roomController.text.isNotEmpty
-                          ? _roomController.text
-                          : "0",
-                      _dadeController.text.isNotEmpty
-                          ? _dadeController.text
-                          : "0",
-                    );
+                            widget.id,
+                            _nameController.text.isNotEmpty
+                                ? _nameController.text
+                                : "0",
+                            _cosrTController.text.isNotEmpty
+                                ? _cosrTController.text
+                                : "0",
+                            _numberTController.text.isNotEmpty
+                                ? _numberTController.text
+                                : "0",
+                            _hotelNameController.text,
+                            _numberdayController.text,
+                            _costdayController.text,
+                            _roomController.text,
+                            _dadeController.text,
+                            _hotelNameM.text,
+                            _roomM.text,
+                            _nigetM.text,
+                            _costM.text);
                     snackBar(context, "تمت العملية بمجاح", false);
                   } catch (e) {
                     print(e);

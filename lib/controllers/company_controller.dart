@@ -85,6 +85,7 @@ class CompanyController extends ChangeNotifier {
       x = await getpi("/api/company_program/index?page=$page&id=$id");
       // print(x.body);
       var data = jsonDecode(x.body);
+      print(x.body);
 
       total = data["total"].toString();
       total_price_t = data["total_price_t"].toString();
@@ -103,16 +104,19 @@ class CompanyController extends ChangeNotifier {
   }
 
   Future addMove(
-    String company_id,
-    String group_number,
-    String number_t,
-    String price_t,
-    String hotel_name,
-    String rooms,
-    String nights,
-    String room_price_per_night,
-    String created_at,
-  ) async {
+      String company_id,
+      String group_number,
+      String number_t,
+      String price_t,
+      String hotel_name,
+      String rooms,
+      String nights,
+      String room_price_per_night,
+      String created_at,
+      String hotel_name_maka,
+      String rooms_maka,
+      String nights_maka,
+      String room_price_per_night_maka) async {
     Response x;
     try {
       x = await postApi("/api/company_program/create", {
@@ -120,10 +124,16 @@ class CompanyController extends ChangeNotifier {
         "group_number": group_number,
         "number_t": number_t,
         "price_t": price_t,
-        "hotel_id": hotel_name,
-        "rooms": rooms,
-        "nights": nights,
-        "room_price_per_night": room_price_per_night,
+        if (hotel_name.isNotEmpty) "hotel_name": hotel_name,
+        if (hotel_name_maka.isNotEmpty) "hotel_name_maka": hotel_name_maka,
+        if (rooms.isNotEmpty) "rooms": rooms,
+        if (rooms_maka.isNotEmpty) "rooms_maka": rooms_maka,
+        if (nights.isNotEmpty) "nights": nights,
+        if (nights_maka.isNotEmpty) "nights_maka": nights_maka,
+        if (room_price_per_night.isNotEmpty)
+          "room_price_per_night": room_price_per_night,
+        if (room_price_per_night_maka.isNotEmpty)
+          "room_price_per_night_maka": room_price_per_night_maka,
         "created_at": created_at,
       });
     } catch (e) {

@@ -10,6 +10,10 @@ class sellerPage extends StatefulWidget {
 class _sellerPageState extends State<sellerPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Text("data"),
+      ),
+    );
   }
 }
