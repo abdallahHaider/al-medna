@@ -1,4 +1,5 @@
 import 'package:admin/controllers/hotel_controller.dart';
+import 'package:admin/models/format_price.dart';
 import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -153,7 +154,7 @@ class _HotelSaleState extends State<HotelSale> {
                 ),
                 Consumer<HotelController>(
                     builder: (context, watch, child) => Text(
-                          "مجموع الشراء الاجمالي \n${watch.total_cost}",
+                          "مجموع الشراء الاجمالي \n${formatPrice(double.parse(watch.total_cost))}",
                           style: TextStyle(
                             fontSize: 18,
                           ),

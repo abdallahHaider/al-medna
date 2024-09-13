@@ -32,6 +32,7 @@ class _AddSaleState extends State<AddSale> {
     // TODO: implement initState
     Provider.of<HotelController>(context, listen: false).getFetchData(true);
     Provider.of<HotelController>(context, listen: false).getFetchData(false);
+    Provider.of<ResellerController>(context, listen: false).fetchHotelBuyer();
     super.initState();
   }
 
@@ -139,7 +140,7 @@ class _AddSaleState extends State<AddSale> {
                         _reselrID.text = value.id.toString();
                         _nameController.clear();
                       },
-                      items: value.resellerss.map((dynamic companies) {
+                      items: value.buyers.map((dynamic companies) {
                         return DropdownMenuItem<dynamic>(
                           value: companies,
                           child: Text(companies.fullName!),
@@ -151,16 +152,16 @@ class _AddSaleState extends State<AddSale> {
                   },
                 ),
               ),
-              SizedBox(
-                width: 500,
-                child: MyTextField(
-                  controller: _nameController,
-                  labelText: 'اسم المشتري',
-                  onChanged: (v) {
-                    _reselrID.clear();
-                  },
-                ),
-              ),
+              // SizedBox(
+              //   width: 500,
+              //   child: MyTextField(
+              //     controller: _nameController,
+              //     labelText: 'اسم المشتري',
+              //     onChanged: (v) {
+              //       _reselrID.clear();
+              //     },
+              //   ),
+              // ),
             ],
           ),
           SizedBox(
@@ -298,7 +299,8 @@ class _AddSaleState extends State<AddSale> {
                   day.text,
                   context,
                   _reselrID.text.toString(),
-                  _nameController.text.toString(),
+                  _reselrID.text,
+                  // _nameController.text.toString(),
                 );
               },
               child: Text("اضافة"))

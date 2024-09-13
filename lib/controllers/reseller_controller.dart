@@ -13,6 +13,7 @@ import '../models/trap_pay.dart';
 
 class ResellerController extends ChangeNotifier {
   List resellerss = [];
+  List buyers = [];
   int totlCost = 0;
   ResellerDbet resellerDbet = ResellerDbet();
 
@@ -143,4 +144,74 @@ class ResellerController extends ChangeNotifier {
   }
 
   // int getTotelcost() {}
+
+  Future<List> fetchHotelBuyer() async {
+    // Simulate fetching data (replace with your actual logic)
+    // await Future.delayed(Duration(seconds: 1));
+
+    try {
+      var x = await getpi("/api/hotel_buyer/index");
+      print(x.body);
+      var data = jsonDecode(x.body);
+      final List resellers =
+          data["data"].map((json) => Reseller.fromJson(json)).toList();
+      buyers = resellers;
+      return resellers;
+    } catch (e) {
+      print(e);
+      throw "jjj";
+    }
+  }
+
+  Future addHotelBuyer(String name, String phone_number, String address,
+      BuildContext context) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_buyer/create", {
+        "name": name,
+        "address": address,
+        "phone_number": phone_number,
+      });
+      //  notifyListeners();
+      //        Navigator.pop(context);
+      // notifyListeners();
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    print(x.body);
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      snackBar(context, "تم اضافة المشتري بنجاح", false);
+
+      notifyListeners();
+    } else {
+      snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future deleteHotelbuer(int id, BuildContext context) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_buyer/delete", {
+        "id": id,
+      });
+      // notifyListeners();
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      Navigator.pop(context);
+      notifyListeners();
+      snackBar(context, "تم حذف المشتري بنجاح", false);
+    } else {
+      snackBar(context, jsonDecode(x.body), true);
+    }
+  }
 }

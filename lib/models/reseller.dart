@@ -11,8 +11,9 @@ class Reseller {
   String? address;
   DateTime? createdAt;
   DateTime? updatedAt;
-   bool? isSold; // تأكد من أن هذه الخاصية موجودة أو استخدم خاصية أخرى تعبر عن حالة البيع
-   String? name;
+  bool?
+      isSold; // تأكد من أن هذه الخاصية موجودة أو استخدم خاصية أخرى تعبر عن حالة البيع
+  String? name;
 
   Reseller({
     this.id,
@@ -23,26 +24,29 @@ class Reseller {
     this.updatedAt,
     this.name,
     this.isSold,
-
   });
 
   factory Reseller.fromJson(Map<String, dynamic> json) => Reseller(
-    id: json["id"],
-    fullName: json["full_name"],
-    phoneNumber: json["phone_number"],
-    address: json["address"],
-    createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
-    updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
-   isSold: json['is_sold'] ?? false, // تأكد من تطابق الاسم مع الخاصية في JSON
-
-  );
+        id: json["id"],
+        fullName: json["full_name"] ?? json["name"] ?? "",
+        phoneNumber: json["phone_number"],
+        address: json["address"],
+        createdAt: json["created_at"] == null
+            ? null
+            : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null
+            ? null
+            : DateTime.parse(json["updated_at"]),
+        isSold:
+            json['is_sold'] ?? false, // تأكد من تطابق الاسم مع الخاصية في JSON
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "full_name": fullName,
-    "phone_number": phoneNumber,
-    "address": address,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-  };
+        "id": id,
+        "full_name": fullName,
+        "phone_number": phoneNumber,
+        "address": address,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }

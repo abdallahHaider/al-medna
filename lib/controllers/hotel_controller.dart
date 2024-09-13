@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
+import 'package:admin/models/buyer.dart';
 import 'package:admin/models/hotel.dart';
 import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/models/reseller.dart';
@@ -17,6 +18,7 @@ class HotelController extends ChangeNotifier {
   List hotelsPay = [];
   List hotelsSale = [];
   List hotelbuy = [];
+  List buyers = [];
   String total_cost = "";
   bool isLading = true;
   bool isMagk = true;
@@ -193,7 +195,7 @@ class HotelController extends ChangeNotifier {
       SmartDialog.showLoading();
       x = await postApi("/api/hotel_tick/create", {
         if (reseller_id.isNotEmpty) "reseller_id": reseller_id,
-        if (buyer_name.isNotEmpty) "buyer_name": buyer_name,
+        if (buyer_name.isNotEmpty) "buyer_id": buyer_name,
         "hotel_id": hotel_id,
         "curreny": RAS,
         "rooms": rooms,
@@ -236,6 +238,57 @@ class HotelController extends ChangeNotifier {
       snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future getHotelPay(id) async {
+    print(id);
+    try {
+      var x = await getpi("/api/hotel_pay/index/hotel?hotel_id=$id");
+      var data = jsonDecode(x.body);
+      // print(x.body);
+
+      // total_cost = data["total_cost"].toString();
+      buyers = data["data"].map((json) => Buyer.fromJson(json)).toList();
+      print(x.body);
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw "jjj";
+    }
+  }
+
+  Future addSalepay(
+    // hotel_id,
+    String hotel_id,
+    String buyer_id,
+    String cost_USD,
+    String note,
+    BuildContext context,
+    // String reseller_id,
+    // String buyer_name
+  ) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_pay/create", {
+        "hotel_id": hotel_id,
+        "buyer_id": buyer_id,
+        "cost_USD": cost_USD,
+        "note": note,
+      });
+    } catch (e) {
+      // snackBar(context, e.toString(), false);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    print(x.body);
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      // getHotelSale(hotel_id);
+      // snackBar(context, "تم اضافة الفندق بنجاح", false);
+    } else {
+      // snackBar(context, jsonDecode(x.body), true);
     }
   }
 }

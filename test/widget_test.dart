@@ -1,30 +1,68 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:admin/screens/hotel/add_sale.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:admin/main.dart';
+import 'package:admin/controllers/hotel_controller.dart';
+import 'package:admin/controllers/reseller_controller.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  group('AddSale widget test', () {
+    testWidgets('Test AddSale widget', (WidgetTester tester) async {
+      // Create a mock HotelController and ResellerController
+      final hotelController = MockHotelController();
+      final resellerController = MockResellerController();
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+      // Pump the AddSale widget with the mock controllers
+      await tester.pumpWidget(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => hotelController),
+            ChangeNotifierProvider(create: (_) => resellerController),
+          ],
+          child: MaterialApp(
+            home: AddSale(),
+          ),
+        ),
+      );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      // Verify that the AddSale widget is displayed
+      expect(find.byType(AddSale), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+      // Verify that the hotel dropdown is displayed
+      expect(find.byType(DropdownButtonFormField), findsNWidgets(2));
+
+      // Verify that the reseller dropdown is displayed
+      expect(find.byType(DropdownButtonFormField), findsNWidgets(3));
+
+      // Verify that the table is displayed
+      expect(find.byType(Table), findsOneWidget);
+
+      // Verify that the elevated button is displayed
+      expect(find.byType(ElevatedButton), findsOneWidget);
+    });
   });
+}
+
+// Mock HotelController
+class MockHotelController extends HotelController {
+  @override
+  Future<void> getFetchData(bool value) async {}
+
+  // @override
+  // Future addSaleHotel (
+  //   String hotelID,
+  //   String rooms,
+  //   String price,
+  //   String currency,
+  //   String day,
+  //   BuildContext context,
+  //   String resellerID,
+  //   String buyerName,
+  // ) async {}
+}
+
+// Mock ResellerController
+class MockResellerController extends ResellerController {
+  // @override
+  // Future<List<dynamic>> fetchHotelBuyer() async {}
 }
