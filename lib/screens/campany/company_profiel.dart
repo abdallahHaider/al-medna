@@ -20,11 +20,14 @@ class CompanyProfilePage extends StatefulWidget {
 
 class _CompanyProfilePageState extends State<CompanyProfilePage> {
   ScrollController _scrollController = ScrollController();
+  bool showT = false;
+
   @override
   void initState() {
     print(widget.id);
     Provider.of<CompanyController>(context, listen: false)
         .getAllData(widget.id);
+    Provider.of<CompanyController>(context, listen: false).showT = false;
 
     super.initState();
   }
@@ -307,11 +310,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                                 controller: _scrollController,
                                 scrollDirection: Axis.horizontal,
                                 child: DataTable(
+                                  border: TableBorder.all(
+                                      color: Colors.grey, width: 1),
+                                  decoration: BoxDecoration(color: Colors.grey),
                                   columns: [
-                                    DataColumn(label: Text('المجموعة')),
-                                    DataColumn(label: Text('التاشيرة')),
-                                    DataColumn(label: Text('السعر')),
-                                    DataColumn(label: Text('السعر الكلي')),
+                                    if (accountsController.showT)
+                                      DataColumn(label: Text('المجموعة')),
+                                    if (accountsController.showT)
+                                      DataColumn(label: Text('التاشيرة')),
+                                    if (accountsController.showT)
+                                      DataColumn(label: Text('السعر')),
+                                    if (accountsController.showT)
+                                      DataColumn(label: Text('السعر الكلي')),
                                     DataColumn(label: Text('ف مكة')),
                                     DataColumn(label: Text('غ مكة')),
                                     DataColumn(label: Text('ليالي م')),
@@ -331,143 +341,162 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                                     Companyy companyy =
                                         accountsController.myCompanys[index];
 
-                                    return DataRow(cells: [
-                                      // DataCell(
-                                      //   Text(accountsController
-                                      //       .myCompanys[index].groupNumber
-                                      //       .toString()),
-                                      // ),
-                                      DataCell(
-                                        Text(companyy.groupNumber.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.numberT.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.priceT.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.totalPriceT.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.hotelNameMaka!),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.roomsMaka == 0
-                                            ? ""
-                                            : companyy.roomsMaka.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.nightsMaka == 0
-                                            ? ""
-                                            : companyy.nightsMaka.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.roomPricePerNightMaka == 0
-                                            ? ""
-                                            : companyy.roomPricePerNightMaka
+                                    if (companyy.numberT! > 0) {
+                                      //   // setState(() {
+                                      //   showT = true;
+                                      //   accountsController.setT();
+                                      //   // });
+                                    }
+
+                                    return DataRow(
+                                        color: WidgetStateProperty.all(
+                                            Colors.white),
+                                        cells: [
+                                          // DataCell(
+                                          //   Text(accountsController
+                                          //       .myCompanys[index].groupNumber
+                                          //       .toString()),
+                                          // ),
+                                          if (accountsController.showT)
+                                            DataCell(
+                                              Text(companyy.groupNumber
+                                                  .toString()),
+                                            ),
+                                          if (accountsController.showT)
+                                            DataCell(
+                                              Text(companyy.numberT.toString()),
+                                            ),
+                                          if (accountsController.showT)
+                                            DataCell(
+                                              Text(companyy.priceT.toString()),
+                                            ),
+                                          if (accountsController.showT)
+                                            DataCell(
+                                              Text(companyy.totalPriceT
+                                                  .toString()),
+                                            ),
+                                          DataCell(
+                                            Text(companyy.hotelNameMaka!),
+                                          ),
+                                          DataCell(
+                                            Text(companyy.roomsMaka == 0
+                                                ? ""
+                                                : companyy.roomsMaka
+                                                    .toString()),
+                                          ),
+                                          DataCell(
+                                            Text(companyy.nightsMaka == 0
+                                                ? ""
+                                                : companyy.nightsMaka
+                                                    .toString()),
+                                          ),
+                                          DataCell(
+                                            Text(companyy
+                                                        .roomPricePerNightMaka ==
+                                                    0
+                                                ? ""
+                                                : companyy.roomPricePerNightMaka
+                                                    .toString()),
+                                          ),
+                                          //
+                                          DataCell(
+                                            Text(companyy.hotelName!),
+                                          ),
+                                          DataCell(
+                                            Text(companyy.rooms == 0
+                                                ? ""
+                                                : companyy.rooms.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(companyy.nights == 0
+                                                ? ""
+                                                : companyy.nights.toString()),
+                                          ),
+                                          DataCell(
+                                            Text(companyy.roomPricePerNight == 0
+                                                ? ""
+                                                : companyy.roomPricePerNight
+                                                    .toString()),
+                                          ),
+                                          //
+                                          DataCell(
+                                            Text(companyy.totalPriceHotel
                                                 .toString()),
-                                      ),
-                                      //
-                                      DataCell(
-                                        Text(companyy.hotelName!),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.rooms == 0
-                                            ? ""
-                                            : companyy.rooms.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.nights == 0
-                                            ? ""
-                                            : companyy.nights.toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.roomPricePerNight == 0
-                                            ? ""
-                                            : companyy.roomPricePerNight
+                                          ),
+                                          DataCell(
+                                            Text(companyy.total_price
                                                 .toString()),
-                                      ),
-                                      //
-                                      DataCell(
-                                        Text(companyy.totalPriceHotel
-                                            .toString()),
-                                      ),
-                                      DataCell(
-                                        Text(companyy.total_price.toString()),
-                                      ),
-                                      // DataCell(Text((index + 1).toString())),
-                                      DataCell(Text(companyy.createdAt
-                                          .toString()
-                                          .substring(0, 10))),
-                                      DataCell(Row(
-                                        children: [
-                                          IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        title: Text('حذف'),
-                                                        content: Text(
-                                                            'هل أنت متأكد من حذف هذا الصيرفة'),
-                                                        actions: [
-                                                          TextButton(
-                                                            child: Text('لا'),
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                          ),
-                                                          TextButton(
-                                                              child:
-                                                                  Text('نعم'),
-                                                              onPressed:
-                                                                  () async {
-                                                                try {
-                                                                  SmartDialog
-                                                                      .showLoading();
-                                                                  await Provider.of<
-                                                                              CompanyController>(
+                                          ),
+                                          // DataCell(Text((index + 1).toString())),
+                                          DataCell(Text(companyy.createdAt
+                                              .toString()
+                                              .substring(0, 10))),
+                                          DataCell(Row(
+                                            children: [
+                                              IconButton(
+                                                  onPressed: () {
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return AlertDialog(
+                                                            title: Text('حذف'),
+                                                            content: Text(
+                                                                'هل أنت متأكد من حذف هذا الصيرفة'),
+                                                            actions: [
+                                                              TextButton(
+                                                                child:
+                                                                    Text('لا'),
+                                                                onPressed: () {
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop();
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                  child: Text(
+                                                                      'نعم'),
+                                                                  onPressed:
+                                                                      () async {
+                                                                    try {
+                                                                      SmartDialog
+                                                                          .showLoading();
+                                                                      await Provider.of<CompanyController>(
+                                                                              context,
+                                                                              listen: false)
+                                                                          .deletCompanyPor(
+                                                                        accountsController
+                                                                            .myCompanys[index]
+                                                                            .id,
+                                                                      );
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                      snackBar(
                                                                           context,
-                                                                          listen:
-                                                                              false)
-                                                                      .deletCompanyPor(
-                                                                    accountsController
-                                                                        .myCompanys[
-                                                                            index]
-                                                                        .id,
-                                                                  );
-                                                                  Navigator.pop(
-                                                                      context);
-                                                                  snackBar(
-                                                                      context,
-                                                                      "تم الحذف بنجاح",
-                                                                      false);
-                                                                } catch (e) {
-                                                                  print(e);
-                                                                  snackBar(
-                                                                      context,
-                                                                      e.toString(),
-                                                                      true);
-                                                                } finally {
-                                                                  SmartDialog
-                                                                      .dismiss();
-                                                                }
-                                                              }),
-                                                        ],
-                                                      );
-                                                    });
-                                              },
-                                              icon: Icon(
-                                                Icons.delete_forever,
-                                                color: Colors.red,
-                                              ))
-                                        ],
-                                      ))
-                                    ]);
+                                                                          "تم الحذف بنجاح",
+                                                                          false);
+                                                                    } catch (e) {
+                                                                      print(e);
+                                                                      snackBar(
+                                                                          context,
+                                                                          e.toString(),
+                                                                          true);
+                                                                    } finally {
+                                                                      SmartDialog
+                                                                          .dismiss();
+                                                                    }
+                                                                  }),
+                                                            ],
+                                                          );
+                                                        });
+                                                  },
+                                                  icon: Icon(
+                                                    Icons.delete_forever,
+                                                    color: Colors.red,
+                                                  ))
+                                            ],
+                                          ))
+                                        ]);
                                   }),
                                 ),
                               ),

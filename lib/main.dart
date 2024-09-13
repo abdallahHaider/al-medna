@@ -14,7 +14,6 @@ import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
-
 import 'controllers/hotel_controller.dart';
 import 'controllers/reseller_controller.dart';
 import 'controllers/rootWidget.dart';

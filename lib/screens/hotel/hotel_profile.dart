@@ -1,6 +1,4 @@
-import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/models/hotel.dart';
-import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/hotel/buyer_page.dart';
 import 'package:admin/screens/hotel/hotel_buy_page.dart';
@@ -8,7 +6,6 @@ import 'package:admin/screens/hotel/hotel_pay.dart';
 import 'package:admin/screens/hotel/hotel_sale.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 /// صفحة الام للفنادق والجذر الاساسي
 class HotelProfile extends StatefulWidget {

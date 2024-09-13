@@ -19,7 +19,7 @@ class HotelController extends ChangeNotifier {
   List hotelsSale = [];
   List hotelbuy = [];
   List buyers = [];
-  String total_cost = "";
+  String total_cost = "0";
   bool isLading = true;
   bool isMagk = true;
   bool isMagk2 = true;

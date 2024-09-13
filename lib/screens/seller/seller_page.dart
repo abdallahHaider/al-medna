@@ -1,34 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/responsive.dart';
-import 'package:admin/screens/reseller/reseller_profiel.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../controllers/reseller_controller.dart';
 import '../dashboard/components/header.dart';
-
-// class sellerPage extends StatefulWidget {
-//   const sellerPage({super.key});
-
-//   @override
-//   State<sellerPage> createState() => _sellerPageState();
-// }
-
-// class _sellerPageState extends State<sellerPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       child: Center(
-//         child: Text("data"),
-//       ),
-//     );
-//   }
-// }
 
 class sellerPage extends StatelessWidget {
   final nameController = TextEditingController();
@@ -104,12 +81,12 @@ class sellerPage extends StatelessWidget {
                                               snapshot.data![index].fullName
                                                   .toString(),
                                             ),
-                                            onTap: () =>
-                                                Provider.of<Rootwidget>(context,
-                                                        listen: false)
-                                                    .getWidet(ResellerProfiel(
-                                                        resellerID: snapshot
-                                                            .data![index])),
+                                            // onTap: () =>
+                                            //     Provider.of<Rootwidget>(context,
+                                            //             listen: false)
+                                            //         .getWidet(ResellerProfiel(
+                                            //             resellerID: snapshot
+                                            //                 .data![index])),
                                           ),
                                           DataCell(
                                             Text(

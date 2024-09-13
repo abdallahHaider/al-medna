@@ -50,6 +50,8 @@ class _CampanyPageState extends State<CampanyPage> {
                       child,
                     ) {
                       return DataTable(
+                        decoration: BoxDecoration(color: Colors.black38),
+                        border: TableBorder.all(color: Colors.grey, width: 1),
                         columns: [
                           DataColumn(label: Text('الاسم')),
                           DataColumn(label: Text('التاريخ')),
@@ -57,91 +59,97 @@ class _CampanyPageState extends State<CampanyPage> {
                         ],
                         rows: List.generate(
                             accountsController.companys.length,
-                            (index) => DataRow(cells: [
-                                  DataCell(TextButton(
-                                    onPressed: () {
-                                      Provider.of<Rootwidget>(context,
-                                              listen: false)
-                                          .getWidet(CompanyProfilePage(
-                                        id: accountsController
-                                            .companys[index].id
-                                            .toString(),
-                                        // isBank: true,
-                                      ));
-                                    },
-                                    child: Text(accountsController
-                                        .companys[index].name
-                                        .toString()),
-                                  )),
-                                  // DataCell(Text((index + 1).toString())),
-                                  DataCell(Text(accountsController
-                                      .companys[index].createdAt
-                                      .toString()
-                                      .substring(0, 10))),
-                                  DataCell(Row(
-                                    children: [
-                                      IconButton(
-                                          onPressed: () {
-                                            showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text('حذف'),
-                                                    content: Text(
-                                                        'هل أنت متأكد من حذف هذا البنك'),
-                                                    actions: [
-                                                      TextButton(
-                                                        child: Text('لا'),
-                                                        onPressed: () {
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        },
-                                                      ),
-                                                      TextButton(
-                                                          child: Text('نعم'),
-                                                          onPressed: () async {
-                                                            try {
-                                                              SmartDialog
-                                                                  .showLoading();
-                                                              await Provider.of<
-                                                                          CompanyController>(
+                            (index) => DataRow(
+                                    color:
+                                        WidgetStateProperty.all(Colors.white),
+                                    cells: [
+                                      DataCell(TextButton(
+                                        onPressed: () {
+                                          Provider.of<Rootwidget>(context,
+                                                  listen: false)
+                                              .getWidet(CompanyProfilePage(
+                                            id: accountsController
+                                                .companys[index].id
+                                                .toString(),
+                                            // isBank: true,
+                                          ));
+                                        },
+                                        child: Text(accountsController
+                                            .companys[index].name
+                                            .toString()),
+                                      )),
+                                      // DataCell(Text((index + 1).toString())),
+                                      DataCell(Text(accountsController
+                                          .companys[index].createdAt
+                                          .toString()
+                                          .substring(0, 10))),
+                                      DataCell(Row(
+                                        children: [
+                                          IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('حذف'),
+                                                        content: Text(
+                                                            'هل أنت متأكد من حذف هذا البنك'),
+                                                        actions: [
+                                                          TextButton(
+                                                            child: Text('لا'),
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                          ),
+                                                          TextButton(
+                                                              child:
+                                                                  Text('نعم'),
+                                                              onPressed:
+                                                                  () async {
+                                                                try {
+                                                                  SmartDialog
+                                                                      .showLoading();
+                                                                  await Provider.of<
+                                                                              CompanyController>(
+                                                                          context,
+                                                                          listen:
+                                                                              false)
+                                                                      .deletbank(
+                                                                    accountsController
+                                                                        .companys[
+                                                                            index]
+                                                                        .id,
+                                                                  );
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                  snackBar(
                                                                       context,
-                                                                      listen:
-                                                                          false)
-                                                                  .deletbank(
-                                                                accountsController
-                                                                    .companys[
-                                                                        index]
-                                                                    .id,
-                                                              );
-                                                              Navigator.pop(
-                                                                  context);
-                                                              snackBar(
-                                                                  context,
-                                                                  "تم الحذف بنجاح",
-                                                                  false);
-                                                            } catch (e) {
-                                                              snackBar(
-                                                                  context,
-                                                                  e.toString(),
-                                                                  true);
-                                                            } finally {
-                                                              SmartDialog
-                                                                  .dismiss();
-                                                            }
-                                                          }),
-                                                    ],
-                                                  );
-                                                });
-                                          },
-                                          icon: Icon(
-                                            Icons.delete_forever,
-                                            color: Colors.red,
-                                          ))
-                                    ],
-                                  ))
-                                ])),
+                                                                      "تم الحذف بنجاح",
+                                                                      false);
+                                                                } catch (e) {
+                                                                  snackBar(
+                                                                      context,
+                                                                      e.toString(),
+                                                                      true);
+                                                                } finally {
+                                                                  SmartDialog
+                                                                      .dismiss();
+                                                                }
+                                                              }),
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              icon: Icon(
+                                                Icons.delete_forever,
+                                                color: Colors.red,
+                                              ))
+                                        ],
+                                      ))
+                                    ])),
                       );
                     })),
               ),
