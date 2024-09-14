@@ -70,7 +70,7 @@ class _HotelSaleState extends State<HotelSale> {
                           cells: [
                             DataCell(
                               Text(
-                                hotelBuy.hotelId.toString(),
+                                hotelBuy.buyer.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,

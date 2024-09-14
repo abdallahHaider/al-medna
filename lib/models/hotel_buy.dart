@@ -11,6 +11,7 @@ class HotelBuy {
   dynamic companyProgramId;
   dynamic reseller;
   String? curreny;
+  String? buyer;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -25,6 +26,7 @@ class HotelBuy {
     this.companyProgramId,
     this.reseller,
     this.curreny,
+    this.buyer,
     this.createdAt,
     this.updatedAt,
   });
@@ -40,6 +42,7 @@ class HotelBuy {
         companyProgramId: json["company_program_id"] ?? "",
         reseller: json["reseller"],
         curreny: json["curreny"],
+        buyer: json["buyer"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
