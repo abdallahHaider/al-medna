@@ -14,7 +14,7 @@ class HotelBuy {
   dynamic reseller;
   String? curreny;
   String? buyer;
-  String? buyerId;
+  int? buyer_id;
   String? now_debt_ras;
   String? now_debt_usd;
   DateTime? createdAt;
@@ -34,7 +34,7 @@ class HotelBuy {
     this.reseller,
     this.curreny,
     this.buyer,
-    this.buyerId,
+    this.buyer_id,
     this.now_debt_ras,
     this.now_debt_usd,
     this.createdAt,
@@ -55,7 +55,7 @@ class HotelBuy {
         reseller: json["reseller"],
         curreny: json["curreny"],
         buyer: json["buyer"],
-        buyerId: json["buyer_id"],
+        buyer_id: json["buyer_id"],
         // now_debt: formatPrice(json["now_debt"]),
         now_debt_ras: formatPrice(json["now_debt_ras"] ?? 0),
         now_debt_usd: formatPrice(json["now_debt_usd"] ?? 0),

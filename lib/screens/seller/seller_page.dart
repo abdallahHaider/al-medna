@@ -179,22 +179,22 @@ class sellerPage extends StatelessWidget {
                               labelText: 'رقم الهاتف',
                               keyboardType: TextInputType.phone,
                               validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'يرجى ادخال رقم الهاتف';
-                                } else if (value.length < 10 ||
-                                    value.length > 11 ||
-                                    !RegExp(r'^\d{11}$').hasMatch(value)) {
-                                  return 'يرجى ادخال رقم هاتف صحيح';
-                                }
-                                return null;
+                                // if (value!.isEmpty) {
+                                //   return 'يرجى ادخال رقم الهاتف';
+                                // } else if (value.length < 0 ||
+                                //     value.length > 11 ||
+                                //     !RegExp(r'^\d{11}$').hasMatch(value)) {
+                                //   return 'يرجى ادخال رقم هاتف صحيح';
+                                // }
+                                // return null;
                               },
                             ),
                             SizedBox(height: defaultPadding),
                             MyTextField(
                               controller: adressController,
                               labelText: 'العنوان',
-                              validator: (value) =>
-                                  value!.isEmpty ? 'ادخل العنوان' : null,
+                              // validator: (value) =>
+                              //     value!.isEmpty ? 'ادخل العنوان' : null,
                             ),
                             SizedBox(height: defaultPadding),
                             SizedBox(
@@ -206,9 +206,9 @@ class sellerPage extends StatelessWidget {
                                             context,
                                             listen: false)
                                         .addHotelBuyer(
-                                            nameController.text.toString(),
-                                            phoneController.text.toString(),
-                                            adressController.text.toString(),
+                                            nameController.text,
+                                            phoneController.text,
+                                            adressController.text,
                                             context);
                                   }
                                 },

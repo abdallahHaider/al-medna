@@ -1,6 +1,8 @@
 import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/controllers/reseller_controller.dart';
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/buyer.dart';
+import 'package:admin/screens/seller/seller_profiel.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +76,10 @@ class _BuyerPageState extends State<BuyerPage> {
                                     color: Colors.black,
                                   ),
                                 ),
+                                onTap: () => Provider.of<Rootwidget>(context,
+                                        listen: false)
+                                    .getWidet(SellerProfile(
+                                        id: hotelBuy.buyer_id.toString())),
                               ),
                               // DataCell(
                               //   Text(

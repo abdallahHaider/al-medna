@@ -170,8 +170,8 @@ class ResellerController extends ChangeNotifier {
       SmartDialog.showLoading();
       x = await postApi("/api/hotel_buyer/create", {
         "name": name,
-        "address": address,
-        "phone_number": phone_number,
+        "address": address.isEmpty ? "_" : address,
+        "phone_number": phone_number.isEmpty ? "0" : phone_number,
       });
       //  notifyListeners();
       //        Navigator.pop(context);

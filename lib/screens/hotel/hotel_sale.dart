@@ -1,6 +1,8 @@
 import 'package:admin/controllers/hotel_controller.dart';
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/format_price.dart';
 import 'package:admin/models/hotel_buy.dart';
+import 'package:admin/screens/seller/seller_profiel.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -80,13 +82,10 @@ class _HotelSaleState extends State<HotelSale> {
                                       color: Colors.black,
                                     ),
                                   ),
-                                  //  onTap: () =>
-                                  //                   Provider.of<Rootwidget>(context,
-                                  //                           listen: false)
-                                  //                       .getWidet(SellerProfile(
-                                  //                           id: snapshot
-                                  //                               .data![index].id
-                                  //                               .toString())),
+                                  onTap: () => Provider.of<Rootwidget>(context,
+                                          listen: false)
+                                      .getWidet(SellerProfile(
+                                          id: hotelBuy.buyer_id.toString())),
                                 ),
                                 DataCell(
                                   Text(

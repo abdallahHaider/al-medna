@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:admin/models/format_price.dart';
+
 MyBuyer myBuyerFromJson(String str) => MyBuyer.fromJson(json.decode(str));
 
 String myBuyerToJson(MyBuyer data) => json.encode(data.toJson());
@@ -12,8 +14,8 @@ class MyBuyer {
   int? id;
   String? buyer;
   String? hotel_name;
-  int? costUsd;
-  int? costRas;
+  String? costUsd;
+  String? costRas;
   String? note;
 
   MyBuyer({
@@ -29,8 +31,8 @@ class MyBuyer {
         id: json["id"],
         buyer: json["buyer"],
         hotel_name: json["hotel_name"],
-        costUsd: json["costUSD"],
-        costRas: json["costRAS"],
+        costUsd: formatPrice(json["costUSD"]),
+        costRas: formatPrice(json["costRAS"]),
         note: json["note"],
       );
 
