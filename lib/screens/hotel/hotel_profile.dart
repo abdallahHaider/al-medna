@@ -23,7 +23,7 @@ class _HotelProfileState extends State<HotelProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Header(title: "حساب الفندق"),
+        title: Header(title: widget.hotelId.hotelName!),
       ),
       // body: !widget.showBuy
       //     ? HotelBuyPage(hotelId: widget.hotelId)
@@ -40,18 +40,20 @@ class _HotelProfileState extends State<HotelProfile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        if (!widget.showBuy)
+                          Text(
+                            "اجمالي الغرف: ${widget.hotelId.rooms_total}",
+                            style: TextStyle(fontSize: 20),
+                          ),
                         Text(
-                          "اسم الفندق: ${widget.hotelId.hotelName}",
+                          "عدد الغرف المباعة: ${widget.hotelId.rooms}",
                           style: TextStyle(fontSize: 20),
                         ),
-                        Text(
-                          "عدد الغرف: ${widget.hotelId.rooms}",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(
-                          "التكلفة: ${widget.hotelId.price}",
-                          style: TextStyle(fontSize: 20),
-                        ),
+                        if (!widget.showBuy)
+                          Text(
+                            "عدد الغرف المتبقية: ${widget.hotelId.rooms_rest}",
+                            style: TextStyle(fontSize: 20),
+                          ),
                       ],
                     ),
                     SizedBox(
@@ -62,16 +64,43 @@ class _HotelProfileState extends State<HotelProfile> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          "الواصل: ${widget.hotelId.paid}",
+                          "التكلفة: ${widget.hotelId.price}",
                           style: TextStyle(fontSize: 20),
                         ),
-                        Text(
-                          "الباقي: ${widget.hotelId.rest}",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        Text(""),
+                        if (!widget.showBuy)
+                          Text(
+                            "الواصل: ${widget.hotelId.paid}",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        if (!widget.showBuy)
+                          Text(
+                            "الباقي: ${widget.hotelId.rest}",
+                            style: TextStyle(fontSize: 20),
+                          ),
                       ],
-                    )
+                    ),
+                    SizedBox(
+                      width: 40,
+                    ),
+                    if (!widget.showBuy)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "اجمالي تكلفة الشراء: ${widget.hotelId.price_total}",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            "اجمالي تكلفة البيع: ${widget.hotelId.price}",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            "الربح المتوقع: ${widget.hotelId.price_rest}",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      )
                   ],
                 ),
               ),

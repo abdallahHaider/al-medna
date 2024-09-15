@@ -6,6 +6,7 @@ import 'package:admin/controllers/company_controller.dart';
 import 'package:admin/controllers/general_information.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/controllers/mony_send.dart';
+import 'package:admin/controllers/seller_controller.dart';
 import 'package:admin/controllers/transactions.dart';
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/controllers/wallet_provider.dart';
@@ -73,6 +74,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => BudgetController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SellerController(),
         ),
       ],
       child: MaterialApp(

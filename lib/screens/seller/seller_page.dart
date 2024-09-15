@@ -1,3 +1,5 @@
+import 'package:admin/controllers/rootWidget.dart';
+import 'package:admin/screens/seller/seller_profiel.dart';
 import 'package:flutter/material.dart';
 import 'package:admin/responsive.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
@@ -81,12 +83,13 @@ class sellerPage extends StatelessWidget {
                                               snapshot.data![index].fullName
                                                   .toString(),
                                             ),
-                                            // onTap: () =>
-                                            //     Provider.of<Rootwidget>(context,
-                                            //             listen: false)
-                                            //         .getWidet(ResellerProfiel(
-                                            //             resellerID: snapshot
-                                            //                 .data![index])),
+                                            onTap: () =>
+                                                Provider.of<Rootwidget>(context,
+                                                        listen: false)
+                                                    .getWidet(SellerProfile(
+                                                        id: snapshot
+                                                            .data![index].id
+                                                            .toString())),
                                           ),
                                           DataCell(
                                             Text(
