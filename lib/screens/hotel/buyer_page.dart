@@ -193,7 +193,7 @@ class _BuyerPageState extends State<BuyerPage> {
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            labelText: "الوكيل",
+                            labelText: "المشتري",
                           ),
                           onChanged: (dynamic value) {
                             buyerID.text = value.id.toString();
@@ -206,7 +206,7 @@ class _BuyerPageState extends State<BuyerPage> {
                             );
                           }).toList(),
                           validator: (value) =>
-                              value == null ? 'يرجى اختبار الوكيل ' : null,
+                              value == null ? 'يرجى اختبار المشتري ' : null,
                         );
                       },
                     ),
@@ -216,7 +216,7 @@ class _BuyerPageState extends State<BuyerPage> {
                   ),
                   MyTextField(
                     controller: cost,
-                    labelText: 'المبلغ',
+                    labelText: 'المبلغ بالدولار',
                   ),
                   SizedBox(
                     height: 10,
@@ -229,10 +229,11 @@ class _BuyerPageState extends State<BuyerPage> {
                     height: 10,
                   ),
                   ElevatedButton(
-                      onPressed: () {
-                        Provider.of<HotelController>(context, listen: false)
+                      onPressed: () async {
+                        await Provider.of<HotelController>(context,
+                                listen: false)
                             .addSalepay(widget.hotelID, buyerID.text, cost.text,
-                                note.text, context);
+                                note.text.isEmpty ? "_" : note.text, context);
                       },
                       child: Text("اضافة"))
                 ],

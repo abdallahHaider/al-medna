@@ -17,14 +17,8 @@ class HotelSale extends StatefulWidget {
 }
 
 class _HotelSaleState extends State<HotelSale> {
-  // final _nameController = TextEditingController();
-
-  // final _priceUSDController = TextEditingController();
-  // final _priceRASController = TextEditingController();
-  // final _numberController = TextEditingController();
-  // final _roomController = TextEditingController();
-  // final _reselrID = TextEditingController();
   String curreny = "";
+  final ScrollController controllerOne = ScrollController();
 
   /// صفحة الخاصة بيع الفندق
 
@@ -50,95 +44,145 @@ class _HotelSaleState extends State<HotelSale> {
             ) {
               return Card(
                 color: Colors.grey,
-                child: DataTable(
-                    border: TableBorder.all(
-                        width: 1, style: BorderStyle.solid, color: Colors.grey),
-                    columns: [
-                      DataColumn(label: Text('اسم المشتري')),
-                      DataColumn(label: Text('الغرف')),
-                      DataColumn(label: Text('الليالي')),
-                      DataColumn(label: Text('سعر الغرفة')),
-                      DataColumn(label: Text('المبلغ الكلي')),
-                      DataColumn(label: Text('التاريخ')),
-                      DataColumn(label: Text('الاجراء')),
-                    ],
-                    rows:
-                        List.generate(hotelController.hotelbuy.length, (index) {
-                      HotelBuy hotelBuy = hotelController.hotelbuy[index];
-                      return DataRow(
-                          color: WidgetStateProperty.all(Colors.white),
-                          cells: [
-                            DataCell(
-                              Text(
-                                hotelBuy.buyer.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                hotelBuy.rooms.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                hotelBuy.nights.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                hotelBuy.roomPricePerNight.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                "${hotelBuy.totalPrice} ${hotelBuy.curreny == "usd" ? "دولار" : "ريال"}",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                hotelBuy.createdAt.toString().substring(0, 10),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStateProperty.all(
-                                    Colors.red,
+                child: Scrollbar(
+                  controller: controllerOne,
+                  child: SingleChildScrollView(
+                    controller: controllerOne,
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                        border: TableBorder.all(
+                            width: 1,
+                            style: BorderStyle.solid,
+                            color: Colors.grey),
+                        columns: [
+                          DataColumn(label: Text('اسم المشتري')),
+                          DataColumn(label: Text('الغرف')),
+                          DataColumn(label: Text('الليالي')),
+                          DataColumn(label: Text('سعر الغرفة')),
+                          DataColumn(label: Text('المتبقي بالدولار')),
+                          DataColumn(label: Text('المتبقي بالريال')),
+                          DataColumn(label: Text('المبلغ الكلي بالدولار')),
+                          DataColumn(label: Text('المبلغ الكلي بالريال')),
+                          DataColumn(label: Text('التاريخ')),
+                          DataColumn(label: Text('الاجراء')),
+                        ],
+                        rows: List.generate(hotelController.hotelbuy.length,
+                            (index) {
+                          HotelBuy hotelBuy = hotelController.hotelbuy[index];
+                          return DataRow(
+                              color: WidgetStateProperty.all(Colors.white),
+                              cells: [
+                                DataCell(
+                                  Text(
+                                    hotelBuy.buyer.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                  foregroundColor: WidgetStateProperty.all(
-                                    Colors.white,
+                                  //  onTap: () =>
+                                  //                   Provider.of<Rootwidget>(context,
+                                  //                           listen: false)
+                                  //                       .getWidet(SellerProfile(
+                                  //                           id: snapshot
+                                  //                               .data![index].id
+                                  //                               .toString())),
+                                ),
+                                DataCell(
+                                  Text(
+                                    hotelBuy.rooms.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
-                                onPressed: () async {
-                                  await Provider.of<HotelController>(context,
-                                          listen: false)
-                                      .deleted(hotelBuy.id.toString(), context);
-                                },
-                                child: Text("حذف"))),
-                          ]);
-                    })),
+                                DataCell(
+                                  Text(
+                                    hotelBuy.nights.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    "${hotelBuy.roomPricePerNight}  ${hotelBuy.curreny == "usd" ? "دولار" : "ريال"}",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    hotelBuy.now_debt_usd.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    hotelBuy.now_debt_ras.toString(),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    "${hotelBuy.total_price_usd} ",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    "${hotelBuy.total_price_ras} ",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(
+                                  Text(
+                                    hotelBuy.createdAt
+                                        .toString()
+                                        .substring(0, 10),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                DataCell(ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStateProperty.all(
+                                        Colors.red,
+                                      ),
+                                      foregroundColor: WidgetStateProperty.all(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                    onPressed: () async {
+                                      await Provider.of<HotelController>(
+                                              context,
+                                              listen: false)
+                                          .deleted(
+                                              hotelBuy.id.toString(), context);
+                                    },
+                                    child: Text("حذف"))),
+                              ]);
+                        })),
+                  ),
+                ),
               );
             })),
         Expanded(

@@ -11,6 +11,7 @@ String myBuyerToJson(MyBuyer data) => json.encode(data.toJson());
 class MyBuyer {
   int? id;
   String? buyer;
+  String? hotel_name;
   int? costUsd;
   int? costRas;
   String? note;
@@ -18,6 +19,7 @@ class MyBuyer {
   MyBuyer({
     this.id,
     this.buyer,
+    this.hotel_name,
     this.costUsd,
     this.costRas,
     this.note,
@@ -26,6 +28,7 @@ class MyBuyer {
   factory MyBuyer.fromJson(Map<String, dynamic> json) => MyBuyer(
         id: json["id"],
         buyer: json["buyer"],
+        hotel_name: json["hotel_name"],
         costUsd: json["costUSD"],
         costRas: json["costRAS"],
         note: json["note"],

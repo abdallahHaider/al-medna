@@ -151,7 +151,7 @@ class ResellerController extends ChangeNotifier {
 
     try {
       var x = await getpi("/api/hotel_buyer/index");
-      print(x.body);
+      // print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
           data["data"].map((json) => Reseller.fromJson(json)).toList();

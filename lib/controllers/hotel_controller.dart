@@ -246,7 +246,7 @@ class HotelController extends ChangeNotifier {
     try {
       var x = await getpi("/api/hotel_pay/index/hotel?hotel_id=$id");
       var data = jsonDecode(x.body);
-      // print(x.body);
+      print(x.body);
 
       // total_cost = data["total_cost"].toString();
       buyers = data["data"].map((json) => Buyer.fromJson(json)).toList();
@@ -285,10 +285,10 @@ class HotelController extends ChangeNotifier {
     }
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
-      // getHotelSale(hotel_id);
-      // snackBar(context, "تم اضافة الفندق بنجاح", false);
+      getHotelPay(hotel_id);
+      snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
-      // snackBar(context, jsonDecode(x.body), true);
+      snackBar(context, jsonDecode(x.body), true);
     }
   }
 }

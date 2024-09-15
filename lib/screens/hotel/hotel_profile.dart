@@ -75,7 +75,11 @@ class _HotelProfileState extends State<HotelProfile> {
                         if (!widget.showBuy)
                           Text(
                             "الباقي: ${widget.hotelId.rest}",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: double.parse(widget.hotelId.rest!) < 0
+                                    ? Colors.red
+                                    : null),
                           ),
                       ],
                     ),

@@ -1,4 +1,5 @@
 import 'package:admin/controllers/seller_controller.dart';
+import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/models/mybuyer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,7 @@ class _SellerProfileState extends State<SellerProfile> {
                                   return DataTable(
                                     columns: [
                                       DataColumn(label: Text('المرسل')),
+                                      DataColumn(label: Text('الفندق')),
                                       DataColumn(label: Text('المبلغ بالريال')),
                                       DataColumn(
                                           label: Text('المبلغ بالدولار')),
@@ -66,6 +68,9 @@ class _SellerProfileState extends State<SellerProfile> {
                                       return DataRow(cells: [
                                         DataCell(
                                           Text(mybuyer.buyer.toString()),
+                                        ),
+                                        DataCell(
+                                          Text(mybuyer.hotel_name.toString()),
                                         ),
                                         DataCell(
                                           Text(mybuyer.costRas.toString()),
@@ -94,29 +99,43 @@ class _SellerProfileState extends State<SellerProfile> {
                                 ) {
                                   return DataTable(
                                     columns: [
-                                      DataColumn(label: Text('المرسل')),
-                                      DataColumn(label: Text('المبلغ بالريال')),
-                                      DataColumn(
-                                          label: Text('المبلغ بالدولار')),
-                                      DataColumn(label: Text('ملاحضات')),
+                                      DataColumn(label: Text('الفندق')),
+                                      DataColumn(label: Text('الغرف')),
+                                      DataColumn(label: Text('الليالي')),
+                                      DataColumn(label: Text('سعر االيلة')),
+                                      DataColumn(label: Text('المتبقي')),
+                                      DataColumn(label: Text('الاجمالي')),
+                                      DataColumn(label: Text('تاريخ')),
                                     ],
                                     rows: List.generate(
                                         accountsController.mySmallBank2.length,
                                         (index) {
-                                      MyBuyer mybuyer = accountsController
+                                      HotelBuy mybuyer = accountsController
                                           .mySmallBank2[index];
                                       return DataRow(cells: [
                                         DataCell(
-                                          Text(mybuyer.buyer.toString()),
+                                          Text(mybuyer.hotelId.toString()),
                                         ),
                                         DataCell(
-                                          Text(mybuyer.costRas.toString()),
+                                          Text(mybuyer.rooms.toString()),
                                         ),
                                         DataCell(
-                                          Text(mybuyer.costUsd.toString()),
+                                          Text(mybuyer.nights.toString()),
                                         ),
                                         DataCell(
-                                          Text(mybuyer.note.toString()),
+                                          Text(mybuyer.roomPricePerNight
+                                              .toString()),
+                                        ),
+                                        DataCell(
+                                          Text(mybuyer.now_debt_usd.toString()),
+                                        ),
+                                        DataCell(
+                                          Text(mybuyer.totalPrice.toString()),
+                                        ),
+                                        DataCell(
+                                          Text(mybuyer.createdAt
+                                              .toString()
+                                              .substring(0, 10)),
                                         ),
                                       ]);
                                     }),
