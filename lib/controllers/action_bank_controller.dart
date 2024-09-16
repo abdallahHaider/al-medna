@@ -135,19 +135,20 @@ class ActionBankController extends ChangeNotifier {
   }
 
   Future addpay(String cost, String Kade) async {
-    print(cost);
-    print(Kade);
-    print(toID);
+    // print(cost);
+    // print(Kade);
+    // print(toID);
     print(fromID);
     print(type);
-    print(typeTO);
-    print(isTo);
+    // print(typeTO);
+    // print(isTo);
 
     Response x;
     try {
       x = await postApi("/api/transactions/create", {
         if (type == "bank") "f_bank": fromID,
         if (type == "small_bank") "f_small_bank": fromID,
+        if (type == "company") "f_company": fromID,
         if (typeTO == "bank") "t_bank": toID,
         if (typeTO == "company") "t_company": toID,
         if (typeTO == "small_bank") "t_small_bank": toID,

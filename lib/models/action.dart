@@ -44,7 +44,7 @@ class TypeAction3 {
         TypeAction3(name: 'البنك', id: 'f_bank'),
         TypeAction3(name: 'الصيرفة', id: 'f_small_bank'),
         TypeAction3(name: 'الخزنة', id: ''),
-        // TypeAction3(name: 'الشركات', id: ''),
+        TypeAction3(name: 'الشركات', id: ''),
         // TypeAction3(name: 'فنادق مكة', id: ''),
         // TypeAction3(name: 'فنادق المدينة', id: ''),
       ];

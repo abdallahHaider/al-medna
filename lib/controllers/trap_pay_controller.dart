@@ -58,11 +58,11 @@ class TrapPayController extends ChangeNotifier {
     try {
       SmartDialog.showLoading();
       x = await postApi("/api/trap_pay/create", {
-        "cost_USD": costUSD,
-        "cost_IQD": costIQD,
+        "cost_USD": costUSD.isNotEmpty ? costUSD : "0",
+        "cost_IQD": costIQD.isNotEmpty ? costIQD : "0",
         "reseller_id": reseller_id,
         "pay_number": "0",
-        "IQD_to_USD": IQD_to_USD,
+        "IQD_to_USD": IQD_to_USD.isEmpty ? "1" : IQD_to_USD,
         "RAS_to_USD": "0"
       });
     } catch (e) {
@@ -72,6 +72,7 @@ class TrapPayController extends ChangeNotifier {
     } finally {
       SmartDialog.dismiss();
     }
+    print(x.body);
 
     if (x.statusCode == 200 || x.statusCode == 201) {
       notifyListeners();

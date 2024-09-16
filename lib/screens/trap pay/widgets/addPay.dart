@@ -116,13 +116,9 @@ Card addPay(BuildContext context) {
                             await Provider.of<TrapPayController>(context,
                                     listen: false)
                                 .addReseller(
-                                    costUSDController.text.toString(),
-                                    costIQDController.text.isNotEmpty
-                                        ? costIQDController.text
-                                        : "0",
-                                    uSDController.text.isNotEmpty
-                                        ? uSDController.text
-                                        : "0",
+                                    costUSDController.text,
+                                    costIQDController.text,
+                                    uSDController.text,
                                     resslrid,
                                     context);
                           } catch (e) {
