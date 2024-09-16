@@ -135,7 +135,7 @@ class ActionBankController extends ChangeNotifier {
   }
 
   Future addpay(String cost, String Kade) async {
-    // print(cost);
+    print(cost);
     // print(Kade);
     // print(toID);
     print(fromID);

@@ -51,7 +51,7 @@ class HotelController extends ChangeNotifier {
     try {
       var x =
           await getpi("/api/hotel/index?type=${ismaka ? "مكة" : "المدينة"}");
-      print(x.body);
+      // print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
@@ -287,6 +287,30 @@ class HotelController extends ChangeNotifier {
     if (x.statusCode == 200 || x.statusCode == 201) {
       getHotelPay(hotel_id);
       snackBar(context, "تم اضافة الفندق بنجاح", false);
+    } else {
+      snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future hotelPayDelete(int id, BuildContext context) async {
+    print(id);
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await postApi("/api/hotel_pay/delete", {
+        "id": id,
+      });
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    print(x.body);
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      Navigator.pop(context);
+      snackBar(context, "تم حذف التسديد بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
     }

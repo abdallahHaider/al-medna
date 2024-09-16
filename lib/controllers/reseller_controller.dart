@@ -23,9 +23,10 @@ class ResellerController extends ChangeNotifier {
 
     try {
       var x = await getpi("/api/reseller/index");
+      print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
-          data.map((json) => Reseller.fromJson(json)).toList();
+          data["data"].map((json) => Reseller.fromJson(json)).toList();
       resellerss = resellers;
       return resellers;
     } catch (e) {
@@ -146,13 +147,11 @@ class ResellerController extends ChangeNotifier {
   // int getTotelcost() {}
 
   Future<List> fetchHotelBuyer() async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-
     try {
       var x = await getpi("/api/hotel_buyer/index");
-      // print(x.body);
+      print(x.body);
       var data = jsonDecode(x.body);
+      print(data["data"]);
       final List resellers =
           data["data"].map((json) => Reseller.fromJson(json)).toList();
       buyers = resellers;

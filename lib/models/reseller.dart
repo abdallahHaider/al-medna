@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:admin/models/format_price.dart';
+
 Reseller resellerFromJson(String str) => Reseller.fromJson(json.decode(str));
 
 String resellerToJson(Reseller data) => json.encode(data.toJson());
@@ -11,6 +13,7 @@ class Reseller {
   String? address;
   DateTime? createdAt;
   DateTime? updatedAt;
+  String? now_debt;
   bool?
       isSold; // تأكد من أن هذه الخاصية موجودة أو استخدم خاصية أخرى تعبر عن حالة البيع
   String? name;
@@ -23,20 +26,22 @@ class Reseller {
     this.createdAt,
     this.updatedAt,
     this.name,
+    this.now_debt,
     this.isSold,
   });
 
   factory Reseller.fromJson(Map<String, dynamic> json) => Reseller(
         id: json["id"],
         fullName: json["full_name"] ?? json["name"] ?? "",
-        phoneNumber: json["phone_number"],
-        address: json["address"],
+        phoneNumber: json["phone_number"].toString(),
+        address: json["address"].toString(),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
         updatedAt: json["updated_at"] == null
             ? null
             : DateTime.parse(json["updated_at"]),
+        now_debt: formatPrice(json["now_debt"] ?? 0),
         isSold:
             json['is_sold'] ?? false, // تأكد من تطابق الاسم مع الخاصية في JSON
       );

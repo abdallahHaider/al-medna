@@ -3,6 +3,7 @@ import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/models/type_cost.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,10 +22,9 @@ class _AddSaleState extends State<AddSale> {
   final price = TextEditingController();
   final _nameController = TextEditingController();
 
-  // final _priceUSDController = TextEditingController();
-  // final _priceRASController = TextEditingController();
-  // final _numberController = TextEditingController();
-  // final _roomController = TextEditingController();
+  final nameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
   final _reselrID = TextEditingController();
   String curreny = "";
   @override
@@ -37,14 +37,7 @@ class _AddSaleState extends State<AddSale> {
   }
 
   String Price = "0";
-  getPrice() {
-    // setState(() {
-    //   Price = (double.tryParse(rooms.text.isEmpty ? "0" : rooms.text)! *
-    //           double.tryParse(rooms.text.isEmpty ? "0" : rooms.text)! *
-    //           double.tryParse(rooms.text.isEmpty ? "0" : rooms.text)!)
-    //       .toString();
-    // });
-  }
+  getPrice() {}
 
   @override
   Widget build(BuildContext context) {
@@ -152,16 +145,6 @@ class _AddSaleState extends State<AddSale> {
                   },
                 ),
               ),
-              // SizedBox(
-              //   width: 500,
-              //   child: MyTextField(
-              //     controller: _nameController,
-              //     labelText: 'اسم المشتري',
-              //     onChanged: (v) {
-              //       _reselrID.clear();
-              //     },
-              //   ),
-              // ),
             ],
           ),
           SizedBox(
@@ -276,13 +259,6 @@ class _AddSaleState extends State<AddSale> {
                   },
                 ),
               ),
-              // SizedBox(
-              //   width: 500,
-              //   child: MyTextField(
-              //     // controller: _priceUSDController,
-              //     labelText: 'سعر الغرفة',
-              //   ),
-              // ),
             ],
           ),
           SizedBox(
@@ -303,7 +279,60 @@ class _AddSaleState extends State<AddSale> {
                   // _nameController.text.toString(),
                 );
               },
-              child: Text("اضافة"))
+              child: Text("اضافة")),
+
+          Container(
+            padding: EdgeInsets.all(defaultPadding),
+            margin: EdgeInsets.all(defaultPadding),
+            decoration: BoxDecoration(
+              color: secondaryColor,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Header(
+                    title: 'اضافة المشتري',
+                  ),
+                  SizedBox(height: defaultPadding),
+                  MyTextField(
+                    controller: nameController,
+                    labelText: 'اسم المشتري',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'برجاء ادخال اسم المشتري';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: defaultPadding),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          try {
+                            await Provider.of<ResellerController>(context,
+                                    listen: false)
+                                .addHotelBuyer(
+                                    nameController.text, "", "", context);
+                            Provider.of<ResellerController>(context,
+                                    listen: false)
+                                .fetchHotelBuyer();
+                          } catch (e) {
+                            snackBar(context, e.toString(), true);
+                          }
+                        }
+                      },
+                      child: Text('اضافة'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ]),
       ),
     );

@@ -62,6 +62,9 @@ class ResellerPage extends StatelessWidget {
                                   label: Text("اسم الوكيل"),
                                 ),
                                 DataColumn(
+                                  label: Text("المتبقي"),
+                                ),
+                                DataColumn(
                                   label: Text("رقم الهاتف"),
                                 ),
                                 DataColumn(
@@ -90,6 +93,12 @@ class ResellerPage extends StatelessWidget {
                                               .getWidet(ResellerProfiel(
                                                   resellerID:
                                                       snapshot.data![index])),
+                                        ),
+                                        DataCell(
+                                          Text(
+                                            snapshot.data![index].now_debt
+                                                .toString(),
+                                          ),
                                         ),
                                         DataCell(
                                           Text(

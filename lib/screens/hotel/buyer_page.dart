@@ -60,7 +60,7 @@ class _BuyerPageState extends State<BuyerPage> {
                         // DataColumn(label: Text('المبلغ الكلي')),
                         // DataColumn(label: Text('اسم الشركة')),
                         // DataColumn(label: Text('رقم الحركة')),
-                        // DataColumn(label: Text('الاجراء')),
+                        DataColumn(label: Text('الاجراء')),
                       ],
                       rows:
                           List.generate(hotelController.buyers.length, (index) {
@@ -146,20 +146,48 @@ class _BuyerPageState extends State<BuyerPage> {
                               //     ),
                               //   ),
                               // ),
-                              // DataCell(ElevatedButton(
-                              //     style: ButtonStyle(
-                              //       backgroundColor: WidgetStateProperty.all(
-                              //         Colors.red,
-                              //       ),
-                              //       foregroundColor: WidgetStateProperty.all(
-                              //         Colors.white,
-                              //       ),
-                              //     ),
-                              //     onPressed: () {
-                              //       // drletdHotel(
-                              //       //     context, snapshot, index);
-                              //     },
-                              //     child: Text("حذف"))),
+                              DataCell(ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStateProperty.all(
+                                      Colors.red,
+                                    ),
+                                    foregroundColor: WidgetStateProperty.all(
+                                      Colors.white,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (
+                                          BuildContext context,
+                                        ) {
+                                          return AlertDialog(
+                                            title: Text("حذف"),
+                                            content:
+                                                Text("هل انت متاكد من الحذف"),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("الغاء"),
+                                              ),
+                                              TextButton(
+                                                onPressed: () async {
+                                                  // await Provider.of<>(context,listen: false)
+                                                  await hotelController
+                                                      .hotelPayDelete(
+                                                          hotelBuy.id!,
+                                                          context);
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text("حذف"),
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: Text("حذف"))),
                             ]);
                       })),
                 );
