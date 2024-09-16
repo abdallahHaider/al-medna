@@ -36,8 +36,8 @@ class _WalletPageState extends State<WalletPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: Header(title: "الخزنة"),
+              padding: const EdgeInsets.all(defaultPadding),        
+              child: Header(title: "الصندوق الرئيسي"),
             ),
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
@@ -51,9 +51,9 @@ class _WalletPageState extends State<WalletPage> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildBalanceCard("الرصيد الحالي في الخزنة بالدينار",
+                          _buildBalanceCard("الرصيد الحالي في  الصندوق الرئيسي بالدينار",
                               "${walletProvider.wallet_IQD} دينار"),
-                          _buildBalanceCard("الرصيد الحالي في الخزنة بالدولار",
+                          _buildBalanceCard("الرصيد الحالي في  الصندوق الرئيسي بالدولار",
                               "${walletProvider.wallet_USD} دولار"),
                         ],
                       );

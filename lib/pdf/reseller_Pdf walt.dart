@@ -26,10 +26,10 @@ Future<void> ResellerToPdfWalt(
         pw.Column(
           crossAxisAlignment: pw.CrossAxisAlignment.end,
           children: [
-            pw.Text("كشف حساب الصندوق - صفحة ${traps.indexOf(traps) + 1}",
+            pw.Text("كشف حساب  الصندوق الرئيسي ",
                 style: pw.TextStyle(
                   fontSize: 24,
-                  fontWeight: pw.FontWeight.bold,
+                  //fontWeight: pw.FontWeight.bold,
                 ),
                 textDirection: pw.TextDirection.rtl),
             pw.SizedBox(height: 20),
