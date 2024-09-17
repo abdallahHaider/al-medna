@@ -5,6 +5,7 @@ class TypeCost {
   static List<TypeCost> get costs => [
         TypeCost(name: 'دينار', id: '1'),
         TypeCost(name: 'دولار', id: '2'),
+        TypeCost(name: 'ريال', id: '3'),
       ];
 }
 

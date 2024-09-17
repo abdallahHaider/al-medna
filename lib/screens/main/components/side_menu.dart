@@ -1,5 +1,6 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/accounts/accounts_page.dart';
+import 'package:admin/screens/authority/authority_page.dart';
 import 'package:admin/screens/bank/bank.dart';
 import 'package:admin/screens/budget/budget_page.dart';
 import 'package:admin/screens/campany/campany_page.dart';
@@ -137,6 +138,14 @@ class SideMenu extends StatelessWidget {
             press: () {
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(HotelPage());
+            },
+          ),
+          DrawerListTile(
+            title: "هيئة الحج والعمرة",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(AuthorityPage());
             },
           ),
         ],

@@ -31,8 +31,11 @@ class AddTrapPage extends StatefulWidget {
     this.notesController,
     this.vipController,
     this.priceVipController,
+    this.hotel,
+    this.realer,
     required this.isEdidt,
     this.trapId,
+    this.transport,
   });
   final bool isEdidt;
   final int? trapId;
@@ -53,6 +56,9 @@ class AddTrapPage extends StatefulWidget {
   final String? notesController;
   final String? vipController;
   final String? priceVipController;
+  final String? hotel;
+  final String? realer;
+  final String? transport;
 
   @override
   State<AddTrapPage> createState() => _AddTrapPageState();
@@ -106,6 +112,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
     notesController.text = widget.notesController ?? "";
     vipController.text = widget.vipController ?? "";
     priceVipController.text = widget.priceVipController ?? "";
+    hotelController.text = widget.hotel ?? "";
     _calculateTotalCost();
     super.initState();
   }
@@ -195,31 +202,36 @@ class _AddTrapPageState extends State<AddTrapPage> {
         Row(
           children: [
             Expanded(
-              child: Consumer<ResellerController>(
-                builder: (BuildContext context, value, Widget? child) {
-                  return DropdownButtonFormField<dynamic>(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: "الوكيل",
+              child: widget.realer!.isEmpty
+                  ? Consumer<ResellerController>(
+                      builder: (BuildContext context, value, Widget? child) {
+                        return DropdownButtonFormField<dynamic>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: "الوكيل",
+                          ),
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              resslrid = value.id.toString();
+                            });
+                          },
+                          items: value.resellerss.map((companies) {
+                            return DropdownMenuItem<dynamic>(
+                              value: companies,
+                              child: Text(companies.fullName!),
+                            );
+                          }).toList(),
+                          validator: (value) =>
+                              value == null ? 'يرجى اختبار الوكيل ' : null,
+                        );
+                      },
+                    )
+                  : MyTextField(
+                      labelText: widget.realer,
+                      enabled: false,
                     ),
-                    onChanged: (dynamic value) {
-                      setState(() {
-                        resslrid = value.id.toString();
-                      });
-                    },
-                    items: value.resellerss.map((dynamic companies) {
-                      return DropdownMenuItem<dynamic>(
-                        value: companies,
-                        child: Text(companies.fullName!),
-                      );
-                    }).toList(),
-                    validator: (value) =>
-                        value == null ? 'يرجى اختبار الوكيل ' : null,
-                  );
-                },
-              ),
             ),
             SizedBox(width: defaultPadding),
             Expanded(
@@ -237,31 +249,36 @@ class _AddTrapPageState extends State<AddTrapPage> {
         Row(
           children: [
             Expanded(
-              child: Consumer<TrapController>(
-                builder: (BuildContext context, value, Widget? child) {
-                  return DropdownButtonFormField<dynamic>(
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      labelText: "الرحلة",
+              child: widget.transport!.isEmpty
+                  ? Consumer<TrapController>(
+                      builder: (BuildContext context, value, Widget? child) {
+                        return DropdownButtonFormField<dynamic>(
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            labelText: "الرحلة",
+                          ),
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              transportsid = value.id;
+                            });
+                          },
+                          items: value.transports.map((dynamic companies) {
+                            return DropdownMenuItem<dynamic>(
+                              value: companies,
+                              child: Text(companies.name),
+                            );
+                          }).toList(),
+                          validator: (value) =>
+                              value == null ? 'يرجى ادخال نوع الرحلة' : null,
+                        );
+                      },
+                    )
+                  : MyTextField(
+                      labelText: widget.transport == "street" ? "بري" : "جوي",
+                      enabled: false,
                     ),
-                    onChanged: (dynamic value) {
-                      setState(() {
-                        transportsid = value.id;
-                      });
-                    },
-                    items: value.transports.map((dynamic companies) {
-                      return DropdownMenuItem<dynamic>(
-                        value: companies,
-                        child: Text(companies.name),
-                      );
-                    }).toList(),
-                    validator: (value) =>
-                        value == null ? 'يرجى ادخال نوع الرحلة' : null,
-                  );
-                },
-              ),
             ),
             SizedBox(width: defaultPadding),
             Expanded(

@@ -6,7 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class WalletAction extends StatefulWidget {
-  WalletAction({Key? key}) : super(key: key);
+  WalletAction(
+      {Key? key,
+      required this.isAdd,
+      this.cost_USD,
+      this.cost_AQR,
+      this.not,
+      this.id})
+      : super(key: key);
+
+  final bool isAdd;
+  final String? cost_USD;
+  final String? cost_AQR;
+  final String? not;
+  final id;
 
   @override
   State<WalletAction> createState() => _WalletActionState();
@@ -22,6 +35,9 @@ class _WalletActionState extends State<WalletAction> {
 
   @override
   void initState() {
+    dinarCostController.text = widget.cost_AQR ?? "";
+    dollarCostController.text = widget.cost_USD ?? "";
+    descriptionController.text = widget.not ?? "";
     super.initState();
     dinarCostController.addListener(_handleCostInputChange);
     dollarCostController.addListener(_handleCostInputChange);
@@ -84,18 +100,9 @@ class _WalletActionState extends State<WalletAction> {
     return Column(
       children: [
         _buildDropdownField(),
-        // label: "نوع العملية",
-        // items: TypeAction.actions,
-        // onChanged: (value) {
-        //   setState(() {
-        //     type = value!.id;
-        //   });
-        // },
-        // ),
-        // const SizedBox(height: 16),
-        // _buildTextField(controller: kadeCostController, label: "رقم القيد"),
         const SizedBox(height: 16),
-        _buildTextField(controller: ownerController, label: "الاسم"),
+        _buildTextField(
+            controller: ownerController, label: "الاسم", enabled: widget.isAdd),
         const SizedBox(height: 16),
         Row(
           children: [
@@ -140,43 +147,29 @@ class _WalletActionState extends State<WalletAction> {
 
   Widget _buildDropdownField() {
     return DropdownButtonFormField<TypeAction>(
+        enableFeedback: widget.isAdd,
         decoration: InputDecoration(
-          labelText: "نوع العملية",
-          border: OutlineInputBorder(),
-        ),
-        items: TypeAction.actions.map((TypeAction toElement) {
-          return DropdownMenuItem(
-            child: Text(toElement.name),
-            value: toElement,
-          );
-        }).toList(),
+            labelText: "نوع العملية",
+            border: OutlineInputBorder(),
+            enabled: widget.isAdd),
+        items: !widget.isAdd
+            ? []
+            : TypeAction.actions.map((TypeAction toElement) {
+                return DropdownMenuItem(
+                  child: Text(toElement.name),
+                  value: toElement,
+                );
+              }).toList(),
         onChanged: (value) {
           type = value!.id;
         });
-    // return DropdownButtonFormField<TypeAction>(
-    //   decoration: InputDecoration(
-    //     labelText: label,
-    //     border: OutlineInputBorder(
-    //       borderRadius: BorderRadius.circular(12),
-    //     ),
-    //     filled: true,
-    //     fillColor: Colors.grey[200],
-    //   ),
-    //   items: TypeAction.a.map((TypeAction item) {
-    //     return DropdownMenuItem(
-    //       value: item,
-    //       child: Text(item.name),
-    //     );
-    //   }).toList(),
-    //   onChanged: onChanged,
-    // );
   }
 
   Widget _buildTextField({
     required TextEditingController controller,
     required String label,
     TextInputType? keyboardType,
-    bool enabled = true,
+    bool? enabled,
     int maxLines = 1,
   }) {
     return TextField(
@@ -200,18 +193,29 @@ class _WalletActionState extends State<WalletAction> {
       child: SizedBox(
         width: 200,
         child: ElevatedButton(
-          onPressed: () {
-            Provider.of<WalletProvider>(context, listen: false).Addpay(
-              false,
-              type,
-              "0",
-              ownerController.text,
-              // dinarCostController.text.isNotEmpty
-              dinarCostController.text,
-              dollarCostController.text,
-              descriptionController.text,
-              context,
-            );
+          onPressed: () async {
+            if (widget.isAdd) {
+              await Provider.of<WalletProvider>(context, listen: false).Addpay(
+                false,
+                type,
+                "0",
+                ownerController.text,
+                // dinarCostController.text.isNotEmpty
+                dinarCostController.text,
+                dollarCostController.text,
+                descriptionController.text,
+                context,
+              );
+            } else {
+              await Provider.of<WalletProvider>(context, listen: false)
+                  .updatePay(
+                widget.id,
+                dinarCostController.text,
+                dollarCostController.text,
+                descriptionController.text,
+                context,
+              );
+            }
           },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 18),

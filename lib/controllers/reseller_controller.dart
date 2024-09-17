@@ -18,9 +18,6 @@ class ResellerController extends ChangeNotifier {
   ResellerDbet resellerDbet = ResellerDbet();
 
   Future<List> fetchData() async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-
     try {
       var x = await getpi("/api/reseller/index");
       print(x.body);
@@ -36,9 +33,6 @@ class ResellerController extends ChangeNotifier {
   }
 
   Future getFetchData() async {
-    // Simulate fetching data (replace with your actual logic)
-    // await Future.delayed(Duration(seconds: 1));
-
     try {
       var x = await getpi("/api/reseller/index");
       var data = jsonDecode(x.body);
@@ -62,11 +56,6 @@ class ResellerController extends ChangeNotifier {
         "address": address,
         "phone_number": phone_number,
       });
-      //  notifyListeners();
-      //        Navigator.pop(context);
-      notifyListeners();
-
-      snackBar(context, "تم اضافة الوكيل بنجاح", false);
     } catch (e) {
       snackBar(context, e.toString(), true);
       throw e;
@@ -74,6 +63,9 @@ class ResellerController extends ChangeNotifier {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+
+      snackBar(context, "تم اضافة الوكيل بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
     }
@@ -86,10 +78,6 @@ class ResellerController extends ChangeNotifier {
       x = await postApi("/api/reseller/delete", {
         "reseller_id": id,
       });
-      notifyListeners();
-      Navigator.pop(context);
-      notifyListeners();
-      snackBar(context, "تم حذف الوكيل بنجاح", false);
     } catch (e) {
       snackBar(context, e.toString(), true);
       throw e;
@@ -97,6 +85,9 @@ class ResellerController extends ChangeNotifier {
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      Navigator.pop(context);
+      snackBar(context, "تم حذف الوكيل بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
     }
@@ -210,6 +201,32 @@ class ResellerController extends ChangeNotifier {
       notifyListeners();
       snackBar(context, "تم حذف المشتري بنجاح", false);
     } else {
+      snackBar(context, jsonDecode(x.body), true);
+    }
+  }
+
+  Future updateReseller(id, String name, String phone_number, String address,
+      BuildContext context) async {
+    http.Response x;
+    try {
+      SmartDialog.showLoading();
+      x = await putApi("/api/reseller/update", {
+        "reseller_id": id,
+        if (name.isNotEmpty) "full_name": name,
+        if (address.isNotEmpty) "address": address,
+        if (phone_number.isNotEmpty) "phone_number": phone_number,
+      });
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      throw e;
+    } finally {
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      notifyListeners();
+      snackBar(context, "تم اضافة الوكيل بنجاح", false);
+    } else {
+      print(x.body);
       snackBar(context, jsonDecode(x.body), true);
     }
   }

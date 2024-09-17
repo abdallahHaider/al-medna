@@ -32,6 +32,25 @@ class TransactionsController extends ChangeNotifier {
     }
   }
 
+  Future getmyT(String id) async {
+    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    Response x;
+    try {
+      x = await getpi("/api/transactions/index/authority?authority_id=$id");
+      var data = jsonDecode(x.body);
+      print(x.body);
+      wallet_USD = data["cost_usd"].toString();
+      wallet_IQD = data["cost_iqd"].toString();
+      mySmallBank = data["data"]["data"]
+          .map((json) => Transactions.fromJson(json))
+          .toList();
+      notifyListeners();
+    } catch (e) {
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    }
+  }
+
   Future getMyHotelPay(String id) async {
     Response x;
     try {

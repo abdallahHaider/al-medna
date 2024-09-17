@@ -179,7 +179,6 @@ class _BuyerPageState extends State<BuyerPage> {
                                                       .hotelPayDelete(
                                                           hotelBuy.id!,
                                                           context);
-                                                  Navigator.pop(context);
                                                 },
                                                 child: Text("حذف"),
                                               ),

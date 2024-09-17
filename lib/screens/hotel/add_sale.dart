@@ -19,7 +19,7 @@ class _AddSaleState extends State<AddSale> {
   String hotelID = "";
   final rooms = TextEditingController();
   final day = TextEditingController();
-  final price = TextEditingController();
+  var price = TextEditingController();
   final _nameController = TextEditingController();
 
   final nameController = TextEditingController();
@@ -36,8 +36,15 @@ class _AddSaleState extends State<AddSale> {
     super.initState();
   }
 
-  String Price = "0";
-  getPrice() {}
+  double Price = 0;
+  getPrice() {
+    setState(() {
+      Price = (double.tryParse(rooms.text) ?? 0) *
+          (double.tryParse(day.text) ?? 0) *
+          (double.tryParse(price.text) ?? 0);
+      print(Price);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -210,21 +217,28 @@ class _AddSaleState extends State<AddSale> {
                     TableCell(
                         child: MyTextField(
                       controller: rooms,
-                      onChanged: getPrice(),
+                      onChanged: (v) {
+                        getPrice();
+                      },
                     )),
                     TableCell(
                         child: MyTextField(
                       controller: day,
-                      onChanged: getPrice(),
+                      onChanged: (v) {
+                        getPrice();
+                      },
                     )),
                     TableCell(
                         child: MyTextField(
                       controller: price,
-                      onChanged: getPrice(),
+                      onChanged: (v) {
+                        getPrice();
+                      },
                     )),
                     TableCell(
                         child: MyTextField(
-                      controller: TextEditingController(text: Price),
+                      labelText: Price.toString(),
+                      // controller: Te,
                       enabled: false,
                     )),
                   ],

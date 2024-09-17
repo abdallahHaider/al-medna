@@ -166,10 +166,14 @@ class _ActionBankCardState extends State<ActionBankCard> {
                         Provider.of<ActionBankController>(context,
                                 listen: false)
                             .isIQD = "f";
-                      } else {
+                      } else if (value!.id == "2") {
                         Provider.of<ActionBankController>(context,
                                 listen: false)
                             .isIQD = "t";
+                      } else {
+                        Provider.of<ActionBankController>(context,
+                                listen: false)
+                            .isIQD = "r";
                       }
                     }),
                   ),

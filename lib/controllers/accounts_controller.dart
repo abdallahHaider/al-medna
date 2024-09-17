@@ -110,4 +110,42 @@ class AccountsController extends ChangeNotifier {
       throw "حصل خطا في ارسال البيانات";
     }
   }
+
+  Future updateBank(id, String name) async {
+    Response x;
+    try {
+      x = await postApi("/api/bank/update", {
+        "id": id,
+        "name": name,
+      });
+    } catch (e) {
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      getBank();
+      print(x.body);
+    } else {
+      throw jsonDecode(x.body);
+    }
+  }
+
+  Future updateSmallbank(id, String name) async {
+    Response x;
+    try {
+      x = await postApi("/api/small_bank/update", {
+        "id": id,
+        "name": name,
+      });
+    } catch (e) {
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      getSmallBank();
+      print(x.body);
+    } else {
+      throw jsonDecode(x.body);
+    }
+  }
 }

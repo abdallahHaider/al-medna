@@ -1,6 +1,7 @@
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/pdf/safe_pdf.dart';
-import 'package:admin/screens/wallet/edit_wallet_dialog.dart';
+import 'package:admin/screens/wallet/widgets/wallet_action.dart';
 import 'package:admin/screens/widgets/show_note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -115,15 +116,16 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
                         // زر تعديل البيانات
                         IconButton(
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return EditWalletDialog(
-                                  wallet: controller.wallets[index],
-                                  walletProvider: controller,
-                                );
-                              },
-                            );
+                            Provider.of<Rootwidget>(context, listen: false)
+                                .getWidet(WalletAction(
+                              isAdd: false,
+                              cost_AQR:
+                                  "${controller.wallets[index].costIQD ?? ""}",
+                              cost_USD:
+                                  "${controller.wallets[index].costUSD ?? ""}",
+                              not: controller.wallets[index].note.toString(),
+                              id: controller.wallets[index].id.toString(),
+                            ));
                           },
                           icon: Icon(
                             Icons.edit,

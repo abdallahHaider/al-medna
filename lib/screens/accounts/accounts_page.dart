@@ -2,6 +2,7 @@ import 'package:admin/controllers/accounts_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/accounts/acconunt_profael.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/edit_widget.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
@@ -19,7 +20,11 @@ class AccountsPage extends StatefulWidget {
 class _AccountsPageState extends State<AccountsPage> {
   final banknameController = TextEditingController();
   final accountsBanknameController = TextEditingController();
+  final nameEController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  bool isEdit = false;
+  String eid = "";
 
   @override
   void initState() {
@@ -85,6 +90,21 @@ class _AccountsPageState extends State<AccountsPage> {
                                             .substring(0, 10))),
                                         DataCell(Row(
                                           children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    isEdit = true;
+                                                    eid = accountsController
+                                                        .SmallBank[index].id
+                                                        .toString();
+                                                    nameEController.text =
+                                                        accountsController
+                                                            .SmallBank[index]
+                                                            .name
+                                                            .toString();
+                                                  });
+                                                },
+                                                icon: Icon(Icons.edit)),
                                             IconButton(
                                                 onPressed: () {
                                                   showDialog(
@@ -154,63 +174,92 @@ class _AccountsPageState extends State<AccountsPage> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                    padding: EdgeInsets.all(defaultPadding),
-                    margin: EdgeInsets.all(defaultPadding),
-                    decoration: BoxDecoration(
-                      color: secondaryColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Header(
-                            title: 'اضافة الصيرفة',
-                          ),
-                          SizedBox(height: defaultPadding),
-                          MyTextField(
-                            controller: accountsBanknameController,
-                            labelText: 'اسم مكتب الصيرفة',
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'برجاء ادخال اسم المكتب';
+                  child: Column(
+                    children: [
+                      if (isEdit)
+                        EditWidget(
+                            savePressed: () async {
+                              try {
+                                await Provider.of<AccountsController>(context,
+                                        listen: false)
+                                    .updateSmallbank(eid, nameEController.text);
+                                snackBar(context, "تم التعديل بنجاح", false);
+                              } catch (e) {
+                                snackBar(context, e.toString(), true);
                               }
-                              return null;
                             },
-                          ),
-                          SizedBox(height: defaultPadding),
-                          SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  try {
-                                    SmartDialog.showLoading();
-                                    await Provider.of<AccountsController>(
-                                            context,
-                                            listen: false)
-                                        .addSmallBank(accountsBanknameController
-                                            .text
-                                            .toString());
-                                    accountsBanknameController.clear();
-                                    snackBar(
-                                        context, "تمت الاضافة بنجاح", false);
-                                  } catch (e) {
-                                    print(e);
-                                    snackBar(context, e.toString(), true);
-                                  } finally {
-                                    SmartDialog.dismiss();
+                            canselPressed: () {
+                              nameEController.clear();
+                              setState(() {
+                                isEdit = false;
+                              });
+                            },
+                            buildActions: [
+                              MyTextField(
+                                controller: nameEController,
+                                labelText: 'اسم البنك',
+                              )
+                            ]),
+                      Container(
+                        padding: EdgeInsets.all(defaultPadding),
+                        margin: EdgeInsets.all(defaultPadding),
+                        decoration: BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Header(
+                                title: 'اضافة الصيرفة',
+                              ),
+                              SizedBox(height: defaultPadding),
+                              MyTextField(
+                                controller: accountsBanknameController,
+                                labelText: 'اسم مكتب الصيرفة',
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'برجاء ادخال اسم المكتب';
                                   }
-                                }
-                              },
-                              child: Text('اضافة'),
-                            ),
+                                  return null;
+                                },
+                              ),
+                              SizedBox(height: defaultPadding),
+                              SizedBox(
+                                width: double.infinity,
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (_formKey.currentState!.validate()) {
+                                      try {
+                                        SmartDialog.showLoading();
+                                        await Provider.of<AccountsController>(
+                                                context,
+                                                listen: false)
+                                            .addSmallBank(
+                                                accountsBanknameController.text
+                                                    .toString());
+                                        accountsBanknameController.clear();
+                                        snackBar(context, "تمت الاضافة بنجاح",
+                                            false);
+                                      } catch (e) {
+                                        print(e);
+                                        snackBar(context, e.toString(), true);
+                                      } finally {
+                                        SmartDialog.dismiss();
+                                      }
+                                    }
+                                  },
+                                  child: Text('اضافة'),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ]),

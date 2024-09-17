@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart' as http;
 import 'package:spelling_number/spelling_number.dart';
+
 class Wallet {
   final String id;
   final String owner;
@@ -158,6 +159,33 @@ class WalletProvider extends ChangeNotifier {
       } else {
         getWallet(false);
       }
+    }
+  }
+
+  Future updatePay(id, String costIQD, String costUSD, String note,
+      BuildContext context) async {
+    SmartDialog.showLoading();
+    http.Response x;
+    try {
+      x = await postApi("/api/safe_doc/update", {
+        "id": id,
+        if (costIQD.isNotEmpty) "cost_IQD": costIQD,
+        if (costUSD.isNotEmpty) "cost_USD": costUSD,
+        if (note.isNotEmpty) "note": note,
+      });
+      if (x.statusCode == 200) {
+        getWallet(true);
+
+        snackBar(context, "تمت العملية بنجاح", false);
+      } else {
+        print(x.body);
+        snackBar(context, jsonDecode(x.body)["message"], true);
+      }
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      print(e);
+    } finally {
+      SmartDialog.dismiss();
     }
   }
 }

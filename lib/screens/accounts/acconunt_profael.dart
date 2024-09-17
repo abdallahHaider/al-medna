@@ -25,6 +25,9 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
     } else if (widget.isBank == "S") {
       Provider.of<TransactionsController>(context, listen: false)
           .getmySmallBank(widget.id);
+    } else if (widget.isBank == "H") {
+      Provider.of<TransactionsController>(context, listen: false)
+          .getmyT(widget.id);
     } else {
       Provider.of<TransactionsController>(context, listen: false)
           .getCompany(widget.id);

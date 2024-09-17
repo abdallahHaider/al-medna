@@ -36,7 +36,7 @@ class _WalletPageState extends State<WalletPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(defaultPadding),        
+              padding: const EdgeInsets.all(defaultPadding),
               child: Header(title: "الصندوق الرئيسي"),
             ),
             Padding(
@@ -51,9 +51,11 @@ class _WalletPageState extends State<WalletPage> {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildBalanceCard("الرصيد الحالي في  الصندوق الرئيسي بالدينار",
+                          _buildBalanceCard(
+                              "الرصيد الحالي في  الصندوق الرئيسي بالدينار",
                               "${walletProvider.wallet_IQD} دينار"),
-                          _buildBalanceCard("الرصيد الحالي في  الصندوق الرئيسي بالدولار",
+                          _buildBalanceCard(
+                              "الرصيد الحالي في  الصندوق الرئيسي بالدولار",
                               "${walletProvider.wallet_USD} دولار"),
                         ],
                       );
@@ -78,7 +80,9 @@ class _WalletPageState extends State<WalletPage> {
                             children: [
                               _buildActionButton("اضافة عملية", () {
                                 Provider.of<Rootwidget>(context, listen: false)
-                                    .getWidet(WalletAction());
+                                    .getWidet(WalletAction(
+                                  isAdd: true,
+                                ));
                               }, primaryColor),
                               SizedBox(width: 10),
                               _buildActionButton("طباعة كشف الحساب", () {

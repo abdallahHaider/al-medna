@@ -74,6 +74,11 @@ class ActionBankController extends ChangeNotifier {
       getTodata();
       isTo = true;
     }
+    if (type == "الهيات") {
+      this.typeTO = "authority";
+      getTodata();
+      isTo = true;
+    }
 
     if (type == "الخزنة") {
       this.typeTO = "";
@@ -152,9 +157,11 @@ class ActionBankController extends ChangeNotifier {
         if (typeTO == "bank") "t_bank": toID,
         if (typeTO == "company") "t_company": toID,
         if (typeTO == "small_bank") "t_small_bank": toID,
+        if (typeTO == "authority") "t_authority": toID,
         if (typeTO == "1") "t_hotel": toID,
         if (isIQD == "t") "cost_USD": cost,
         if (isIQD == "f") "cost_IQD": cost,
+        if (isIQD == "r") "cost_USD": double.parse(cost) / 3.75,
         "number_kade": "0",
       });
       print(x.body);
