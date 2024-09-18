@@ -86,7 +86,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
   final priceVipController = TextEditingController();
 
   String resslrid = "";
-  String trapid = "";
+  // String trapid = "";
   String transportsid = "";
   int remainingTravelers = 0;
   double totalCost = 0;
@@ -202,7 +202,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
         Row(
           children: [
             Expanded(
-              child: widget.realer!.isEmpty
+              child: !widget.isEdidt
                   ? Consumer<ResellerController>(
                       builder: (BuildContext context, value, Widget? child) {
                         return DropdownButtonFormField<dynamic>(
@@ -249,7 +249,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
         Row(
           children: [
             Expanded(
-              child: widget.transport!.isEmpty
+              child: !widget.isEdidt
                   ? Consumer<TrapController>(
                       builder: (BuildContext context, value, Widget? child) {
                         return DropdownButtonFormField<dynamic>(

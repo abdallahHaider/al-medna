@@ -20,7 +20,7 @@ class _AddSaleState extends State<AddSale> {
   final rooms = TextEditingController();
   final day = TextEditingController();
   var price = TextEditingController();
-  final _nameController = TextEditingController();
+  // final _nameController = TextEditingController();
 
   final nameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -123,49 +123,71 @@ class _AddSaleState extends State<AddSale> {
           SizedBox(
             height: defaultPadding,
           ),
-          Row(
-            children: [
-              SizedBox(
-                width: 500,
-                height: 100,
-                child: Consumer<ResellerController>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return DropdownButtonFormField<dynamic>(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        labelText: "الوكيل",
-                      ),
-                      onChanged: (dynamic value) {
-                        _reselrID.text = value.id.toString();
-                        _nameController.clear();
-                      },
-                      items: value.buyers.map((dynamic companies) {
-                        return DropdownMenuItem<dynamic>(
-                          value: companies,
-                          child: Text(companies.fullName!),
-                        );
-                      }).toList(),
-                      validator: (value) =>
-                          value == null ? 'يرجى اختبار الوكيل ' : null,
-                    );
+          SizedBox(
+            width: 500,
+            child: Consumer<ResellerController>(
+              builder: (BuildContext context, value, Widget? child) {
+                return DropdownButtonFormField<dynamic>(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    labelText: "الوكيل",
+                  ),
+                  onChanged: (dynamic value) {
+                    // setState(() {
+                    _reselrID.text = value.id.toString();
+                    // });
                   },
-                ),
-              ),
-            ],
+                  items: value.buyers.map((companies) {
+                    return DropdownMenuItem<dynamic>(
+                      value: companies,
+                      child: Text(companies.fullName!),
+                    );
+                  }).toList(),
+                );
+              },
+            ),
           ),
+          //  SizedBox(
+          //   width: 500,
+          //   height: 50,
+          //   child: Consumer<ResellerController>(
+          //     builder: (BuildContext context, value, Widget? child) {
+          //       return DropdownButtonFormField<dynamic>(
+          //         decoration: InputDecoration(
+          //           border: OutlineInputBorder(
+          //             borderRadius: BorderRadius.circular(10),
+          //           ),
+          //           labelText: "الوكيل",
+          //         ),
+          //         onChanged: (dynamic value) {
+
+          //           // _nameController.clear();
+          //         },
+          //   items: value.buyers.map((dynamic companies) {
+          //     return DropdownMenuItem<dynamic>(
+          //       value: companies,
+          //       child: Text(companies.fullName!),
+          //     );
+          //   }).toList(),
+          //   validator: (value) =>
+          //       value == null ? 'يرجى اختبار الوكيل ' : null,
+          // );
+          //     },
+          //   ),
+          // ),
           SizedBox(
             height: defaultPadding,
           ),
           Table(
-              columnWidths: {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-                3: FlexColumnWidth(1),
-                4: FlexColumnWidth(2),
-              },
+              // columnWidths: {
+              //   0: FlexColumnWidth(1),
+              //   1: FlexColumnWidth(1),
+              //   2: FlexColumnWidth(1),
+              //   3: FlexColumnWidth(1),
+              //   4: FlexColumnWidth(2),
+              // },
               border: TableBorder.all(color: Colors.grey),
               children: [
                 TableRow(
