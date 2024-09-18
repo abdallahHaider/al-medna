@@ -127,6 +127,7 @@ class _AddSaleState extends State<AddSale> {
             children: [
               SizedBox(
                 width: 500,
+                height: 100,
                 child: Consumer<ResellerController>(
                   builder: (BuildContext context, value, Widget? child) {
                     return DropdownButtonFormField<dynamic>(

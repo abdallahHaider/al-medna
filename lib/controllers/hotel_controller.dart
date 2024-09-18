@@ -234,7 +234,7 @@ class HotelController extends ChangeNotifier {
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
       notifyListeners();
-      // Navigator.pop(context);
+      Navigator.pop(context);
       snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
