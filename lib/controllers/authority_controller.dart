@@ -146,4 +146,55 @@ class AuthorityController extends ChangeNotifier {
       throw jsonDecode(x.body);
     }
   }
+
+  Future deleteAuthorityTicks(id, BuildContext context) async {
+    Response x;
+    SmartDialog.showLoading();
+    try {
+      x = await postApi("/api/authority_tickt/delete", {"id": id});
+    } catch (e) {
+      snackBar(context, "حصل خطا في الرسال البيانات", true);
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    } finally {
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode == 200) {
+      getAuthority();
+      snackBar(context, "تمت الحذف بنجاح", false);
+      Navigator.pop(context);
+    } else {
+      snackBar(context, jsonDecode(x.body)["message"], true);
+      print(x.body);
+      throw jsonDecode(x.body);
+    }
+  }
+
+//TODO: Error frome API
+  Future updateAuthorityTicks(String number_of_travel, price_of_travel,
+      commission, BuildContext context) async {
+    Response x;
+    SmartDialog.showLoading();
+    try {
+      x = await postApi("/api/authority_tickt/update", {
+        "id": id,
+        "number_of_travel": number_of_travel,
+        "price_of_travel": price_of_travel,
+        "commission": commission
+      });
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    } finally {
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      snackBar(context, "تمت العملية بنجاح", false);
+      print(x.body);
+    } else {
+      snackBar(context, jsonDecode(x.body)["message"], true);
+      throw jsonDecode(x.body);
+    }
+  }
 }

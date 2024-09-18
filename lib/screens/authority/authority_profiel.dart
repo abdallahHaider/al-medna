@@ -1,6 +1,7 @@
 import 'package:admin/controllers/authority_controller.dart';
 import 'package:admin/models/authority_tickt.dart';
 import 'package:admin/screens/accounts/acconunt_profael.dart';
+import 'package:admin/screens/authority/widget/add_ticks.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/widgets/deleteDialog.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
@@ -17,9 +18,12 @@ class AuthorityProfile extends StatefulWidget {
 }
 
 class _AuthorityProfileState extends State<AuthorityProfile> {
+  bool isEdit = false;
+  int id = 0;
   final number = TextEditingController();
   final cost = TextEditingController();
   final commission = TextEditingController();
+
   @override
   void initState() {
     Provider.of<AuthorityController>(context, listen: false)
@@ -69,10 +73,6 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                     DataCell(
                                       Text(
                                           authority.numberOfTravel!.toString()),
-                                      // onTap: () => Provider.of<Rootwidget>(context, listen: false)
-                                      //     .getWidet(AuthorityProfile(
-                                      //   id: authority.id!.toString(),
-                                      // )),
                                     ),
                                     DataCell(Text(
                                         authority.priceOfTravel.toString())),
@@ -84,18 +84,36 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                       children: [
                                         IconButton(
                                             onPressed: () {
-                                              // myType.id =
-                                              //     authority.id!.toString();
-                                              // myType.setedit(true);
+                                              cost.text = authority
+                                                  .numberOfTravel!
+                                                  .toString();
+                                              number.text = authority
+                                                  .numberOfTravel!
+                                                  .toString();
+                                              commission.text = authority
+                                                  .commission
+                                                  .toString();
+                                              setState(() {
+                                                isEdit = true;
+                                                id = authority.id!;
+                                              });
                                             },
                                             icon: Icon(Icons.edit)),
                                         IconButton(
                                             onPressed: () async {
                                               await deleteDialog(context,
                                                   () async {
-                                                // await Provider.of<AuthorityController>(context,
-                                                //         listen: false)
-                                                //     .deletAuthority(authority.id!, context);
+                                                await Provider.of<
+                                                            AuthorityController>(
+                                                        context,
+                                                        listen: false)
+                                                    .deleteAuthorityTicks(
+                                                        authority.id!, context);
+                                                Provider.of<AuthorityController>(
+                                                        context,
+                                                        listen: false)
+                                                    .getAuthorityTicks(
+                                                        widget.id);
                                               });
                                             },
                                             icon: Icon(Icons.delete)),
@@ -107,50 +125,28 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 500,
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(defaultPadding),
-                              child: Header(title: "اضافة حجز"),
+                    Column(
+                      children: [
+                        if (isEdit)
+                          SizedBox(
+                            width: 500,
+                            child: undetected(
+                              id: id,
+                              number: number,
+                              cost: cost,
+                              commission: commission,
+                              onPressed: () {
+                                setState(() {
+                                  isEdit = false;
+                                });
+                              },
                             ),
-                            SizedBox(
-                              height: defaultPadding,
-                            ),
-                            MyTextField(
-                              labelText: "عدد المسافرين",
-                              controller: number,
-                            ),
-                            SizedBox(
-                              height: defaultPadding,
-                            ),
-                            MyTextField(
-                              labelText: "السعر لكل مسافر",
-                              controller: cost,
-                            ),
-                            SizedBox(
-                              height: defaultPadding,
-                            ),
-                            MyTextField(
-                              labelText: "العمولة",
-                              controller: commission,
-                            ),
-                            SizedBox(
-                              height: defaultPadding,
-                            ),
-                            ElevatedButton(
-                                onPressed: () {
-                                  Provider.of<AuthorityController>(context,
-                                          listen: false)
-                                      .addAuthorityTicks(widget.id, number.text,
-                                          cost.text, commission.text, context);
-                                },
-                                child: Text("اضافة"))
-                          ],
+                          ),
+                        SizedBox(
+                          width: 500,
+                          child: addTicks(widget: widget),
                         ),
-                      ),
+                      ],
                     )
                   ],
                 ),
@@ -164,6 +160,72 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
             ]),
           )
         ],
+      ),
+    );
+  }
+}
+
+class undetected extends StatelessWidget {
+  undetected({
+    super.key,
+    required this.id,
+    required this.number,
+    required this.cost,
+    required this.commission,
+    required this.onPressed,
+  });
+  final int id;
+  final TextEditingController number;
+
+  final TextEditingController cost;
+
+  final TextEditingController commission;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          children: [
+            Header(title: "تعديل حجز"),
+            SizedBox(height: defaultPadding),
+            MyTextField(
+              labelText: "عدد المسافرين",
+              controller: number,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: "السعر لكل مسافر",
+              controller: cost,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: "العمولة",
+              controller: commission,
+            ),
+            SizedBox(height: defaultPadding),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      await Provider.of<AuthorityController>(context,
+                              listen: false)
+                          .updateAuthorityTicks(
+                              number.text, cost.text, commission.text, context);
+                    },
+                    child: Text("تعديل")),
+                ElevatedButton(onPressed: onPressed, child: Text("الغاء")),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
