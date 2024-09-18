@@ -93,7 +93,7 @@ class SideMenu extends StatelessWidget {
             },
           ),
           DrawerListTile(
-            title: "المصارف",
+            title: "المنافذ",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
               Provider.of<Rootwidget>(context, listen: false)

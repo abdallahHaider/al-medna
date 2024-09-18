@@ -40,7 +40,7 @@ class _AccountsPageState extends State<AccountsPage> {
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
             child: Header(
-              title: "الصيرفات",
+              title: "المنافذ",
             ),
           ),
           Row(
@@ -114,7 +114,7 @@ class _AccountsPageState extends State<AccountsPage> {
                                                         return AlertDialog(
                                                           title: Text('حذف'),
                                                           content: Text(
-                                                              'هل أنت متأكد من حذف هذا الصيرفة'),
+                                                              'هل أنت متأكد من حذف هذا المنفذ'),
                                                           actions: [
                                                             TextButton(
                                                               child: Text('لا'),
@@ -214,15 +214,15 @@ class _AccountsPageState extends State<AccountsPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Header(
-                                title: 'اضافة الصيرفة',
+                                title: 'اضافة المنفذ',
                               ),
                               SizedBox(height: defaultPadding),
                               MyTextField(
                                 controller: accountsBanknameController,
-                                labelText: 'اسم مكتب الصيرفة',
+                                labelText: 'اسم  المنفذ',
                                 validator: (value) {
                                   if (value!.isEmpty) {
-                                    return 'برجاء ادخال اسم المكتب';
+                                    return ' برجاء ادخال اسم المنفذ ';
                                   }
                                   return null;
                                 },
