@@ -16,6 +16,9 @@ class AuthorityTickt {
   int? priceOfTravel;
   int? commission;
   int? totalPrice;
+  String? name;
+  int? number_of_child;
+  int? price_of_child;
   DateTime? createdAt;
 
   AuthorityTickt({
@@ -25,6 +28,9 @@ class AuthorityTickt {
     this.priceOfTravel,
     this.commission,
     this.totalPrice,
+    this.name,
+    this.number_of_child,
+    this.price_of_child,
     this.createdAt,
   });
 
@@ -35,6 +41,9 @@ class AuthorityTickt {
         priceOfTravel: json["price_of_travel"],
         commission: json["commission"],
         totalPrice: json["total_price"],
+        name: json["name"],
+        number_of_child: json["number_of_child"],
+        price_of_child: json["price_of_child"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),

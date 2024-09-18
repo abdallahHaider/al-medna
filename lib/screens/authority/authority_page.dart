@@ -43,13 +43,19 @@ class _AuthorityPageState extends State<AuthorityPage> {
                   builder: (context, myType, child) {
                     if (myType.isEdit) {
                       return EditWidget(
-                          savePressed: () {
-                            myType.updateAuthority(name.text, context);
+                          savePressed: () async {
+                            await myType.updateAuthority(name.text, context);
+                            myType.getAuthority();
                           },
                           canselPressed: () {
                             myType.setedit(false);
                           },
-                          buildActions: [MyTextField()]);
+                          buildActions: [
+                            MyTextField(
+                              controller: name,
+                              labelText: "اسم الهيئة",
+                            )
+                          ]);
                     } else {
                       return SizedBox();
                     }

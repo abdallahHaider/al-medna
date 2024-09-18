@@ -59,8 +59,13 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                           builder: (context, myType, child) {
                             return DataTable(
                                 columns: [
+                                  DataColumn(
+                                    label: Text('الاسم'),
+                                  ),
                                   DataColumn(label: Text("عدد المسافرين")),
                                   DataColumn(label: Text("سعر")),
+                                  DataColumn(label: Text("عدد الاطفال")),
+                                  DataColumn(label: Text("سعر الاطفال")),
                                   DataColumn(label: Text("العمولة")),
                                   DataColumn(label: Text("الاجمالي")),
                                   DataColumn(label: Text("الاجراء"))
@@ -70,12 +75,17 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                   AuthorityTickt authority =
                                       myType.authoritiesT[index];
                                   return DataRow(cells: [
+                                    DataCell(Text(authority.name!)),
                                     DataCell(
                                       Text(
                                           authority.numberOfTravel!.toString()),
                                     ),
                                     DataCell(Text(
                                         authority.priceOfTravel.toString())),
+                                    DataCell(Text(
+                                        authority.number_of_child!.toString())),
+                                    DataCell(Text(
+                                        authority.price_of_child.toString())),
                                     DataCell(
                                         Text(authority.commission.toString())),
                                     DataCell(
@@ -140,6 +150,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                   isEdit = false;
                                 });
                               },
+                              onerid: widget.id,
                             ),
                           ),
                         SizedBox(
@@ -173,8 +184,10 @@ class undetected extends StatelessWidget {
     required this.cost,
     required this.commission,
     required this.onPressed,
+    required this.onerid,
   });
   final int id;
+  final String onerid;
   final TextEditingController number;
 
   final TextEditingController cost;
@@ -217,8 +230,10 @@ class undetected extends StatelessWidget {
                     onPressed: () async {
                       await Provider.of<AuthorityController>(context,
                               listen: false)
-                          .updateAuthorityTicks(
-                              number.text, cost.text, commission.text, context);
+                          .updateAuthorityTicks(id, number.text, cost.text,
+                              commission.text, context);
+                      Provider.of<AuthorityController>(context, listen: false)
+                          .getAuthorityTicks(onerid);
                     },
                     child: Text("تعديل")),
                 ElevatedButton(onPressed: onPressed, child: Text("الغاء")),

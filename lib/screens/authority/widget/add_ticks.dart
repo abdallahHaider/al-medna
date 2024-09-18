@@ -18,6 +18,9 @@ class addTicks extends StatelessWidget {
   final number = TextEditingController();
   final cost = TextEditingController();
   final commission = TextEditingController();
+  final name = TextEditingController();
+  final number_of_child = TextEditingController();
+  final price_of_child = TextEditingController();
   final AuthorityProfile widget;
 
   @override
@@ -28,6 +31,13 @@ class addTicks extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
             child: Header(title: "اضافة حجز"),
+          ),
+          SizedBox(
+            height: defaultPadding,
+          ),
+          MyTextField(
+            labelText: "اسم الوكيل",
+            controller: name,
           ),
           SizedBox(
             height: defaultPadding,
@@ -47,6 +57,17 @@ class addTicks extends StatelessWidget {
             height: defaultPadding,
           ),
           MyTextField(
+            labelText: "عدد الاطفال",
+            controller: number_of_child,
+          ),
+          SizedBox(
+            height: defaultPadding,
+          ),
+          MyTextField(
+            labelText: "سعر الطفل",
+            controller: price_of_child,
+          ),
+          MyTextField(
             labelText: "العمولة",
             controller: commission,
           ),
@@ -56,8 +77,15 @@ class addTicks extends StatelessWidget {
           ElevatedButton(
               onPressed: () async {
                 await Provider.of<AuthorityController>(context, listen: false)
-                    .addAuthorityTicks(widget.id, number.text, cost.text,
-                        commission.text, context);
+                    .addAuthorityTicks(
+                        widget.id,
+                        number.text,
+                        cost.text,
+                        commission.text,
+                        number_of_child.text,
+                        price_of_child.text,
+                        name.text,
+                        context);
                 Provider.of<AuthorityController>(context, listen: false)
                     .getAuthorityTicks(widget.id);
               },

@@ -120,8 +120,15 @@ class AuthorityController extends ChangeNotifier {
     }
   }
 
-  Future addAuthorityTicks(String authority_id, number_of_travel,
-      price_of_travel, commission, BuildContext context) async {
+  Future addAuthorityTicks(
+      String authority_id,
+      number_of_travel,
+      price_of_travel,
+      commission,
+      number_of_child,
+      price_of_child,
+      name,
+      BuildContext context) async {
     Response x;
     SmartDialog.showLoading();
     try {
@@ -129,7 +136,10 @@ class AuthorityController extends ChangeNotifier {
         "authority_id": authority_id,
         "number_of_travel": number_of_travel,
         "price_of_travel": price_of_travel,
-        "commission": commission
+        "commission": commission,
+        "number_of_child": number_of_child ?? "0",
+        "price_of_child": price_of_child ?? "0",
+        "name": name,
       });
     } catch (e) {
       snackBar(context, e.toString(), true);
@@ -171,7 +181,7 @@ class AuthorityController extends ChangeNotifier {
   }
 
 //TODO: Error frome API
-  Future updateAuthorityTicks(String number_of_travel, price_of_travel,
+  Future updateAuthorityTicks(id, String number_of_travel, price_of_travel,
       commission, BuildContext context) async {
     Response x;
     SmartDialog.showLoading();
