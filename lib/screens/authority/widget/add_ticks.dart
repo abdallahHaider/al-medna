@@ -36,39 +36,39 @@ class addTicks extends StatelessWidget {
             height: defaultPadding,
           ),
           MyTextField(
-            labelText: "اسم الوكيل",
+            labelText: "اسم ",
             controller: name,
           ),
           SizedBox(
             height: defaultPadding,
           ),
           MyTextField(
-            labelText: "عدد المسافرين",
+            labelText: " عدد كبير ",
             controller: number,
           ),
           SizedBox(
             height: defaultPadding,
           ),
           MyTextField(
-            labelText: "السعر لكل مسافر",
+            labelText: "السعر كبير",
             controller: cost,
           ),
           SizedBox(
             height: defaultPadding,
           ),
           MyTextField(
-            labelText: "عدد الاطفال",
+            labelText: "عدد صغير",
             controller: number_of_child,
           ),
           SizedBox(
             height: defaultPadding,
           ),
           MyTextField(
-            labelText: "سعر الطفل",
+            labelText: "سعر صغير",
             controller: price_of_child,
           ),
           MyTextField(
-            labelText: "العمولة",
+            labelText: "الأجر",
             controller: commission,
           ),
           SizedBox(

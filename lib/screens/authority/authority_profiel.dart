@@ -45,6 +45,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
               text: "التسديد",
             )
           ]),
+   
           Expanded(
             child: TabBarView(children: [
               SizedBox(
@@ -62,11 +63,12 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                   DataColumn(
                                     label: Text('الاسم'),
                                   ),
-                                  DataColumn(label: Text("عدد المسافرين")),
-                                  DataColumn(label: Text("سعر")),
-                                  DataColumn(label: Text("عدد الاطفال")),
-                                  DataColumn(label: Text("سعر الاطفال")),
-                                  DataColumn(label: Text("العمولة")),
+                                  DataColumn(label: Text(" عدد   كبير")),
+                                  DataColumn(label: Text("سعر كبير")),
+                                  DataColumn(label: Text("عدد  صغير")),
+                                  DataColumn(label: Text("سعر  صغير")),
+                                  DataColumn(label: Text(" الأجر")),
+                                  DataColumn(label: Text(" الواصل")),
                                   DataColumn(label: Text("الاجمالي")),
                                   DataColumn(label: Text("الاجراء"))
                                 ],
@@ -154,7 +156,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                             ),
                           ),
                         SizedBox(
-                          width: 500,
+                          width: 400,
                           child: addTicks(widget: widget),
                         ),
                       ],
