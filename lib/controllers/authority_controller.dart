@@ -105,12 +105,24 @@ class AuthorityController extends ChangeNotifier {
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////
+  ///
+  int allCost = 0;
+  int paid = 0;
+  int rest = 0;
+  int page = 1;
+  setpage(int v) {
+    page = page + v;
+  }
+
   Future getAuthorityTicks(id) async {
     Response x;
     try {
-      x = await getpi("/api/authority_tickt/index?id=${id}");
+      x = await getpi("/api/authority_tickt/index?page=$page&id=${id}");
       print(x.body);
       var data = jsonDecode(x.body);
+      allCost = data["cost"];
+      paid = data["paid"];
+      rest = data["rest"];
       authoritiesT =
           data["data"].map((json) => AuthorityTickt.fromJson(json)).toList();
       notifyListeners();

@@ -26,71 +26,74 @@ class addTicks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(defaultPadding),
-            child: Header(title: "اضافة حجز"),
-          ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          MyTextField(
-            labelText: "اسم ",
-            controller: name,
-          ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          MyTextField(
-            labelText: " عدد كبير ",
-            controller: number,
-          ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          MyTextField(
-            labelText: "السعر كبير",
-            controller: cost,
-          ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          MyTextField(
-            labelText: "عدد صغير",
-            controller: number_of_child,
-          ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          MyTextField(
-            labelText: "سعر صغير",
-            controller: price_of_child,
-          ),
-          MyTextField(
-            labelText: "الأجر",
-            controller: commission,
-          ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          ElevatedButton(
-              onPressed: () async {
-                await Provider.of<AuthorityController>(context, listen: false)
-                    .addAuthorityTicks(
-                        widget.id,
-                        number.text,
-                        cost.text,
-                        commission.text,
-                        number_of_child.text,
-                        price_of_child.text,
-                        name.text,
-                        context);
-                Provider.of<AuthorityController>(context, listen: false)
-                    .getAuthorityTicks(widget.id);
-              },
-              child: Text("اضافة"))
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Header(title: "اضافة حجز"),
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: "اسم ",
+              controller: name,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: " عدد كبير ",
+              controller: number,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: "السعر كبير",
+              controller: cost,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: "عدد صغير",
+              controller: number_of_child,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            MyTextField(
+              labelText: "سعر صغير",
+              controller: price_of_child,
+            ),
+            MyTextField(
+              labelText: "الأجر",
+              controller: commission,
+            ),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  await Provider.of<AuthorityController>(context, listen: false)
+                      .addAuthorityTicks(
+                          widget.id,
+                          number.text,
+                          cost.text,
+                          commission.text,
+                          number_of_child.text,
+                          price_of_child.text,
+                          name.text,
+                          context);
+                  Provider.of<AuthorityController>(context, listen: false)
+                      .getAuthorityTicks(widget.id);
+                },
+                child: Text("اضافة"))
+          ],
+        ),
       ),
     );
   }

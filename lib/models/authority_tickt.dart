@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:admin/models/format_price.dart';
+
 AuthorityTickt authorityTicktFromJson(String str) =>
     AuthorityTickt.fromJson(json.decode(str));
 
@@ -13,13 +15,14 @@ class AuthorityTickt {
   int? id;
   int? authorityId;
   int? numberOfTravel;
-  int? priceOfTravel;
+  String? priceOfTravel;
   int? commission;
-  int? totalPrice;
+  String? totalPrice;
   String? name;
   int? number_of_child;
-  int? price_of_child;
+  String? price_of_child;
   DateTime? createdAt;
+  String? number_kade;
 
   AuthorityTickt({
     this.id,
@@ -32,21 +35,23 @@ class AuthorityTickt {
     this.number_of_child,
     this.price_of_child,
     this.createdAt,
+    this.number_kade,
   });
 
   factory AuthorityTickt.fromJson(Map<String, dynamic> json) => AuthorityTickt(
         id: json["id"],
-        authorityId: json["authority_id"],
-        numberOfTravel: json["number_of_travel"],
-        priceOfTravel: json["price_of_travel"],
-        commission: json["commission"],
-        totalPrice: json["total_price"],
-        name: json["name"],
-        number_of_child: json["number_of_child"],
-        price_of_child: json["price_of_child"],
+        authorityId: json["authority_id"] ?? 0,
+        numberOfTravel: json["number_of_travel"] ?? 0,
+        priceOfTravel: formatPrice(json["price_of_travel"] ?? 0),
+        commission: json["commission"] ?? 0,
+        totalPrice: formatPrice(json["total_price"] ?? 0),
+        name: json["name"] ?? "",
+        number_of_child: json["number_of_child"] ?? 0,
+        price_of_child: formatPrice(json["price_of_child"] ?? 0),
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
+        number_kade: json["number_kade"] ?? "0",
       );
 
   Map<String, dynamic> toJson() => {

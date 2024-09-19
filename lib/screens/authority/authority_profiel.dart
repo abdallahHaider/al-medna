@@ -1,6 +1,5 @@
 import 'package:admin/controllers/authority_controller.dart';
 import 'package:admin/models/authority_tickt.dart';
-import 'package:admin/screens/accounts/acconunt_profael.dart';
 import 'package:admin/screens/authority/widget/add_ticks.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/widgets/deleteDialog.dart';
@@ -23,6 +22,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
   final number = TextEditingController();
   final cost = TextEditingController();
   final commission = TextEditingController();
+  final ScrollController controllerOne = ScrollController();
 
   @override
   void initState() {
@@ -33,50 +33,77 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Column(
-        children: [
-          TabBar(isScrollable: true, tabs: [
-            Tab(
-              text: "الحجز",
+    return Column(
+      children: [
+        Header(
+          title: 'حساب: ${widget.id}',
+        ),
+        Row(
+          children: [
+            TextButton(
+                onPressed: () {
+                  Provider.of<AuthorityController>(context, listen: false)
+                      .setpage(-1);
+                  Provider.of<AuthorityController>(context, listen: false)
+                      .getAuthorityTicks(widget.id);
+                },
+                child: Text("الصفحة السابقة")),
+            Consumer<AuthorityController>(
+              builder: (context, myType, child) {
+                return Text("الصفحة :${myType.page}");
+              },
             ),
-            Tab(
-              text: "التسديد",
-            )
-          ]),
-   
-          Expanded(
-            child: TabBarView(children: [
-              SizedBox(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Card(
-                        child: Consumer<AuthorityController>(
-                          builder: (context, myType, child) {
-                            return DataTable(
-                                columns: [
-                                  DataColumn(
-                                    label: Text('الاسم'),
-                                  ),
-                                  DataColumn(label: Text(" عدد   كبير")),
-                                  DataColumn(label: Text("سعر كبير")),
-                                  DataColumn(label: Text("عدد  صغير")),
-                                  DataColumn(label: Text("سعر  صغير")),
-                                  DataColumn(label: Text(" الأجر")),
-                                  DataColumn(label: Text(" الواصل")),
-                                  DataColumn(label: Text("الاجمالي")),
-                                  DataColumn(label: Text("الاجراء"))
-                                ],
-                                rows: List.generate(myType.authoritiesT.length,
-                                    (index) {
-                                  AuthorityTickt authority =
-                                      myType.authoritiesT[index];
-                                  return DataRow(cells: [
+            TextButton(
+                onPressed: () {
+                  Provider.of<AuthorityController>(context, listen: false)
+                      .setpage(1);
+                  Provider.of<AuthorityController>(context, listen: false)
+                      .getAuthorityTicks(widget.id);
+                },
+                child: Text("الصفحة التالية")),
+          ],
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Card(
+                child: Consumer<AuthorityController>(
+                  builder: (context, myType, child) {
+                    return Scrollbar(
+                      controller: controllerOne,
+                      child: SingleChildScrollView(
+                        controller: controllerOne,
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                            columns: [
+                              DataColumn(
+                                label: Text('الاسم'),
+                              ),
+                              DataColumn(label: Text(" عدد   كبير")),
+                              DataColumn(label: Text("سعر كبير")),
+                              DataColumn(label: Text("عدد  صغير")),
+                              DataColumn(label: Text("سعر  صغير")),
+                              DataColumn(label: Text(" الأجر")),
+                              // DataColumn(label: Text(" الواصل")),
+                              DataColumn(label: Text("الاجمالي")),
+                              DataColumn(label: Text("القيد")),
+
+                              DataColumn(label: Text("التاريخ")),
+                              DataColumn(label: Text("الاجراء"))
+                            ],
+                            rows: List.generate(myType.authoritiesT.length,
+                                (index) {
+                              AuthorityTickt authority =
+                                  myType.authoritiesT[index];
+                              return DataRow(
+                                  color: int.parse(authority.number_kade!) > 0
+                                      ? WidgetStateProperty.all(
+                                          Colors.grey.shade300)
+                                      : null,
+                                  cells: [
                                     DataCell(Text(authority.name!)),
                                     DataCell(
                                       Text(
@@ -92,25 +119,32 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                         Text(authority.commission.toString())),
                                     DataCell(
                                         Text(authority.totalPrice.toString())),
+                                    DataCell(
+                                        Text(authority.number_kade.toString())),
+                                    DataCell(Text(authority.createdAt
+                                        .toString()
+                                        .substring(0, 10))),
                                     DataCell(Row(
                                       children: [
-                                        IconButton(
-                                            onPressed: () {
-                                              cost.text = authority
-                                                  .numberOfTravel!
-                                                  .toString();
-                                              number.text = authority
-                                                  .numberOfTravel!
-                                                  .toString();
-                                              commission.text = authority
-                                                  .commission
-                                                  .toString();
-                                              setState(() {
-                                                isEdit = true;
-                                                id = authority.id!;
-                                              });
-                                            },
-                                            icon: Icon(Icons.edit)),
+                                        if (int.parse(authority.number_kade!) <
+                                            1)
+                                          IconButton(
+                                              onPressed: () {
+                                                cost.text = authority
+                                                    .numberOfTravel!
+                                                    .toString();
+                                                number.text = authority
+                                                    .numberOfTravel!
+                                                    .toString();
+                                                commission.text = authority
+                                                    .commission
+                                                    .toString();
+                                                setState(() {
+                                                  isEdit = true;
+                                                  id = authority.id!;
+                                                });
+                                              },
+                                              icon: Icon(Icons.edit)),
                                         IconButton(
                                             onPressed: () async {
                                               await deleteDialog(context,
@@ -132,48 +166,64 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                       ],
                                     ))
                                   ]);
-                                }));
-                          },
-                        ),
+                            })),
                       ),
-                    ),
-                    Column(
-                      children: [
-                        if (isEdit)
-                          SizedBox(
-                            width: 500,
-                            child: undetected(
-                              id: id,
-                              number: number,
-                              cost: cost,
-                              commission: commission,
-                              onPressed: () {
-                                setState(() {
-                                  isEdit = false;
-                                });
-                              },
-                              onerid: widget.id,
-                            ),
-                          ),
-                        SizedBox(
-                          width: 400,
-                          child: addTicks(widget: widget),
-                        ),
-                      ],
-                    )
+                    );
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Card(
+                        child: SizedBox(
+                      width: double.maxFinite,
+                      child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Consumer<AuthorityController>(
+                            builder: (context, myType, child) {
+                              return Column(
+                                children: [
+                                  Text("مجموع الطلب"),
+                                  Text(myType.allCost.toString()),
+                                  SizedBox(
+                                    height: defaultPadding * 2,
+                                  ),
+                                  Text("مجوع السداد"),
+                                  Text(myType.paid.toString()),
+                                  SizedBox(
+                                    height: defaultPadding * 2,
+                                  ),
+                                  Text("مجوع المتبقي"),
+                                  Text(myType.rest.toString()),
+                                ],
+                              );
+                            },
+                          )),
+                    )),
+                    if (isEdit)
+                      undetected(
+                        id: id,
+                        number: number,
+                        cost: cost,
+                        commission: commission,
+                        onPressed: () {
+                          setState(() {
+                            isEdit = false;
+                          });
+                        },
+                        onerid: widget.id,
+                      ),
+                    addTicks(widget: widget),
                   ],
                 ),
               ),
-              SizedBox(
-                child: AcconuntProfael_page(
-                  id: widget.id,
-                  isBank: "H",
-                ),
-              ),
-            ]),
-          )
-        ],
-      ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }
