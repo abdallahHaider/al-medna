@@ -15,6 +15,8 @@ class HotelBuy {
   String? curreny;
   String? buyer;
   int? buyer_id;
+  int? number_of_floors;
+  int? number_of_rooms_for_each_floor;
   String? now_debt_ras;
   String? now_debt_usd;
   DateTime? createdAt;
@@ -35,6 +37,8 @@ class HotelBuy {
     this.curreny,
     this.buyer,
     this.buyer_id,
+    this.number_of_floors,
+    this.number_of_rooms_for_each_floor,
     this.now_debt_ras,
     this.now_debt_usd,
     this.createdAt,
@@ -56,6 +60,8 @@ class HotelBuy {
         curreny: json["curreny"],
         buyer: json["buyer"],
         buyer_id: json["buyer_id"],
+        number_of_floors: json["number_of_floors"],
+        number_of_rooms_for_each_floor: json["number_of_rooms_for_each_floor"],
         // now_debt: formatPrice(json["now_debt"]),
         now_debt_ras: formatPrice(json["now_debt_ras"] ?? 0),
         now_debt_usd: formatPrice(json["now_debt_usd"] ?? 0),

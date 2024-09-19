@@ -1,4 +1,5 @@
 import 'package:admin/controllers/authority_controller.dart';
+import 'package:admin/controllers/transactions.dart';
 import 'package:admin/models/authority_tickt.dart';
 import 'package:admin/screens/authority/widget/add_ticks.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
@@ -147,20 +148,31 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                               icon: Icon(Icons.edit)),
                                         IconButton(
                                             onPressed: () async {
-                                              await deleteDialog(context,
-                                                  () async {
+                                              if (int.parse(
+                                                      authority.number_kade!) >
+                                                  0) {
                                                 await Provider.of<
-                                                            AuthorityController>(
+                                                            TransactionsController>(
                                                         context,
                                                         listen: false)
-                                                    .deleteAuthorityTicks(
-                                                        authority.id!, context);
-                                                Provider.of<AuthorityController>(
-                                                        context,
-                                                        listen: false)
-                                                    .getAuthorityTicks(
-                                                        widget.id);
-                                              });
+                                                    .deletSmallbank(
+                                                        authority.id!);
+                                              } else {
+                                                await deleteDialog(context,
+                                                    () async {
+                                                  await Provider.of<
+                                                              AuthorityController>(
+                                                          context,
+                                                          listen: false)
+                                                      .deleteAuthorityTicks(
+                                                          authority.id!,
+                                                          context);
+                                                });
+                                              }
+                                              Provider.of<AuthorityController>(
+                                                      context,
+                                                      listen: false)
+                                                  .getAuthorityTicks(widget.id);
                                             },
                                             icon: Icon(Icons.delete)),
                                       ],
@@ -186,18 +198,30 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                             builder: (context, myType, child) {
                               return Column(
                                 children: [
-                                  Text("مجموع الطلب"),
-                                  Text(myType.allCost.toString()),
+                                  Text("مجموع الطلب",
+                                      style: TextStyle(fontSize: 18)),
+                                  Text(myType.allCost.toString(),
+                                      style: TextStyle(fontSize: 20)),
                                   SizedBox(
                                     height: defaultPadding * 2,
                                   ),
-                                  Text("مجوع السداد"),
-                                  Text(myType.paid.toString()),
+                                  Text(
+                                    "مجموع السداد",
+                                    style: TextStyle(fontSize: 18),
+                                  ),
+                                  Text(myType.paid.toString(),
+                                      style: TextStyle(fontSize: 20)),
                                   SizedBox(
                                     height: defaultPadding * 2,
                                   ),
-                                  Text("مجوع المتبقي"),
-                                  Text(myType.rest.toString()),
+                                  Text(" المتبقي",
+                                      style: TextStyle(fontSize: 18)),
+                                  Text(myType.rest.toString(),
+                                      style: TextStyle(
+                                          color: myType.rest < 0
+                                              ? Colors.red
+                                              : null,
+                                          fontSize: 20)),
                                 ],
                               );
                             },

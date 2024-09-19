@@ -72,20 +72,20 @@ class _HotelProfileState extends State<HotelProfile> {
                           "التكلفة: ${widget.hotelId.price}",
                           style: TextStyle(fontSize: 20),
                         ),
-                        if (!widget.showBuy)
-                          Text(
-                            "الواصل: ${widget.hotelId.paid}",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        if (!widget.showBuy)
-                          Text(
-                            "الباقي: ${widget.hotelId.rest}",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: double.parse(widget.hotelId.rest!) < 0
-                                    ? Colors.red
-                                    : null),
-                          ),
+                        // if (!widget.showBuy)
+                        Text(
+                          "الواصل: ${widget.hotelId.paid}",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        // if (!widget.showBuy)
+                        Text(
+                          "الباقي: ${widget.hotelId.rest}",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: double.parse(widget.hotelId.rest!) < 0
+                                  ? Colors.red
+                                  : null),
+                        ),
                       ],
                     ),
                     SizedBox(

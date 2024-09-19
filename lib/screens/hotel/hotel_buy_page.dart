@@ -50,12 +50,13 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                     columns: [
                       DataColumn(label: Text('الفندق')),
                       DataColumn(label: Text('التاريخ')),
-                      DataColumn(label: Text('الغرف')),
+                      DataColumn(label: Text('الطابق')),
+                      DataColumn(label: Text('الغرف لكل طابق')),
+                      DataColumn(label: Text('الغرف الاضافية')),
                       DataColumn(label: Text('الليالي')),
                       DataColumn(label: Text('سعر الغرفة')),
+                      DataColumn(label: Text("المتبقي")),
                       DataColumn(label: Text('المبلغ الكلي')),
-                      DataColumn(label: Text('اسم الشركة')),
-                      DataColumn(label: Text('رقم الحركة')),
                       DataColumn(label: Text('الاجراء')),
                     ],
                     rows:
@@ -76,6 +77,25 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                             DataCell(
                               Text(
                                 hotelBuy.createdAt.toString().substring(0, 10),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.number_of_floors.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.number_of_rooms_for_each_floor
+                                    .toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -111,7 +131,7 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                             ),
                             DataCell(
                               Text(
-                                hotelBuy.totalPrice.toString(),
+                                hotelBuy.now_debt_ras.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -120,16 +140,7 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                             ),
                             DataCell(
                               Text(
-                                hotelBuy.company.toString(),
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              Text(
-                                hotelBuy.companyProgramId.toString(),
+                                hotelBuy.total_price_ras.toString(),
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,

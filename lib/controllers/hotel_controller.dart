@@ -138,16 +138,27 @@ class HotelController extends ChangeNotifier {
     }
   }
 
-  Future addBuyHotel(hotel_id, String rooms, String room_price_per_night,
-      String nights, BuildContext context) async {
+  Future addBuyHotel(
+      hotel_id,
+      String rooms,
+      String room_price_per_night,
+      String nights,
+      String number_of_floors,
+      String number_of_rooms_for_each_floor,
+      BuildContext context) async {
     http.Response x;
     try {
       SmartDialog.showLoading();
       x = await postApi("/api/hotel_tick/create", {
         "hotel_id": hotel_id,
-        "rooms": rooms,
+        "rooms": rooms.isNotEmpty ? rooms : 0,
         "nights": nights,
         "curreny": "ras",
+        "number_of_floors": number_of_floors.isNotEmpty ? number_of_floors : 0,
+        "number_of_rooms_for_each_floor":
+            number_of_rooms_for_each_floor.isNotEmpty
+                ? number_of_rooms_for_each_floor
+                : 0,
         "room_price_per_night": room_price_per_night,
       });
     } catch (e) {
