@@ -33,6 +33,7 @@ class CardTable extends StatelessWidget {
                   onTap: () => Provider.of<Rootwidget>(context, listen: false)
                       .getWidet(AuthorityProfile(
                     id: authority.id!.toString(),
+                    name: authority.name!,
                   )),
                 ),
                 DataCell(Text(authority.createdAt.toString().substring(0, 10))),

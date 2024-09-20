@@ -10,8 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AuthorityProfile extends StatefulWidget {
-  const AuthorityProfile({super.key, required this.id});
+  const AuthorityProfile({super.key, required this.id, required this.name});
   final String id;
+  final String name;
 
   @override
   State<AuthorityProfile> createState() => _AuthorityProfileState();
@@ -36,8 +37,11 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Header(
-          title: 'حساب: ${widget.id}',
+        Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Header(
+            title: 'حساب: ${widget.name}',
+          ),
         ),
         Row(
           children: [
