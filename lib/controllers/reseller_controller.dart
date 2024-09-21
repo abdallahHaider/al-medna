@@ -37,7 +37,7 @@ class ResellerController extends ChangeNotifier {
       var x = await getpi("/api/reseller/index");
       var data = jsonDecode(x.body);
       final List resellers =
-          data.map((json) => Reseller.fromJson(json)).toList();
+          data["data"].map((json) => Reseller.fromJson(json)).toList();
       resellerss = resellers;
       notifyListeners();
     } catch (e) {

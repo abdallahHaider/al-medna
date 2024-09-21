@@ -36,145 +36,66 @@ class _ResellerProfielState extends State<ResellerProfiel> {
   Widget build(BuildContext context) {
     Provider.of<ResellerController>(context, listen: false)
         .getResellerinfodebt(widget.resellerID.id.toString());
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Column(
-            children: [
-              Header(title: "تفاصيل الوكيل"),
-              SizedBox(
-                height: defaultPadding,
-              ),
-              cardResellerDetels(widget.resellerID),
-              Row(
-                children: [
-                  Expanded(
-                    child: TabBar(isScrollable: true, tabs: [
-                      Tab(text: "الرحلات"),
-                      // Tab(text: "كشف الحساب")
-                    ]),
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          children: [
+            Header(title: "تفاصيل الوكيل"),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            cardResellerDetels(widget.resellerID),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Tab(text: "الرحلات"), Divider()],
                   ),
-                  TextButton.icon(
-                    onPressed: () async {
-                      try {
-                        SmartDialog.showLoading();
-                        var globlDebt = await Provider.of<ResellerController>(
-                                context,
-                                listen: false)
-                            .resellerDbet;
-                        List traps = await Provider.of<ResellerController>(
-                                context,
-                                listen: false)
-                            .getResellerinfo(widget.resellerID.id.toString());
-                        await ResellerToPdf(
-                            widget.resellerID, globlDebt, traps);
-                      } catch (e) {
-                        snackBar(context, e.toString(), true);
-                      } finally {
-                        SmartDialog.dismiss();
-                      }
-                    },
-                    label: Text("كشف كلي"),
-                    icon: Icon(Icons.picture_as_pdf),
-                  ),
-                ],
-              ),
-              Expanded(
-                child: TabBarView(children: [
-                  FutureBuilder(
-                      future: Provider.of<ResellerController>(context,
+                ),
+                TextButton.icon(
+                  onPressed: () async {
+                    try {
+                      SmartDialog.showLoading();
+                      var globlDebt = await Provider.of<ResellerController>(
+                              context,
                               listen: false)
+                          .resellerDbet;
+                      List traps = await Provider.of<ResellerController>(
+                              context,
+                              listen: false)
+                          .getResellerinfo(widget.resellerID.id.toString());
+                      await ResellerToPdf(widget.resellerID, globlDebt, traps);
+                    } catch (e) {
+                      snackBar(context, e.toString(), true);
+                    } finally {
+                      SmartDialog.dismiss();
+                    }
+                  },
+                  label: Text("كشف كلي"),
+                  icon: Icon(Icons.picture_as_pdf),
+                ),
+              ],
+            ),
+            Expanded(
+              child: FutureBuilder(
+                  future:
+                      Provider.of<ResellerController>(context, listen: false)
                           .getResellerinfo(widget.resellerID.id.toString()),
-                      // future: resellerProvider
-                      //     .getResellerinfo(resellerID.id.toString()),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else if (snapshot.hasData) {
-                          return TrapTableReseller(traps: snapshot.data!);
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      }),
-                  // FutureBuilder(
-                  //     future: Provider.of<ResellerController>(context,
-                  //             listen: false)
-                  //         .getDbetPayinfo(widget.resellerID.id.toString()),
-                  //     builder: (context, snapshot) {
-                  //       if (snapshot.hasError) {
-                  //         return Text(snapshot.error.toString());
-                  //       } else if (snapshot.hasData) {
-                  //         return Card(
-                  //           // height: double.maxFinite,
-                  //           // width: double.infinity,
-                  //           color: secondaryColor,
-                  //           elevation: 5,
-                  //           margin: EdgeInsets.all(defaultPadding),
-                  //           child: DataTable(
-                  //             columnSpacing: defaultPadding,
-                  //             columns: [
-                  //               DataColumn(
-                  //                 label: Text("اسم الوكيل"),
-                  //               ),
-                  //               DataColumn(
-                  //                 label: Text("رقم الوصل"),
-                  //               ),
-                  //               DataColumn(
-                  //                 label: Text("المبلغ"),
-                  //               ),
-                  //               DataColumn(
-                  //                 label: Text("سعر الصرف"),
-                  //               ),
-                  //               DataColumn(
-                  //                 label: Text("التاريخ"),
-                  //               ),
-                  //             ],
-                  //             rows: List.generate(
-                  //                 snapshot.data!.length,
-                  //                 (index) => DataRow(cells: [
-                  //                       DataCell(
-                  //                         Text(
-                  //                           snapshot.data![index].resellerId
-                  //                               .toString(),
-                  //                         ),
-                  //                       ),
-                  //                       DataCell(
-                  //                         Text(
-                  //                           snapshot.data![index].id.toString(),
-                  //                         ),
-                  //                       ),
-                  //                       DataCell(
-                  //                         Text(
-                  //                           snapshot.data![index].cost
-                  //                               .toString(),
-                  //                         ),
-                  //                       ),
-                  //                       DataCell(
-                  //                         Text(
-                  //                           snapshot.data![index].iqdToUsd
-                  //                               .toString(),
-                  //                         ),
-                  //                       ),
-                  //                       DataCell(
-                  //                         Text(
-                  //                           snapshot.data![index].createdAt
-                  //                               .toString()
-                  //                               .substring(0, 10),
-                  //                         ),
-                  //                       ),
-                  //                     ])),
-                  //           ),
-                  //         );
-                  //       } else {
-                  //         return Center(child: CircularProgressIndicator());
-                  //       }
-                  //     })
-                ]),
-              ),
-            ],
-          ),
+                  // future: resellerProvider
+                  //     .getResellerinfo(resellerID.id.toString()),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else if (snapshot.hasData) {
+                      return TrapTableReseller(traps: snapshot.data!);
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }),
+            ),
+          ],
         ),
       ),
     );
