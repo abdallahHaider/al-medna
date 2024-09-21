@@ -53,10 +53,10 @@ class _WalletPageState extends State<WalletPage> {
                         children: [
                           _buildBalanceCard(
                               "الرصيد الحالي في  الصندوق الرئيسي بالدينار",
-                              "${walletProvider.wallet_IQD} دينار"),
+                              "${walletProvider.wallet_IQD.toString()} دينار"),
                           _buildBalanceCard(
                               "الرصيد الحالي في  الصندوق الرئيسي بالدولار",
-                              "${walletProvider.wallet_USD} دولار"),
+                              "${walletProvider.wallet_USD.toString()} دولار"),
                         ],
                       );
                     },

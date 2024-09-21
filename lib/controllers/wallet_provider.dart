@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
+import 'package:admin/models/format_price.dart';
 import 'package:admin/models/safe.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,8 @@ class WalletProvider extends ChangeNotifier {
   String numberWord = "";
   bool isLoading = false;
   List wallets = [];
-  var wallet_IQD = 0;
-  var wallet_USD = 0;
+  String wallet_IQD = "0";
+  String wallet_USD = "0";
   int page = 1;
 
   @override
@@ -56,8 +57,8 @@ class WalletProvider extends ChangeNotifier {
       var data = jsonDecode(x.body);
       wallets =
           data["data"]["data"].map((json) => Safe.fromJson(json)).toList();
-      wallet_IQD = data["cost_IQD"];
-      wallet_USD = data["cost_USD"];
+      wallet_IQD = formatPrice(data["cost_IQD"] ?? 0).toString();
+      wallet_USD = formatPrice(data["cost_USD"] ?? 0).toString();
       isLoading = false;
       notifyListeners();
     } catch (e) {
