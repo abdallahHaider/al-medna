@@ -25,7 +25,7 @@ class _WalletPageState extends State<WalletPage> {
 
   @override
   void dispose() {
-    Provider.of<WalletProvider>(context, listen: false).dispose();
+    // Provider.of<WalletProvider>(context, listen: false).dispose();
     super.dispose();
   }
 
