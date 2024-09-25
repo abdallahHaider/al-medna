@@ -22,9 +22,9 @@ class Transactions {
   // final dynamic fSmallBank;
   // final dynamic tBank;
   // final dynamic tSmallBank;
-  final dynamic costUsd;
-  final dynamic costIqd;
-  final dynamic costRAS;
+  final String? costUsd;
+  final String? costIqd;
+  final String? costRAS;
   final String? senderName;
   final String? getterName;
   final String? numberKade;
@@ -38,9 +38,9 @@ class Transactions {
       // fSmallBank: json["f_small_bank"],
       // tBank: json["t_bank"],
       // tSmallBank: json["t_small_bank"],
-      costUsd: json["cost_USD"] ?? "",
-      costIqd: json["cost_IQD"] ?? "",
-      costRAS: formatPrice(json["cost_RAS"]),
+      costUsd: formatPrice(json["cost_USD"] ?? 0),
+      costIqd: formatPrice(json["cost_IQD"] ?? 0),
+      costRAS: formatPrice(json["cost_RAS"] ?? 0),
       senderName: json["sender_name"],
       getterName: json["getter_name"],
       numberKade: json["number_kade"],

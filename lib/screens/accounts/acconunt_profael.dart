@@ -84,16 +84,32 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                                         DataCell(
                                           Text(widget.isBank != "C"
                                               ? accountsController
-                                                  .mySmallBank[index].costIqd
-                                                  .toString()
+                                                          .mySmallBank[index]
+                                                          .costIqd ==
+                                                      "0"
+                                                  ? ""
+                                                  : accountsController
+                                                      .mySmallBank[index]
+                                                      .costIqd
                                               : accountsController
-                                                  .mySmallBank[index].costRAS
-                                                  .toString()),
+                                                          .mySmallBank[index]
+                                                          .costRAS ==
+                                                      "0"
+                                                  ? ""
+                                                  : accountsController
+                                                      .mySmallBank[index]
+                                                      .costRAS),
                                         ),
                                         DataCell(
                                           Text(accountsController
-                                              .mySmallBank[index].costUsd
-                                              .toString()),
+                                                      .mySmallBank[index]
+                                                      .costUsd
+                                                      .toString() ==
+                                                  "0"
+                                              ? ""
+                                              : accountsController
+                                                  .mySmallBank[index].costUsd
+                                                  .toString()),
                                         ),
                                         DataCell(
                                           Text(accountsController

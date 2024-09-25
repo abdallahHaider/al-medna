@@ -53,9 +53,11 @@ Card cardResellerDetels(Reseller resellerID) {
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                       Text(
-                        "مجموع المتبقي: ${((double.tryParse(ref.resellerDbet.totalCostUsdPays!) ?? 0) - (double.tryParse(ref.resellerDbet.totalCostUsd!) ?? 0)).toStringAsFixed(2)}",
+                        "مجموع المتبقي: ${resellerID.now_debt}",
                         style: TextStyle(
-                          color: Colors.red,
+                          color: double.parse(resellerID.now_debt!) < 0
+                              ? Colors.red
+                              : Colors.green,
                           fontSize: 18,
                         ),
                       ),
