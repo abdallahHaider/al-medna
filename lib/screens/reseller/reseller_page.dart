@@ -116,6 +116,13 @@ class _ResellerPageState extends State<ResellerPage> {
                                           Text(
                                             snapshot.data![index].now_debt
                                                 .toString(),
+                                            style: TextStyle(
+                                                color: double.parse(snapshot
+                                                            .data![index]
+                                                            .now_debt) <
+                                                        0
+                                                    ? Colors.red
+                                                    : null),
                                           ),
                                         ),
                                         DataCell(

@@ -18,12 +18,12 @@ class Trap {
   String? quadrupleRoom;
   String? child;
   String? veryChild;
-  double? priceCoupleRoom;
-  double? priceTripleRoom;
-  double? priceQuadrupleRoom;
-  double? priceChild;
-  double? priceVeryChild;
-  double? pricePerOne;
+  String? priceCoupleRoom;
+  String? priceTripleRoom;
+  String? priceQuadrupleRoom;
+  String? priceChild;
+  String? priceVeryChild;
+  String? pricePerOne;
   int? rasToUsd;
   int? iqdToUsd;
   String? type;
@@ -32,7 +32,7 @@ class Trap {
   String? nowDebt;
   String? note;
   int? vip_travel;
-  double? price_vip_travel;
+  String? price_vip_travel;
 
   Trap({
     this.id,
@@ -77,19 +77,19 @@ class Trap {
         veryChild: json["very_child"].toString(),
         priceCoupleRoom: json["price_couple_room"] == null
             ? null
-            : double.parse(json["price_couple_room"].toString()),
+            : formatPrice(json["price_couple_room"]),
         priceTripleRoom: json["price_triple_room"] == null
             ? null
-            : double.parse(json["price_triple_room"].toString()),
+            : formatPrice(json["price_triple_room"]),
         priceQuadrupleRoom: json["price_quadruple_room"] == null
             ? null
-            : double.parse(json["price_quadruple_room"].toString()),
+            : formatPrice(json["price_quadruple_room"]),
         priceChild: json["price_child"] == null
             ? null
-            : double.parse(json["price_child"].toString()),
+            : formatPrice(json["price_child"]),
         priceVeryChild: json["price_very_child"] == null
             ? null
-            : double.parse(json["price_very_child"].toString()),
+            : formatPrice(json["price_very_child"]),
         // pricePerOne: double.parse(json["price_per_one"].toString()),
         rasToUsd: json["RAS_to_USD"],
         iqdToUsd: json["IQD_to_USD"],
@@ -103,7 +103,7 @@ class Trap {
         vip_travel: json["vip_travel"],
         price_vip_travel: json["price_vip_travel"] == null
             ? null
-            : double.parse(json["price_vip_travel"].toString()),
+            : formatPrice(json["price_vip_travel"]),
       );
 
   Map<String, dynamic> toJson() => {
