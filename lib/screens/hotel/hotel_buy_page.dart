@@ -1,7 +1,6 @@
 import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/screens/widgets/deleteDialog.dart';
-import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -176,7 +175,7 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
         //     child: Column(
         //       mainAxisSize: MainAxisSize.min,
         //       children: [
-                
+
         //         Divider(),
         //         // Text("انشاء حجز جديد"),
         //         // SizedBox(

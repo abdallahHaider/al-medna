@@ -1,5 +1,6 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/screens/hotel/hotel_index.dart';
 import 'package:admin/screens/hotel/widgets/add_hotel.dart';
 import 'package:admin/screens/hotel/widgets/hotel_table_index.dart';
 import 'package:admin/screens/seller/seller_page.dart';
@@ -38,7 +39,7 @@ class _HotelPageState extends State<HotelPage> {
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Header(title: 'الفنادق'),
                 ElevatedButton(
@@ -54,6 +55,13 @@ class _HotelPageState extends State<HotelPage> {
                     );
                   },
                   child: Text('إضافة فندق'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Provider.of<Rootwidget>(context, listen: false)
+                        .getWidet(HotelIndex());
+                  },
+                  child: Text('عرض الفنادق'),
                 ),
                 ElevatedButton(
                   onPressed: () {

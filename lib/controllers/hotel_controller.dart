@@ -51,13 +51,13 @@ class HotelController extends ChangeNotifier {
     try {
       var x =
           await getpi("/api/hotel/index?type=${ismaka ? "مكة" : "المدينة"}");
-      // print(x.body);
+      print(x.body);
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
       if (ismaka) {
         hotels = resellers;
-        hotels2 = resellers;
+        // hotels2 = resellers;
       } else {
         hotels2 = resellers;
         // hotels = resellers;
@@ -115,8 +115,8 @@ class HotelController extends ChangeNotifier {
     }
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
-      notifyListeners();
-      Navigator.pop(context);
+      // notifyListeners();
+      // Navigator.pop(context);
       snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
@@ -212,6 +212,8 @@ class HotelController extends ChangeNotifier {
         "rooms": rooms,
         "nights": nights,
         "room_price_per_night": room_price_per_night,
+        "number_of_floors": 0,
+        "number_of_rooms_for_each_floor": 0,
       });
     } catch (e) {
       snackBar(context, e.toString(), false);
