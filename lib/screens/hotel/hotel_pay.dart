@@ -112,10 +112,11 @@ class _HotelPayState extends State<HotelPay> {
                                                               context,
                                                               listen: false)
                                                           .deletSmallbank(
-                                                        accountsController
-                                                            .mySmallBank[index]
-                                                            .id,
-                                                      );
+                                                              accountsController
+                                                                  .mySmallBank[
+                                                                      index]
+                                                                  .id,
+                                                              context);
                                                       Navigator.pop(context);
                                                       snackBar(
                                                           context,

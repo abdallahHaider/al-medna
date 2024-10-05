@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/format_price.dart';
 import 'package:admin/models/transactions.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart';
 
 class TransactionsController extends ChangeNotifier {
@@ -107,19 +109,24 @@ class TransactionsController extends ChangeNotifier {
     }
   }
 
-  Future deletSmallbank(id) async {
+  Future deletSmallbank(id, BuildContext context) async {
     Response x;
     try {
+      SmartDialog.showLoading();
       x = await postApi("/api/transactions/delete", {"transaction_id": id});
       if (x.statusCode == 200) {
         // getmyBank();
         notifyListeners();
+        Navigator.pop(context);
+        snackBar(context, "تم الحذف بنجاح", false);
       } else {
         print(x.body);
-        throw jsonDecode(x.body);
+        snackBar(context, jsonDecode(x.body), true);
       }
     } catch (e) {
       throw "حصل خطا في ارسال البيانات";
+    } finally {
+      SmartDialog.dismiss();
     }
   }
 

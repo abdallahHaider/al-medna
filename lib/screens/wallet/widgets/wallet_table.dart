@@ -2,6 +2,8 @@ import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/pdf/safe_pdf.dart';
 import 'package:admin/screens/wallet/widgets/wallet_action.dart';
+import 'package:admin/screens/widgets/deleteDialog.dart';
+import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/screens/widgets/show_note.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,13 +12,11 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
   ScrollController scrollController = ScrollController();
   return SizedBox(
     width: double.maxFinite,
-    child: Card(
-      color: Colors.white,
-      child: Scrollbar(
-        controller: scrollController,
-        child: SingleChildScrollView(
+    child: Scrollbar(
+      controller: scrollController,
+      child: SingleChildScrollView(
           controller: scrollController,
-          child: DataTable(
+          child: MyDataTable(
             columns: [
               DataColumn(label: Text('ت')),
               DataColumn(label: Text('النوع')),
@@ -33,7 +33,7 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
               (index) => DataRow(
                 color: controller.wallets[index].type.toString() == "pay"
                     ? WidgetStateProperty.all(Colors.grey)
-                    : null,
+                    : WidgetStateProperty.all(Colors.white),
                 cells: [
                   DataCell(Text((index + 1).toString())),
                   DataCell(Text(
@@ -78,35 +78,12 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
                         ),
                         IconButton(
                           onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('حذف'),
-                                  content:
-                                      Text('هل أنت متأكد من حذف هذه العملية؟'),
-                                  actions: [
-                                    TextButton(
-                                      child: Text('لا'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                    ),
-                                    TextButton(
-                                      child: Text('نعم'),
-                                      onPressed: () {
-                                        Provider.of<WalletProvider>(context,
-                                                listen: false)
-                                            .deletWallet(
-                                                false,
-                                                controller.wallets[index].id,
-                                                context);
-                                      },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
+                            deleteDialog(context, () {
+                              Provider.of<WalletProvider>(context,
+                                      listen: false)
+                                  .deletWallet(false,
+                                      controller.wallets[index].id, context);
+                            });
                           },
                           icon: Icon(
                             Icons.delete_forever,
@@ -138,9 +115,7 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
                 ],
               ),
             ),
-          ),
-        ),
-      ),
+          )),
     ),
   );
 }

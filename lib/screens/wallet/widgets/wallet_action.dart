@@ -1,6 +1,9 @@
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/models/action.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/wallet/wallet_page.dart';
+import 'package:admin/screens/widgets/back_batten.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -68,23 +71,27 @@ class _WalletActionState extends State<WalletAction> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Card(
-        elevation: 12,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        margin: const EdgeInsets.all(defaultPadding),
+    return Scaffold(
+      // TODO: يجب فصل وتعميم هذا اب بار
+      appBar: AppBar(
+        title: Header(title: "الصندوق الرئيسي"),
+        actions: [
+          BackBatten(
+            onPressed: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(WalletPage());
+            },
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Header(title: "إضافة عملية"),
-              const Divider(
-                thickness: 2,
-                color: Colors.grey,
-              ),
+              Header(title: ". إضافة عملية"),
               const SizedBox(height: 20),
               _buildFormFields(),
               const SizedBox(height: 30),
@@ -98,8 +105,10 @@ class _WalletActionState extends State<WalletAction> {
 
   Widget _buildFormFields() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        _buildDropdownField(),
+        SizedBox(width: 770, child: _buildDropdownField()),
         const SizedBox(height: 16),
         _buildTextField(
             controller: ownerController, label: "الاسم", enabled: widget.isAdd),
@@ -136,10 +145,13 @@ class _WalletActionState extends State<WalletAction> {
           },
         ),
         const SizedBox(height: 16),
-        _buildTextField(
-          controller: descriptionController,
-          label: "ملاحظة",
-          maxLines: 3,
+        SizedBox(
+          width: 770,
+          child: _buildTextField(
+            controller: descriptionController,
+            label: "ملاحظة",
+            maxLines: 3,
+          ),
         ),
       ],
     );
@@ -189,47 +201,44 @@ class _WalletActionState extends State<WalletAction> {
   }
 
   Widget _buildSubmitButton() {
-    return Center(
-      child: SizedBox(
-        width: 200,
-        child: ElevatedButton(
-          onPressed: () async {
-            if (widget.isAdd) {
-              await Provider.of<WalletProvider>(context, listen: false).Addpay(
-                false,
-                type,
-                "0",
-                ownerController.text,
-                // dinarCostController.text.isNotEmpty
-                dinarCostController.text,
-                dollarCostController.text,
-                descriptionController.text,
-                context,
-              );
-            } else {
-              await Provider.of<WalletProvider>(context, listen: false)
-                  .updatePay(
-                widget.id,
-                dinarCostController.text,
-                dollarCostController.text,
-                descriptionController.text,
-                context,
-              );
-            }
-          },
-          style: ElevatedButton.styleFrom(
-            padding: const EdgeInsets.symmetric(vertical: 18),
-            backgroundColor: primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
+    return SizedBox(
+      width: 770,
+      child: ElevatedButton(
+        onPressed: () async {
+          if (widget.isAdd) {
+            await Provider.of<WalletProvider>(context, listen: false).Addpay(
+              false,
+              type,
+              "0",
+              ownerController.text,
+              // dinarCostController.text.isNotEmpty
+              dinarCostController.text,
+              dollarCostController.text,
+              descriptionController.text,
+              context,
+            );
+          } else {
+            await Provider.of<WalletProvider>(context, listen: false).updatePay(
+              widget.id,
+              dinarCostController.text,
+              dollarCostController.text,
+              descriptionController.text,
+              context,
+            );
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 18),
+          backgroundColor: primaryColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: const Text(
-            "إضافة",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.white,
-            ),
+        ),
+        child: const Text(
+          "إضافة",
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
           ),
         ),
       ),

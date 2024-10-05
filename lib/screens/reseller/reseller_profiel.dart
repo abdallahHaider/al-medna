@@ -1,10 +1,13 @@
 import 'package:admin/controllers/reseller_controller.dart';
+import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/reseller.dart';
 import 'package:admin/models/reseller_dbet.dart';
 import 'package:admin/pdf/reseller_Pdf.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/reseller/reseller_page.dart';
 import 'package:admin/screens/reseller/widgets/cardResellerDetels.dart';
 import 'package:admin/screens/reseller/widgets/trap_tibel.dart';
+import 'package:admin/screens/widgets/back_batten.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -37,23 +40,31 @@ class _ResellerProfielState extends State<ResellerProfiel> {
     Provider.of<ResellerController>(context, listen: false)
         .getResellerinfodebt(widget.resellerID.id.toString());
     return Scaffold(
+      appBar: AppBar(
+        title: Header(title: "تفاصيل الوكيل"),
+        actions: [
+          BackBatten(
+            onPressed: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(ResellerPage());
+            },
+          )
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
           children: [
-            Header(title: "تفاصيل الوكيل"),
-            SizedBox(
-              height: defaultPadding,
-            ),
             cardResellerDetels(widget.resellerID),
+            Divider(),
             Row(
               children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [Tab(text: "الرحلات"), Divider()],
-                  ),
-                ),
+                Expanded(child: Header(title: "الرحلات")
+                    // Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [Tab(text: "الرحلات"), Divider()],
+                    // ),
+                    ),
                 TextButton.icon(
                   onPressed: () async {
                     try {
@@ -78,23 +89,20 @@ class _ResellerProfielState extends State<ResellerProfiel> {
                 ),
               ],
             ),
-            Expanded(
-              child: FutureBuilder(
-                  future:
-                      Provider.of<ResellerController>(context, listen: false)
-                          .getResellerinfo(widget.resellerID.id.toString()),
-                  // future: resellerProvider
-                  //     .getResellerinfo(resellerID.id.toString()),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Text(snapshot.error.toString());
-                    } else if (snapshot.hasData) {
-                      return TrapTableReseller(traps: snapshot.data!);
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  }),
-            ),
+            FutureBuilder(
+                future: Provider.of<ResellerController>(context, listen: false)
+                    .getResellerinfo(widget.resellerID.id.toString()),
+                // future: resellerProvider
+                //     .getResellerinfo(resellerID.id.toString()),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return Text(snapshot.error.toString());
+                  } else if (snapshot.hasData) {
+                    return TrapTableReseller(traps: snapshot.data!);
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                }),
           ],
         ),
       ),

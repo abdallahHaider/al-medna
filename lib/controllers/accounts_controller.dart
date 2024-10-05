@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/bank.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart';
 
 class AccountsController extends ChangeNotifier {
@@ -83,31 +85,42 @@ class AccountsController extends ChangeNotifier {
     }
   }
 
-  Future deletbank(id) async {
+  Future deletbank(id, BuildContext context) async {
     Response x;
     try {
+      SmartDialog.showLoading();
       x = await postApi("/api/bank/delete", {"id": id});
+
       if (x.statusCode == 200) {
         getBank();
+        Navigator.pop(context);
+        snackBar(context, "تم الحذف بنجاح", false);
       } else {
-        throw jsonDecode(x.body);
+        snackBar(context, jsonDecode(x.body), true);
       }
     } catch (e) {
-      throw "حصل خطا في ارسال البيانات";
+      snackBar(context, "حصل خطا غير متوقع", true);
+    } finally {
+      SmartDialog.dismiss();
     }
   }
 
-  Future deletSmallbank(id) async {
+  Future deletSmallbank(id, BuildContext context) async {
     Response x;
     try {
       x = await postApi("/api/small_bank/delete", {"id": id});
       if (x.statusCode == 200) {
         getSmallBank();
+        Navigator.pop(context);
+        snackBar(context, "تم الحذف بنجاح", false);
       } else {
-        throw jsonDecode(x.body);
+        snackBar(context, jsonDecode(x.body), true);
       }
     } catch (e) {
+      snackBar(context, "حصل خطا غير متوقع", true);
       throw "حصل خطا في ارسال البيانات";
+    } finally {
+      SmartDialog.dismiss();
     }
   }
 

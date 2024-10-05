@@ -3,6 +3,7 @@ import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/trap_controller%20.dart';
 import 'package:admin/screens/trap/trap_page.dart';
+import 'package:admin/screens/widgets/back_batten.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
@@ -168,28 +169,40 @@ class _AddTrapPageState extends State<AddTrapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(defaultPadding),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Header(title: 'اضافة رحلة'),
-              SizedBox(height: defaultPadding),
-              _buildDropdowns(),
-              SizedBox(height: defaultPadding),
-              _buildTravelersField(),
-              SizedBox(height: defaultPadding),
-              _buildRoomTable(),
-              SizedBox(height: defaultPadding),
-              _buildFinancials(),
-              SizedBox(height: defaultPadding),
-              _buildNotesField(),
-              SizedBox(height: defaultPadding),
-              _buildActionButtons(context),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Header(title: 'اضافة رحلة'),
+        actions: [
+          BackBatten(
+            onPressed: () {
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(TrapPage());
+            },
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: defaultPadding),
+                _buildDropdowns(),
+                SizedBox(height: defaultPadding),
+                _buildTravelersField(),
+                SizedBox(height: defaultPadding),
+                _buildRoomTable(),
+                SizedBox(height: defaultPadding),
+                _buildFinancials(),
+                SizedBox(height: defaultPadding),
+                _buildNotesField(),
+                SizedBox(height: defaultPadding),
+                _buildActionButtons(context),
+              ],
+            ),
           ),
         ),
       ),

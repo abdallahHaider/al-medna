@@ -1,5 +1,8 @@
 import 'package:admin/controllers/hotel_controller.dart';
+import 'package:admin/controllers/rootWidget.dart';
+import 'package:admin/models/hotel_type.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/hotel/hotel_index.dart';
 import 'package:admin/screens/hotel/widgets/add_hotel.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
@@ -20,12 +23,15 @@ class _AddBuyState extends State<AddBuy> {
   final moreRooms = TextEditingController();
   final day = TextEditingController();
   final price = TextEditingController();
+  final nameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final adressController = TextEditingController();
   double numberRooms = 0;
   double allPrice = 0;
+  bool isNewBuy = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     Provider.of<HotelController>(context, listen: false).getFetchData(true);
     Provider.of<HotelController>(context, listen: false).getFetchData(false);
     super.initState();
@@ -49,15 +55,23 @@ class _AddBuyState extends State<AddBuy> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Header(title: "شراء فندق"),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(defaultPadding),
-        child: Column(children: [
-          SizedBox(
-            height: defaultPadding,
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Header(title: "شراء فندق"),
+              SizedBox(
+                width: defaultPadding,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    Provider.of<Rootwidget>(context, listen: false)
+                        .getWidet(HotelIndex());
+                  },
+                  child: Text("عرض الفنادق"))
+            ],
           ),
           SizedBox(
             height: defaultPadding,
@@ -66,68 +80,117 @@ class _AddBuyState extends State<AddBuy> {
             children: [
               SizedBox(
                 width: 500,
-                child: Consumer<HotelController>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return DropdownButtonFormField<dynamic>(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                child: isNewBuy
+                    ? TextFormField(
+                        controller: nameController,
+                        decoration: InputDecoration(
+                          labelText: 'اسم الفندق',
+                          border: OutlineInputBorder(),
                         ),
-                        labelText: "فندق مكة",
+                      )
+                    : Consumer<HotelController>(
+                        builder: (BuildContext context, value, Widget? child) {
+                          return DropdownButtonFormField<dynamic>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: "فندق مكة",
+                            ),
+                            onChanged: (dynamic value) {
+                              // setState(() {
+                              hotelID = value.id.toString();
+                              // });
+                            },
+                            items: value.hotels.map((companies) {
+                              return DropdownMenuItem<dynamic>(
+                                value: companies,
+                                child: Text(companies.fullName!),
+                              );
+                            }).toList(),
+                          );
+                        },
                       ),
-                      onChanged: (dynamic value) {
-                        // setState(() {
-                        hotelID = value.id.toString();
-                        // });
-                      },
-                      items: value.hotels.map((companies) {
-                        return DropdownMenuItem<dynamic>(
-                          value: companies,
-                          child: Text(companies.fullName!),
-                        );
-                      }).toList(),
-                    );
-                  },
-                ),
+              ),
+              SizedBox(
+                height: defaultPadding,
               ),
               SizedBox(
                 width: 500,
-                child: Consumer<HotelController>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return DropdownButtonFormField<dynamic>(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                child: isNewBuy
+                    ? TextFormField(
+                        controller: phoneController,
+                        decoration: InputDecoration(
+                          labelText: 'رقم الهاتف',
+                          border: OutlineInputBorder(),
                         ),
-                        labelText: "فندق المدينة",
+                        keyboardType: TextInputType.phone,
+                      )
+                    : Consumer<HotelController>(
+                        builder: (BuildContext context, value, Widget? child) {
+                          return DropdownButtonFormField<dynamic>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: "فندق المدينة",
+                            ),
+                            onChanged: (dynamic value) {
+                              // setState(() {
+                              hotelID = value.id.toString();
+                              // });
+                            },
+                            items: value.hotelsM.map((companies) {
+                              return DropdownMenuItem<dynamic>(
+                                value: companies,
+                                child: Text(companies.fullName!),
+                              );
+                            }).toList(),
+                          );
+                        },
                       ),
-                      onChanged: (dynamic value) {
-                        // setState(() {
-                        hotelID = value.id.toString();
-                        // });
-                      },
-                      items: value.hotelsM.map((companies) {
-                        return DropdownMenuItem<dynamic>(
-                          value: companies,
-                          child: Text(companies.fullName!),
-                        );
-                      }).toList(),
-                    );
-                  },
-                ),
               ),
+              isNewBuy
+                  ? SizedBox(
+                      width: 200,
+                      child: DropdownButtonFormField<HotelType>(
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          labelText: "العنوان",
+                        ),
+                        onChanged: (value) {
+                          adressController.text = value!.name.toString();
+                        },
+                        items: HotelType.costs.map((HotelType companies) {
+                          return DropdownMenuItem<HotelType>(
+                            value: companies,
+                            child: Text(companies.name),
+                          );
+                        }).toList(),
+                        validator: (value) =>
+                            value == null ? 'يرجى اختيار الوكيل' : null,
+                      ),
+                    )
+                  : SizedBox(),
               TextButton(
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Dialog(
-                          child: addHotelForm(context),
-                        );
-                      },
-                    );
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) {
+                    //     return Dialog(
+                    // child: addHotelForm(context),
+                    //     );
+                    //   },
+                    // );
+                    setState(() {
+                      isNewBuy = !isNewBuy;
+                    });
                   },
-                  child: Text("اضافة فندق جديد")),
+                  child: isNewBuy
+                      ? Text("اختيار فندق موجود")
+                      : Text("اضافة فندق جديد")),
             ],
           ),
           SizedBox(
@@ -293,15 +356,26 @@ class _AddBuyState extends State<AddBuy> {
                   ],
                 ),
               ]),
+          SizedBox(
+            height: defaultPadding,
+          ),
           ElevatedButton(
               onPressed: () async {
+                if (isNewBuy) {
+                  await Provider.of<HotelController>(context, listen: false)
+                      .addReseller(
+                    nameController.text.toString(),
+                    phoneController.text.toString(),
+                    adressController.text.toString(),
+                    context,
+                  );
+                }
+
                 await Provider.of<HotelController>(context, listen: false)
                     .addBuyHotel(hotelID, moreRooms.text, price.text, day.text,
                         floss.text, rooms.text, context);
               },
               child: Text("اضافة"))
-        ]),
-      ),
-    );
+        ]);
   }
 }

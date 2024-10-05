@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:admin/api%20server/api_servers.dart';
 import 'package:admin/models/company.dart';
 import 'package:admin/models/companyy.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:http/http.dart';
 
 class CompanyController extends ChangeNotifier {
@@ -52,36 +54,46 @@ class CompanyController extends ChangeNotifier {
     }
   }
 
-  Future deletbank(id) async {
+  Future deletbank(id, BuildContext context) async {
     Response x;
     try {
+      SmartDialog.showLoading();
       x = await postApi("/api/company/delete", {"id": id});
       if (x.statusCode == 200) {
         getCompanys();
+        Navigator.pop(context);
+        snackBar(context, "تم الحذف بنجاح", false);
       } else {
         print(x.body);
-        throw jsonDecode(x.body);
+        snackBar(context, jsonDecode(x.body), true);
       }
     } catch (e) {
-      throw "حصل خطا في ارسال البيانات";
+      snackBar(context, "حصل خطا في ارسال البيانات", true);
+    } finally {
+      SmartDialog.dismiss();
     }
   }
 
-  Future deletCompanyPor(id) async {
+  Future deletCompanyPor(id, BuildContext context) async {
     Response x;
     try {
+      SmartDialog.showLoading();
       x = await postApi(
           "/api/company_program/delete", {"company_program_id": id});
       if (x.statusCode == 200) {
         // getCompanys();
         notifyListeners();
+        Navigator.pop(context);
+        snackBar(context, "تم الحذف بنجاح", false);
       } else {
         print(x.body);
-        throw jsonDecode(x.body);
+        snackBar(context, jsonDecode(x.body), true);
       }
     } catch (e) {
       print(e);
-      throw "حصل خطا في ارسال البيانات";
+      snackBar(context, "حصل خطا في ارسال البيانات", true);
+    } finally {
+      SmartDialog.dismiss();
     }
   }
 

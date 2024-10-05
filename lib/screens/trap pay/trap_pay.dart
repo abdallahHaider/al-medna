@@ -1,8 +1,6 @@
 import 'package:admin/controllers/trap_pay_controller.dart';
-import 'package:admin/responsive.dart';
 import 'package:admin/screens/trap%20pay/widgets/addPay.dart';
 import 'package:admin/screens/trap%20pay/widgets/dataTibel.dart';
-import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../dashboard/components/header.dart';
@@ -24,21 +22,15 @@ class _TrapPayPageState extends State<TrapPayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Header(
+          title: 'التسديدات',
+        ),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: Header(
-                  title: 'التسديدات',
-                ),
-              ),
-            ],
-          ),
+          addPay(context),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,24 +54,9 @@ class _TrapPayPageState extends State<TrapPayPage> {
                   child: Text("الصفحة التالية")),
             ],
           ),
-          SizedBox(
-            height: defaultPadding,
-          ),
           Expanded(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: dataTibel(),
-                ),
-                if (!Responsive.isMobile(context))
-                  Expanded(
-                    flex: 1,
-                    child: addPay(context),
-                  ),
-              ],
-            ),
+            flex: 2,
+            child: dataTibel(),
           ),
         ],
       ),

@@ -1,7 +1,9 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/trap_controller%20.dart';
 import 'package:admin/screens/trap/add_trap.dart';
-import 'package:admin/utl/constants.dart';
+import 'package:admin/screens/widgets/deleteDialog.dart';
+import 'package:admin/screens/widgets/my_data_table.dart';
+import 'package:admin/screens/widgets/note_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,20 +21,14 @@ class _TrapTableState extends State<TrapTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: secondaryColor,
-      elevation: 5,
-      margin: EdgeInsets.all(defaultPadding),
-      child: Scrollbar(
-        controller: scrollController,
-        child: SingleChildScrollView(
+    return Scrollbar(
+      controller: scrollController,
+      child: SingleChildScrollView(
           controller: scrollController,
           scrollDirection: Axis.horizontal,
-          child: DataTable(
-            columns: const [
+          child: MyDataTable(
+            columns: [
               DataColumn(label: Text('الوكيل')),
-              // DataColumn(label: Text('الفندق')),
-              // DataColumn(label: Text('المدة')),
               DataColumn(label: Text('عدد المسافرين')),
               DataColumn(label: Text('الأطفال')),
               DataColumn(label: Text('الرضع')),
@@ -40,21 +36,16 @@ class _TrapTableState extends State<TrapTable> {
               DataColumn(label: Text('غ ثلاثية')),
               DataColumn(label: Text('غ رباعية')),
               DataColumn(label: Text('المسافر الخاص')),
-              // DataColumn(label: Text('المبلغ')),
               DataColumn(label: Text('المتبقي')),
-              // DataColumn(label: Text('قيمة الريال بالنسبة للدولار')),
-              // DataColumn(label: Text('قيمة الدينار بالنسبة للدولار')),
-              // DataColumn(label: Text('وسيلة النقل')),
               DataColumn(label: Text('تاريخ الإنشاء')),
               DataColumn(label: Text('الملاحظة')),
               DataColumn(label: Text('إجراءات')),
             ],
             rows: widget.traps.map((trap) {
               return DataRow(
+                color: WidgetStateProperty.all(Colors.white),
                 cells: [
                   DataCell(Text(trap.resellerId ?? '')),
-                  // DataCell(Text(trap.hotelId ?? '')),
-                  // DataCell(Text('${trap.duration ?? 0} يوم')),
                   DataCell(Text('${trap.quantity ?? 0}')),
                   DataCell(Text('${trap.child ?? 0}')),
                   DataCell(Text('${trap.veryChild ?? 0}')),
@@ -62,32 +53,14 @@ class _TrapTableState extends State<TrapTable> {
                   DataCell(Text('${trap.tripleRoom ?? 0}')),
                   DataCell(Text('${trap.quadrupleRoom ?? 0}')),
                   DataCell(Text('${trap.vip_travel ?? 0}')),
-                  // DataCell(Text('${trap.price ?? 0}')),
                   DataCell(Text('${trap.nowDebt ?? 0}')),
-                  // DataCell(Text('${trap.rasToUsd ?? 0}')),
-                  // DataCell(Text('${trap.iqdToUsd ?? 0}')),
-                  // DataCell(Text(trap.transport == 'fly' ? 'جوي' : 'بري')),
                   DataCell(
                       Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
                   DataCell(SizedBox(
                     width: 100,
                     child: TextButton(
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: Text('ملاحظات'),
-                            content: Text(trap.note ?? ''),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('حسناً'),
-                              ),
-                            ],
-                          ),
-                        );
+                        noteDialog(context, trap.note ?? "");
                       },
                       child: Text(
                         trap.note.toString(),
@@ -133,31 +106,11 @@ class _TrapTableState extends State<TrapTable> {
                           icon: Icon(Icons.delete),
                           color: Colors.red,
                           onPressed: () {
-                            // Implement delete functionality
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('حذف'),
-                                    content:
-                                        Text('هل أنت متأكد من حذف هذا الرحلة'),
-                                    actions: [
-                                      TextButton(
-                                        child: Text('لا'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                      TextButton(
-                                          child: Text('نعم'),
-                                          onPressed: () {
-                                            Provider.of<TrapController>(context,
-                                                    listen: false)
-                                                .delete(trap.id, context);
-                                          }),
-                                    ],
-                                  );
-                                });
+                            deleteDialog(context, () {
+                              Provider.of<TrapController>(context,
+                                      listen: false)
+                                  .delete(trap.id, context);
+                            });
                           },
                         ),
                       ],
@@ -166,9 +119,7 @@ class _TrapTableState extends State<TrapTable> {
                 ],
               );
             }).toList(),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }

@@ -4,7 +4,6 @@ import 'package:admin/screens/authority/widget/card_table.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/edit_widget.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
-import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -25,24 +24,23 @@ class _AuthorityPageState extends State<AuthorityPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Header(title: "حسابات الهيئة"),
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(flex: 2, child: CardTable()),
-            Expanded(
-                child: Column(
-              children: [
-                Consumer<AuthorityController>(
-                  builder: (context, myType, child) {
-                    if (myType.isEdit) {
-                      return EditWidget(
+    return Scaffold(
+      appBar: AppBar(
+        title: Header(title: "حسابات الهيئة"),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              AddAuthority(),
+              Consumer<AuthorityController>(
+                builder: (context, myType, child) {
+                  if (myType.isEdit) {
+                    return SizedBox(
+                      width: 500,
+                      child: EditWidget(
                           savePressed: () async {
                             await myType.updateAuthority(name.text, context);
                             myType.getAuthority();
@@ -55,18 +53,18 @@ class _AuthorityPageState extends State<AuthorityPage> {
                               controller: name,
                               labelText: "اسم الهيئة",
                             )
-                          ]);
-                    } else {
-                      return SizedBox();
-                    }
-                  },
-                ),
-                AddAuthority(),
-              ],
-            ))
-          ],
-        ),
-      ],
+                          ]),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+              ),
+            ],
+          ),
+          CardTable()
+        ],
+      ),
     );
   }
 }

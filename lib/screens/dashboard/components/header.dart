@@ -3,10 +3,10 @@ import 'package:admin/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class Header extends StatelessWidget {
   const Header({
-    Key? key, required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
   final String title;
 
@@ -24,9 +24,7 @@ class Header extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.titleLarge,
           ),
-        
       ],
     );
   }
 }
-

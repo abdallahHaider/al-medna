@@ -24,43 +24,37 @@ class _WalletPageState extends State<WalletPage> {
   }
 
   @override
-  void dispose() {
-    // Provider.of<WalletProvider>(context, listen: false).dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Header(title: "الصندوق الرئيسي"),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: Header(title: "الصندوق الرئيسي"),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: Card(
-                elevation: 5,
-                color: secondaryColor,
-                child: SizedBox(
-                  height: 100,
-                  child: Consumer<WalletProvider>(
-                    builder: (context, walletProvider, child) {
-                      return Row(
+            Card(
+              elevation: 5,
+              color: blueColor,
+              margin: EdgeInsets.all(defaultPadding),
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: Consumer<WalletProvider>(
+                  builder: (context, walletProvider, child) {
+                    return IntrinsicHeight(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _buildBalanceCard(
                               "الرصيد الحالي في  الصندوق الرئيسي بالدينار",
                               "${walletProvider.wallet_IQD.toString()} دينار"),
+                          VerticalDivider(),
                           _buildBalanceCard(
                               "الرصيد الحالي في  الصندوق الرئيسي بالدولار",
                               "${walletProvider.wallet_USD.toString()} دولار"),
                         ],
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),
@@ -117,7 +111,6 @@ class _WalletPageState extends State<WalletPage> {
                             ],
                           ),
                         ),
-                        SizedBox(height: defaultPadding),
                         Consumer<WalletProvider>(
                           builder: (context, controller, child) {
                             if (controller.isLoading) {
@@ -144,13 +137,16 @@ class _WalletPageState extends State<WalletPage> {
 
   Widget _buildBalanceCard(String title, String amount) {
     return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(title, style: TextStyle(fontSize: 16)),
-          Text(amount, style: TextStyle(fontSize: 24)),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 90),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(title, style: TextStyle(fontSize: 16)),
+            Text(amount, style: TextStyle(fontSize: 16)),
+          ],
+        ),
       ),
     );
   }

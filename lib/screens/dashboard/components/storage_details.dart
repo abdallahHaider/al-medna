@@ -32,27 +32,6 @@ class StorageDetails extends StatelessWidget {
               height: defaultPadding,
             ),
 
-            Text(
-              'الرصيد بالدينار',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.money),
-                Consumer<WalletProvider>(
-                  builder: (context, storage, child) {
-                    return Text(
-                      '${storage.wallet_IQD}',
-                      style: TextStyle(
-                        fontSize: 20,
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
             SizedBox(
               height: defaultPadding,
             ),

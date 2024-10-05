@@ -25,10 +25,12 @@ class addTicks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return SizedBox(
+      width: 920,
       child: Padding(
         padding: const EdgeInsets.all(defaultPadding),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
@@ -37,61 +39,98 @@ class addTicks extends StatelessWidget {
             SizedBox(
               height: defaultPadding,
             ),
-            MyTextField(
-              labelText: "اسم ",
-              controller: name,
+            Row(
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: MyTextField(
+                    labelText: "اسم ",
+                    controller: name,
+                  ),
+                ),
+                SizedBox(
+                  width: defaultPadding,
+                ),
+                SizedBox(
+                  width: 400,
+                  child: MyTextField(
+                    labelText: " عدد كبير ",
+                    controller: number,
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: defaultPadding,
             ),
-            MyTextField(
-              labelText: " عدد كبير ",
-              controller: number,
+            Row(
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: MyTextField(
+                    labelText: "السعر كبير",
+                    controller: cost,
+                  ),
+                ),
+                SizedBox(
+                  width: defaultPadding,
+                ),
+                SizedBox(
+                  width: 400,
+                  child: MyTextField(
+                    labelText: "عدد صغير",
+                    controller: number_of_child,
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: defaultPadding,
             ),
-            MyTextField(
-              labelText: "السعر كبير",
-              controller: cost,
+            Row(
+              children: [
+                SizedBox(
+                  width: 400,
+                  child: MyTextField(
+                    labelText: "سعر صغير",
+                    controller: price_of_child,
+                  ),
+                ),
+                SizedBox(
+                  width: defaultPadding,
+                ),
+                SizedBox(
+                  width: 400,
+                  child: MyTextField(
+                    labelText: "الأجر",
+                    controller: commission,
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: defaultPadding,
             ),
-            MyTextField(
-              labelText: "عدد صغير",
-              controller: number_of_child,
-            ),
             SizedBox(
-              height: defaultPadding,
-            ),
-            MyTextField(
-              labelText: "سعر صغير",
-              controller: price_of_child,
-            ),
-            MyTextField(
-              labelText: "الأجر",
-              controller: commission,
-            ),
-            SizedBox(
-              height: defaultPadding,
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  await Provider.of<AuthorityController>(context, listen: false)
-                      .addAuthorityTicks(
-                          widget.id,
-                          number.text,
-                          cost.text,
-                          commission.text,
-                          number_of_child.text,
-                          price_of_child.text,
-                          name.text,
-                          context);
-                  Provider.of<AuthorityController>(context, listen: false)
-                      .getAuthorityTicks(widget.id);
-                },
-                child: Text("اضافة"))
+              width: 400,
+              child: ElevatedButton(
+                  onPressed: () async {
+                    await Provider.of<AuthorityController>(context,
+                            listen: false)
+                        .addAuthorityTicks(
+                            widget.id,
+                            number.text,
+                            cost.text,
+                            commission.text,
+                            number_of_child.text,
+                            price_of_child.text,
+                            name.text,
+                            context);
+                    Provider.of<AuthorityController>(context, listen: false)
+                        .getAuthorityTicks(widget.id);
+                  },
+                  child: Text("اضافة")),
+            )
           ],
         ),
       ),

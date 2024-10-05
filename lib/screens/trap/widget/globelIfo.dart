@@ -6,10 +6,12 @@ Padding globelIfo(
     AsyncSnapshot<Map<dynamic, dynamic>> snapshot, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.all(8.0),
-    child: Card(
-      color: secondaryColor,
+    child: Container(
+      decoration: BoxDecoration(
+          color: blueColor,
+          borderRadius: BorderRadius.all(Radius.circular(10))),
+      // color: secondaryColor,
       margin: EdgeInsets.symmetric(horizontal: defaultPadding),
-      elevation: 5,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: defaultPadding),
         child: Column(
@@ -17,19 +19,19 @@ Padding globelIfo(
             SizedBox(
               height: 10,
             ),
-            Row(
-              children: [
-                Expanded(
-                    child: Text(
-                  'معلومات عامة',
-                  textAlign: TextAlign.center,
-                )),
-                Expanded(flex: 1, child: SizedBox())
-              ],
-            ),
-            SizedBox(
-              height: defaultPadding,
-            ),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //         child: Text(
+            //       'معلومات عامة',
+            //       textAlign: TextAlign.center,
+            //     )),
+            //     Expanded(flex: 1, child: SizedBox())
+            //   ],
+            // ),
+            // SizedBox(
+            //   height: defaultPadding,
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

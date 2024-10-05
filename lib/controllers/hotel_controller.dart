@@ -84,7 +84,7 @@ class HotelController extends ChangeNotifier {
 
       //  Navigator.pop(context);
     } catch (e) {
-      snackBar(context, e.toString(), false);
+      snackBar(context, "حصل خطا غير متوقع", true);
       throw e;
     } finally {
       SmartDialog.dismiss();
@@ -95,7 +95,7 @@ class HotelController extends ChangeNotifier {
       // notifyListeners();
       snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
-      snackBar(context, jsonDecode(x.body), true);
+      snackBar(context, jsonDecode(x.body)["message"], true);
     }
   }
 
@@ -162,7 +162,7 @@ class HotelController extends ChangeNotifier {
         "room_price_per_night": room_price_per_night,
       });
     } catch (e) {
-      snackBar(context, e.toString(), false);
+      snackBar(context, "حصل خطا غير متوقع", true);
       throw e;
     } finally {
       SmartDialog.dismiss();
@@ -172,7 +172,7 @@ class HotelController extends ChangeNotifier {
       getHotelBuy(hotel_id);
       snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
-      snackBar(context, jsonDecode(x.body), true);
+      snackBar(context, jsonDecode(x.body)["message"], true);
     }
   }
 
