@@ -89,7 +89,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primaryColor: primaryColor,
             fontFamily: 'Alexandria',
-            brightness: Brightness.light),
+            brightness: Brightness.light,
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(EbuttonColor),
+                    foregroundColor: WidgetStateProperty.all(Colors.black87),
+                    side: WidgetStateProperty.all(
+                        BorderSide(color: Colors.green))))),
         home: Directionality(
           textDirection: TextDirection.rtl,
           child: MainScreen(),

@@ -153,7 +153,7 @@ class ResellerController extends ChangeNotifier {
     }
   }
 
-  Future addHotelBuyer(String name, String phone_number, String address,
+  Future<String> addHotelBuyer(String name, String phone_number, String address,
       BuildContext context) async {
     http.Response x;
     try {
@@ -177,8 +177,10 @@ class ResellerController extends ChangeNotifier {
       snackBar(context, "تم اضافة المشتري بنجاح", false);
 
       notifyListeners();
+      return jsonDecode(x.body)["id"].toString();
     } else {
       snackBar(context, jsonDecode(x.body), true);
+      throw "";
     }
   }
 

@@ -1,4 +1,5 @@
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +38,8 @@ class EditWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(onPressed: savePressed, child: Text("حفظ")),
-              ElevatedButton(onPressed: canselPressed, child: Text("الغاء"))
+              MyButton(onPressed: savePressed, child: Text("حفظ")),
+              MyButton(onPressed: canselPressed, child: Text("الغاء"))
             ],
           )
         ],

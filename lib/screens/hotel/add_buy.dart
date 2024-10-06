@@ -3,8 +3,9 @@ import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/hotel_type.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/hotel/hotel_index.dart';
-import 'package:admin/screens/hotel/widgets/add_hotel.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
+import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +114,7 @@ class _AddBuyState extends State<AddBuy> {
                       ),
               ),
               SizedBox(
-                height: defaultPadding,
+                width: defaultPadding,
               ),
               SizedBox(
                 width: 500,
@@ -150,6 +151,9 @@ class _AddBuyState extends State<AddBuy> {
                         },
                       ),
               ),
+              SizedBox(
+                width: defaultPadding,
+              ),
               isNewBuy
                   ? SizedBox(
                       width: 200,
@@ -174,6 +178,9 @@ class _AddBuyState extends State<AddBuy> {
                       ),
                     )
                   : SizedBox(),
+              SizedBox(
+                width: defaultPadding,
+              ),
               TextButton(
                   onPressed: () {
                     // showDialog(
@@ -196,186 +203,205 @@ class _AddBuyState extends State<AddBuy> {
           SizedBox(
             height: defaultPadding,
           ),
-          Table(
-              columnWidths: {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-                3: FlexColumnWidth(1),
-              },
-              border: TableBorder.all(color: Colors.grey),
-              children: [
-                TableRow(
-                  decoration: BoxDecoration(color: Colors.blueGrey[50]),
-                  children: [
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'عدد الطوابق',
-                          style: TextStyle(
-                            fontSize: 16,
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width / 2,
+            child: Table(
+                columnWidths: {
+                  // 0: FlexColumnWidth(1),
+                  // 1: FlexColumnWidth(1),
+                  // 2: FlexColumnWidth(1),
+                  // 3: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(color: Colors.grey),
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(color: blueColor),
+                    children: [
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'عدد الطوابق',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'عدد الغرف في كل طابق',
-                          style: TextStyle(
-                            fontSize: 16,
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'عدد الغرف في كل طابق',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'غرف اضافية',
-                          style: TextStyle(
-                            fontSize: 16,
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'غرف اضافية',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'مجموع الغرف',
-                          style: TextStyle(
-                            fontSize: 16,
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'مجموع الغرف',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                        child: MyTextField(
-                      controller: floss,
-                      onChanged: (v) {
-                        getRooms();
-                        getAllPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      controller: rooms,
-                      onChanged: (v) {
-                        getRooms();
-                        getAllPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      controller: moreRooms,
-                      onChanged: (v) {
-                        getRooms();
-                        getAllPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      labelText: numberRooms.toString(),
-                      // controller: Te,
-                      enabled: false,
-                    )),
-                  ],
-                ),
-              ]),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      TableCell(
+                          child: MyTextField(
+                        controller: floss,
+                        onChanged: (v) {
+                          getRooms();
+                          getAllPrice();
+                        },
+                      )),
+                      TableCell(
+                          child: MyTextField(
+                        controller: rooms,
+                        onChanged: (v) {
+                          getRooms();
+                          getAllPrice();
+                        },
+                      )),
+                      TableCell(
+                          child: MyTextField(
+                        controller: moreRooms,
+                        onChanged: (v) {
+                          getRooms();
+                          getAllPrice();
+                        },
+                      )),
+                      TableCell(
+                          child: MyTextField(
+                        labelText: numberRooms.toString(),
+                        // controller: Te,
+                        enabled: false,
+                      )),
+                    ],
+                  ),
+                ]),
+          ),
           SizedBox(
             height: defaultPadding,
           ),
-          Table(
-              columnWidths: {
-                0: FlexColumnWidth(1),
-                1: FlexColumnWidth(1),
-                2: FlexColumnWidth(1),
-              },
-              border: TableBorder.all(color: Colors.grey),
-              children: [
-                TableRow(
-                  decoration: BoxDecoration(color: Colors.blueGrey[50]),
-                  children: [
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'عدد الليالي',
-                          style: TextStyle(
-                            fontSize: 16,
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width / 2.7,
+            child: Table(
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                },
+                border: TableBorder.all(color: Colors.grey),
+                children: [
+                  TableRow(
+                    decoration: BoxDecoration(color: blueColor),
+                    children: [
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'عدد الليالي',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'سعر الغرفة',
-                          style: TextStyle(
-                            fontSize: 16,
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'سعر الغرفة',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'مجموع السعر',
-                          style: TextStyle(
-                            fontSize: 16,
+                      TableCell(
+                        child: Center(
+                          child: Text(
+                            'مجموع السعر',
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                        child: MyTextField(
-                      controller: day,
-                      onChanged: (v) {
-                        getAllPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      controller: price,
-                      onChanged: (v) {
-                        getAllPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      labelText: allPrice.toString(),
-                      // controller: Te,
-                      enabled: false,
-                    )),
-                  ],
-                ),
-              ]),
+                    ],
+                  ),
+                  TableRow(
+                    children: [
+                      TableCell(
+                          child: MyTextField(
+                        controller: day,
+                        onChanged: (v) {
+                          getAllPrice();
+                        },
+                      )),
+                      TableCell(
+                          child: MyTextField(
+                        controller: price,
+                        onChanged: (v) {
+                          getAllPrice();
+                        },
+                      )),
+                      TableCell(
+                          child: MyTextField(
+                        labelText: allPrice.toString(),
+                        // controller: Te,
+                        enabled: false,
+                      )),
+                    ],
+                  ),
+                ]),
+          ),
           SizedBox(
             height: defaultPadding,
           ),
-          ElevatedButton(
-              onPressed: () async {
-                if (isNewBuy) {
-                  await Provider.of<HotelController>(context, listen: false)
-                      .addReseller(
-                    nameController.text.toString(),
-                    phoneController.text.toString(),
-                    adressController.text.toString(),
-                    context,
-                  );
-                }
-
-                await Provider.of<HotelController>(context, listen: false)
-                    .addBuyHotel(hotelID, moreRooms.text, price.text, day.text,
-                        floss.text, rooms.text, context);
-              },
-              child: Text("اضافة"))
+          SizedBox(
+            width: 300,
+            child: MyButton(
+                onPressed: () async {
+                  if (isNewBuy) {
+                    try {
+                      var id = await Provider.of<HotelController>(context,
+                              listen: false)
+                          .addReseller(
+                        nameController.text.toString(),
+                        phoneController.text.toString(),
+                        adressController.text.toString(),
+                        context,
+                      );
+                      print("111");
+                      await Provider.of<HotelController>(context, listen: false)
+                          .addBuyHotel(id, moreRooms.text, price.text, day.text,
+                              floss.text, rooms.text, context);
+                      print("222");
+                    } catch (e) {
+                      snackBar(context, "خطا في انشاء الحساب", true);
+                    }
+                  } else {
+                    await Provider.of<HotelController>(context, listen: false)
+                        .addBuyHotel(hotelID, moreRooms.text, price.text,
+                            day.text, floss.text, rooms.text, context);
+                  }
+                },
+                child: Text("اضافة")),
+          )
         ]);
   }
 }

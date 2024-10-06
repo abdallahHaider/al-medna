@@ -1,8 +1,6 @@
 import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/hotel.dart';
-import 'package:admin/screens/hotel/add_buy.dart';
-import 'package:admin/screens/hotel/add_sale.dart';
 import 'package:admin/screens/hotel/hotel_profile.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/utl/constants.dart';

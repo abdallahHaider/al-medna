@@ -1,5 +1,6 @@
 import 'package:admin/controllers/authority_controller.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +29,15 @@ class AddAuthority extends StatelessWidget {
                 labelText: "الاسم",
               ),
               SizedBox(height: defaultPadding),
-              ElevatedButton(
-                  onPressed: () {
-                    Provider.of<AuthorityController>(context, listen: false)
-                        .addAuthority(name.text, context);
-                  },
-                  child: Text("اضافة"))
+              SizedBox(
+                width: double.maxFinite,
+                child: MyButton(
+                    onPressed: () {
+                      Provider.of<AuthorityController>(context, listen: false)
+                          .addAuthority(name.text, context);
+                    },
+                    child: Text("اضافة")),
+              )
             ],
           ),
         ),

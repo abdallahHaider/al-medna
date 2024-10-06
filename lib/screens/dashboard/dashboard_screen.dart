@@ -1,20 +1,15 @@
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/wallet_provider.dart';
-import 'package:admin/responsive.dart';
 import 'package:admin/screens/authority/authority_page.dart';
 import 'package:admin/screens/budget/budget_page.dart';
 import 'package:admin/screens/campany/campany_page.dart';
-import 'package:admin/screens/dashboard/components/my_fields.dart';
 import 'package:admin/screens/hotel/hotel_page.dart';
 import 'package:admin/screens/reseller/reseller_page.dart';
 import 'package:admin/screens/trap/trap_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../utl/constants.dart';
 import 'components/header.dart';
-
-import 'components/storage_details.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override

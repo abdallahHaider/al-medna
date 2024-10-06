@@ -1,5 +1,6 @@
 import 'package:admin/controllers/wallet_provider.dart';
 import 'package:admin/models/action.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -109,7 +110,7 @@ class _AddPayState extends State<AddPay> {
             SizedBox(
               height: defaultPadding,
             ),
-            ElevatedButton(
+            MyButton(
               onPressed: () {
                 Provider.of<WalletProvider>(context, listen: false).Addpay(
                   true,

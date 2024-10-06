@@ -71,7 +71,7 @@ class HotelController extends ChangeNotifier {
     }
   }
 
-  Future addReseller(String name, String phone_number, String address,
+  Future<String> addReseller(String name, String phone_number, String address,
       BuildContext context) async {
     http.Response x;
     try {
@@ -85,17 +85,21 @@ class HotelController extends ChangeNotifier {
       //  Navigator.pop(context);
     } catch (e) {
       snackBar(context, "حصل خطا غير متوقع", true);
+
       throw e;
     } finally {
       SmartDialog.dismiss();
     }
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
-      // fetchData();
+      getFetchData(true);
+      getFetchData(false);
       // notifyListeners();
       snackBar(context, "تم اضافة الفندق بنجاح", false);
+      return jsonDecode(x.body)["id"].toString();
     } else {
       snackBar(context, jsonDecode(x.body)["message"], true);
+      throw "";
     }
   }
 
@@ -115,8 +119,7 @@ class HotelController extends ChangeNotifier {
     }
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
-      // notifyListeners();
-      // Navigator.pop(context);
+      Navigator.pop(context);
       snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
@@ -170,6 +173,8 @@ class HotelController extends ChangeNotifier {
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
       getHotelBuy(hotel_id);
+      fetchData(true, true);
+      fetchData(true, false);
       snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body)["message"], true);

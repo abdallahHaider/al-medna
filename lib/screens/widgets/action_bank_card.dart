@@ -133,9 +133,9 @@ class _ActionBankCardState extends State<ActionBankCard> {
                                         border: OutlineInputBorder(),
                                         labelText: "فندق",
                                       ),
-                                      value: value.hotels2.isEmpty
-                                          ? ""
-                                          : value.hotels2.first,
+                                      // value: value.hotels2.isEmpty
+                                      //     ? ""
+                                      //     : value.hotels2.first,
                                       onChanged: (dynamic value) {
                                         Provider.of<ActionBankController>(
                                                 context,
@@ -202,15 +202,6 @@ class _ActionBankCardState extends State<ActionBankCard> {
                   ),
                   SizedBox(width: 16),
                   Expanded(
-                    // child: MyTextField(
-                    //   controller: _namberKedeController,
-                    //   labelText: 'رقم القيد',
-                    //   validator: (value) {
-                    //     // if (value!.isEmpty) {
-                    //     //   return 'Please enter namber kede';
-                    //     // }
-                    //   },
-                    // ),
                     child: SizedBox(),
                   ),
                 ],

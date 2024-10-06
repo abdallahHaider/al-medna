@@ -3,7 +3,8 @@ import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/type_cost.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
-import 'package:admin/screens/hotel/hotel_index.dart';
+import 'package:admin/screens/seller/seller_page.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
 import 'package:admin/utl/constants.dart';
@@ -23,12 +24,12 @@ class _AddSaleState extends State<AddSale> {
   final day = TextEditingController();
   var price = TextEditingController();
   // final _nameController = TextEditingController();
-
   final nameController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-
+  // final _formKey = GlobalKey<FormState>();
   final _reselrID = TextEditingController();
   String curreny = "";
+  bool isNewSeller = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -58,14 +59,14 @@ class _AddSaleState extends State<AddSale> {
             children: [
               Header(title: "بيع فندق"),
               SizedBox(
-                height: defaultPadding,
+                width: defaultPadding,
               ),
               ElevatedButton(
                   onPressed: () {
                     Provider.of<Rootwidget>(context, listen: false)
-                        .getWidet(HotelIndex());
+                        .getWidet(sellerPage());
                   },
-                  child: Text("عرض الفنادق"))
+                  child: Text("عرض حسابات المشتركين"))
             ],
           ),
           SizedBox(
@@ -85,9 +86,7 @@ class _AddSaleState extends State<AddSale> {
                         labelText: "فندق مكة",
                       ),
                       onChanged: (dynamic value) {
-                        // setState(() {
                         hotelID = value.id.toString();
-                        // });
                       },
                       items: value.hotels.map((companies) {
                         return DropdownMenuItem<dynamic>(
@@ -98,6 +97,9 @@ class _AddSaleState extends State<AddSale> {
                     );
                   },
                 ),
+              ),
+              SizedBox(
+                width: defaultPadding,
               ),
               SizedBox(
                 width: 500,
@@ -130,6 +132,150 @@ class _AddSaleState extends State<AddSale> {
           SizedBox(
             height: defaultPadding,
           ),
+          Row(
+            children: [
+              !isNewSeller
+                  ? SizedBox(
+                      width: 500,
+                      child: Consumer<ResellerController>(
+                        builder: (BuildContext context, value, Widget? child) {
+                          return DropdownButtonFormField<dynamic>(
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              labelText: "المشتري",
+                            ),
+                            onChanged: (dynamic value) {
+                              // setState(() {
+                              _reselrID.text = value.id.toString();
+                              // });
+                            },
+                            items: value.buyers.map((companies) {
+                              return DropdownMenuItem<dynamic>(
+                                value: companies,
+                                child: Text(companies.fullName!),
+                              );
+                            }).toList(),
+                          );
+                        },
+                      ),
+                    )
+                  : SizedBox(
+                      width: 500,
+                      child: MyTextField(
+                        controller: nameController,
+                        labelText: 'اسم المشتري',
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'برجاء ادخال اسم المشتري';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+              SizedBox(
+                width: defaultPadding,
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      isNewSeller = !isNewSeller;
+                    });
+                  },
+                  child: isNewSeller
+                      ? Text("اختيار المشتري موجود")
+                      : Text("اضافة مشتري جديد"))
+            ],
+          ),
+          SizedBox(
+            height: defaultPadding,
+          ),
+          SizedBox(
+            width: MediaQuery.sizeOf(context).width / 2,
+            child:
+                Table(border: TableBorder.all(color: Colors.grey), children: [
+              TableRow(
+                decoration: BoxDecoration(color: blueColor),
+                children: [
+                  TableCell(
+                    child: Center(
+                      child: Text(
+                        'عدد الغرف',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Center(
+                      child: Text(
+                        'عدد الليالي',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Center(
+                      child: Text(
+                        'سعر الغرفة',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                  TableCell(
+                    child: Center(
+                      child: Text(
+                        'مجموع السعر',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  TableCell(
+                      child: MyTextField(
+                    controller: rooms,
+                    onChanged: (v) {
+                      getPrice();
+                    },
+                  )),
+                  TableCell(
+                      child: MyTextField(
+                    controller: day,
+                    onChanged: (v) {
+                      getPrice();
+                    },
+                  )),
+                  TableCell(
+                      child: MyTextField(
+                    controller: price,
+                    onChanged: (v) {
+                      getPrice();
+                    },
+                  )),
+                  TableCell(
+                      child: MyTextField(
+                    labelText: Price.toString(),
+                    // controller: Te,
+                    enabled: false,
+                  )),
+                ],
+              ),
+            ]),
+          ),
+          SizedBox(
+            height: defaultPadding,
+          ),
           SizedBox(
             width: 500,
             child: Consumer<ResellerController>(
@@ -139,164 +285,66 @@ class _AddSaleState extends State<AddSale> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    labelText: "المشتري",
+                    labelText: "العملة",
                   ),
                   onChanged: (dynamic value) {
-                    // setState(() {
-                    _reselrID.text = value.id.toString();
-                    // });
+                    curreny = value.id.toString();
+                    // _nameController.clear();
                   },
-                  items: value.buyers.map((companies) {
+                  items: TypeCost2.costs.map((dynamic companies) {
                     return DropdownMenuItem<dynamic>(
                       value: companies,
-                      child: Text(companies.fullName!),
+                      child: Text(companies.name!),
                     );
                   }).toList(),
+                  validator: (value) =>
+                      value == null ? 'يرجى اختبار الوكيل ' : null,
                 );
               },
             ),
           ),
-
           SizedBox(
             height: defaultPadding,
           ),
-          Table(
-              // columnWidths: {
-              //   0: FlexColumnWidth(1),
-              //   1: FlexColumnWidth(1),
-              //   2: FlexColumnWidth(1),
-              //   3: FlexColumnWidth(1),
-              //   4: FlexColumnWidth(2),
-              // },
-              border: TableBorder.all(color: Colors.grey),
-              children: [
-                TableRow(
-                  decoration: BoxDecoration(color: Colors.blueGrey[50]),
-                  children: [
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'عدد الغرف',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'عدد الليالي',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'سعر الغرفة',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                    TableCell(
-                      child: Center(
-                        child: Text(
-                          'مجموع السعر',
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                TableRow(
-                  children: [
-                    TableCell(
-                        child: MyTextField(
-                      controller: rooms,
-                      onChanged: (v) {
-                        getPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      controller: day,
-                      onChanged: (v) {
-                        getPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      controller: price,
-                      onChanged: (v) {
-                        getPrice();
-                      },
-                    )),
-                    TableCell(
-                        child: MyTextField(
-                      labelText: Price.toString(),
-                      // controller: Te,
-                      enabled: false,
-                    )),
-                  ],
-                ),
-              ]),
-          Row(
-            children: [
-              SizedBox(
-                width: 500,
-                child: Consumer<ResellerController>(
-                  builder: (BuildContext context, value, Widget? child) {
-                    return DropdownButtonFormField<dynamic>(
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        labelText: "العملة",
-                      ),
-                      onChanged: (dynamic value) {
-                        curreny = value.id.toString();
-                        // _nameController.clear();
-                      },
-                      items: TypeCost2.costs.map((dynamic companies) {
-                        return DropdownMenuItem<dynamic>(
-                          value: companies,
-                          child: Text(companies.name!),
-                        );
-                      }).toList(),
-                      validator: (value) =>
-                          value == null ? 'يرجى اختبار الوكيل ' : null,
+          SizedBox(
+            width: 300,
+            child: MyButton(
+                onPressed: () async {
+                  if (isNewSeller) {
+                    try {
+                      var id = await Provider.of<ResellerController>(context,
+                              listen: false)
+                          .addHotelBuyer(nameController.text, "", "", context);
+                      await Provider.of<HotelController>(context, listen: false)
+                          .addSaleHotel(
+                        hotelID,
+                        rooms.text,
+                        price.text,
+                        curreny,
+                        day.text,
+                        context,
+                        id,
+                        id,
+                      );
+                    } catch (e) {
+                      snackBar(context, "حصل خطا في انشاء الحساب", true);
+                    }
+                  } else {
+                    await Provider.of<HotelController>(context, listen: false)
+                        .addSaleHotel(
+                      hotelID,
+                      rooms.text,
+                      price.text,
+                      curreny,
+                      day.text,
+                      context,
+                      _reselrID.text.toString(),
+                      _reselrID.text,
                     );
-                  },
-                ),
-              ),
-            ],
+                  }
+                },
+                child: Text("اضافة")),
           ),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          ElevatedButton(
-              onPressed: () async {
-                await Provider.of<HotelController>(context, listen: false)
-                    .addSaleHotel(
-                  hotelID,
-                  rooms.text,
-                  price.text,
-                  curreny,
-                  day.text,
-                  context,
-                  _reselrID.text.toString(),
-                  _reselrID.text,
-                  // _nameController.text.toString(),
-                );
-              },
-              child: Text("اضافة")),
 
           // Container(
           //   padding: EdgeInsets.all(defaultPadding),

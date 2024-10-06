@@ -3,6 +3,7 @@ import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/buyer.dart';
 import 'package:admin/screens/seller/seller_profiel.dart';
+import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -44,152 +45,101 @@ class _BuyerPageState extends State<BuyerPage> {
                 HotelController hotelController,
                 Widget? child,
               ) {
-                return Card(
-                  color: Colors.grey,
-                  child: DataTable(
-                      border: TableBorder.all(
-                          width: 1,
-                          style: BorderStyle.solid,
-                          color: Colors.grey),
-                      columns: [
-                        DataColumn(label: Text('الاسم')),
-                        // DataColumn(label: Text('التاريخ')),
-                        DataColumn(label: Text('المبلغ بالدولار')),
-                        DataColumn(label: Text('المبلغ بالريال')),
-                        DataColumn(label: Text('ملاحضة')),
-                        // DataColumn(label: Text('المبلغ الكلي')),
-                        // DataColumn(label: Text('اسم الشركة')),
-                        // DataColumn(label: Text('رقم الحركة')),
-                        DataColumn(label: Text('الاجراء')),
-                      ],
-                      rows:
-                          List.generate(hotelController.buyers.length, (index) {
-                        Buyer hotelBuy = hotelController.buyers[index];
-                        return DataRow(
-                            color: WidgetStateProperty.all(Colors.white),
-                            cells: [
-                              DataCell(
-                                Text(
-                                  hotelBuy.buyer.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                onTap: () => Provider.of<Rootwidget>(context,
-                                        listen: false)
-                                    .getWidet(SellerProfile(
-                                        id: hotelBuy.buyer_id.toString())),
-                              ),
-                              // DataCell(
-                              //   Text(
-                              //     hotelBuy.createdAt
-                              //         .toString()
-                              //         .substring(0, 10),
-                              //     style: TextStyle(
-                              //       fontSize: 16,
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              // ),
-                              DataCell(
-                                Text(
-                                  hotelBuy.costUsd.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
+                return MyDataTable(
+                    columns: [
+                      DataColumn(label: Text('الاسم')),
+                      DataColumn(label: Text('المبلغ بالدولار')),
+                      DataColumn(label: Text('المبلغ بالريال')),
+                      DataColumn(label: Text('ملاحضة')),
+                      DataColumn(label: Text('الاجراء')),
+                    ],
+                    rows: List.generate(hotelController.buyers.length, (index) {
+                      Buyer hotelBuy = hotelController.buyers[index];
+                      return DataRow(
+                          color: WidgetStateProperty.all(Colors.white),
+                          cells: [
+                            DataCell(
+                              Text(
+                                hotelBuy.buyer.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
                                 ),
                               ),
-                              DataCell(
-                                Text(
-                                  hotelBuy.costRas.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
+                              onTap: () => Provider.of<Rootwidget>(context,
+                                      listen: false)
+                                  .getWidet(SellerProfile(
+                                      id: hotelBuy.buyer_id.toString())),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.costUsd.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
                                 ),
                               ),
-                              DataCell(
-                                Text(
-                                  hotelBuy.note.toString(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                  ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.costRas.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
                                 ),
                               ),
-                              // DataCell(
-                              //   Text(
-                              //     hotelBuy.totalPrice.toString(),
-                              //     style: TextStyle(
-                              //       fontSize: 16,
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              // ),
-                              // DataCell(
-                              //   Text(
-                              //     hotelBuy.company.toString(),
-                              //     style: TextStyle(
-                              //       fontSize: 16,
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              // ),
-                              // DataCell(
-                              //   Text(
-                              //     hotelBuy.companyProgramId.toString(),
-                              //     style: TextStyle(
-                              //       fontSize: 16,
-                              //       color: Colors.black,
-                              //     ),
-                              //   ),
-                              // ),
-                              DataCell(ElevatedButton(
-                                  style: ButtonStyle(
-                                    backgroundColor: WidgetStateProperty.all(
-                                      Colors.red,
-                                    ),
-                                    foregroundColor: WidgetStateProperty.all(
-                                      Colors.white,
-                                    ),
+                            ),
+                            DataCell(
+                              Text(
+                                hotelBuy.note.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            DataCell(ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.all(
+                                    Colors.red,
                                   ),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (
-                                          BuildContext context,
-                                        ) {
-                                          return AlertDialog(
-                                            title: Text("حذف"),
-                                            content:
-                                                Text("هل انت متاكد من الحذف"),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                child: Text("الغاء"),
-                                              ),
-                                              TextButton(
-                                                onPressed: () async {
-                                                  // await Provider.of<>(context,listen: false)
-                                                  await hotelController
-                                                      .hotelPayDelete(
-                                                          hotelBuy.id!,
-                                                          context);
-                                                },
-                                                child: Text("حذف"),
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  child: Text("حذف"))),
-                            ]);
-                      })),
-                );
+                                  foregroundColor: WidgetStateProperty.all(
+                                    Colors.white,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (
+                                        BuildContext context,
+                                      ) {
+                                        return AlertDialog(
+                                          title: Text("حذف"),
+                                          content:
+                                              Text("هل انت متاكد من الحذف"),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Text("الغاء"),
+                                            ),
+                                            TextButton(
+                                              onPressed: () async {
+                                                // await Provider.of<>(context,listen: false)
+                                                await hotelController
+                                                    .hotelPayDelete(
+                                                        hotelBuy.id!, context);
+                                              },
+                                              child: Text("حذف"),
+                                            ),
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: Text("حذف"))),
+                          ]);
+                    }));
               })),
           Expanded(
               child: Card(
@@ -202,23 +152,11 @@ class _BuyerPageState extends State<BuyerPage> {
                   SizedBox(
                     height: 15,
                   ),
-                  // Consumer<HotelController>(
-                  //     builder: (context, watch, child) => Text(
-                  //           "مجموع الشراء الاجمالي \n${watch.total_cost}",
-                  //           style: TextStyle(
-                  //             fontSize: 18,
-                  //           ),
-                  //         )),
-                  // SizedBox(
-                  //   height: 15,
-                  // ),
-                  // Divider(),
                   Text("انشاء تسديد جديد"),
                   SizedBox(
                     height: 20,
                   ),
                   SizedBox(
-                    // width: 500,
                     child: Consumer<ResellerController>(
                       builder: (BuildContext context, value, Widget? child) {
                         return DropdownButtonFormField<dynamic>(

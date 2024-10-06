@@ -2,6 +2,7 @@ import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/edit_widget.dart';
 import 'package:admin/screens/reseller/reseller_profiel.dart';
 import 'package:admin/screens/reseller/widgets/deletedReseller.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/utl/constants.dart';
@@ -96,7 +97,7 @@ class _ResellerPageState extends State<ResellerPage> {
                         SizedBox(height: defaultPadding),
                         SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton(
+                          child: MyButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 await Provider.of<ResellerController>(context,

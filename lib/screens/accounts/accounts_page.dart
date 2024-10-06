@@ -4,6 +4,7 @@ import 'package:admin/screens/accounts/acconunt_profael.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/edit_widget.dart';
 import 'package:admin/screens/widgets/deleteDialog.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
@@ -78,7 +79,7 @@ class _AccountsPageState extends State<AccountsPage> {
                         SizedBox(height: defaultPadding),
                         SizedBox(
                           width: double.infinity,
-                          child: ElevatedButton(
+                          child: MyButton(
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 try {

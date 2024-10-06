@@ -1,6 +1,7 @@
 import 'package:admin/controllers/seller_controller.dart';
 import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/models/mybuyer.dart';
+import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -39,108 +40,94 @@ class _SellerProfileState extends State<SellerProfile> {
           Expanded(
             child: TabBarView(
               children: [
-                Card(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            width: double.maxFinite,
-                            child: Card(
-                                color: Colors.white,
-                                child: Consumer<SellerController>(builder: (
-                                  BuildContext context,
-                                  accountsController,
-                                  Widget? child,
-                                ) {
-                                  return DataTable(
-                                    columns: [
-                                      DataColumn(label: Text('المرسل')),
-                                      DataColumn(label: Text('الفندق')),
-                                      DataColumn(label: Text('المبلغ بالريال')),
-                                      DataColumn(
-                                          label: Text('المبلغ بالدولار')),
-                                      DataColumn(label: Text('ملاحضات')),
-                                    ],
-                                    rows: List.generate(
-                                        accountsController.mySmallBank.length,
-                                        (index) {
-                                      MyBuyer mybuyer =
-                                          accountsController.mySmallBank[index];
-                                      return DataRow(cells: [
-                                        DataCell(
-                                          Text(mybuyer.buyer.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.hotel_name.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.costRas.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.costUsd.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.note.toString()),
-                                        ),
-                                      ]);
-                                    }),
-                                  );
-                                }))))),
-                Card(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: SizedBox(
-                            width: double.maxFinite,
-                            child: Card(
-                                color: Colors.white,
-                                child: Consumer<SellerController>(builder: (
-                                  BuildContext context,
-                                  accountsController,
-                                  Widget? child,
-                                ) {
-                                  return DataTable(
-                                    columns: [
-                                      DataColumn(label: Text('الفندق')),
-                                      DataColumn(label: Text('الغرف')),
-                                      DataColumn(label: Text('الليالي')),
-                                      DataColumn(label: Text('سعر االيلة')),
-                                      DataColumn(label: Text('المتبقي')),
-                                      DataColumn(label: Text('الاجمالي')),
-                                      DataColumn(label: Text('تاريخ')),
-                                    ],
-                                    rows: List.generate(
-                                        accountsController.mySmallBank2.length,
-                                        (index) {
-                                      HotelBuy mybuyer = accountsController
-                                          .mySmallBank2[index];
-                                      return DataRow(cells: [
-                                        DataCell(
-                                          Text(mybuyer.hotelId.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.rooms.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.nights.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.roomPricePerNight
-                                              .toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.now_debt_usd.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.totalPrice.toString()),
-                                        ),
-                                        DataCell(
-                                          Text(mybuyer.createdAt
-                                              .toString()
-                                              .substring(0, 10)),
-                                        ),
-                                      ]);
-                                    }),
-                                  );
-                                }))))),
+                Consumer<SellerController>(builder: (
+                  BuildContext context,
+                  accountsController,
+                  Widget? child,
+                ) {
+                  return MyDataTable(
+                    expended: true,
+                    columns: [
+                      DataColumn(label: Text('المرسل')),
+                      DataColumn(label: Text('الفندق')),
+                      DataColumn(label: Text('المبلغ بالريال')),
+                      DataColumn(label: Text('المبلغ بالدولار')),
+                      DataColumn(label: Text('ملاحضات')),
+                    ],
+                    rows: List.generate(accountsController.mySmallBank.length,
+                        (index) {
+                      MyBuyer mybuyer = accountsController.mySmallBank[index];
+                      return DataRow(
+                          color: WidgetStateProperty.all(Colors.white),
+                          cells: [
+                            DataCell(
+                              Text(mybuyer.buyer.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.hotel_name.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.costRas.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.costUsd.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.note.toString()),
+                            ),
+                          ]);
+                    }),
+                  );
+                }),
+                Consumer<SellerController>(builder: (
+                  BuildContext context,
+                  accountsController,
+                  Widget? child,
+                ) {
+                  return MyDataTable(
+                    expended: true,
+                    columns: [
+                      DataColumn(label: Text('الفندق')),
+                      DataColumn(label: Text('الغرف')),
+                      DataColumn(label: Text('الليالي')),
+                      DataColumn(label: Text('سعر االيلة')),
+                      DataColumn(label: Text('المتبقي')),
+                      DataColumn(label: Text('الاجمالي')),
+                      DataColumn(label: Text('تاريخ')),
+                    ],
+                    rows: List.generate(accountsController.mySmallBank2.length,
+                        (index) {
+                      HotelBuy mybuyer = accountsController.mySmallBank2[index];
+                      return DataRow(
+                          color: WidgetStateProperty.all(Colors.white),
+                          cells: [
+                            DataCell(
+                              Text(mybuyer.hotelId.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.rooms.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.nights.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.roomPricePerNight.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.now_debt_usd.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.totalPrice.toString()),
+                            ),
+                            DataCell(
+                              Text(mybuyer.createdAt
+                                  .toString()
+                                  .substring(0, 10)),
+                            ),
+                          ]);
+                    }),
+                  );
+                }),
               ],
             ),
           ),

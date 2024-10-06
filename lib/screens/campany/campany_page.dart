@@ -3,6 +3,7 @@ import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/campany/company_profiel.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/widgets/deleteDialog.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
@@ -69,7 +70,7 @@ class _CampanyPageState extends State<CampanyPage> {
                   SizedBox(height: defaultPadding),
                   SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: MyButton(
                       onPressed: () async {
                         if (_formKey1.currentState!.validate()) {
                           try {

@@ -3,8 +3,10 @@ import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/screens/campany/campany_page.dart';
 import 'package:admin/screens/widgets/back_batten.dart';
+import 'package:admin/screens/widgets/my_button.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
 import 'package:admin/screens/widgets/snakbar.dart';
+import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
@@ -173,7 +175,7 @@ class _MovementPageState extends State<MovementPage> {
                   border: TableBorder.all(color: Colors.grey),
                   children: [
                     TableRow(
-                      decoration: BoxDecoration(color: Colors.blueGrey[50]),
+                      decoration: BoxDecoration(color: blueColor),
                       children: [
                         _buildTableCell('الفندق'),
                         _buildTableCell('عدد'),
@@ -199,7 +201,7 @@ class _MovementPageState extends State<MovementPage> {
                   border: TableBorder.all(color: Colors.grey),
                   children: [
                     TableRow(
-                      decoration: BoxDecoration(color: Colors.blueGrey[50]),
+                      decoration: BoxDecoration(color: blueColor),
                       children: [
                         _buildTableCell('فندق المدينة'),
                         _buildTableCell('عدد الليالي'),
@@ -231,7 +233,7 @@ class _MovementPageState extends State<MovementPage> {
                   border: TableBorder.all(color: Colors.grey),
                   children: [
                     TableRow(
-                      decoration: BoxDecoration(color: Colors.blueGrey[50]),
+                      decoration: BoxDecoration(color: blueColor),
                       children: [
                         _buildTableCell('فندق مكة'),
                         _buildTableCell('عدد الليالي'),
@@ -249,49 +251,46 @@ class _MovementPageState extends State<MovementPage> {
 
                 SizedBox(height: 24),
                 // Submit Button
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    padding:
-                        EdgeInsets.symmetric(vertical: 12, horizontal: 100),
-                    textStyle: TextStyle(fontSize: 16),
+                SizedBox(
+                  width: 500,
+                  child: MyButton(
+                    onPressed: () async {
+                      // if (_formKey.currentState!.validate()) {
+                      try {
+                        SmartDialog.showLoading();
+                        await Provider.of<CompanyController>(context,
+                                listen: false)
+                            .addMove(
+                                widget.id,
+                                _nameController.text.isNotEmpty
+                                    ? _nameController.text
+                                    : "0",
+                                _cosrTController.text.isNotEmpty
+                                    ? _cosrTController.text
+                                    : "0",
+                                _numberTController.text.isNotEmpty
+                                    ? _numberTController.text
+                                    : "0",
+                                _hotelNameController.text,
+                                _numberdayController.text,
+                                _costdayController.text,
+                                _roomController.text,
+                                _dadeController.text,
+                                _hotelNameM.text,
+                                _roomM.text,
+                                _nigetM.text,
+                                _costM.text);
+                        snackBar(context, "تمت العملية بمجاح", false);
+                      } catch (e) {
+                        print(e);
+                        snackBar(context, e.toString(), true);
+                      } finally {
+                        SmartDialog.dismiss();
+                      }
+                      // }
+                    },
+                    child: Text('اضافة'),
                   ),
-                  onPressed: () async {
-                    // if (_formKey.currentState!.validate()) {
-                    try {
-                      SmartDialog.showLoading();
-                      await Provider.of<CompanyController>(context,
-                              listen: false)
-                          .addMove(
-                              widget.id,
-                              _nameController.text.isNotEmpty
-                                  ? _nameController.text
-                                  : "0",
-                              _cosrTController.text.isNotEmpty
-                                  ? _cosrTController.text
-                                  : "0",
-                              _numberTController.text.isNotEmpty
-                                  ? _numberTController.text
-                                  : "0",
-                              _hotelNameController.text,
-                              _numberdayController.text,
-                              _costdayController.text,
-                              _roomController.text,
-                              _dadeController.text,
-                              _hotelNameM.text,
-                              _roomM.text,
-                              _nigetM.text,
-                              _costM.text);
-                      snackBar(context, "تمت العملية بمجاح", false);
-                    } catch (e) {
-                      print(e);
-                      snackBar(context, e.toString(), true);
-                    } finally {
-                      SmartDialog.dismiss();
-                    }
-                    // }
-                  },
-                  child: Text('اضافة'),
                 )
               ],
             ),
