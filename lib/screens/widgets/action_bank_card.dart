@@ -26,12 +26,8 @@ class _ActionBankCardState extends State<ActionBankCard> {
   int typeAction3 = 0;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
+    return Scaffold(
+      body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,

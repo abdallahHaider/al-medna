@@ -35,8 +35,20 @@ class _AddSaleState extends State<AddSale> {
     // TODO: implement initState
     Provider.of<HotelController>(context, listen: false).getFetchData(true);
     Provider.of<HotelController>(context, listen: false).getFetchData(false);
-    Provider.of<ResellerController>(context, listen: false).fetchHotelBuyer();
+    setber();
     super.initState();
+  }
+
+  setber() async {
+    try {
+      await Provider.of<ResellerController>(context, listen: false)
+          .fetchHotelBuyer();
+      _reselrID.text = Provider.of<ResellerController>(context, listen: false)
+              .buyers
+              .first
+              .id ??
+          "";
+    } catch (e) {}
   }
 
   double Price = 0;
@@ -146,6 +158,15 @@ class _AddSaleState extends State<AddSale> {
                               ),
                               labelText: "المشتري",
                             ),
+                            hint: Text("  "),
+                            // value: value.buyers.isEmpty ? null : dynamic,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return "يرجى اختيار المشتري";
+                              } else {
+                                return null;
+                              }
+                            },
                             onChanged: (dynamic value) {
                               // setState(() {
                               _reselrID.text = value.id.toString();
@@ -310,6 +331,7 @@ class _AddSaleState extends State<AddSale> {
             width: 300,
             child: MyButton(
                 onPressed: () async {
+                  // if (_formKey.currentState!.validate()) {
                   if (isNewSeller) {
                     try {
                       var id = await Provider.of<ResellerController>(context,
@@ -330,18 +352,23 @@ class _AddSaleState extends State<AddSale> {
                       snackBar(context, "حصل خطا في انشاء الحساب", true);
                     }
                   } else {
-                    await Provider.of<HotelController>(context, listen: false)
-                        .addSaleHotel(
-                      hotelID,
-                      rooms.text,
-                      price.text,
-                      curreny,
-                      day.text,
-                      context,
-                      _reselrID.text.toString(),
-                      _reselrID.text,
-                    );
+                    if (_reselrID.text.isEmpty || _reselrID.text == "") {
+                      snackBar(context, "يرجى اختيار المشتري", true);
+                    } else {
+                      await Provider.of<HotelController>(context, listen: false)
+                          .addSaleHotel(
+                        hotelID,
+                        rooms.text,
+                        price.text,
+                        curreny,
+                        day.text,
+                        context,
+                        _reselrID.text.toString(),
+                        _reselrID.text,
+                      );
+                    }
                   }
+                  // }
                 },
                 child: Text("اضافة")),
           ),

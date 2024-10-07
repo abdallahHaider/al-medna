@@ -156,7 +156,8 @@ class _HotelSaleState extends State<HotelSale> {
                             onPressed: () async {
                               await Provider.of<HotelController>(context,
                                       listen: false)
-                                  .deleted(hotelBuy.id.toString(), context);
+                                  .deleted(hotelBuy.id.toString(), context,
+                                      widget.hotelId);
                             },
                             child: Text("حذف"))),
                       ]);

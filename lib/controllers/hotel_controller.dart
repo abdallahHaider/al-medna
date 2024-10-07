@@ -175,8 +175,8 @@ class HotelController extends ChangeNotifier {
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
       getHotelBuy(hotel_id);
-      fetchData(true, true);
-      fetchData(true, false);
+      fetchData(false, true);
+      fetchData(false, false);
       snackBar(context, "تم اضافة الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body)["message"], true);
@@ -231,13 +231,15 @@ class HotelController extends ChangeNotifier {
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
       getHotelSale(hotel_id);
-      snackBar(context, "تم اضافة الفندق بنجاح", false);
+      fetchData(true, true);
+      fetchData(true, false);
+      snackBar(context, "تم اضافة بيع الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);
     }
   }
 
-  Future deleted(String id, BuildContext context) async {
+  Future deleted(String id, BuildContext context, hotelId) async {
     print(id);
     http.Response x;
     try {
@@ -254,7 +256,7 @@ class HotelController extends ChangeNotifier {
     print(x.body);
     if (x.statusCode == 200 || x.statusCode == 201) {
       notifyListeners();
-      Navigator.pop(context);
+      getHotelSale(hotelId);
       snackBar(context, "تم حذف الفندق بنجاح", false);
     } else {
       snackBar(context, jsonDecode(x.body), true);

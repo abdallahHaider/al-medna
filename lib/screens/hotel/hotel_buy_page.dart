@@ -144,7 +144,7 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
                       onPressed: () {
                         deleteDialog(context, () async {
                           await hotelController.deleted(
-                              hotelBuy.id!.toString(), context);
+                              hotelBuy.id!.toString(), context, widget.hotelId);
                           hotelController.getHotelBuy(widget.hotelId);
                         });
                       },

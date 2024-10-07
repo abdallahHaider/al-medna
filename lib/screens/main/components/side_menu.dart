@@ -26,6 +26,7 @@ class SideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Color.fromRGBO(246, 251, 255, 1),
       child: ListView(
         children: [
           SizedBox(
@@ -201,7 +202,8 @@ class DrawerListTile extends StatelessWidget {
         width: 100,
         margin: EdgeInsets.only(left: 10),
         decoration: BoxDecoration(
-            color: x.index == index ? primaryColor : null,
+            color: Color.fromRGBO(
+                246, 251, 255, 1), //x.index == index ? primaryColor : null,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
         child: ListTile(

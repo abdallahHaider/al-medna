@@ -90,6 +90,7 @@ class MyApp extends StatelessWidget {
             primaryColor: primaryColor,
             fontFamily: 'Alexandria',
             brightness: Brightness.light,
+            scaffoldBackgroundColor: Color.fromRGBO(246, 251, 255, 1),
             elevatedButtonTheme: ElevatedButtonThemeData(
                 style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all(EbuttonColor),

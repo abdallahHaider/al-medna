@@ -53,57 +53,61 @@ class _ResellerProfielState extends State<ResellerProfiel> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(defaultPadding),
-        child: Column(
-          children: [
-            cardResellerDetels(widget.resellerID),
-            Divider(),
-            Row(
-              children: [
-                Expanded(child: Header(title: "الرحلات")
-                    // Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [Tab(text: "الرحلات"), Divider()],
-                    // ),
-                    ),
-                TextButton.icon(
-                  onPressed: () async {
-                    try {
-                      SmartDialog.showLoading();
-                      var globlDebt = await Provider.of<ResellerController>(
-                              context,
-                              listen: false)
-                          .resellerDbet;
-                      List traps = await Provider.of<ResellerController>(
-                              context,
-                              listen: false)
-                          .getResellerinfo(widget.resellerID.id.toString());
-                      await ResellerToPdf(widget.resellerID, globlDebt, traps);
-                    } catch (e) {
-                      snackBar(context, e.toString(), true);
-                    } finally {
-                      SmartDialog.dismiss();
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              cardResellerDetels(widget.resellerID),
+              Divider(),
+              Row(
+                children: [
+                  Expanded(child: Header(title: "الرحلات")
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [Tab(text: "الرحلات"), Divider()],
+                      // ),
+                      ),
+                  TextButton.icon(
+                    onPressed: () async {
+                      try {
+                        SmartDialog.showLoading();
+                        var globlDebt = await Provider.of<ResellerController>(
+                                context,
+                                listen: false)
+                            .resellerDbet;
+                        List traps = await Provider.of<ResellerController>(
+                                context,
+                                listen: false)
+                            .getResellerinfo(widget.resellerID.id.toString());
+                        await ResellerToPdf(
+                            widget.resellerID, globlDebt, traps);
+                      } catch (e) {
+                        snackBar(context, e.toString(), true);
+                      } finally {
+                        SmartDialog.dismiss();
+                      }
+                    },
+                    label: Text("كشف كلي"),
+                    icon: Icon(Icons.picture_as_pdf),
+                  ),
+                ],
+              ),
+              FutureBuilder(
+                  future:
+                      Provider.of<ResellerController>(context, listen: false)
+                          .getResellerinfo(widget.resellerID.id.toString()),
+                  // future: resellerProvider
+                  //     .getResellerinfo(resellerID.id.toString()),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else if (snapshot.hasData) {
+                      return TrapTableReseller(traps: snapshot.data!);
+                    } else {
+                      return Center(child: CircularProgressIndicator());
                     }
-                  },
-                  label: Text("كشف كلي"),
-                  icon: Icon(Icons.picture_as_pdf),
-                ),
-              ],
-            ),
-            FutureBuilder(
-                future: Provider.of<ResellerController>(context, listen: false)
-                    .getResellerinfo(widget.resellerID.id.toString()),
-                // future: resellerProvider
-                //     .getResellerinfo(resellerID.id.toString()),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else if (snapshot.hasData) {
-                    return TrapTableReseller(traps: snapshot.data!);
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }),
-          ],
+                  }),
+            ],
+          ),
         ),
       ),
     );
