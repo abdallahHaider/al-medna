@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 class HotelController extends ChangeNotifier {
   List hotels = [];
   List hotels2 = [];
+  List hotelsMove = [];
   List hotelsM = [];
   List hotelsPay = [];
   List hotelsSale = [];
@@ -55,6 +56,7 @@ class HotelController extends ChangeNotifier {
       var data = jsonDecode(x.body);
       final List resellers =
           data.map((json) => Reseller.fromJson(json)).toList();
+      hotelsMove = resellers;
       if (ismaka) {
         hotels = resellers;
         // hotels2 = resellers;

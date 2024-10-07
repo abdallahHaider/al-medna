@@ -142,7 +142,7 @@ class _ActionBankCardState extends State<ActionBankCard> {
                                                 listen: false)
                                             .toID = value.id.toString();
                                       },
-                                      items: value.hotels2
+                                      items: value.hotelsMove
                                           .map((dynamic companies) {
                                         return DropdownMenuItem<dynamic>(
                                           value: companies,
