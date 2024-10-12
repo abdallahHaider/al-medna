@@ -27,6 +27,7 @@ class _AuthorityPageState extends State<AuthorityPage> {
     return Scaffold(
       appBar: AppBar(
         title: Header(title: "حسابات الهيئة"),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

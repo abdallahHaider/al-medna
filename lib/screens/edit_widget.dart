@@ -18,31 +18,34 @@ class EditWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: EdgeInsets.all(defaultPadding),
+    return Card(
+      // margin: const EdgeInsets.all(defaultPadding),
+      // padding: EdgeInsets.all(defaultPadding),
       color: secondaryColor,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Header(title: "لوحة التعديل"),
-          SizedBox(
-            height: defaultPadding,
-          ),
-          Column(
-            children: buildActions,
-          ),
-          SizedBox(
-            height: defaultPadding * 2,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              MyButton(onPressed: savePressed, child: Text("حفظ")),
-              MyButton(onPressed: canselPressed, child: Text("الغاء"))
-            ],
-          )
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(defaultPadding),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Header(title: "لوحة التعديل"),
+            SizedBox(
+              height: defaultPadding,
+            ),
+            Column(
+              children: buildActions,
+            ),
+            SizedBox(
+              height: defaultPadding * 2,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MyButton(onPressed: savePressed, child: Text("حفظ")),
+                MyButton(onPressed: canselPressed, child: Text("الغاء"))
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

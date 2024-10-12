@@ -46,89 +46,96 @@ class _HotelPayState extends State<HotelPay> {
             ],
             rows: List.generate(
                 accountsController.mySmallBank.length,
-                (index) => DataRow(cells: [
-                      DataCell(
-                        Text(accountsController.mySmallBank[index].senderName
-                            .toString()),
-                      ),
-                      DataCell(
-                        Text(accountsController.mySmallBank[index].getterName
-                            .toString()),
-                      ),
-                      DataCell(
-                        Text(widget.isBank != "C"
-                            ? accountsController.mySmallBank[index].costIqd
-                                .toString()
-                            : accountsController.mySmallBank[index].costRAS
+                (index) => DataRow(
+                        color: WidgetStateProperty.all(Colors.white),
+                        cells: [
+                          DataCell(
+                            Text(accountsController
+                                .mySmallBank[index].senderName
                                 .toString()),
-                      ),
-                      DataCell(
-                        Text(accountsController.mySmallBank[index].costUsd
-                            .toString()),
-                      ),
-                      DataCell(
-                        Text(accountsController.mySmallBank[index].numberKade
-                            .toString()),
-                      ),
-                      // DataCell(Text((index + 1).toString())),
-                      DataCell(Text(accountsController
-                          .mySmallBank[index].createdAt
-                          .toString()
-                          .substring(0, 10))),
-                      DataCell(Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        title: Text('حذف'),
-                                        content: Text(
-                                            'هل أنت متأكد من حذف هذا الصيرفة'),
-                                        actions: [
-                                          TextButton(
-                                            child: Text('لا'),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          TextButton(
-                                              child: Text('نعم'),
-                                              onPressed: () async {
-                                                try {
-                                                  SmartDialog.showLoading();
-                                                  await Provider.of<
-                                                              TransactionsController>(
+                          ),
+                          DataCell(
+                            Text(accountsController
+                                .mySmallBank[index].getterName
+                                .toString()),
+                          ),
+                          DataCell(
+                            Text(widget.isBank != "C"
+                                ? accountsController.mySmallBank[index].costIqd
+                                    .toString()
+                                : accountsController.mySmallBank[index].costRAS
+                                    .toString()),
+                          ),
+                          DataCell(
+                            Text(accountsController.mySmallBank[index].costUsd
+                                .toString()),
+                          ),
+                          DataCell(
+                            Text(accountsController
+                                .mySmallBank[index].numberKade
+                                .toString()),
+                          ),
+                          // DataCell(Text((index + 1).toString())),
+                          DataCell(Text(accountsController
+                              .mySmallBank[index].createdAt
+                              .toString()
+                              .substring(0, 10))),
+                          DataCell(Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('حذف'),
+                                            content: Text(
+                                                'هل أنت متأكد من حذف هذا الصيرفة'),
+                                            actions: [
+                                              TextButton(
+                                                child: Text('لا'),
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                              ),
+                                              TextButton(
+                                                  child: Text('نعم'),
+                                                  onPressed: () async {
+                                                    try {
+                                                      SmartDialog.showLoading();
+                                                      await Provider.of<
+                                                                  TransactionsController>(
+                                                              context,
+                                                              listen: false)
+                                                          .deletSmallbank(
+                                                              accountsController
+                                                                  .mySmallBank[
+                                                                      index]
+                                                                  .id,
+                                                              context);
+                                                      Navigator.pop(context);
+                                                      snackBar(
                                                           context,
-                                                          listen: false)
-                                                      .deletSmallbank(
-                                                          accountsController
-                                                              .mySmallBank[
-                                                                  index]
-                                                              .id,
-                                                          context);
-                                                  Navigator.pop(context);
-                                                  snackBar(context,
-                                                      "تم الحذف بنجاح", false);
-                                                } catch (e) {
-                                                  snackBar(context,
-                                                      e.toString(), true);
-                                                } finally {
-                                                  SmartDialog.dismiss();
-                                                }
-                                              }),
-                                        ],
-                                      );
-                                    });
-                              },
-                              icon: Icon(
-                                Icons.delete_forever,
-                                color: Colors.red,
-                              ))
-                        ],
-                      ))
-                    ])));
+                                                          "تم الحذف بنجاح",
+                                                          false);
+                                                    } catch (e) {
+                                                      snackBar(context,
+                                                          e.toString(), true);
+                                                    } finally {
+                                                      SmartDialog.dismiss();
+                                                    }
+                                                  }),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  icon: Icon(
+                                    Icons.delete_forever,
+                                    color: Colors.red,
+                                  ))
+                            ],
+                          ))
+                        ])));
       },
     );
   }

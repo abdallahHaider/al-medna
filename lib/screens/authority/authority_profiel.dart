@@ -220,12 +220,14 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                       onPressed: () async {
                                         if (int.parse(authority.number_kade!) >
                                             0) {
-                                          await Provider.of<
-                                                      TransactionsController>(
-                                                  context,
-                                                  listen: false)
-                                              .deletSmallbank(
-                                                  authority.id!, context);
+                                          deleteDialog(context, () async {
+                                            await Provider.of<
+                                                        TransactionsController>(
+                                                    context,
+                                                    listen: false)
+                                                .deletSmallbank(
+                                                    authority.id!, context);
+                                          });
                                         } else {
                                           await deleteDialog(context, () async {
                                             await Provider.of<

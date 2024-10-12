@@ -121,9 +121,10 @@ class TransactionsController extends ChangeNotifier {
         snackBar(context, "تم الحذف بنجاح", false);
       } else {
         print(x.body);
-        snackBar(context, jsonDecode(x.body), true);
+        snackBar(context, "حصل مشكلة من السيرفر", true);
       }
     } catch (e) {
+      snackBar(context, "حصل مشكلة غير  متوقع", true);
       throw "حصل خطا في ارسال البيانات";
     } finally {
       SmartDialog.dismiss();
