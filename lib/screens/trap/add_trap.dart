@@ -37,6 +37,7 @@ class AddTrapPage extends StatefulWidget {
     required this.isEdidt,
     this.trapId,
     this.transport,
+    this.number,
   });
   final bool isEdidt;
   final int? trapId;
@@ -60,6 +61,7 @@ class AddTrapPage extends StatefulWidget {
   final String? hotel;
   final String? realer;
   final String? transport;
+  final String? number;
 
   @override
   State<AddTrapPage> createState() => _AddTrapPageState();
@@ -114,6 +116,8 @@ class _AddTrapPageState extends State<AddTrapPage> {
     vipController.text = widget.vipController ?? "";
     priceVipController.text = widget.priceVipController ?? "";
     hotelController.text = widget.hotel ?? "";
+    iqdToUsd.text = widget.number ?? "";
+
     _calculateTotalCost();
     super.initState();
   }
@@ -533,6 +537,7 @@ class _AddTrapPageState extends State<AddTrapPage> {
         if (infantsPrice.text.isNotEmpty) "vip_travel": vipController.text,
         if (infantsPrice.text.isNotEmpty)
           "price_vip_travel": priceVipController.text,
+        if (iqdToUsd.text.isNotEmpty) "number_trap": iqdToUsd.text,
       };
     } else {
       trapDetails = {

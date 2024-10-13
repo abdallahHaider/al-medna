@@ -99,6 +99,7 @@ class _TrapTableState extends State<TrapTable> {
                               realer: trap.resellerId.toString(),
                               hotel: trap.hotelId.toString(),
                               transport: trap.transport.toString(),
+                              number: trap.number_trap.toString(),
                             ));
                           },
                         ),

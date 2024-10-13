@@ -25,10 +25,10 @@ class TrapController extends ChangeNotifier {
       final List resellers = [];
       for (int i = 0; i < data.length; i++) {
         var x = Trap.fromJson(data[i]);
-        print(111111111);
+        // print(111111111);
         resellers.add(x);
       }
-      print(111111111);
+      // print(111111111);
       hap["resellers"] = resellers;
       hap['total_cost_USD'] = jsonDecode(x.body)['total_cost_USD'];
       hap['total_cost_IQD'] = jsonDecode(x.body)['total_cost_IQD'];

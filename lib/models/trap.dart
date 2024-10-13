@@ -33,6 +33,7 @@ class Trap {
   String? note;
   int? vip_travel;
   String? price_vip_travel;
+  int? number_trap;
 
   Trap({
     this.id,
@@ -61,6 +62,7 @@ class Trap {
     this.note,
     this.vip_travel,
     this.price_vip_travel,
+    this.number_trap,
   });
 
   factory Trap.fromJson(Map<String, dynamic> json) => Trap(
@@ -104,6 +106,7 @@ class Trap {
         price_vip_travel: json["price_vip_travel"] == null
             ? null
             : formatPrice(json["price_vip_travel"]),
+        number_trap: json["number_trap"],
       );
 
   Map<String, dynamic> toJson() => {

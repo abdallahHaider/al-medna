@@ -9,6 +9,7 @@ import 'package:admin/screens/many%20send/many_send.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
 import 'package:admin/screens/wallet/wallet_page.dart';
 import 'package:admin/screens/widgets/action_bank_card.dart';
+import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -201,8 +202,7 @@ class DrawerListTile extends StatelessWidget {
         width: 100,
         margin: EdgeInsets.only(left: 10),
         decoration: BoxDecoration(
-            color: Color.fromRGBO(
-                246, 251, 255, 1), //x.index == index ? primaryColor : null,
+            color: x.index == index ? primaryColor : null,
             borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10), bottomLeft: Radius.circular(10))),
         child: ListTile(
