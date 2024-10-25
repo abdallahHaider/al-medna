@@ -24,16 +24,16 @@ class Trap {
   String? priceChild;
   String? priceVeryChild;
   String? pricePerOne;
-  int? rasToUsd;
-  int? iqdToUsd;
+  String? rasToUsd;
+  String? iqdToUsd;
   String? type;
   String? transport;
   DateTime? createdAt;
   String? nowDebt;
   String? note;
-  int? vip_travel;
+  String? vip_travel;
   String? price_vip_travel;
-  int? number_trap;
+  String? number_trap;
 
   Trap({
     this.id,
@@ -93,8 +93,8 @@ class Trap {
             ? null
             : formatPrice(json["price_very_child"]),
         // pricePerOne: double.parse(json["price_per_one"].toString()),
-        rasToUsd: json["RAS_to_USD"],
-        iqdToUsd: json["IQD_to_USD"],
+        rasToUsd: formatPrice(json["RAS_to_USD"]),
+        iqdToUsd: formatPrice(json["IQD_to_USD"]),
         transport: json["transport"],
         createdAt: json["created_at"] == null
             ? null
@@ -102,11 +102,11 @@ class Trap {
         nowDebt: formatPrice(json["now_debt"]),
         type: json["type"],
         note: json["note"].toString(),
-        vip_travel: json["vip_travel"],
+        vip_travel: formatPrice(json["vip_travel"] ?? 0),
         price_vip_travel: json["price_vip_travel"] == null
             ? null
             : formatPrice(json["price_vip_travel"]),
-        number_trap: json["number_trap"],
+        number_trap: formatPrice(json["number_trap"] ?? 0),
       );
 
   Map<String, dynamic> toJson() => {

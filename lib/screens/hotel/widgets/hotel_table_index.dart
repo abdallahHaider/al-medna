@@ -82,8 +82,9 @@ Widget hotelTable(HotelController value, BuildContext context, List hotels,
             DataColumn(label: Text('اسم الفندق')),
             DataColumn(label: Text('عدد الغرف')),
             DataColumn(label: Text('التكلفة')),
-            DataColumn(label: Text('الواصل ')),
-            DataColumn(label: Text('الباقي ')),
+            DataColumn(label: Text('الواصل')),
+            DataColumn(label: Text('الباقي')),
+            // if (!isBuying) DataColumn(label: Text('')),
           ],
           rows: List.generate(hotels.length, (index) {
             Hotel hotel = hotels[index];

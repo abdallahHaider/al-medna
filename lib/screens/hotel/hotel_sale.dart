@@ -1,6 +1,7 @@
 import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/hotel_buy.dart';
+import 'package:admin/pdf/hotel.dart';
 import 'package:admin/screens/seller/seller_profiel.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:flutter/material.dart';
@@ -144,22 +145,36 @@ class _HotelSaleState extends State<HotelSale> {
                             ),
                           ),
                         ),
-                        DataCell(ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: WidgetStateProperty.all(
-                                Colors.red,
-                              ),
-                              foregroundColor: WidgetStateProperty.all(
-                                Colors.white,
-                              ),
-                            ),
-                            onPressed: () async {
-                              await Provider.of<HotelController>(context,
-                                      listen: false)
-                                  .deleted(hotelBuy.id.toString(), context,
-                                      widget.hotelId);
-                            },
-                            child: Text("حذف"))),
+                        DataCell(Row(
+                          children: [
+                            IconButton(
+                                onPressed: () => createHotelPDF(
+                                      startDate: '2024-10-25',
+                                      endDate: '2024-11-25',
+                                      seller: 'شركة العقارات المحدودة',
+                                      buyer: 'عمر حسين',
+                                      roomCount: 3,
+                                      pricePerRoom: 500.0,
+                                    ),
+                                icon: Icon(Icons.picture_as_pdf)),
+                            IconButton(
+                                style: ButtonStyle(
+                                  backgroundColor: WidgetStateProperty.all(
+                                    Colors.red,
+                                  ),
+                                  foregroundColor: WidgetStateProperty.all(
+                                    Colors.white,
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  await Provider.of<HotelController>(context,
+                                          listen: false)
+                                      .deleted(hotelBuy.id.toString(), context,
+                                          widget.hotelId);
+                                },
+                                icon: Icon(Icons.delete)),
+                          ],
+                        )),
                       ]);
                 }))),
       );
