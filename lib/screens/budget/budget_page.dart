@@ -184,7 +184,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     return DataRow(cells: [
                       DataCell(Text((index + 1).toString())),
                       DataCell(Text(names[index])),
-                      DataCell(Text(amount <= 0 ? "دائن" : "مدين")),
+                      DataCell(Text(amount <= 0 ? "مطلوب" : "طالب")),
                       DataCell(Text(amount.abs().toStringAsFixed(2))),
                     ]);
                   },
@@ -204,10 +204,7 @@ List<String> names_usd = [
   'شركات السعودي',
   'المصارف',
   'البنوك',
+  "الفنادق",
 ];
 
-List<String> names_iqd = [
-  'الخزنه',
-  'المصارف',
-  'البنوك',
-];
+List<String> names_iqd = ['الخزنه', 'المصارف', 'البنوك', "الهيئات"];
