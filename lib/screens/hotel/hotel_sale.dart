@@ -149,12 +149,21 @@ class _HotelSaleState extends State<HotelSale> {
                           children: [
                             IconButton(
                                 onPressed: () => createHotelPDF(
-                                      startDate: '2024-10-25',
-                                      endDate: '2024-11-25',
-                                      seller: 'شركة العقارات المحدودة',
-                                      buyer: 'عمر حسين',
-                                      roomCount: 3,
-                                      pricePerRoom: 500.0,
+                                      startDate: hotelBuy.createdAt
+                                          .toString()
+                                          .substring(0, 10),
+                                      endDate: DateTime(
+                                              hotelBuy.createdAt!.year,
+                                              hotelBuy.createdAt!.month,
+                                              hotelBuy.createdAt!.day +
+                                                  hotelBuy.nights!)
+                                          .toString(),
+                                      seller:
+                                          'شركة المدينة المنورة العالمية للج والعمرة المحدودة',
+                                      buyer: hotelBuy.buyer!,
+                                      roomCount: hotelBuy.rooms!,
+                                      pricePerRoom: double.parse(
+                                          hotelBuy.roomPricePerNight!),
                                     ),
                                 icon: Icon(Icons.picture_as_pdf)),
                             IconButton(
