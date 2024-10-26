@@ -12,6 +12,7 @@ import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class AcconuntProfael_page extends StatefulWidget {
   const AcconuntProfael_page(
@@ -42,6 +43,12 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
     }
 
     super.initState();
+  }
+  String formatCustomNumber(String value) {
+    if (value.isEmpty) return '';
+    final number = double.tryParse(value.replaceAll(',', ''));
+    if (number == null) return value;
+    return NumberFormat('#,##0.00').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
   }
 
   @override
@@ -92,7 +99,7 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                                 Consumer<TransactionsController>(
                                   builder: (context, storage, child) {
                                     return Text(
-                                      '${storage.wallet_IQD}',
+                                      '${formatCustomNumber(storage.wallet_IQD)}',
                                       style: TextStyle(
                                         fontSize: 24,
                                       ),

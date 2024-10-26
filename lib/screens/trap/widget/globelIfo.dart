@@ -1,7 +1,15 @@
 import 'package:admin/responsive.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+  // دالة لتنسيق الرقم بإضافة الفواصل
+  String formatCustomNumber(String value) {
+  if (value.isEmpty) return '';
+  final number = double.tryParse(value.replaceAll(',', ''));
+  if (number == null) return value;
+  return NumberFormat('#000,000').format(number);
+}
 Padding globelIfo(
     AsyncSnapshot<Map<dynamic, dynamic>> snapshot, BuildContext context) {
   return Padding(
@@ -40,10 +48,10 @@ Padding globelIfo(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                          "التلكفة الاجمالية بالدولار : ${double.tryParse(snapshot.data!['total_cost_USD'].toString())!.toStringAsFixed(0)}"),
+                          "التلكفة الاجمالية بالدولار : ${formatCustomNumber(double.tryParse(snapshot.data!['total_cost_USD'].toString())!.toStringAsFixed(0))}"),
                       Divider(),
                       Text(
-                          "المبلغ المدفوع بالدولار: ${double.tryParse(snapshot.data!['total_cost_USD_pays'].toString())!.toStringAsFixed(2)}"),
+                          "المبلغ المدفوع بالدولار: ${formatCustomNumber(double.tryParse(snapshot.data!['total_cost_USD_pays'].toString())!.toStringAsFixed(2))}"),
                       Divider(),
                       Text(
                           "المتبقي : ${double.tryParse((snapshot.data!['total_cost_USD'] - snapshot.data!['total_cost_USD_pays']).toString())!.toStringAsFixed(2)}"),

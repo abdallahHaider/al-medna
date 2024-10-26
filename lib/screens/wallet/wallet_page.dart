@@ -8,6 +8,7 @@ import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:provider/provider.dart';
 import 'package:admin/pdf/reseller_Pdf walt.dart'; // استيراد الدالة الخاصة بـ PDF
+import 'package:intl/intl.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
@@ -21,6 +22,14 @@ class _WalletPageState extends State<WalletPage> {
   void initState() {
     Provider.of<WalletProvider>(context, listen: false).getWallet(false);
     super.initState();
+  }
+
+  // دالة لتنسيق الرقم بإضافة الفواصل
+  String formatCustomNumber(String value) {
+    if (value.isEmpty) return '';
+    final number = double.tryParse(value.replaceAll(',', ''));
+    if (number == null) return value;
+    return NumberFormat('#,##0.00').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
   }
 
   @override
@@ -45,12 +54,12 @@ class _WalletPageState extends State<WalletPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           _buildBalanceCard(
-                              "الرصيد الحالي في  الصندوق الرئيسي بالدينار",
-                              "${walletProvider.wallet_IQD.toString()} دينار"),
+                              "الرصيد الحالي في الصندوق الرئيسي بالدينار",
+                              "${formatCustomNumber(walletProvider.wallet_IQD.toString())} دينار"),
                           VerticalDivider(),
                           _buildBalanceCard(
-                              "الرصيد الحالي في  الصندوق الرئيسي بالدولار",
-                              "${walletProvider.wallet_USD.toString()} دولار"),
+                              "الرصيد الحالي في الصندوق الرئيسي بالدولار",
+                              "${formatCustomNumber(walletProvider.wallet_USD.toString())} دولار"),
                         ],
                       ),
                     );
@@ -154,13 +163,13 @@ class _WalletPageState extends State<WalletPage> {
   Widget _buildActionButton(String text, VoidCallback onPressed, Color color) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(color),
-        shape: WidgetStateProperty.all(
+        backgroundColor: MaterialStateProperty.all(color),
+        shape: MaterialStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
         ),
-        foregroundColor: WidgetStateProperty.all(Colors.white),
+        foregroundColor: MaterialStateProperty.all(Colors.white),
       ),
       onPressed: onPressed,
       child: Text(text),

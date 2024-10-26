@@ -10,7 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../utl/constants.dart';
 import 'components/header.dart';
+import 'package:intl/intl.dart';
 
+  // دالة لتنسيق الرقم بإضافة الفواصل
+  String formatCustomNumber(String value) {
+  if (value.isEmpty) return '';
+  final number = double.tryParse(value.replaceAll(',', ''));
+  if (number == null) return value;
+  return NumberFormat('#000,000').format(number);
+}
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -63,7 +71,7 @@ class DashboardScreen extends StatelessWidget {
                                         Consumer<WalletProvider>(
                                           builder: (context, storage, child) {
                                             return Text(
-                                              '${storage.wallet_IQD}',
+                                              '${formatCustomNumber(storage.wallet_IQD)}',
                                               style: TextStyle(
                                                 fontSize: 24,
                                               ),
