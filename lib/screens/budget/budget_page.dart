@@ -115,9 +115,10 @@ class _BudgetPageState extends State<BudgetPage> {
               double currencyValue = (watch.budget[currency] is int)
                   ? (watch.budget[currency] as int).toDouble()
                   : watch.budget[currency] ?? 0.0;
-
+              List x = watch.budget["additional"] as List;
               return Text(
-                currencyValue.toStringAsFixed(2),
+                // ناقص حساب الفنادق
+                (currencyValue - x.last["hotel"]).toStringAsFixed(2),
                 style: const TextStyle(
                   fontSize: 18,
                   color: Colors.white,
@@ -174,7 +175,8 @@ class _BudgetPageState extends State<BudgetPage> {
                   DataColumn(label: Text('المبلغ')),
                 ],
                 rows: List.generate(
-                  additionalData.length,
+                  // عرض الفنادق في الجدول
+                  additionalData.length - 1,
                   (index) {
                     String key = additionalData[index].keys.first;
                     dynamic value = additionalData[index][key];
@@ -202,9 +204,14 @@ List<String> names_usd = [
   'الرحلات',
   'الخزنه',
   'شركات السعودي',
-  'المصارف',
+  'المنافذ',
   'البنوك',
   "الفنادق",
 ];
 
-List<String> names_iqd = ['الخزنه', 'المصارف', 'البنوك', "الهيئات"];
+List<String> names_iqd = [
+  'الخزنه',
+  'المنافذ',
+  'البنوك',
+  "الهيئات",
+];
