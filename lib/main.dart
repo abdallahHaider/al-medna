@@ -11,6 +11,7 @@ import 'package:admin/controllers/seller_controller.dart';
 import 'package:admin/controllers/transactions.dart';
 import 'package:admin/controllers/trap_pay_controller.dart';
 import 'package:admin/controllers/wallet_provider.dart';
+import 'package:admin/screens/hotel/hotel_page.dart';
 import 'package:admin/screens/main/main_screen.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
@@ -99,7 +100,7 @@ class MyApp extends StatelessWidget {
                         BorderSide(color: Colors.green))))),
         home: Directionality(
           textDirection: TextDirection.rtl,
-          child: MainScreen(),
+          child: HotelPage(),
         ),
         navigatorObservers: [FlutterSmartDialog.observer],
         builder: FlutterSmartDialog.init(),
