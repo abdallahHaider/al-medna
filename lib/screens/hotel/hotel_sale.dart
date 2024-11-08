@@ -38,6 +38,9 @@ class _HotelSaleState extends State<HotelSale> {
       HotelController hotelController,
       Widget? child,
     ) {
+      if (hotelController.isLading) {
+        return Center(child: CircularProgressIndicator());
+      }
       return Scrollbar(
         controller: controllerOne,
         child: SingleChildScrollView(

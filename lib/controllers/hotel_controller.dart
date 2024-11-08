@@ -129,17 +129,22 @@ class HotelController extends ChangeNotifier {
   }
 
   Future getHotelBuy(id) async {
+    isLading = true;
+    notifyListeners();
     try {
+      hotelbuy.clear();
       var x = await getpi("/api/hotel_tick/index/buy?hotel_id=$id");
       print(x.body);
       var data = jsonDecode(x.body);
       total_cost = data["total_cost"].toString();
       hotelbuy = data["data"].map((json) => HotelBuy.fromJson(json)).toList();
       print(x.body);
-      notifyListeners();
     } catch (e) {
       print(e);
       throw "jjj";
+    } finally {
+      isLading = false;
+      notifyListeners();
     }
   }
 
@@ -185,17 +190,23 @@ class HotelController extends ChangeNotifier {
 
   Future getHotelSale(id) async {
     print(id);
+    isLading = true;
+
+    notifyListeners();
     try {
       var x = await getpi("/api/hotel_tick/index/pay?hotel_id=$id");
       print(x.body);
+      hotelbuy.clear();
       var data = jsonDecode(x.body);
       total_cost = data["total_cost"].toString();
       hotelbuy = data["data"].map((json) => HotelBuy.fromJson(json)).toList();
       print(x.body);
-      notifyListeners();
     } catch (e) {
       print(e);
       throw "jjj";
+    } finally {
+      isLading = false;
+      notifyListeners();
     }
   }
 
@@ -264,19 +275,22 @@ class HotelController extends ChangeNotifier {
   }
 
   Future getHotelPay(id) async {
+    isLading = true;
+    notifyListeners();
     print(id);
     try {
       var x = await getpi("/api/hotel_pay/index/hotel?hotel_id=$id");
       var data = jsonDecode(x.body);
       print(x.body);
-
       // total_cost = data["total_cost"].toString();
       buyers = data["data"].map((json) => Buyer.fromJson(json)).toList();
       print(x.body);
-      notifyListeners();
     } catch (e) {
       print(e);
       throw "jjj";
+    } finally {
+      isLading = false;
+      notifyListeners();
     }
   }
 

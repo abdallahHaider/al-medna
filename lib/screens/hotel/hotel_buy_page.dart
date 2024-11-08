@@ -33,6 +33,9 @@ class _HotelBuyPageState extends State<HotelBuyPage> {
       HotelController hotelController,
       Widget? child,
     ) {
+      if (hotelController.isLading) {
+        return Center(child: CircularProgressIndicator());
+      }
       return MyDataTable(
           columns: [
             DataColumn(label: Text('الفندق')),
