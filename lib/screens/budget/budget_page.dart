@@ -347,11 +347,6 @@ List<String> names_usd = [
   'البنوك',
   "الفنادق",
 ];
-List<String> names_usd1 = [
-  'المنافذ',
-  'البنوك',
-  "الفنادق",
-];
 
 List<String> names_iqd = [
   'الخزنه',
