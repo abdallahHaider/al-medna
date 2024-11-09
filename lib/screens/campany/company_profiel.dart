@@ -181,7 +181,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
                               return Text(
-                                '${(double.parse(storage.rest) / 3.72).toStringAsFixed(2)}',
+                                '${(double.parse(storage.rest) / 3.75).toStringAsFixed(2)}',
                                 style: TextStyle(
                                   fontSize: 20,
                                 ),

@@ -40,13 +40,13 @@ class _BudgetPageState extends State<BudgetPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: buildCapitalContainer(
-                              "رأس المال بل دولار", context, "usd"),
+                          child: buildCapitalContainer("رأس المال بل دولار",
+                              context, "usd", "additional"),
                         ),
                         const SizedBox(width: 20),
                         Expanded(
-                          child: buildCapitalContainer(
-                              "رأس المال بل دينار", context, "iqd"),
+                          child: buildCapitalContainer("رأس المال بل دينار",
+                              context, "iqd", "additional_iqd"),
                         ),
                       ],
                     ),
@@ -85,7 +85,7 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 
   Widget buildCapitalContainer(
-      String title, BuildContext context, String currency) {
+      String title, BuildContext context, String currency, String path) {
     return Card(
       elevation: 5,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -111,21 +111,117 @@ class _BudgetPageState extends State<BudgetPage> {
               ),
             ),
             const SizedBox(height: 10),
-            Consumer<BudgetController>(builder: (context, watch, child) {
-              double currencyValue = (watch.budget[currency] is int)
-                  ? (watch.budget[currency] as int).toDouble()
-                  : watch.budget[currency] ?? 0.0;
-              List x = watch.budget["additional"] as List;
-              return Text(
-                // ناقص حساب الفنادق
-                (currencyValue - x.last["hotel"]).toStringAsFixed(2),
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "الطالب",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: 100,
+                      child: Consumer<BudgetController>(
+                          builder: (context, watch, child) {
+                        List x = watch.budget[path] as List;
+                        return Text(
+                          path == "additional"
+                              ? (x[0]["traps"] +
+                                      x[1]["softDoc_usd"] +
+                                      x[2]["company"])
+                                  .toStringAsFixed(2)
+                              : (x[0]["softDoc_iqd"] +
+                                      x[1]["small_bank_iqd"] +
+                                      x[2]["bank_iqd"])
+                                  .toStringAsFixed(2),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
                 ),
-              );
-            }),
+                /////
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "مطلوب",
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: 100,
+                      child: Consumer<BudgetController>(
+                          builder: (context, watch, child) {
+                        List x = watch.budget[path] as List;
+                        return Text(
+                          path == "additional"
+                              ? (x[3]["small_bank"] + x[4]["bank"])
+                                  .toStringAsFixed(2)
+                              : (x[3]["authority_iqd"]).toStringAsFixed(2),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        );
+                      }),
+                    ),
+                  ],
+                ),
+                ////
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Consumer<BudgetController>(
+                        builder: (context, watch, child) {
+                      double currencyValue = (watch.budget[currency] is int)
+                          ? (watch.budget[currency] as int).toDouble()
+                          : watch.budget[currency] ?? 0.0;
+                      List x = watch.budget["additional"] as List;
+                      return Text(
+                        // ناقص حساب الفنادق
+                        (currencyValue -
+                                (path == "additional" ? x.last["hotel"] : 0))
+                            .toStringAsFixed(2),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+
+                ///
+              ],
+            ),
           ],
         ),
       ),
@@ -176,7 +272,9 @@ class _BudgetPageState extends State<BudgetPage> {
                 ],
                 rows: List.generate(
                   // عرض الفنادق في الجدول
-                  additionalData.length - 1,
+                  additionalKey == "additional"
+                      ? additionalData.length - 1
+                      : additionalData.length,
                   (index) {
                     String key = additionalData[index].keys.first;
                     dynamic value = additionalData[index][key];
