@@ -231,15 +231,9 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget buildTableContainer(BuildContext context, String tableName,
       String additionalKey, List<String> names) {
     return Card(
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: Container(
-        margin: const EdgeInsets.all(10),
+      color: Colors.white,
+      child: Padding(
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -280,54 +274,64 @@ class _BudgetPageState extends State<BudgetPage> {
                 }
               }
 
-              return Column(
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // جدول "طالب"
-                  Text(
-                    "الطالب",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  DataTable(
-                    columnSpacing: 20.0,
-                    headingTextStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
-                    ),
-                    columns: const [
-                      DataColumn(label: Text('ت')),
-                      DataColumn(label: Text('الاسم')),
-                      DataColumn(label: Text('النوع')),
-                      DataColumn(label: Text('المبلغ')),
+                  Column(
+                    children: [
+                      Text(
+                        "الطالب",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green,
+                        ),
+                      ),
+                      DataTable(
+                        columnSpacing: 20.0,
+                        headingTextStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                        columns: const [
+                          DataColumn(label: Text('ت')),
+                          DataColumn(label: Text('الاسم')),
+                          DataColumn(label: Text('النوع')),
+                          DataColumn(label: Text('المبلغ')),
+                        ],
+                        rows: talebRows,
+                      ),
                     ],
-                    rows: talebRows,
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(width: 20),
                   // جدول "مطلوب"
-                  Text(
-                    "المطلوب",
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red,
-                    ),
-                  ),
-                  DataTable(
-                    columnSpacing: 20.0,
-                    headingTextStyle: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
-                    ),
-                    columns: const [
-                      DataColumn(label: Text('ت')),
-                      DataColumn(label: Text('الاسم')),
-                      DataColumn(label: Text('النوع')),
-                      DataColumn(label: Text('المبلغ')),
+                  Column(
+                    children: [
+                      Text(
+                        "المطلوب",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+                      DataTable(
+                        columnSpacing: 20.0,
+                        headingTextStyle: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                        columns: const [
+                          DataColumn(label: Text('ت')),
+                          DataColumn(label: Text('الاسم')),
+                          DataColumn(label: Text('النوع')),
+                          DataColumn(label: Text('المبلغ')),
+                        ],
+                        rows: matloubRows,
+                      ),
                     ],
-                    rows: matloubRows,
                   ),
                 ],
               );
