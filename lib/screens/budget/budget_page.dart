@@ -258,37 +258,78 @@ class _BudgetPageState extends State<BudgetPage> {
                       .map((item) => Map<String, dynamic>.from(item))
                       .toList();
 
-              return DataTable(
-                columnSpacing: 20.0,
-                headingTextStyle: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
-                ),
-                columns: const [
-                  DataColumn(label: Text('ت')),
-                  DataColumn(label: Text('الاسم')),
-                  DataColumn(label: Text('النوع')),
-                  DataColumn(label: Text('المبلغ')),
+              List<DataRow> talebRows = [];
+              List<DataRow> matloubRows = [];
+
+              for (int index = 0; index < additionalData.length; index++) {
+                String key = additionalData[index].keys.first;
+                dynamic value = additionalData[index][key];
+                double amount = (value is int) ? value.toDouble() : value;
+
+                DataRow row = DataRow(cells: [
+                  DataCell(Text((index + 1).toString())),
+                  DataCell(Text(names[index])),
+                  DataCell(Text(amount <= 0 ? "مطلوب" : "طالب")),
+                  DataCell(Text(amount.abs().toStringAsFixed(2))),
+                ]);
+
+                if (amount <= 0) {
+                  matloubRows.add(row);
+                } else {
+                  talebRows.add(row);
+                }
+              }
+
+              return Column(
+                children: [
+                  // جدول "طالب"
+                  Text(
+                    "الطالب",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                  DataTable(
+                    columnSpacing: 20.0,
+                    headingTextStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('ت')),
+                      DataColumn(label: Text('الاسم')),
+                      DataColumn(label: Text('النوع')),
+                      DataColumn(label: Text('المبلغ')),
+                    ],
+                    rows: talebRows,
+                  ),
+                  const SizedBox(height: 20),
+                  // جدول "مطلوب"
+                  Text(
+                    "المطلوب",
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red,
+                    ),
+                  ),
+                  DataTable(
+                    columnSpacing: 20.0,
+                    headingTextStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
+                    ),
+                    columns: const [
+                      DataColumn(label: Text('ت')),
+                      DataColumn(label: Text('الاسم')),
+                      DataColumn(label: Text('النوع')),
+                      DataColumn(label: Text('المبلغ')),
+                    ],
+                    rows: matloubRows,
+                  ),
                 ],
-                rows: List.generate(
-                  // عرض الفنادق في الجدول
-                  additionalKey == "additional"
-                      ? additionalData.length - 1
-                      : additionalData.length,
-                  (index) {
-                    String key = additionalData[index].keys.first;
-                    dynamic value = additionalData[index][key];
-
-                    double amount = (value is int) ? value.toDouble() : value;
-
-                    return DataRow(cells: [
-                      DataCell(Text((index + 1).toString())),
-                      DataCell(Text(names[index])),
-                      DataCell(Text(amount <= 0 ? "مطلوب" : "طالب")),
-                      DataCell(Text(amount.abs().toStringAsFixed(2))),
-                    ]);
-                  },
-                ),
               );
             }),
           ],
@@ -302,6 +343,11 @@ List<String> names_usd = [
   'الرحلات',
   'الخزنه',
   'شركات السعودي',
+  'المنافذ',
+  'البنوك',
+  "الفنادق",
+];
+List<String> names_usd1 = [
   'المنافذ',
   'البنوك',
   "الفنادق",
