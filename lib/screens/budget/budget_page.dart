@@ -290,6 +290,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         ),
                       ),
                       DataTable(
+                        border: TableBorder.all(color: Colors.grey),
                         columnSpacing: 20.0,
                         headingTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
@@ -318,6 +319,7 @@ class _BudgetPageState extends State<BudgetPage> {
                         ),
                       ),
                       DataTable(
+                        border: TableBorder.all(color: Colors.grey),
                         columnSpacing: 20.0,
                         headingTextStyle: const TextStyle(
                           fontWeight: FontWeight.bold,
