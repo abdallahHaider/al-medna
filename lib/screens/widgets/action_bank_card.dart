@@ -21,6 +21,7 @@ class _ActionBankCardState extends State<ActionBankCard> {
   final _namberKedeController = TextEditingController();
 
   final _costController = TextEditingController();
+  final _usdToIQDController = TextEditingController();
   bool isPay = true;
   var typeAction2 = TypeAction2(name: 'ايداع', id: 'pay');
   int typeAction3 = 0;
@@ -197,8 +198,24 @@ class _ActionBankCardState extends State<ActionBankCard> {
                     ),
                   ),
                   SizedBox(width: 16),
+                  // Expanded(
+                  //   child: SizedBox(),
+                  // ),
                   Expanded(
-                    child: SizedBox(),
+                    child: MyTextField(
+                      controller: _usdToIQDController,
+                      labelText: 'سعر الصرف',
+                      // validator: (value) {
+                      //   if (value!.isEmpty) {
+                      //     return 'Please enter cost';
+                      //   }
+                      // },
+                      // onChanged: (v) {
+                      //   Provider.of<ActionBankController>(context,
+                      //           listen: false)
+                      //       .setNumberWord(_costController.text, '');
+                      // },
+                    ),
                   ),
                 ],
               ),
@@ -227,8 +244,10 @@ class _ActionBankCardState extends State<ActionBankCard> {
                       SmartDialog.showLoading();
                       await Provider.of<ActionBankController>(context,
                               listen: false)
-                          .addpay(_costController.text.toString(),
-                              _namberKedeController.text.toString());
+                          .addpay(
+                              _costController.text.toString(),
+                              _namberKedeController.text.toString(),
+                              _usdToIQDController.text);
                       snackBar(context, "تمت العملية بمجاح", false);
                     } catch (e) {
                       snackBar(context, e.toString(), true);

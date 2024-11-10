@@ -139,7 +139,7 @@ class ActionBankController extends ChangeNotifier {
     }
   }
 
-  Future addpay(String cost, String Kade) async {
+  Future addpay(String cost, String Kade, String usdToIQD) async {
     print("11111111111111111111111");
     print(cost);
     // print(Kade);
@@ -164,6 +164,7 @@ class ActionBankController extends ChangeNotifier {
         if (isIQD == "t") "cost_USD": cost,
         if (isIQD == "f") "cost_IQD": cost,
         if (isIQD == "r") "cost_USD": double.parse(cost) / 3.75,
+        if (usdToIQD.isNotEmpty) "IQD_to_USD": usdToIQD,
         "number_kade": "0",
       });
       print(x.body);
