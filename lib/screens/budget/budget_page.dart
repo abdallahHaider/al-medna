@@ -119,7 +119,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "الطالب",
+                      "نطلب",
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -157,7 +157,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      "مطلوب",
+                      "مطلوبين",
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -254,6 +254,14 @@ class _BudgetPageState extends State<BudgetPage> {
 
               List<DataRow> talebRows = [];
               List<DataRow> matloubRows = [];
+              print(additionalData[3]);
+              if (additionalKey == "additional") {
+                talebRows.length - 1;
+                print(additionalData[4]);
+                additionalData[4]["bank"] = additionalData[4]["bank"] * -1;
+                additionalData[2]["company"] =
+                    additionalData[2]["company"] * -1;
+              }
 
               for (int index = 0; index < additionalData.length; index++) {
                 String key = additionalData[index].keys.first;
@@ -263,12 +271,18 @@ class _BudgetPageState extends State<BudgetPage> {
                 DataRow row = DataRow(cells: [
                   DataCell(Text((index + 1).toString())),
                   DataCell(Text(names[index])),
-                  DataCell(Text(amount <= 0 ? "مطلوب" : "طالب")),
+                  DataCell(Text(amount <= 0 ? "مطلوبين" : "نطلب")),
                   DataCell(Text(amount.abs().toStringAsFixed(2))),
                 ]);
 
                 if (amount <= 0) {
-                  matloubRows.add(row);
+                  if (additionalKey == "additional") {
+                    if (index != 5) {
+                      matloubRows.add(row);
+                    }
+                  } else {
+                    matloubRows.add(row);
+                  }
                 } else {
                   talebRows.add(row);
                 }
