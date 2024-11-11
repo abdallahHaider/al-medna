@@ -144,18 +144,27 @@ class _BudgetPageState extends State<BudgetPage> {
                           builder: (context, watch, child) {
                         List x = watch.budget[path] as List;
                         return Text(
-                          // watch.addbUSD.toStringAsFixed(2),
                           path == "additional"
                               ? (x[0]["traps"] +
-                                              x[1]["softDoc_usd"] +
-                                              x[2]["company"] * -1 >=
-                                          0
-                                      ? x[2]["company"]
-                                      : 0)
+                                      x[1]["softDoc_usd"] +
+                                      ((x[2]["company"] * -1) >= 0
+                                          ? x[2]["company"]
+                                          : 0) +
+                                      (x[3]["small_bank"] >= 0
+                                          ? x[3]["small_bank"]
+                                          : 0) +
+                                      (x[4]["bank"] >= 0 ? x[4]["bank"] : 0))
                                   .toStringAsFixed(2)
                               : (x[0]["softDoc_iqd"] +
-                                      x[1]["small_bank_iqd"] +
-                                      x[2]["bank_iqd"])
+                                      ((x[1]["small_bank_iqd"]) >= 0
+                                          ? x[1]["small_bank_iqd"]
+                                          : 0) +
+                                      (x[2]["bank_iqd"] >= 0
+                                          ? x[2]["bank_iqd"]
+                                          : 0) +
+                                      (x[3]["authority_iqd"] >= 0
+                                          ? x[3]["authority_iqd"]
+                                          : 0))
                                   .toStringAsFixed(2),
                           style: const TextStyle(
                             fontSize: 18,
@@ -186,11 +195,25 @@ class _BudgetPageState extends State<BudgetPage> {
                           builder: (context, watch, child) {
                         List x = watch.budget[path] as List;
                         return Text(
-                          watch.subUSD.toStringAsFixed(2),
-                          // path == "additional"
-                          //     ? (x[3]["small_bank"] + x[4]["bank"])
-                          //         .toStringAsFixed(2)
-                          //     : (x[3]["authority_iqd"]).toStringAsFixed(2),
+                          path == "additional"
+                              ? (((x[2]["company"] * -1) < 0
+                                          ? x[2]["company"] * -1
+                                          : 0) +
+                                      (x[3]["small_bank"] < 0
+                                          ? x[3]["small_bank"]
+                                          : 0) +
+                                      (x[4]["bank"] < 0 ? x[4]["bank"] : 0))
+                                  .toStringAsFixed(2)
+                              : (((x[1]["small_bank_iqd"]) < 0
+                                          ? x[1]["small_bank_iqd"]
+                                          : 0) +
+                                      (x[2]["bank_iqd"] < 0
+                                          ? x[2]["bank_iqd"]
+                                          : 0) +
+                                      (x[3]["authority_iqd"] < 0
+                                          ? x[3]["authority_iqd"]
+                                          : 0))
+                                  .toStringAsFixed(2),
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -274,7 +297,7 @@ class _BudgetPageState extends State<BudgetPage> {
               if (additionalKey == "additional") {
                 talebRows.length - 1;
                 print(additionalData[4]);
-                additionalData[4]["bank"] = additionalData[4]["bank"] * -1;
+                additionalData[4]["bank"] = additionalData[4]["bank"] * 1;
                 additionalData[2]["company"] =
                     additionalData[2]["company"] * -1;
               }
@@ -287,7 +310,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 DataRow row = DataRow(cells: [
                   DataCell(Text((index + 1).toString())),
                   DataCell(Text(names[index])),
-                  DataCell(Text(amount <= 0 ? "مطلوبين" : "نطلب")),
+                  DataCell(Text(amount < 0 ? "مطلوبين" : "نطلب")),
                   DataCell(Text(amount.abs().toStringAsFixed(2))),
                 ]);
 
