@@ -147,7 +147,7 @@ class _BudgetPageState extends State<BudgetPage> {
                           path == "additional"
                               ? (x[0]["traps"] +
                                       x[1]["softDoc_usd"] +
-                                      ((x[2]["company"] * -1) >= 0
+                                      ((x[2]["company"] * 1) >= 0
                                           ? x[2]["company"]
                                           : 0) +
                                       (x[3]["small_bank"] >= 0
@@ -196,8 +196,8 @@ class _BudgetPageState extends State<BudgetPage> {
                         List x = watch.budget[path] as List;
                         return Text(
                           path == "additional"
-                              ? (((x[2]["company"] * -1) < 0
-                                          ? x[2]["company"] * -1
+                              ? (((x[2]["company"] * 1) < 0
+                                          ? x[2]["company"] * 1
                                           : 0) +
                                       (x[3]["small_bank"] < 0
                                           ? x[3]["small_bank"]
@@ -298,8 +298,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 talebRows.length - 1;
                 print(additionalData[4]);
                 additionalData[4]["bank"] = additionalData[4]["bank"] * 1;
-                additionalData[2]["company"] =
-                    additionalData[2]["company"] * -1;
+                additionalData[2]["company"] = additionalData[2]["company"] * 1;
               }
 
               for (int index = 0; index < additionalData.length; index++) {
