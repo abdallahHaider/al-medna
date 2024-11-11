@@ -8,12 +8,15 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/services.dart' show rootBundle;
 
 Future<void> createHotelPDF({
+  // required String hotelName,
   required String startDate,
   required String endDate,
   required String seller,
   required String buyer,
   required int roomCount,
   required double pricePerRoom,
+  required int days,
+  // required String Time,
 }) async {
   final fonddata = await rootBundle.load("assets/fonts/Cairo-Light.ttf");
   final costmfond = pw.Font.ttf(fonddata);
@@ -54,113 +57,136 @@ Future<void> createHotelPDF({
               child: pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
+                  pw.SizedBox(height: 20),
+                  pw.Row(
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      mainAxisAlignment: pw.MainAxisAlignment.center,
+                      children: [
+                        pw.Text('عقد شراء غرف',
+                            style: pw.TextStyle(fontSize: 24),
+                            textDirection: pw.TextDirection.rtl,
+                            textAlign: pw.TextAlign.center),
+                      ]),
                   // عنوان العقد
-                  pw.Text('عقد شراء غرف',
-                      style: pw.TextStyle(fontSize: 24),
-                      textDirection: pw.TextDirection.rtl,
-                      textAlign: pw.TextAlign.center),
 
                   // مقدمة العقد
                   pw.Text(
-                      'بناءً على رغبة الطرف الأول (البائع) والطرف الثاني (المشتري) في إبرام اتفاقية بيع وشراء عدد من الغرف، فقد تم الاتفاق بينهما وفقاً للشروط والبنود التالية:'),
+                      'الطرف الأول السيد محمد حسن سليم مستأجر الفندق (${seller}) لموسم رمضان 2046 حسب العقود المبرمة مع أصحاب الفنادق .',
+                      style: pw.TextStyle(fontSize: 17),
+                      textDirection: pw.TextDirection.rtl),
+
+                  pw.Text(
+                      'الطرف الثاني السيد (${buyer}) حيث أبدى الطرف الثاني باستئجار غرف من الطرف الأول للفندق (${seller}) 	وتكون عدد الغرف (${roomCount})   سعر الغرف  (${pricePerRoom})  المجموع (${pricePerRoom * totalPrice * days})   وتكون الفترة من (${startDate}) ولي غايت (${endDate.toString().substring(0, 10)}) يوم ',
+                      style: pw.TextStyle(fontSize: 17),
+                      textDirection: pw.TextDirection.rtl),
 
                   // بند التفاصيل العامة
-                  pw.Text('1. التفاصيل العامة:',
-                      style: pw.TextStyle(fontSize: 14),
+                  pw.Text(
+                      '1.  يلتزم  الطرف الأول بتامين جميع الخدمات المنصوص عليا في تعليمات وزارت الحج وضوابط اسكان المعتمرين وتنفيذ لوائح وزارة الحج والعمرة في المملكة العربية السعودية ',
+                      style: pw.TextStyle(fontSize: 17),
                       textDirection: pw.TextDirection.rtl),
-                  pw.Text(
-                    'تاريخ العقد: من $startDate إلى $endDate',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
-                  pw.Text(
-                    'الطرف الأول (البائع): $seller',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
-                  pw.Text(
-                    'الطرف الثاني (المشتري): $buyer',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
+                  // pw.Text(
+                  //   'تاريخ العقد: من $startDate إلى $endDate',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
+                  // pw.Text(
+                  //   'الطرف الأول (البائع): $seller',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
+                  // pw.Text(
+                  //   'الطرف الثاني (المشتري): $buyer',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
 
                   // بند تفاصيل الغرف والأسعار
-                  pw.Text('2. تفاصيل الشراء:',
+                  pw.Text(
+                      '2. يلتزم الطرف الثاني بالمحافظة على أثاث الفندق ويتحمل أي ضرر أو تلف أثاث الغرفة',
                       style: pw.TextStyle(
-                        fontSize: 14,
+                        fontSize: 17,
                       ),
                       textDirection: pw.TextDirection.rtl),
-                  pw.Text(
-                    'عدد الغرف المشمولة: $roomCount غرفة',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
-                  pw.Text(
-                    'سعر الغرفة الواحدة: ${pricePerRoom.toStringAsFixed(2)} دينار',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
-                  pw.Text(
-                    'السعر الكلي: ${totalPrice.toStringAsFixed(2)} دينار',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
+                  // pw.Text(
+                  //   'عدد الغرف المشمولة: $roomCount غرفة',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
+                  // pw.Text(
+                  //   'سعر الغرفة الواحدة: ${pricePerRoom.toStringAsFixed(2)} دينار',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
+                  // pw.Text(
+                  //   'السعر الكلي: ${totalPrice.toStringAsFixed(2)} دينار',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
 
                   // بند التزامات الطرفين
-                  pw.Text('3. التزامات الطرفين:',
-                      style: pw.TextStyle(fontSize: 14),
+                  pw.Text(
+                      '3.على الطرف الثاني تسديد المبلغ المتفق عليه قبل دخول المعتمرين .',
+                      style: pw.TextStyle(fontSize: 17),
                       textDirection: pw.TextDirection.rtl),
-                  pw.Text(
-                    'يلتزم الطرف الأول بتوفير الغرف المتفق عليها وتسليمها للطرف الثاني في التاريخ المحدد.',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
-                  pw.Text(
-                    'يلتزم الطرف الثاني بدفع المبلغ المتفق عليه في موعده المحدد.',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
+                  // pw.Text(
+                  //   'يلتزم الطرف الأول بتوفير الغرف المتفق عليها وتسليمها للطرف الثاني في التاريخ المحدد.',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
+                  // pw.Text(
+                  //   'يلتزم الطرف الثاني بدفع المبلغ المتفق عليه في موعده المحدد.',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
 
                   // بند إنهاء العقد
-                  pw.Text('4. شروط إنهاء العقد:',
-                      style: pw.TextStyle(fontSize: 14),
+                  pw.Text(
+                      '4. يحق للطرف الاول فسخ العقد في حال عدم سداد الدفعات .',
+                      style: pw.TextStyle(fontSize: 17),
                       textDirection: pw.TextDirection.rtl),
-                  pw.Text(
-                    'يحق للطرفين إنهاء العقد باتفاق مشترك.',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
-                  pw.Text(
-                    'يلتزم الطرف الذي يقرر إنهاء العقد بإخطار الطرف الآخر قبل فترة لا تقل عن 15 يوماً.',
-                    style: pw.TextStyle(fontSize: 12),
-                    textDirection: pw.TextDirection.rtl,
-                  ),
+                  // pw.Text(
+                  //   'يحق للطرفين إنهاء العقد باتفاق مشترك.',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
+                  // pw.Text(
+                  //   'يلتزم الطرف الذي يقرر إنهاء العقد بإخطار الطرف الآخر قبل فترة لا تقل عن 15 يوماً.',
+                  //   style: pw.TextStyle(fontSize: 12),
+                  //   textDirection: pw.TextDirection.rtl,
+                  // ),
 
                   // بند شروط عامة
                   pw.Text('5. شروط عامة:',
                       style: pw.TextStyle(
-                        fontSize: 14,
+                        fontSize: 20,
                       ),
                       textDirection: pw.TextDirection.rtl),
                   pw.Text(
                     'يعتبر هذا العقد ساري المفعول بمجرد توقيعه من قبل الطرفين.',
-                    style: pw.TextStyle(fontSize: 12),
+                    style: pw.TextStyle(fontSize: 16),
                     textDirection: pw.TextDirection.rtl,
                   ),
                   pw.Text(
                     'جميع الشروط والبنود في هذا العقد ملزمة للطرفين.',
-                    style: pw.TextStyle(fontSize: 12),
+                    style: pw.TextStyle(fontSize: 16),
                     textDirection: pw.TextDirection.rtl,
                   ),
 
-                  // التوقيعات
-                  pw.Text('توقيع الطرف الأول (البائع):',
-                      style: pw.TextStyle(fontSize: 12),
-                      textDirection: pw.TextDirection.rtl),
+                  pw.SizedBox(height: 20),
+                  pw.Row(
+                      crossAxisAlignment: pw.CrossAxisAlignment.center,
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceAround,
+                      children: [
+                        // التوقيعات
+                        pw.Text('توقيع الطرف الأول (البائع):',
+                            style: pw.TextStyle(fontSize: 16),
+                            textDirection: pw.TextDirection.rtl),
 
-                  pw.Text('توقيع الطرف الثاني (المشتري):',
-                      style: pw.TextStyle(fontSize: 12),
-                      textDirection: pw.TextDirection.rtl),
+                        pw.Text('توقيع الطرف الثاني (المشتري):',
+                            style: pw.TextStyle(fontSize: 16),
+                            textDirection: pw.TextDirection.rtl),
+                      ]),
                 ],
               ))
         ]);
@@ -186,12 +212,12 @@ Future<void> createHotelPDF({
   // فتح ملف PDF باستخدام تطبيق خارجي
   await OpenFilex.open(file.path);
 
-  // // حفظ ملف PDF على الويب
-  // final bytes = await pdf.save();
-  // final blob = Blob([bytes], 'application/pdf');
-  // final url = Url.createObjectUrlFromBlob(blob);
-  // final anchor = AnchorElement(href: url)
-  //   ..setAttribute("download", "example.pdf")
-  //   ..click();
-  // Url.revokeObjectUrl(url);
+//   // حفظ ملف PDF على الويب
+//   final bytes = await pdf.save();
+//   final blob = Blob([bytes], 'application/pdf');
+//   final url = Url.createObjectUrlFromBlob(blob);
+//   final anchor = AnchorElement(href: url)
+//     ..setAttribute("download", "example.pdf")
+//     ..click();
+//   Url.revokeObjectUrl(url);
 }

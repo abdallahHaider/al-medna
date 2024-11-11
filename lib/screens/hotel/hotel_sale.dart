@@ -167,6 +167,7 @@ class _HotelSaleState extends State<HotelSale> {
                                       roomCount: hotelBuy.rooms!,
                                       pricePerRoom: double.parse(
                                           hotelBuy.roomPricePerNight!),
+                                      days: hotelBuy.nights!,
                                     ),
                                 icon: Icon(Icons.picture_as_pdf)),
                             IconButton(
