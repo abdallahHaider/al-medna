@@ -7,6 +7,15 @@ class BudgetController extends ChangeNotifier {
   Map<String, dynamic> budget = {};
   bool isLoading = true; // حالة التحميل
 
+  double subUSD = 0;
+  double subIQD = 0;
+  double addbUSD = 0;
+  double addbIQD = 0;
+
+  updede() {
+    notifyListeners();
+  }
+
   Future getBuget() async {
     print("جلب البيانات جارٍ...");
     isLoading = true; // بدء التحميل

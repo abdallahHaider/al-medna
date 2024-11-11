@@ -18,6 +18,17 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 
   @override
+  void dispose() {
+    Provider.of<BudgetController>(context, listen: false).addbUSD = 0;
+    Provider.of<BudgetController>(context, listen: false).addbIQD = 0;
+    Provider.of<BudgetController>(context, listen: false).subIQD = 0;
+    Provider.of<BudgetController>(context, listen: false).subUSD = 0;
+    Provider.of<BudgetController>(context, listen: false).updede();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -133,10 +144,14 @@ class _BudgetPageState extends State<BudgetPage> {
                           builder: (context, watch, child) {
                         List x = watch.budget[path] as List;
                         return Text(
+                          // watch.addbUSD.toStringAsFixed(2),
                           path == "additional"
                               ? (x[0]["traps"] +
-                                      x[1]["softDoc_usd"] +
-                                      x[2]["company"])
+                                              x[1]["softDoc_usd"] +
+                                              x[2]["company"] * -1 >=
+                                          0
+                                      ? x[2]["company"]
+                                      : 0)
                                   .toStringAsFixed(2)
                               : (x[0]["softDoc_iqd"] +
                                       x[1]["small_bank_iqd"] +
@@ -171,10 +186,11 @@ class _BudgetPageState extends State<BudgetPage> {
                           builder: (context, watch, child) {
                         List x = watch.budget[path] as List;
                         return Text(
-                          path == "additional"
-                              ? (x[3]["small_bank"] + x[4]["bank"])
-                                  .toStringAsFixed(2)
-                              : (x[3]["authority_iqd"]).toStringAsFixed(2),
+                          watch.subUSD.toStringAsFixed(2),
+                          // path == "additional"
+                          //     ? (x[3]["small_bank"] + x[4]["bank"])
+                          //         .toStringAsFixed(2)
+                          //     : (x[3]["authority_iqd"]).toStringAsFixed(2),
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
@@ -275,16 +291,26 @@ class _BudgetPageState extends State<BudgetPage> {
                   DataCell(Text(amount.abs().toStringAsFixed(2))),
                 ]);
 
-                if (amount <= 0) {
+                if (amount < 0) {
                   if (additionalKey == "additional") {
                     if (index != 5) {
                       matloubRows.add(row);
+                      print(index);
+                      print(amount);
+                      Provider.of<BudgetController>(context, listen: false)
+                          .addbUSD += amount;
+                      Provider.of<BudgetController>(context, listen: false)
+                          .updede();
                     }
                   } else {
                     matloubRows.add(row);
                   }
                 } else {
                   talebRows.add(row);
+                  Provider.of<BudgetController>(context, listen: false)
+                      .subUSD += amount;
+                  Provider.of<BudgetController>(context, listen: false)
+                      .updede();
                 }
               }
 
