@@ -5,7 +5,6 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
-// import 'package:universal_html/html.dart';
 
 Future<void> generatePdfWeb(
     String name, String cost, String id, String date, String totalCost) async {

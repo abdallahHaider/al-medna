@@ -2,6 +2,7 @@ import 'package:admin/controllers/hotel_controller.dart';
 import 'package:admin/controllers/reseller_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/models/buyer.dart';
+import 'package:admin/pdf/pdd.dart';
 import 'package:admin/screens/seller/seller_profiel.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/screens/widgets/my_text_field.dart';
@@ -10,9 +11,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class BuyerPage extends StatefulWidget {
-  const BuyerPage({super.key, required this.hotelID});
+  const BuyerPage({super.key, required this.hotelID, required this.fullCost});
 
   final String hotelID;
+  final String fullCost;
 
   @override
   State<BuyerPage> createState() => _BuyerPageState();
@@ -101,46 +103,73 @@ class _BuyerPageState extends State<BuyerPage> {
                                 ),
                               ),
                             ),
-                            DataCell(ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStateProperty.all(
-                                    Colors.red,
-                                  ),
-                                  foregroundColor: WidgetStateProperty.all(
-                                    Colors.white,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (
-                                        BuildContext context,
-                                      ) {
-                                        return AlertDialog(
-                                          title: Text("حذف"),
-                                          content:
-                                              Text("هل انت متاكد من الحذف"),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text("الغاء"),
-                                            ),
-                                            TextButton(
-                                              onPressed: () async {
-                                                // await Provider.of<>(context,listen: false)
-                                                await hotelController
-                                                    .hotelPayDelete(
-                                                        hotelBuy.id!, context);
-                                              },
-                                              child: Text("حذف"),
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Text("حذف"))),
+                            DataCell(Row(
+                              children: [
+                                IconButton(
+                                    onPressed: () async {
+                                      try {
+                                        // await generateInvoice();
+                                        // final pdf = await generateInvoice();
+                                        // await Printing.layoutPdf(
+                                        //     onLayout:
+                                        //         (PdfPageFormat format) async =>
+                                        //             pdf.save());
+                                        generatePdfWeb(
+                                            hotelBuy.buyer.toString(),
+                                            hotelBuy.costRas.toString(),
+                                            hotelBuy.id.toString(),
+                                            DateTime.now()
+                                                .toString()
+                                                .substring(0, 10),
+                                            widget.fullCost);
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                    },
+                                    icon: Icon(Icons.picture_as_pdf)),
+                                ElevatedButton(
+                                    style: ButtonStyle(
+                                      backgroundColor: WidgetStateProperty.all(
+                                        Colors.red,
+                                      ),
+                                      foregroundColor: WidgetStateProperty.all(
+                                        Colors.white,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (
+                                            BuildContext context,
+                                          ) {
+                                            return AlertDialog(
+                                              title: Text("حذف"),
+                                              content:
+                                                  Text("هل انت متاكد من الحذف"),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text("الغاء"),
+                                                ),
+                                                TextButton(
+                                                  onPressed: () async {
+                                                    // await Provider.of<>(context,listen: false)
+                                                    await hotelController
+                                                        .hotelPayDelete(
+                                                            hotelBuy.id!,
+                                                            context);
+                                                  },
+                                                  child: Text("حذف"),
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    child: Text("حذف")),
+                              ],
+                            )),
                           ]);
                     }));
               })),

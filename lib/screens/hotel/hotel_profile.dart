@@ -155,7 +155,12 @@ class _HotelProfileState extends State<HotelProfile> {
                     if (widget.showBuy)
                       HotelPay(hotelID: widget.hotelId.id.toString()),
                     if (!widget.showBuy)
-                      BuyerPage(hotelID: widget.hotelId.id.toString()),
+                      Consumer<HotelController>(
+                        builder: (context, watch, child) => BuyerPage(
+                          hotelID: widget.hotelId.id.toString(),
+                          fullCost: formatPrice(double.parse(watch.total_cost)),
+                        ),
+                      )
                   ],
                 ),
               ),

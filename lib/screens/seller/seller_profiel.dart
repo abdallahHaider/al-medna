@@ -1,8 +1,11 @@
 import 'package:admin/controllers/seller_controller.dart';
 import 'package:admin/models/hotel_buy.dart';
 import 'package:admin/models/mybuyer.dart';
+import 'package:admin/pdf/hotel_pay.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 import 'package:provider/provider.dart';
 
 class SellerProfile extends StatefulWidget {
@@ -53,6 +56,7 @@ class _SellerProfileState extends State<SellerProfile> {
                       DataColumn(label: Text('المبلغ بالريال')),
                       DataColumn(label: Text('المبلغ بالدولار')),
                       DataColumn(label: Text('ملاحضات')),
+                      DataColumn(label: Text('الطباعة')),
                     ],
                     rows: List.generate(accountsController.mySmallBank.length,
                         (index) {
@@ -75,6 +79,20 @@ class _SellerProfileState extends State<SellerProfile> {
                             DataCell(
                               Text(mybuyer.note.toString()),
                             ),
+                            DataCell(IconButton(
+                                onPressed: () async {
+                                  try {
+                                    // await generateInvoice();
+                                    final pdf = await generateInvoice();
+                                    await Printing.layoutPdf(
+                                        onLayout:
+                                            (PdfPageFormat format) async =>
+                                                pdf.save());
+                                  } catch (e) {
+                                    print(e);
+                                  }
+                                },
+                                icon: Icon(Icons.picture_as_pdf)))
                           ]);
                     }),
                   );
