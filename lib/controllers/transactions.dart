@@ -14,12 +14,14 @@ class TransactionsController extends ChangeNotifier {
   String wallet_USD = "";
 
   String wallet_IQD = "";
+  int page = 1;
 
   Future getmySmallBank(String id) async {
     print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     Response x;
     try {
-      x = await getpi("/api/transactions/index/small_bank?small_bank_id=$id");
+      x = await getpi(
+          "/api/transactions/index/small_bank?page=${page}&small_bank_id=$id");
       var data = jsonDecode(x.body);
       print(x.body);
       wallet_USD = data["cost_usd"].toString();
@@ -150,5 +152,10 @@ class TransactionsController extends ChangeNotifier {
       print(e);
       throw "حصل خطا في ارسال البيانات";
     }
+  }
+
+  void updete(String id, int i) {
+    page += i;
+    getmySmallBank(id);
   }
 }

@@ -44,11 +44,13 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
 
     super.initState();
   }
+
   String formatCustomNumber(String value) {
     if (value.isEmpty) return '';
     final number = double.tryParse(value.replaceAll(',', ''));
     if (number == null) return value;
-    return NumberFormat('#,##0.00').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+    return NumberFormat('#,##0.00')
+        .format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
   }
 
   @override
@@ -143,6 +145,36 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                   LoclPay(
                     id: widget.id,
                   )
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(),
+                ),
+                TextButton(
+                    onPressed: () {
+                      Provider.of<TransactionsController>(context,
+                              listen: false)
+                          .updete(widget.id, -1);
+                    },
+                    child: Text("الصفحة السابقة")),
+                Consumer(
+                  builder: (context, TransactionsController companyController,
+                      child) {
+                    return Text(
+                      "الصفحة الحالية: ${companyController.page}",
+                    );
+                  },
+                ),
+                TextButton(
+                    onPressed: () {
+                      Provider.of<TransactionsController>(context,
+                              listen: false)
+                          .updete(widget.id, 1);
+                    },
+                    child: Text("الصفحة التالية")),
+                Expanded(child: SizedBox()),
               ],
             ),
             Padding(
