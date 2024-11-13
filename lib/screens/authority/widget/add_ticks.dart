@@ -6,22 +6,25 @@ import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class addTicks extends StatelessWidget {
-  addTicks({
-    super.key,
-    // required this.number,
-    // required this.cost,
-    // required this.commission,
-    required this.widget,
-  });
+class AddTicks extends StatefulWidget {
+  AddTicks({super.key, required this.widget});
 
+  final AuthorityProfile widget;
+
+  @override
+  _AddTicksState createState() => _AddTicksState();
+}
+
+class _AddTicksState extends State<AddTicks> {
   final number = TextEditingController();
   final cost = TextEditingController();
   final commission = TextEditingController();
   final name = TextEditingController();
   final number_of_child = TextEditingController();
   final price_of_child = TextEditingController();
-  final AuthorityProfile widget;
+  final iqd_to_usd = TextEditingController();
+
+  String selectedCurrency = 'دينار'; // Default currency
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +39,7 @@ class addTicks extends StatelessWidget {
               padding: const EdgeInsets.all(defaultPadding),
               child: Header(title: "اضافة حجز"),
             ),
-            SizedBox(
-              height: defaultPadding,
-            ),
+            SizedBox(height: defaultPadding),
             Row(
               children: [
                 SizedBox(
@@ -48,9 +49,7 @@ class addTicks extends StatelessWidget {
                     controller: name,
                   ),
                 ),
-                SizedBox(
-                  width: defaultPadding,
-                ),
+                SizedBox(width: defaultPadding),
                 SizedBox(
                   width: 400,
                   child: MyTextField(
@@ -60,9 +59,7 @@ class addTicks extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: defaultPadding,
-            ),
+            SizedBox(height: defaultPadding),
             Row(
               children: [
                 SizedBox(
@@ -72,9 +69,7 @@ class addTicks extends StatelessWidget {
                     controller: cost,
                   ),
                 ),
-                SizedBox(
-                  width: defaultPadding,
-                ),
+                SizedBox(width: defaultPadding),
                 SizedBox(
                   width: 400,
                   child: MyTextField(
@@ -84,9 +79,7 @@ class addTicks extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: defaultPadding,
-            ),
+            SizedBox(height: defaultPadding),
             Row(
               children: [
                 SizedBox(
@@ -96,9 +89,7 @@ class addTicks extends StatelessWidget {
                     controller: price_of_child,
                   ),
                 ),
-                SizedBox(
-                  width: defaultPadding,
-                ),
+                SizedBox(width: defaultPadding),
                 SizedBox(
                   width: 400,
                   child: MyTextField(
@@ -108,29 +99,62 @@ class addTicks extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: defaultPadding,
+            SizedBox(height: defaultPadding),
+            // Dropdown for currency selection
+            Row(
+              children: [
+                Text("العملة: ", style: TextStyle(fontSize: 18)),
+                SizedBox(width: 10),
+                DropdownButton<String>(
+                  value: selectedCurrency,
+                  items: ['دينار', 'دولار'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedCurrency = newValue!;
+                    });
+                  },
+                ),
+              ],
             ),
+            SizedBox(height: defaultPadding),
+            // Conditionally show the IQD to USD field
+            if (selectedCurrency == 'دولار')
+              SizedBox(
+                width: 400,
+                child: MyTextField(
+                  labelText: "سعر الصرف",
+                  controller: iqd_to_usd,
+                ),
+              ),
+            SizedBox(height: defaultPadding),
             SizedBox(
               width: 400,
               child: ElevatedButton(
                   onPressed: () async {
-                    await Provider.of<AuthorityController>(context,
-                            listen: false)
+                    await Provider.of<AuthorityController>(context, listen: false)
                         .addAuthorityTicks(
-                            widget.id,
-                            number.text,
-                            cost.text,
-                            commission.text,
-                            number_of_child.text,
-                            price_of_child.text,
-                            name.text,
-                            context);
+                      widget.widget.id,
+                      number.text,
+                      cost.text,
+                      commission.text,
+                      number_of_child.text,
+                      price_of_child.text,
+                      name.text,
+                      
+                      selectedCurrency=='دينار'?'iqd':'usd',
+                      iqd_to_usd.text.isEmpty?"1":    iqd_to_usd.text,
+                      context
+                    );
                     Provider.of<AuthorityController>(context, listen: false)
-                        .getAuthorityTicks(widget.id);
+                        .getAuthorityTicks(widget.widget.id);
                   },
                   child: Text("اضافة")),
-            )
+            ),
           ],
         ),
       ),

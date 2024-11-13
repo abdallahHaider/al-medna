@@ -140,6 +140,8 @@ class AuthorityController extends ChangeNotifier {
       number_of_child,
       price_of_child,
       name,
+      type,
+      iqd_to_usd,
       BuildContext context) async {
     Response x;
     SmartDialog.showLoading();
@@ -152,6 +154,8 @@ class AuthorityController extends ChangeNotifier {
         "number_of_child": number_of_child ?? "0",
         "price_of_child": price_of_child ?? "0",
         "name": name,
+        'type':type,
+        'IQD_to_USD':iqd_to_usd
       });
     } catch (e) {
       snackBar(context, e.toString(), true);

@@ -60,7 +60,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
           children: [
             Row(
               children: [
-                if (!isEdit) addTicks(widget: widget),
+                if (!isEdit) AddTicks(widget: widget),
                 if (isEdit)
                   SizedBox(
                     width: 500,
@@ -172,6 +172,8 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                         DataColumn(label: Text(" الأجر")),
                         DataColumn(label: Text("الاجمالي")),
                         DataColumn(label: Text("القيد")),
+                                                DataColumn(label: Text("العمله")),
+
                         DataColumn(label: Text("التاريخ")),
                         DataColumn(label: Text("الاجراء"))
                       ],
@@ -195,6 +197,8 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                               DataCell(Text(authority.commission.toString())),
                               DataCell(Text(authority.totalPrice.toString())),
                               DataCell(Text(authority.number_kade.toString())),
+                                                            DataCell(Text(authority.type.toString()== 'iqd'?'دينار':"دولار")),
+
                               DataCell(Text(authority.createdAt
                                   .toString()
                                   .substring(0, 10))),

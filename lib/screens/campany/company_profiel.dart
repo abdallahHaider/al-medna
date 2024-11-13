@@ -298,10 +298,10 @@ class CustomTable extends StatelessWidget {
         Table(
           border: TableBorder.all(color: Colors.grey, width: 1),
           children: [
-            _buildTableRow('مجموع التاشيرات', (storage) => storage.total_price_t, (storage) => storage.convertTashera(), (storage) => storage.isTashera, 20),
+            _buildTableRow('مجموع حساب التاشيرات', (storage) => storage.total_price_t, (storage) => storage.convertTashera(), (storage) => storage.isTashera, 20),
             _buildTableRow('مجموع حساب الفنادق', (storage) => storage.total_room_price_per_night, (storage) => storage.convertHotel(), (storage) => storage.ishotel, 20),
             _buildTableRow('المجموع الكلي', (storage) => storage.total, (storage) => storage.convertTotal(), (storage) => storage.istotal, 20),
-            _buildTableRow('المجموع التسديد', (storage) => storage.pay, (storage) => storage.convertPay(), (storage) => storage.ispay, 20),
+            _buildTableRow('مجموع التسديد', (storage) => storage.pay, (storage) => storage.convertPay(), (storage) => storage.ispay, 20),
             _buildTableRow('المجموع المتبقي', (storage) => storage.rest, (storage) => storage.convertrest(), (storage) => storage.isrest, 20),
             _buildTableRow('المجموع المتبقي بل الدولار', (storage) => (double.parse(storage.rest) / 3.75).toString(), (storage) => storage.convertRestUsd(), (storage) => storage.isrestUSD, 20),
           ],

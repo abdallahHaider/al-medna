@@ -23,6 +23,7 @@ class AuthorityTickt {
   String? price_of_child;
   DateTime? createdAt;
   String? number_kade;
+  String? type;
 
   AuthorityTickt({
     this.id,
@@ -36,6 +37,7 @@ class AuthorityTickt {
     this.price_of_child,
     this.createdAt,
     this.number_kade,
+    this.type 
   });
 
   factory AuthorityTickt.fromJson(Map<String, dynamic> json) => AuthorityTickt(
@@ -52,6 +54,8 @@ class AuthorityTickt {
             ? null
             : DateTime.parse(json["created_at"]),
         number_kade: json["number_kade"] ?? "0",
+                type: json["type"] ?? "iqd",
+
       );
 
   Map<String, dynamic> toJson() => {
