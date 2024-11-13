@@ -11,18 +11,54 @@ class CompanyController extends ChangeNotifier {
   List companys = [];
   List myCompanys = [];
 
-  String total_price_t = "";
-  String total_room_price_per_night = "";
+  String total_price_t = "0";
+  String total_room_price_per_night = "0";
   String total = "0";
   String pay = "0";
   String rest = "0";
   int page = 1;
   bool showT = false;
+  bool isTashera= false;
+  bool ishotel= false;
+    bool istotal= false;
+  bool ispay= false;
+  bool isrest = false;
+  bool isrestUSD = false;
+  
+
 
   setT() {
     showT = true;
     notifyListeners();
   }
+  convertTashera(){
+    isTashera = !isTashera;
+        notifyListeners();
+  }
+  convertHotel(){
+    ishotel = !ishotel;
+        notifyListeners();
+  }
+   convertTotal(){
+    istotal = !istotal;
+        notifyListeners();
+  }
+  convertPay(){
+    ispay = !ispay;
+        notifyListeners();
+
+  }
+   convertrest(){
+    isrest = !isrest;
+        notifyListeners();
+
+  }
+  convertRestUsd(){
+    isrestUSD = !isrestUSD;
+            notifyListeners();
+
+  }
+  
 
   Future getCompanys() async {
     Response x;

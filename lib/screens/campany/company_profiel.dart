@@ -10,6 +10,7 @@ import 'package:admin/screens/widgets/my_data_table.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spelling_number/spelling_number.dart';
 
 import '../../controllers/rootWidget.dart';
 
@@ -76,10 +77,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           ),
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
-                              return Text(
-                                '${storage.total_price_t}',
-                                style: TextStyle(
-                                  fontSize: 20,
+                              return InkWell(
+                                onTap: () {
+                                  storage.convertTashera();
+                                },
+                                child: Text(
+                                  '${storage.isTashera ? SpellingNumber(lang: 'ar').convert(double.parse(storage.total_price_t).toInt().abs()) : storage.total_price_t}',
+                                  style: TextStyle(
+                                     color:double.parse(storage.total_price_t).toInt() < 0
+                                        ? Colors.red
+                                        : null,
+                                    fontSize: storage.isTashera ? 15 : 20,
+                                  ),
                                 ),
                               );
                             },
@@ -96,10 +105,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           ),
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
-                              return Text(
-                                '${storage.total_room_price_per_night}ر.ع',
-                                style: TextStyle(
-                                  fontSize: 20,
+                              return InkWell(
+                                onTap: () {
+                                  storage.convertHotel();
+                                },
+                                child: Text(
+                                  '${storage.ishotel ? SpellingNumber(lang: 'ar').convert(double.parse(storage.total_room_price_per_night).toInt().abs()) : storage.total_room_price_per_night}',
+                                  style: TextStyle(
+                                     color:double.parse(storage.total_room_price_per_night).toInt() < 0
+                                        ? Colors.red
+                                        : null,
+                                    fontSize: storage.ishotel ? 15 : 20,
+                                  ),
                                 ),
                               );
                             },
@@ -116,10 +133,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           ),
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
-                              return Text(
-                                '${storage.total}',
-                                style: TextStyle(
-                                  fontSize: 20,
+                              return InkWell(
+                                onTap: () {
+                                  storage.convertTotal();
+                                },
+                                child: Text(
+                                  '${storage.istotal ? SpellingNumber(lang: 'ar').convert(double.parse(storage.total).toInt().abs()) : storage.total}',
+                                  style: TextStyle(
+                                    color:double.parse(storage.total).toInt() < 0
+                                        ? Colors.red
+                                        : null,
+                                    fontSize: storage.istotal ? 15 : 20,
+                                  ),
                                 ),
                               );
                             },
@@ -140,10 +165,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           ),
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
-                              return Text(
-                                '${storage.pay}',
-                                style: TextStyle(
-                                  fontSize: 20,
+                              return InkWell(
+                                onTap: () {
+                                  storage.convertPay();
+                                },
+                                child: Text(
+                                  '${storage.ispay ? SpellingNumber(lang: 'ar').convert(double.parse(storage.pay).toInt().abs()) : double.parse(storage.pay).toInt().toString()}',
+                                  style: TextStyle(
+                                    color:double.parse(storage.pay).toInt() < 0
+                                        ? Colors.red
+                                        : null,
+                                    fontSize: storage.ispay ? 15 : 20,
+                                  ),
                                 ),
                               );
                             },
@@ -160,10 +193,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           ),
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
-                              return Text(
-                                '${storage.rest}',
-                                style: TextStyle(
-                                  fontSize: 20,
+                              return InkWell(
+                                onTap: () {
+                                  storage.convertrest();
+                                },
+                                child: Text(
+                                  '${storage.isrest ? SpellingNumber(lang: 'ar').convert(double.parse(storage.rest).toInt().abs()) : double.parse(storage.rest).toInt().toString()}',
+                                  style: TextStyle(
+                                    color:double.parse(storage.rest).toInt() < 0
+                                        ? Colors.red
+                                        : null,
+                                    fontSize: storage.isrest ? 15 : 20,
+                                  ),
                                 ),
                               );
                             },
@@ -180,10 +221,18 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
                           ),
                           Consumer<CompanyController>(
                             builder: (context, storage, child) {
-                              return Text(
-                                '${(double.parse(storage.rest) / 3.75).toStringAsFixed(2)}',
-                                style: TextStyle(
-                                  fontSize: 20,
+                              return InkWell(
+                                onTap: () {
+                                  storage.convertRestUsd();
+                                },
+                                child: Text(
+                                  '${storage.isrestUSD ? SpellingNumber(lang: 'ar').convert((double.parse(storage.rest) / 3.75).toInt().abs()) : (double.parse(storage.rest) / 3.75).toInt().toString()}',
+                                  style: TextStyle(
+                                    color: double.parse(storage.rest) / 3.75 < 0
+                                        ? Colors.red
+                                        : null,
+                                    fontSize: storage.isrestUSD ? 15 : 20,
+                                  ),
                                 ),
                               );
                             },
