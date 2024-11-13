@@ -94,14 +94,14 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                             child: Column(
                               children: [
                                 Text(
-                                  'الرصيد بالدينار',
+                                  'الرصيد بالدولار',
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.grey),
                                 ),
                                 Consumer<TransactionsController>(
                                   builder: (context, storage, child) {
                                     return Text(
-                                      '${formatCustomNumber(storage.wallet_IQD)}',
+                                      '${formatCustomNumber(double.parse(storage.wallet_IQD).toInt().toString())}',
                                       style: TextStyle(
                                         fontSize: 24,
                                       ),

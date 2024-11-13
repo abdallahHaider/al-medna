@@ -11,9 +11,9 @@ import 'package:http/http.dart';
 class TransactionsController extends ChangeNotifier {
   List mySmallBank = [];
 
-  String wallet_USD = "";
+  String wallet_USD = "0";
 
-  String wallet_IQD = "";
+  String wallet_IQD = "0";
   int page = 1;
 
   Future getmySmallBank(String id) async {
@@ -81,7 +81,7 @@ class TransactionsController extends ChangeNotifier {
       var data = jsonDecode(x.body);
       print(x.body);
       wallet_USD = formatPrice(data["cost_ras"]).toString();
-      // wallet_IQD = data["cost_iqd"].toString();
+      wallet_IQD = data["cost_usd"].toString();
       mySmallBank = data["data"]["data"]
           .map((json) => Transactions.fromJson(json))
           .toList();

@@ -167,7 +167,7 @@ class SideMenu extends StatelessWidget {
             index: 12,
           ),
           DrawerListTile(
-            title: "هيئة الحج والعمرة",
+            title: "الحسابات العامه",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
               Provider.of<Rootwidget>(context, listen: false).index = 13;

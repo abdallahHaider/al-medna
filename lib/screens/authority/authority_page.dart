@@ -26,7 +26,7 @@ class _AuthorityPageState extends State<AuthorityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Header(title: "حسابات الهيئة"),
+        title: Header(title: "الحسابات العامه"),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: Column(

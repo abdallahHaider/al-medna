@@ -55,196 +55,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Card(
-            elevation: 5,
-            color: blueColor,
-            child: Padding(
-              padding: const EdgeInsets.all(defaultPadding),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'مجموع التاشيرات',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          Consumer<CompanyController>(
-                            builder: (context, storage, child) {
-                              return InkWell(
-                                onTap: () {
-                                  storage.convertTashera();
-                                },
-                                child: Text(
-                                  '${storage.isTashera ? SpellingNumber(lang: 'ar').convert(double.parse(storage.total_price_t).toInt().abs()) : storage.total_price_t}',
-                                  style: TextStyle(
-                                     color:double.parse(storage.total_price_t).toInt() < 0
-                                        ? Colors.red
-                                        : null,
-                                    fontSize: storage.isTashera ? 15 : 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'مجموع حساب الفنادق',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          Consumer<CompanyController>(
-                            builder: (context, storage, child) {
-                              return InkWell(
-                                onTap: () {
-                                  storage.convertHotel();
-                                },
-                                child: Text(
-                                  '${storage.ishotel ? SpellingNumber(lang: 'ar').convert(double.parse(storage.total_room_price_per_night).toInt().abs()) : storage.total_room_price_per_night}',
-                                  style: TextStyle(
-                                     color:double.parse(storage.total_room_price_per_night).toInt() < 0
-                                        ? Colors.red
-                                        : null,
-                                    fontSize: storage.ishotel ? 15 : 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'المجموع الكلي',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          Consumer<CompanyController>(
-                            builder: (context, storage, child) {
-                              return InkWell(
-                                onTap: () {
-                                  storage.convertTotal();
-                                },
-                                child: Text(
-                                  '${storage.istotal ? SpellingNumber(lang: 'ar').convert(double.parse(storage.total).toInt().abs()) : storage.total}',
-                                  style: TextStyle(
-                                    color:double.parse(storage.total).toInt() < 0
-                                        ? Colors.red
-                                        : null,
-                                    fontSize: storage.istotal ? 15 : 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'المجموع التسديد',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          Consumer<CompanyController>(
-                            builder: (context, storage, child) {
-                              return InkWell(
-                                onTap: () {
-                                  storage.convertPay();
-                                },
-                                child: Text(
-                                  '${storage.ispay ? SpellingNumber(lang: 'ar').convert(double.parse(storage.pay).toInt().abs()) : double.parse(storage.pay).toInt().toString()}',
-                                  style: TextStyle(
-                                    color:double.parse(storage.pay).toInt() < 0
-                                        ? Colors.red
-                                        : null,
-                                    fontSize: storage.ispay ? 15 : 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'المجموع المتبقي',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          Consumer<CompanyController>(
-                            builder: (context, storage, child) {
-                              return InkWell(
-                                onTap: () {
-                                  storage.convertrest();
-                                },
-                                child: Text(
-                                  '${storage.isrest ? SpellingNumber(lang: 'ar').convert(double.parse(storage.rest).toInt().abs()) : double.parse(storage.rest).toInt().toString()}',
-                                  style: TextStyle(
-                                    color:double.parse(storage.rest).toInt() < 0
-                                        ? Colors.red
-                                        : null,
-                                    fontSize: storage.isrest ? 15 : 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'المجموع المتبقي بل الدولار',
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
-                          ),
-                          Consumer<CompanyController>(
-                            builder: (context, storage, child) {
-                              return InkWell(
-                                onTap: () {
-                                  storage.convertRestUsd();
-                                },
-                                child: Text(
-                                  '${storage.isrestUSD ? SpellingNumber(lang: 'ar').convert((double.parse(storage.rest) / 3.75).toInt().abs()) : (double.parse(storage.rest) / 3.75).toInt().toString()}',
-                                  style: TextStyle(
-                                    color: double.parse(storage.rest) / 3.75 < 0
-                                        ? Colors.red
-                                        : null,
-                                    fontSize: storage.isrestUSD ? 15 : 20,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+   CustomTable(),
           Expanded(
             flex: 2,
             child: Padding(
@@ -465,6 +276,76 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
           ),
         ],
       ),
+    );
+  }
+}
+
+
+
+
+class CustomTable extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        // Title
+        Text(
+          'الحساب بالريال',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        // Table
+        Table(
+          border: TableBorder.all(color: Colors.grey, width: 1),
+          children: [
+            _buildTableRow('مجموع التاشيرات', (storage) => storage.total_price_t, (storage) => storage.convertTashera(), (storage) => storage.isTashera, 20),
+            _buildTableRow('مجموع حساب الفنادق', (storage) => storage.total_room_price_per_night, (storage) => storage.convertHotel(), (storage) => storage.ishotel, 20),
+            _buildTableRow('المجموع الكلي', (storage) => storage.total, (storage) => storage.convertTotal(), (storage) => storage.istotal, 20),
+            _buildTableRow('المجموع التسديد', (storage) => storage.pay, (storage) => storage.convertPay(), (storage) => storage.ispay, 20),
+            _buildTableRow('المجموع المتبقي', (storage) => storage.rest, (storage) => storage.convertrest(), (storage) => storage.isrest, 20),
+            _buildTableRow('المجموع المتبقي بل الدولار', (storage) => (double.parse(storage.rest) / 3.75).toString(), (storage) => storage.convertRestUsd(), (storage) => storage.isrestUSD, 20),
+          ],
+        ),
+      ],
+    );
+  }
+
+  TableRow _buildTableRow(
+    String title,
+    String Function(CompanyController) valueExtractor,
+    void Function(CompanyController) converter,
+    bool Function(CompanyController) isSpelling,
+    double fontSize,
+  ) {
+    return TableRow(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        Consumer<CompanyController>(
+          builder: (context, storage, child) {
+            return InkWell(
+              onTap: () => converter(storage),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  '${isSpelling(storage) ? SpellingNumber(lang: 'ar').convert(double.parse(valueExtractor(storage)).toInt().abs()) : double.parse(valueExtractor(storage)).toInt().toString()}',
+                  style: TextStyle(
+                    color: double.parse(valueExtractor(storage)).toInt() < 0 ? Colors.red : null,
+                    fontSize: isSpelling(storage) ? 15 : fontSize,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

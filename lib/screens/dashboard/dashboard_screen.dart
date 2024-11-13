@@ -283,7 +283,7 @@ class DashboardScreen extends StatelessWidget {
                                             topRight: Radius.circular(15)),
                                         color: primaryColor),
                                     child: Center(
-                                        child: Text("هيئة الحج والعمرة"))),
+                                        child: Text("الحسابات العامه"))),
                               ],
                             ),
                           ),
