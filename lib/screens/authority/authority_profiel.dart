@@ -89,9 +89,9 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                 children: [
                                   Row(
                                     children: [
-                                      Text("مجموع الطلب: ",
+                                      Text("مجموع الطلب بالدينار : ",
                                           style: TextStyle(fontSize: 18)),
-                                      Text(myType.allCost.toString(),
+                                      Text(myType.allCostiqd.toString(),
                                           style: TextStyle(fontSize: 20)),
                                     ],
                                   ),
@@ -101,10 +101,10 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                   Row(
                                     children: [
                                       Text(
-                                        "مجموع السداد: ",
+                                        "مجموع السداد بالدينار:",
                                         style: TextStyle(fontSize: 18),
                                       ),
-                                      Text(myType.paid.toString(),
+                                      Text(myType.paidusd.toString(),
                                           style: TextStyle(fontSize: 20)),
                                     ],
                                   ),
@@ -113,11 +113,11 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                                   ),
                                   Row(
                                     children: [
-                                      Text(" المتبقي: ",
+                                      Text("الباقي بالدينار : ",
                                           style: TextStyle(fontSize: 18)),
-                                      Text(myType.rest.toString(),
+                                      Text(myType.restiqd.toString(),
                                           style: TextStyle(
-                                              color: myType.rest < 0
+                                              color: myType.restiqd < 0
                                                   ? Colors.red
                                                   : null,
                                               fontSize: 20)),

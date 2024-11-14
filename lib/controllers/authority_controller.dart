@@ -106,9 +106,12 @@ class AuthorityController extends ChangeNotifier {
 
   //////////////////////////////////////////////////////////////////////////////////////////
   ///
-  int allCost = 0;
-  int paid = 0;
-  int rest = 0;
+  int allCostiqd = 0;
+  int paidiqd = 0;
+  int restiqd = 0;
+   int allCostusd= 0;
+  int paidusd= 0;
+  int restusd = 0;
   int page = 1;
   setpage(int v) {
     page = page + v;
@@ -120,9 +123,12 @@ class AuthorityController extends ChangeNotifier {
       x = await getpi("/api/authority_tickt/index?page=$page&id=${id}");
       print(x.body);
       var data = jsonDecode(x.body);
-      allCost = data["cost"];
-      paid = data["paid"];
-      rest = data["rest"];
+      allCostiqd = data["cost_iqd"];
+      paidiqd = data["paid_iqd"];
+      restiqd = data["rest_iqd"];
+       allCostusd= data["cost_usd"];
+      paidusd = data["paid_usd"];
+      restusd= data["rest_usd"];
       authoritiesT =
           data["data"].map((json) => AuthorityTickt.fromJson(json)).toList();
       notifyListeners();
