@@ -77,57 +77,108 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                       onerid: widget.id,
                     ),
                   ),
-                Card(
-                    color: blueColor,
-                    child: Padding(
-                        padding: const EdgeInsets.all(defaultPadding * 2),
-                        child: Consumer<AuthorityController>(
-                          builder: (context, myType, child) {
-                            return SizedBox(
-                              width: 500,
-                              child: Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text("مجموع الطلب بالدينار : ",
-                                          style: TextStyle(fontSize: 18)),
-                                      Text(myType.allCostiqd.toString(),
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: defaultPadding,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "مجموع السداد بالدينار:",
-                                        style: TextStyle(fontSize: 18),
-                                      ),
-                                      Text(myType.paidusd.toString(),
-                                          style: TextStyle(fontSize: 20)),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: defaultPadding,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text("الباقي بالدينار : ",
-                                          style: TextStyle(fontSize: 18)),
-                                      Text(myType.restiqd.toString(),
-                                          style: TextStyle(
-                                              color: myType.restiqd < 0
-                                                  ? Colors.red
-                                                  : null,
-                                              fontSize: 20)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ))),
+          SizedBox(
+  width: 500, // Increased width for better visual impact
+  child: Consumer<AuthorityController>(
+    builder: (context, myType, child) {
+      return InkWell(
+        onTap: () {
+          myType.changeIT();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white, // Background color for the container
+            borderRadius: BorderRadius.circular(12), // Rounded borders
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3), // Shadow direction
+              ),
+            ],
+          ),
+          child: Table(
+            border: TableBorder(
+              horizontalInside: BorderSide(width: 1, color: Colors.grey.shade300),
+              verticalInside: BorderSide(width: 1, color: Colors.grey.shade300),
+              top: BorderSide(width: 2, color: Colors.blue), // Custom border color
+              bottom: BorderSide(width: 2, color: Colors.blue),
+            ),
+            columnWidths: const {
+              0: FlexColumnWidth(),
+              1: FixedColumnWidth(220),
+            },
+            children: [
+              TableRow(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: Text(
+                      myType.iqd ? "مجموع الطلب بالدينار" : "مجموع الطلب بالدولار",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: Text(
+                      myType.iqd ? myType.allCostiqd.toString() : myType.allCostusd.toString(),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: Text(
+                      myType.iqd ? "مجموع السداد بالدينار" : "مجموع السداد بالدولار",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: Text(
+                      myType.iqd ? myType.paidiqd.toString() : myType.paidusd.toString(),
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: Text(
+                      myType.iqd ? "الباقي بالدينار" : "الباقي بالدولار",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                    child: Text(
+                      myType.iqd ? myType.restiqd.toString() : myType.restusd.toString(),
+                      style: TextStyle(
+                        color: (myType.iqd ? myType.restiqd : myType.restusd) < 0
+                            ? Colors.red
+                            : Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+)
+
+
               ],
             ),
             Row(
@@ -172,8 +223,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                         DataColumn(label: Text(" الأجر")),
                         DataColumn(label: Text("الاجمالي")),
                         DataColumn(label: Text("القيد")),
-                                                DataColumn(label: Text("العمله")),
-
+                        DataColumn(label: Text("العمله")),
                         DataColumn(label: Text("التاريخ")),
                         DataColumn(label: Text("الاجراء"))
                       ],
@@ -197,8 +247,9 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                               DataCell(Text(authority.commission.toString())),
                               DataCell(Text(authority.totalPrice.toString())),
                               DataCell(Text(authority.number_kade.toString())),
-                                                            DataCell(Text(authority.type.toString()== 'iqd'?'دينار':"دولار")),
-
+                              DataCell(Text(authority.type.toString() == 'iqd'
+                                  ? 'دينار'
+                                  : "دولار")),
                               DataCell(Text(authority.createdAt
                                   .toString()
                                   .substring(0, 10))),

@@ -48,7 +48,6 @@ class _ActionBankCardState extends State<ActionBankCard> {
                         setState(() {
                           isPay = true;
                           typeAction2 = TypeAction2(name: 'ايداع', id: 'pay');
-                          typeAction3 = 0;
                         });
                       } else {
                         // Provider.of<ActionBankController>(context,
@@ -57,7 +56,6 @@ class _ActionBankCardState extends State<ActionBankCard> {
                         setState(() {
                           isPay = false;
                           typeAction2 = TypeAction2(name: 'حوالة', id: 'debt');
-                          typeAction3 = 1;
                         });
                       }
                     }),
@@ -159,6 +157,7 @@ class _ActionBankCardState extends State<ActionBankCard> {
                 children: [
                   Expanded(
                     child: _buildDropdown("العملة", TypeCost.costs, (value) {
+                      print('omer '+ value!.id);
                       if (value!.id == "1") {
                         Provider.of<ActionBankController>(context,
                                 listen: false)

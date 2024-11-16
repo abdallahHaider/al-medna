@@ -113,8 +113,13 @@ class AuthorityController extends ChangeNotifier {
   int paidusd= 0;
   int restusd = 0;
   int page = 1;
+  bool iqd = true;
   setpage(int v) {
     page = page + v;
+  }
+  changeIT(){
+    iqd = !iqd;
+    notifyListeners();
   }
 
   Future getAuthorityTicks(id) async {

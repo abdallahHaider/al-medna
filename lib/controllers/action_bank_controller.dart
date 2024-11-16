@@ -14,7 +14,7 @@ class ActionBankController extends ChangeNotifier {
 
   String type = "";
   String typeTO = "";
-  String isIQD = "";
+  String isIQD = "f";
   String fromID = "";
   String toID = "";
   bool isfrom = true;
@@ -152,6 +152,7 @@ class ActionBankController extends ChangeNotifier {
 
     Response x;
     try {
+      print(isIQD);
       x = await postApi("/api/transactions/create", {
         if (type == "bank") "f_bank": fromID,
         if (type == "small_bank") "f_small_bank": fromID,
