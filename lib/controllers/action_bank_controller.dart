@@ -180,6 +180,7 @@ class ActionBankController extends ChangeNotifier {
       throw "حصل خطا في ارسال البيانات";
     }
   }
+  
 
   void setNumberWord(String value, String type) {
     int x = 0;
