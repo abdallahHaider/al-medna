@@ -165,6 +165,7 @@ class ActionBankController extends ChangeNotifier {
         if (isIQD == "t") "cost_USD": cost,
         if (isIQD == "f") "cost_IQD": cost,
         if (isIQD == "r") "cost_USD": double.parse(cost) / 3.75,
+        'type':isIQD=='t'?'usd':'iqd',
         if (usdToIQD.isNotEmpty) "IQD_to_USD": usdToIQD,
         "number_kade": "0",
       });

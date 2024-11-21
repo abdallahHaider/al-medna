@@ -106,12 +106,12 @@ class AuthorityController extends ChangeNotifier {
 
   //////////////////////////////////////////////////////////////////////////////////////////
   ///
-  int allCostiqd = 0;
-  int paidiqd = 0;
-  int restiqd = 0;
-   int allCostusd= 0;
-  int paidusd= 0;
-  int restusd = 0;
+  double allCostiqd = 0;
+  double paidiqd = 0;
+  double restiqd = 0;
+   double allCostusd= 0;
+  double paidusd= 0;
+  double restusd = 0;
   int page = 1;
   bool iqd = true;
   setpage(int v) {

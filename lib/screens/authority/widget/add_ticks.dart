@@ -123,7 +123,6 @@ class _AddTicksState extends State<AddTicks> {
             ),
             SizedBox(height: defaultPadding),
             // Conditionally show the IQD to USD field
-            if (selectedCurrency == 'دولار')
               SizedBox(
                 width: 400,
                 child: MyTextField(
