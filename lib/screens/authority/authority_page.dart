@@ -64,31 +64,36 @@ class _AuthorityPageState extends State<AuthorityPage> {
             ],
           ),
           Consumer<AuthorityController>(builder: (context, myType, child) {
-            return InkWell(
-              onTap: (){
-  myType.changeType();
-              },
-              child: Card(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: (){
+                  myType.changeType();
+                  },
+                  child: Card(
+                    child: Column(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 3,vertical: 10),
-                            child: Text(
-                          myType.type == false ? "عرض الارشيف" : 'رجوع',
-                          style: TextStyle(fontSize: 23),
-                        )),
-                        Icon(
-                         myType.type == false ?  Icons.archive:Icons.arrow_back,
-                          size: 40,
-                        )
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 3,vertical: 10),
+                                child: Text(
+                              myType.type == false ? "عرض الارشيف" : 'رجوع',
+                              style: TextStyle(fontSize: 23),
+                            )),
+                            Icon(
+                             myType.type == false ?  Icons.archive:Icons.arrow_back,
+                              size: 40,
+                            )
+                          ],
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+              ],
             );
           }),
           CardTable()
