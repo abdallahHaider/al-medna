@@ -3,11 +3,13 @@ import 'package:admin/models/authority.dart';
 import 'package:admin/models/authority_tickt.dart';
 import 'package:admin/models/reseller.dart';
 import 'package:admin/models/reseller_dbet.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'dart:html' as html; // Import html for web download support
 
 Future<void> authortiytoPdf(
      List<AuthorityTickt> traps,String name,
@@ -52,7 +54,7 @@ Future<void> authortiytoPdf(
             ),
             pw.SizedBox(height: 20),
 
-            // ملخص الحساب
+    //         // ملخص الحساب
             _buildSummary(   totalremainingiqd , totalcostiqd, totalpayiqd,
      totalremainingusd , totalcostusd, totalpayusd),
           ],
@@ -61,15 +63,28 @@ Future<void> authortiytoPdf(
     ),
   );
 
-  // حفظ ملف PDF في جهازك
-  final output = await getTemporaryDirectory();
-  final file = File("${output.path}/${name }.pdf");
-  await file.writeAsBytes(await pdf.save());
+  // // حفظ ملف PDF في جهازك
+  // final output = await getTemporaryDirectory();
+  // final file = File("${output.path}/${name }.pdf");
+  // await file.writeAsBytes(await pdf.save());
 
-  print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
+  // print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
-  // فتح ملف PDF باستخدام تطبيق خارجي
-  await OpenFilex.open(file.path);
+  // // فتح ملف PDF باستخدام تطبيق خارجي
+  // await OpenFilex.open(file.path);
+    // // Preview the PDF file
+  // await Printing.layoutPdf(
+  //   onLayout: (PdfPageFormat format) async => pdf.save(),
+  // );
+  // // حفظ ملف PDF على الويب
+  final bytes = await pdf.save();
+  final blob = html.Blob([bytes], 'application/pdf');
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute("download", "example.pdf")
+    ..click();
+  html.Url.revokeObjectUrl(url);
+
 }
 
 // دالة لبناء صف اسم الوكيل
@@ -113,7 +128,6 @@ pw.TableRow _buildTableHeader() {
     children: [
       _buildHeaderCell("التاريخ"),
             _buildHeaderCell("العملة"),
-
       _buildHeaderCell("الواصل"),
       _buildHeaderCell("المجموع الكلي"),
       _buildHeaderCell("الأجره"),
@@ -123,6 +137,8 @@ pw.TableRow _buildTableHeader() {
       _buildHeaderCell("عدد كبير"),
       _buildHeaderCell("اسم ورقم الرحلة"),
       _buildHeaderCell("ت"),
+  
+
     ],
   );
 }
@@ -132,7 +148,7 @@ pw.Widget _buildHeaderCell(String title) {
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
     child: pw.Text(title,
-        textDirection: pw.TextDirection.rtl, style: pw.TextStyle()),
+        textDirection: pw.TextDirection.rtl, style: pw.TextStyle(fontSize: 10)),
   );
 }
 
@@ -142,17 +158,17 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
     traps.length,
     (index) {
       final trap = traps[index];
-      final isPayment = trap.commission == null;
+      bool isPayment = trap.istyped!;
+      print(trap.commission);
       return pw.TableRow(
         decoration: pw.BoxDecoration(
-          color: isPayment ? null : PdfColors.grey400,
+          color: isPayment ==true? null : PdfColors.grey400,
           border: pw.Border.all(),
         ),
         children: [
-          _buildTableCell(trap.createdAt.toString()),
-          _buildTableCell(isPayment ? (trap.number_of_child.toString()) : ""),
-                    _buildTableCell(trap.type.toString()),
-
+          _buildTableCell(trap.createdAt.toString().substring(0,11)),
+                              _buildTableCell(trap.type.toString()=="iqd"?"دينار":"دولار"),
+          _buildTableCell(isPayment ? (trap.totalPrice.toString()) : ""),
           _buildTableCell(isPayment ? "" : (trap.totalPrice.toString())),
           _buildTableCell(isPayment ? "" : (trap.commission.toString())),
           _buildTableCell(isPayment ? "" : (trap.price_of_child.toString())),
@@ -161,6 +177,9 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
           _buildTableCell(isPayment ? "" : (trap.numberOfTravel.toString())),
           _buildTableCell(trap.name ?? ""),
           _buildTableCell((index + 1).toString()),
+      
+
+
         ],
       );
     },
@@ -171,51 +190,59 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
 pw.Widget _buildTableCell(String content) {
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
-    child: pw.Text(content, textDirection: pw.TextDirection.rtl),
+    child: pw.Text(content, textDirection: pw.TextDirection.rtl,style: pw.TextStyle(fontSize: 8)),
   );
 }
 
 // دالة لبناء ملخص الحساب
 pw.Widget _buildSummary(
-  num totalremainingiqd ,num totalcostiqd,num totalpayiqd,
-    num totalremainingusd ,num totalcostusd,num totalpayusd
-
+  num totalremainingiqd,
+  num totalcostiqd,
+  num totalpayiqd,
+  num totalremainingusd,
+  num totalcostusd,
+  num totalpayusd
 ) {
-
-  return pw.Row(children: 
-  [
-    pw.Column(
-    mainAxisAlignment: pw.MainAxisAlignment.center,
+  return pw.Column(
+    crossAxisAlignment: pw.CrossAxisAlignment.start, // Align to the left
     children: [
-      _buildSummaryItem("مجموع المتبقي بالدينار", totalremainingiqd.toString()),
-      _buildSummaryItem("مجموع السداد بالدينار", totalcostiqd.toString()),
-      _buildSummaryItem("مجموع الطلب بالدينار", totalpayiqd.toString()),
+      // IQD Row - this row will fill the width of the page
+      pw.Row(
+        children: [
+          _buildSummaryItem("مجموع المتبقي بالدينار", totalremainingiqd.toString(), 1),
+          _buildSummaryItem("مجموع السداد بالدينار", totalcostiqd.toString(), 1),
+          _buildSummaryItem("مجموع الطلب بالدينار", totalpayiqd.toString(), 1),
+        ],
+      ),
+      
+      // USD Row - this row will also fill the width of the page
+      pw.Row(
+        children: [
+          _buildSummaryItem("مجموع المتبقي بالدولار", totalremainingusd.toString(), 1),
+          _buildSummaryItem("مجموع السداد بالدولار", totalcostusd.toString(), 1),
+          _buildSummaryItem("مجموع الطلب بالدولار", totalpayusd.toString(), 1),
+        ],
+      ),
     ],
-  ),
-   pw.Column(
-    mainAxisAlignment: pw.MainAxisAlignment.center,
-    children: [
-      _buildSummaryItem("مجموع المتبقي بالدولار", totalremainingusd.toString()),
-      _buildSummaryItem("مجموع السداد بالدولار", totalcostusd.toString()),
-      _buildSummaryItem("مجموع الطلب بالدولار", totalpayusd.toString()),
-    ],
-  ),
-
-  ]);
+  );
 }
 
-// دالة لإنشاء عنصر الملخص
-pw.Widget _buildSummaryItem(String title, String value) {
-  return pw.Container(
-    decoration: pw.BoxDecoration(border: pw.Border.all()),
-    padding: pw.EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-    child: pw.Column(
-      children: [
-        pw.Text(title, textDirection: pw.TextDirection.rtl),
-        pw.Text(value,
-            style: pw.TextStyle(fontSize: 20),
-            textDirection: pw.TextDirection.rtl),
-      ],
+pw.Widget _buildSummaryItem(String title, String value, double flex) {
+  return pw.Expanded(
+    flex: flex.toInt(),  // Distribute width equally across the row
+    child: pw.Container(
+      decoration: pw.BoxDecoration(border: pw.Border.all()),
+      padding: pw.EdgeInsets.symmetric(horizontal: 5, vertical: 8), // Reduced padding
+      child: pw.Column(
+        children: [
+          pw.Text(title,
+              textDirection: pw.TextDirection.rtl,
+              style: pw.TextStyle(fontSize: 10)), // Smaller text for the title
+          pw.Text(value,
+              style: pw.TextStyle(fontSize: 12), // Smaller text for the value
+              textDirection: pw.TextDirection.rtl),
+        ],
+      ),
     ),
   );
 }

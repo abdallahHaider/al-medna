@@ -153,6 +153,14 @@ Future archiveauthority(id,BuildContext context)async{
   }
 
   Future getAuthorityTicks(id) async {
+       allCostiqd = 0;
+  paidiqd = 0;
+  restiqd = 0;
+  allCostusd= 0;
+  paidusd= 0;
+  restusd = 0;
+          authoritiesT  =[];
+
     Response x;
     try {
       x = await getpi("/api/authority_tickt/index?page=$page&id=${id}");

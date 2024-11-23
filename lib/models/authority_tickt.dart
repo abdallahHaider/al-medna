@@ -24,6 +24,7 @@ class AuthorityTickt {
   DateTime? createdAt;
   String? number_kade;
   String? type;
+  bool? istyped;
 
   AuthorityTickt({
     this.id,
@@ -37,7 +38,8 @@ class AuthorityTickt {
     this.price_of_child,
     this.createdAt,
     this.number_kade,
-    this.type 
+    this.type ,
+    this.istyped,
   });
 
   factory AuthorityTickt.fromJson(Map<String, dynamic> json) => AuthorityTickt(
@@ -46,6 +48,7 @@ class AuthorityTickt {
         numberOfTravel: json["number_of_travel"] ?? 0,
         priceOfTravel: formatPrice(json["price_of_travel"] ?? 0),
         commission: json["commission"] ?? 0,
+        
         totalPrice: formatPrice(json["total_price"] ?? 0),
         name: json["name"] ?? "",
         number_of_child: json["number_of_child"] ?? 0,
@@ -55,6 +58,7 @@ class AuthorityTickt {
             : DateTime.parse(json["created_at"]),
         number_kade: json["number_kade"] ?? "0",
                 type: json["type"] ?? "iqd",
+                istyped: json["commission"] ==null
 
       );
 
