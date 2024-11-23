@@ -14,7 +14,6 @@ class AuthorityController extends ChangeNotifier {
   List authoritiesT = [];
   bool isEdit = false;
   String id = "";
-
   setedit(bool v) {
     isEdit = v;
     notifyListeners();
@@ -67,10 +66,17 @@ class AuthorityController extends ChangeNotifier {
     }
   }
 
+
+bool type = false; 
+changeType()async{
+  type = !type;
+authorities =await  getAuthority();
+  notifyListeners();
+}
   Future getAuthority() async {
     Response x;
     try {
-      x = await getpi("/api/authority/index");
+      x = await getpi("/api/authority/index?type=${type==true?1:0}");
       print(x.body);
       var data = jsonDecode(x.body);
       authorities = data.map((json) => Authority.fromJson(json)).toList();
@@ -104,6 +110,30 @@ class AuthorityController extends ChangeNotifier {
     }
   }
 
+Future archiveauthority(id,BuildContext context)async{
+   Response x;
+    SmartDialog.showLoading();
+    try {
+      x = await postApi("/api/authority/update", {
+        "id": id,
+        'is_archive':false
+      });
+    } catch (e) {
+      snackBar(context, e.toString(), true);
+      print(e);
+      throw "حصل خطا في ارسال البيانات";
+    } finally {
+      SmartDialog.dismiss();
+    }
+    if (x.statusCode == 200 || x.statusCode == 201) {
+      snackBar(context, "تمت عملية ${type == false?"الارشفه":'الغاء الارشفه'} بنجاح", false);
+      print(x.body);
+      authorities = await getAuthority();
+    } else {
+      snackBar(context, jsonDecode(x.body)["message"], true);
+      throw jsonDecode(x.body);
+    }
+}
   //////////////////////////////////////////////////////////////////////////////////////////
   ///
   double allCostiqd = 0;

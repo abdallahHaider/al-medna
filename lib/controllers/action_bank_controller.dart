@@ -188,7 +188,7 @@ class ActionBankController extends ChangeNotifier {
       x = int.parse(value);
       numberWord = SpellingNumber(lang: 'ar').convert(x);
       numberWord =
-          "${numberWord} $type فقط لا غير "; // Add the phrase "only no other" to the word
+          "${numberWord} $type فقط لا غير "; 
       notifyListeners();
     }
   }

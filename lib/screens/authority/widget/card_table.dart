@@ -60,6 +60,13 @@ class CardTable extends StatelessWidget {
                               });
                             },
                             icon: Icon(Icons.delete)),
+                            IconButton(icon: Icon(Icons.archive),onPressed: ()async{
+                              await Provider.of<AuthorityController>(context,
+                                        listen: false)
+                                    .archiveauthority(authority.id!, context);
+                            }
+
+                            ,)
                       ],
                     ))
                   ]);
