@@ -29,7 +29,7 @@ class _WalletPageState extends State<WalletPage> {
     if (value.isEmpty) return '';
     final number = double.tryParse(value.replaceAll(',', ''));
     if (number == null) return value;
-    return NumberFormat('#,##0.00').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+    return NumberFormat('#,##0').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
   }
 
   @override

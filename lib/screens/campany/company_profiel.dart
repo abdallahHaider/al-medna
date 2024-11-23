@@ -279,10 +279,6 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
     );
   }
 }
-
-
-
-
 class CustomTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

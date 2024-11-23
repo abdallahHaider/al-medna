@@ -24,7 +24,13 @@ class AcconuntProfael_page extends StatefulWidget {
   @override
   State<AcconuntProfael_page> createState() => _AcconuntProfael_pageState();
 }
-
+  // دالة لتنسيق الرقم بإضافة الفواصل
+  String formatCustomNumber(String value) {
+    if (value.isEmpty) return '';
+    final number = double.tryParse(value.replaceAll(',', ''));
+    if (number == null) return value;
+    return NumberFormat('#,##0.00').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+  }
 class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
   @override
   void initState() {
@@ -49,7 +55,7 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
     if (value.isEmpty) return '';
     final number = double.tryParse(value.replaceAll(',', ''));
     if (number == null) return value;
-    return NumberFormat('#,##0.00')
+    return NumberFormat('#,##0')
         .format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
   }
 
@@ -94,7 +100,7 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                             child: Column(
                               children: [
                                 Text(
-                                  'الرصيد بالدولار',
+                                  'الرصيد بالدينار',
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.grey),
                                 ),
@@ -126,7 +132,7 @@ class _AcconuntProfael_pageState extends State<AcconuntProfael_page> {
                                 Consumer<TransactionsController>(
                                   builder: (context, storage, child) {
                                     return Text(
-                                      '${storage.wallet_USD}',
+                                      '${formatCustomNumber( storage.wallet_USD.toString()) }',
                                       style: TextStyle(
                                         fontSize: 24,
                                       ),
