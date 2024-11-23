@@ -176,7 +176,7 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
           _buildTableCell(isPayment ? "" : (trap.number_of_child.toString())),
           _buildTableCell(isPayment ? "" : (trap.priceOfTravel.toString())),
           _buildTableCell(isPayment ? "" : (trap.numberOfTravel.toString())),
-          _buildTableCell(trap.name ?? ""),
+          _buildTableCell(isPayment?"سداد":trap.name.toString()),
           _buildTableCell((index + 1).toString()),
       
 
