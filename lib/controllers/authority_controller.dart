@@ -136,12 +136,12 @@ Future archiveauthority(id,BuildContext context)async{
 }
   //////////////////////////////////////////////////////////////////////////////////////////
   ///
-  double allCostiqd = 0;
-  double paidiqd = 0;
-  double restiqd = 0;
-   double allCostusd= 0;
-  double paidusd= 0;
-  double restusd = 0;
+  num allCostiqd = 0;
+  num paidiqd = 0;
+  num restiqd = 0;
+  num allCostusd= 0;
+  num paidusd= 0;
+  num restusd = 0;
   int page = 1;
   bool iqd = true;
   setpage(int v) {
