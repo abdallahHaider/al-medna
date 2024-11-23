@@ -11,7 +11,7 @@ import 'package:http/http.dart';
 class AuthorityController extends ChangeNotifier {
   bool isError = false;
   List authorities = [];
-  List authoritiesT = [];
+  List<AuthorityTickt> authoritiesT = [];
   bool isEdit = false;
   String id = "";
   setedit(bool v) {

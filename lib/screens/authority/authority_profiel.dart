@@ -2,6 +2,7 @@ import 'package:admin/controllers/authority_controller.dart';
 import 'package:admin/controllers/rootWidget.dart';
 import 'package:admin/controllers/transactions.dart';
 import 'package:admin/models/authority_tickt.dart';
+import 'package:admin/pdf/authority_pdf.dart';
 import 'package:admin/screens/authority/authority_page.dart';
 import 'package:admin/screens/authority/widget/add_ticks.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
@@ -58,6 +59,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            
             Row(
               children: [
                 if (!isEdit) AddTicks(widget: widget),
@@ -180,6 +182,17 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
 
 
               ],
+              
+            ),
+             Consumer<AuthorityController>(
+    builder: (context, myType, child) {
+                return Card(
+                  child: InkWell(child: Text("كشف حساب"),onTap: (){
+                    authortiytoPdf(  myType.authoritiesT, widget.name,  myType.restiqd, myType.allCostiqd, myType.paidiqd,myType.restusd, myType.allCostusd, myType.paidusd);
+                  },),
+                
+                );
+              }
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
