@@ -127,7 +127,7 @@ class ActionBankController extends ChangeNotifier {
     print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     Response x;
     try {
-      x = await getpi("/api/$typeTO/index");
+      x = await getpi("/api/$typeTO/index${typeTO =="authority"?"?type=0":""}");
       print(x.body);
       var data = jsonDecode(x.body);
       mineActionsTO = data.map((json) => MineAction.fromJson(json)).toList();
