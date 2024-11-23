@@ -9,7 +9,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:html' as html; // Import html for web download support
+// import 'dart:html' as html; // Import html for web download support
 
 Future<void> authortiytoPdf(
      List<AuthorityTickt> traps,String name,
@@ -63,27 +63,27 @@ Future<void> authortiytoPdf(
     ),
   );
 
-  // // حفظ ملف PDF في جهازك
-  // final output = await getTemporaryDirectory();
-  // final file = File("${output.path}/${name }.pdf");
-  // await file.writeAsBytes(await pdf.save());
+  // حفظ ملف PDF في جهازك
+  final output = await getTemporaryDirectory();
+  final file = File("${output.path}/${name }.pdf");
+  await file.writeAsBytes(await pdf.save());
 
-  // print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
+  print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
   // // فتح ملف PDF باستخدام تطبيق خارجي
   // await OpenFilex.open(file.path);
-    // // Preview the PDF file
+  //   // Preview the PDF file
   // await Printing.layoutPdf(
   //   onLayout: (PdfPageFormat format) async => pdf.save(),
   // );
   // // حفظ ملف PDF على الويب
-  final bytes = await pdf.save();
-  final blob = html.Blob([bytes], 'application/pdf');
-  final url = html.Url.createObjectUrlFromBlob(blob);
-  final anchor = html.AnchorElement(href: url)
-    ..setAttribute("download", "example.pdf")
-    ..click();
-  html.Url.revokeObjectUrl(url);
+  // final bytes = await pdf.save();
+  // final blob = html.Blob([bytes], 'application/pdf');
+  // final url = html.Url.createObjectUrlFromBlob(blob);
+  // final anchor = html.AnchorElement(href: url)
+  //   ..setAttribute("download", "example.pdf")
+  //   ..click();
+  // html.Url.revokeObjectUrl(url);
 
 }
 
