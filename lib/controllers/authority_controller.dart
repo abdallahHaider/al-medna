@@ -164,8 +164,9 @@ Future archiveauthority(id,BuildContext context)async{
        allCostusd= data["cost_usd"];
       paidusd = data["paid_usd"];
       restusd= data["rest_usd"];
-      authoritiesT =
-          data["data"].map((json) => AuthorityTickt.fromJson(json)).toList();
+      for(var i in      data["data"]){
+        authoritiesT.add( AuthorityTickt.fromJson(i));
+      }
       notifyListeners();
     } catch (e) {
       print(e);
