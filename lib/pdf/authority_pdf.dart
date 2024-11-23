@@ -9,6 +9,7 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 // import 'dart:html' as html; // Import html for web download support
 
 Future<void> authortiytoPdf(
@@ -70,12 +71,12 @@ Future<void> authortiytoPdf(
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
-  // // فتح ملف PDF باستخدام تطبيق خارجي
-  // await OpenFilex.open(file.path);
-  //   // Preview the PDF file
-  // await Printing.layoutPdf(
-  //   onLayout: (PdfPageFormat format) async => pdf.save(),
-  // );
+  // فتح ملف PDF باستخدام تطبيق خارجي
+  await OpenFilex.open(file.path);
+    // Preview the PDF file
+  await Printing.layoutPdf(
+    onLayout: (PdfPageFormat format) async => pdf.save(),
+  );
   // // حفظ ملف PDF على الويب
   // final bytes = await pdf.save();
   // final blob = html.Blob([bytes], 'application/pdf');
