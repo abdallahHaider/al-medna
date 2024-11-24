@@ -32,7 +32,7 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
               controller.wallets.length,
               (index) => DataRow(
                 color: controller.wallets[index].type.toString() == "pay"
-                    ? WidgetStateProperty.all(Colors.grey)
+                    ? WidgetStateProperty.all(const Color.fromARGB(255, 146, 218, 164))
                     : WidgetStateProperty.all(Colors.white),
                 cells: [
                   DataCell(Text((index + 1).toString())),
@@ -97,7 +97,7 @@ Widget walletTable(WalletProvider controller, BuildContext context) {
                                 .getWidet(WalletAction(
                               isAdd: false,
                               cost_AQR:
-                                  "${controller.wallets[index].costIQD ?? ""}",
+                                  "${controller.wallets[index].costIQD ??  ""}",
                               cost_USD:
                                   "${controller.wallets[index].costUSD ?? ""}",
                               not: controller.wallets[index].note.toString(),

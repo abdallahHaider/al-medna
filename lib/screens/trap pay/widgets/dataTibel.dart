@@ -9,6 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:provider/provider.dart';
 
+import 'package:intl/intl.dart';
+  // دالة لتنسيق الرقم بإضافة الفواصل
+  String formatCustomNumber(String value) {
+    if (value.isEmpty) return '';
+    final number = double.tryParse(value.replaceAll(',', ''));
+    if (number == null) return value;
+    return NumberFormat('#,##0').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+  }
 Consumer<TrapPayController> dataTibel() {
   return Consumer<TrapPayController>(
     builder: (BuildContext context, value, Widget? child) {
@@ -69,8 +77,8 @@ Consumer<TrapPayController> dataTibel() {
                                           ),
                                           DataCell(
                                             Text(
-                                              snapshot.data![index].cost
-                                                  .toString(),
+                                              formatCustomNumber(snapshot.data![index].cost
+                                                  .toString()) ,
                                             ),
                                           ),
                                           DataCell(

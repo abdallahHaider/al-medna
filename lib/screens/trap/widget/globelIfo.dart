@@ -5,15 +5,15 @@ import 'package:intl/intl.dart';
 
   // دالة لتنسيق الرقم بإضافة الفواصل
   String formatCustomNumber(String value) {
-  if (value.isEmpty) return '';
-  final number = double.tryParse(value.replaceAll(',', ''));
-  if (number == null) return value;
-  return NumberFormat('#000,000').format(number);
-}
+    if (value.isEmpty) return '';
+    final number = double.tryParse(value.replaceAll(',', ''));
+    if (number == null) return value;
+    return NumberFormat('#,##0').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+  }
 Padding globelIfo(
     AsyncSnapshot<Map<dynamic, dynamic>> snapshot, BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(8.0),
+    padding: const EdgeInsets.all(9.0),
     child: Container(
       decoration: BoxDecoration(
           color: blueColor,
@@ -54,7 +54,7 @@ Padding globelIfo(
                           "المبلغ المدفوع بالدولار: ${formatCustomNumber(double.tryParse(snapshot.data!['total_cost_USD_pays'].toString())!.toStringAsFixed(2))}"),
                       Divider(),
                       Text(
-                          "المتبقي : ${double.tryParse((snapshot.data!['total_cost_USD'] - snapshot.data!['total_cost_USD_pays']).toString())!.toStringAsFixed(2)}"),
+                          "المتبقي : ${formatCustomNumber(double.tryParse((snapshot.data!['total_cost_USD'] - snapshot.data!['total_cost_USD_pays']).toString())!.toStringAsFixed(2))}"),
                     ]),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

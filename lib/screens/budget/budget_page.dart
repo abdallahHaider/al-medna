@@ -2,7 +2,14 @@ import 'package:admin/controllers/budget_controller.dart';
 import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:intl/intl.dart';
+  // دالة لتنسيق الرقم بإضافة الفواصل
+  String formatCustomNumber(String value) {
+    if (value.isEmpty) return '';
+    final number = double.tryParse(value.replaceAll(',', ''));
+    if (number == null) return value;
+    return NumberFormat('#,##0').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+  }
 class BudgetPage extends StatefulWidget {
   const BudgetPage({super.key});
 

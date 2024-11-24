@@ -5,7 +5,14 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 // import 'package:provider/provider.dart';
-
+// import 'package:intl/intl.dart';
+//   // دالة لتنسيق الرقم بإضافة الفواصل
+//   String formatCustomNumber(String value) {
+//     if (value.isEmpty) return '';
+//     final number = double.tryParse(value.replaceAll(',', ''));
+//     if (number == null) return value;
+//     return NumberFormat('#,##0').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+//   }
 // class DetilPage extends StatefulWidget {
 //   const DetilPage(
 //       {super.key, required this.id, required this.isBank});
@@ -185,7 +192,7 @@
 //                       Consumer<CompanyController>(
 //                         builder: (context, storage, child) {
 //                           return Text(
-//                             '${storage.wallet_IQD}',
+//                             '${formatCustomNumber(storage.wallet_IQD).tostring()}',
 //                             style: TextStyle(
 //                               fontSize: 20,
 //                             ),
@@ -209,7 +216,7 @@
 //                       Consumer<TransactionsController>(
 //                         builder: (context, storage, child) {
 //                           return Text(
-//                             '${storage.wallet_USD}',
+//                             '${formatCustomNumber(storage.wallet_USD)toString()}',
 //                             style: TextStyle(
 //                               fontSize: 20,
 //                             ),
