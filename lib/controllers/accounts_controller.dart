@@ -11,9 +11,11 @@ class AccountsController extends ChangeNotifier {
   List banks = [];
 
   List SmallBank = [];
+  bool isLoading = false;
 
   Future getBank() async {
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    isLoading = true;
+    notifyListeners();
     Response x;
     try {
       x = await getpi("/api/bank/index");
@@ -23,6 +25,9 @@ class AccountsController extends ChangeNotifier {
     } catch (e) {
       print(e);
       throw "حصل خطا في ارسال البيانات";
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 
@@ -40,7 +45,8 @@ class AccountsController extends ChangeNotifier {
   // }
 
   Future getSmallBank() async {
-    print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+    isLoading = true;
+    notifyListeners();
     Response x;
     try {
       x = await getpi("/api/small_bank/index");
@@ -50,6 +56,9 @@ class AccountsController extends ChangeNotifier {
     } catch (e) {
       print(e);
       throw "حصل خطا في ارسال البيانات";
+    } finally {
+      isLoading = false;
+      notifyListeners();
     }
   }
 

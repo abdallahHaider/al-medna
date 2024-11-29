@@ -1,9 +1,6 @@
-import 'dart:io';
-import 'package:flutter/material.dart' as flutter;
 import 'package:flutter/services.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
 
 // class InvoicePDF extends flutter.StatefulWidget {
 //   const InvoicePDF({flutter.Key? key}) : super(key: key);

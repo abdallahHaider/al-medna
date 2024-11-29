@@ -1,9 +1,5 @@
 import 'dart:io';
-import 'package:admin/models/authority.dart';
 import 'package:admin/models/authority_tickt.dart';
-import 'package:admin/models/reseller.dart';
-import 'package:admin/models/reseller_dbet.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
@@ -13,9 +9,14 @@ import 'package:printing/printing.dart';
 // import 'dart:html' as html; // Import html for web download support
 
 Future<void> authortiytoPdf(
-     List<AuthorityTickt> traps,String name,
-       num totalremainingiqd ,num totalcostiqd,num totalpayiqd,
-    num totalremainingusd ,num totalcostusd,num totalpayusd) async {
+    List<AuthorityTickt> traps,
+    String name,
+    num totalremainingiqd,
+    num totalcostiqd,
+    num totalpayiqd,
+    num totalremainingusd,
+    num totalcostusd,
+    num totalpayusd) async {
   final pdf = pw.Document();
 
   // تحميل الخط مرة واحدة
@@ -55,9 +56,9 @@ Future<void> authortiytoPdf(
             ),
             pw.SizedBox(height: 20),
 
-    //         // ملخص الحساب
-            _buildSummary(   totalremainingiqd , totalcostiqd, totalpayiqd,
-     totalremainingusd , totalcostusd, totalpayusd),
+            //         // ملخص الحساب
+            _buildSummary(totalremainingiqd, totalcostiqd, totalpayiqd,
+                totalremainingusd, totalcostusd, totalpayusd),
           ],
         ),
       ),
@@ -66,14 +67,14 @@ Future<void> authortiytoPdf(
 
   // حفظ ملف PDF في جهازك
   final output = await getTemporaryDirectory();
-  final file = File("${output.path}/${name }.pdf");
+  final file = File("${output.path}/${name}.pdf");
   await file.writeAsBytes(await pdf.save());
 
   print("PDF تم إنشاؤه وحفظه بنجاح في ${file.path}");
 
   // فتح ملف PDF باستخدام تطبيق خارجي
   await OpenFilex.open(file.path);
-    // Preview the PDF file
+  // Preview the PDF file
   await Printing.layoutPdf(
     onLayout: (PdfPageFormat format) async => pdf.save(),
   );
@@ -85,7 +86,6 @@ Future<void> authortiytoPdf(
   //   ..setAttribute("download", "example.pdf")
   //   ..click();
   // html.Url.revokeObjectUrl(url);
-
 }
 
 // دالة لبناء صف اسم الوكيل
@@ -128,7 +128,7 @@ pw.TableRow _buildTableHeader() {
     ),
     children: [
       _buildHeaderCell("التاريخ"),
-            _buildHeaderCell("العملة"),
+      _buildHeaderCell("العملة"),
       _buildHeaderCell("الواصل"),
       _buildHeaderCell("المجموع الكلي"),
       _buildHeaderCell("الأجره"),
@@ -138,8 +138,6 @@ pw.TableRow _buildTableHeader() {
       _buildHeaderCell("عدد كبير"),
       _buildHeaderCell("اسم ورقم الرحلة"),
       _buildHeaderCell("ت"),
-  
-
     ],
   );
 }
@@ -163,12 +161,12 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
       print(trap.commission);
       return pw.TableRow(
         decoration: pw.BoxDecoration(
-          color: isPayment ==true? null : PdfColors.grey400,
+          color: isPayment == true ? null : PdfColors.grey400,
           border: pw.Border.all(),
         ),
         children: [
-          _buildTableCell(trap.createdAt.toString().substring(0,11)),
-                              _buildTableCell(trap.type.toString()=="iqd"?"دينار":"دولار"),
+          _buildTableCell(trap.createdAt.toString().substring(0, 11)),
+          _buildTableCell(trap.type.toString() == "iqd" ? "دينار" : "دولار"),
           _buildTableCell(isPayment ? (trap.totalPrice.toString()) : ""),
           _buildTableCell(isPayment ? "" : (trap.totalPrice.toString())),
           _buildTableCell(isPayment ? "" : (trap.commission.toString())),
@@ -176,11 +174,8 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
           _buildTableCell(isPayment ? "" : (trap.number_of_child.toString())),
           _buildTableCell(isPayment ? "" : (trap.priceOfTravel.toString())),
           _buildTableCell(isPayment ? "" : (trap.numberOfTravel.toString())),
-          _buildTableCell(isPayment?"سداد":trap.name.toString()),
+          _buildTableCell(isPayment ? "سداد" : trap.name.toString()),
           _buildTableCell((index + 1).toString()),
-      
-
-
         ],
       );
     },
@@ -191,36 +186,35 @@ List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
 pw.Widget _buildTableCell(String content) {
   return pw.Padding(
     padding: pw.EdgeInsets.symmetric(horizontal: 5),
-    child: pw.Text(content, textDirection: pw.TextDirection.rtl,style: pw.TextStyle(fontSize: 8)),
+    child: pw.Text(content,
+        textDirection: pw.TextDirection.rtl, style: pw.TextStyle(fontSize: 8)),
   );
 }
 
 // دالة لبناء ملخص الحساب
-pw.Widget _buildSummary(
-  num totalremainingiqd,
-  num totalcostiqd,
-  num totalpayiqd,
-  num totalremainingusd,
-  num totalcostusd,
-  num totalpayusd
-) {
+pw.Widget _buildSummary(num totalremainingiqd, num totalcostiqd,
+    num totalpayiqd, num totalremainingusd, num totalcostusd, num totalpayusd) {
   return pw.Column(
     crossAxisAlignment: pw.CrossAxisAlignment.start, // Align to the left
     children: [
       // IQD Row - this row will fill the width of the page
       pw.Row(
         children: [
-          _buildSummaryItem("مجموع المتبقي بالدينار", totalremainingiqd.toString(), 1),
-          _buildSummaryItem("مجموع السداد بالدينار", totalcostiqd.toString(), 1),
+          _buildSummaryItem(
+              "مجموع المتبقي بالدينار", totalremainingiqd.toString(), 1),
+          _buildSummaryItem(
+              "مجموع السداد بالدينار", totalcostiqd.toString(), 1),
           _buildSummaryItem("مجموع الطلب بالدينار", totalpayiqd.toString(), 1),
         ],
       ),
-      
+
       // USD Row - this row will also fill the width of the page
       pw.Row(
         children: [
-          _buildSummaryItem("مجموع المتبقي بالدولار", totalremainingusd.toString(), 1),
-          _buildSummaryItem("مجموع السداد بالدولار", totalcostusd.toString(), 1),
+          _buildSummaryItem(
+              "مجموع المتبقي بالدولار", totalremainingusd.toString(), 1),
+          _buildSummaryItem(
+              "مجموع السداد بالدولار", totalcostusd.toString(), 1),
           _buildSummaryItem("مجموع الطلب بالدولار", totalpayusd.toString(), 1),
         ],
       ),
@@ -230,10 +224,11 @@ pw.Widget _buildSummary(
 
 pw.Widget _buildSummaryItem(String title, String value, double flex) {
   return pw.Expanded(
-    flex: flex.toInt(),  // Distribute width equally across the row
+    flex: flex.toInt(), // Distribute width equally across the row
     child: pw.Container(
       decoration: pw.BoxDecoration(border: pw.Border.all()),
-      padding: pw.EdgeInsets.symmetric(horizontal: 5, vertical: 8), // Reduced padding
+      padding: pw.EdgeInsets.symmetric(
+          horizontal: 5, vertical: 8), // Reduced padding
       child: pw.Column(
         children: [
           pw.Text(title,

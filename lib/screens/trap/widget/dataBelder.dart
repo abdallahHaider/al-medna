@@ -58,15 +58,17 @@ class _TrapTableState extends State<TrapTable> {
                       Text(trap.createdAt?.toString().substring(0, 10) ?? '')),
                   DataCell(SizedBox(
                     width: 100,
-                    child: TextButton(
-                      onPressed: () {
-                        noteDialog(context, trap.note ?? "");
-                      },
-                      child: Text(
-                        trap.note.toString(),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                    child: trap.note == "null" || trap.note == ""
+                        ? SizedBox()
+                        : TextButton(
+                            onPressed: () {
+                              noteDialog(context, trap.note ?? "");
+                            },
+                            child: Text(
+                              trap.note.toString(),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                   )),
                   DataCell(
                     Row(

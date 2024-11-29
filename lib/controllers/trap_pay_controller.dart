@@ -100,6 +100,7 @@ class TrapPayController extends ChangeNotifier {
       notifyListeners();
       Navigator.pop(context);
     } else {
+      print(x.body);
       throw jsonDecode(x.body);
     }
   }

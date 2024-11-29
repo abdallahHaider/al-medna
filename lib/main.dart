@@ -101,6 +101,7 @@ class MyApp extends StatelessWidget {
           textDirection: TextDirection.rtl,
           child: MainScreen(),
         ),
+        locale: Locale("ar"),
         navigatorObservers: [FlutterSmartDialog.observer],
         builder: FlutterSmartDialog.init(),
       ),

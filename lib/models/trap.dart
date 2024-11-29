@@ -101,7 +101,7 @@ class Trap {
             : DateTime.parse(json["created_at"]),
         nowDebt: formatPrice(json["now_debt"]),
         type: json["type"],
-        note: json["note"].toString(),
+        note: json["note"] ?? "",
         vip_travel: formatPrice(json["vip_travel"] ?? 0),
         price_vip_travel: json["price_vip_travel"] == null
             ? null

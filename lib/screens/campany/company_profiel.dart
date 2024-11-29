@@ -7,7 +7,6 @@ import 'package:admin/screens/dashboard/components/header.dart';
 import 'package:admin/screens/widgets/back_batten.dart';
 import 'package:admin/screens/widgets/deleteDialog.dart';
 import 'package:admin/screens/widgets/my_data_table.dart';
-import 'package:admin/utl/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spelling_number/spelling_number.dart';
@@ -55,7 +54,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-   CustomTable(),
+          CustomTable(),
           Expanded(
             flex: 2,
             child: Padding(
@@ -279,6 +278,7 @@ class _CompanyProfilePageState extends State<CompanyProfilePage> {
     );
   }
 }
+
 class CustomTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -294,12 +294,42 @@ class CustomTable extends StatelessWidget {
         Table(
           border: TableBorder.all(color: Colors.grey, width: 1),
           children: [
-            _buildTableRow('مجموع حساب التاشيرات', (storage) => storage.total_price_t, (storage) => storage.convertTashera(), (storage) => storage.isTashera, 20),
-            _buildTableRow('مجموع حساب الفنادق', (storage) => storage.total_room_price_per_night, (storage) => storage.convertHotel(), (storage) => storage.ishotel, 20),
-            _buildTableRow('المجموع الكلي', (storage) => storage.total, (storage) => storage.convertTotal(), (storage) => storage.istotal, 20),
-            _buildTableRow('مجموع التسديد', (storage) => storage.pay, (storage) => storage.convertPay(), (storage) => storage.ispay, 20),
-            _buildTableRow('المجموع المتبقي', (storage) => storage.rest, (storage) => storage.convertrest(), (storage) => storage.isrest, 20),
-            _buildTableRow('المجموع المتبقي بل الدولار', (storage) => (double.parse(storage.rest) / 3.75).toString(), (storage) => storage.convertRestUsd(), (storage) => storage.isrestUSD, 20),
+            _buildTableRow(
+                'مجموع حساب التاشيرات',
+                (storage) => storage.total_price_t,
+                (storage) => storage.convertTashera(),
+                (storage) => storage.isTashera,
+                20),
+            _buildTableRow(
+                'مجموع حساب الفنادق',
+                (storage) => storage.total_room_price_per_night,
+                (storage) => storage.convertHotel(),
+                (storage) => storage.ishotel,
+                20),
+            _buildTableRow(
+                'المجموع الكلي',
+                (storage) => storage.total,
+                (storage) => storage.convertTotal(),
+                (storage) => storage.istotal,
+                20),
+            _buildTableRow(
+                'مجموع التسديد',
+                (storage) => storage.pay,
+                (storage) => storage.convertPay(),
+                (storage) => storage.ispay,
+                20),
+            _buildTableRow(
+                'المجموع المتبقي',
+                (storage) => storage.rest,
+                (storage) => storage.convertrest(),
+                (storage) => storage.isrest,
+                20),
+            _buildTableRow(
+                'المجموع المتبقي بل الدولار',
+                (storage) => (double.parse(storage.rest) / 3.75).toString(),
+                (storage) => storage.convertRestUsd(),
+                (storage) => storage.isrestUSD,
+                20),
           ],
         ),
       ],
@@ -332,7 +362,9 @@ class CustomTable extends StatelessWidget {
                 child: Text(
                   '${isSpelling(storage) ? SpellingNumber(lang: 'ar').convert(double.parse(valueExtractor(storage)).toInt().abs()) : double.parse(valueExtractor(storage)).toInt().toString()}',
                   style: TextStyle(
-                    color: double.parse(valueExtractor(storage)).toInt() < 0 ? Colors.red : null,
+                    color: double.parse(valueExtractor(storage)).toInt() < 0
+                        ? Colors.red
+                        : null,
                     fontSize: isSpelling(storage) ? 15 : fontSize,
                   ),
                   textAlign: TextAlign.center,

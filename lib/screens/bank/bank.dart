@@ -108,12 +108,18 @@ class _BankPageState extends State<BankPage> {
                   child: EditWidget(
                       savePressed: () async {
                         try {
+                          SmartDialog.showLoading();
                           await Provider.of<AccountsController>(context,
                                   listen: false)
                               .updateBank(eid, nameEController.text);
                           snackBar(context, "تم التعديل بنجاح", false);
+                          setState(() {
+                            isEdit = false;
+                          });
                         } catch (e) {
                           snackBar(context, e.toString(), true);
+                        } finally {
+                          SmartDialog.dismiss();
                         }
                       },
                       canselPressed: () {
@@ -139,6 +145,11 @@ class _BankPageState extends State<BankPage> {
             accountsController,
             child,
           ) {
+            if (accountsController.isLoading) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
             return MyDataTable(
               expended: true,
               columns: [
