@@ -32,7 +32,6 @@ class _AddSaleState extends State<AddSale> {
 
   @override
   void initState() {
-    // TODO: implement initState
     Provider.of<HotelController>(context, listen: false).getFetchData(true);
     Provider.of<HotelController>(context, listen: false).getFetchData(false);
     setber();

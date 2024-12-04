@@ -1,4 +1,4 @@
-class Transport{
+class Transport {
   final String name;
   final String id;
 

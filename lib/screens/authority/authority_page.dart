@@ -47,7 +47,7 @@ class _AuthorityPageState extends State<AuthorityPage> {
                             myType.getAuthority();
                           },
                           canselPressed: () {
-                            myType.setedit(false);
+                            myType.setEdit(false);
                           },
                           buildActions: [
                             MyTextField(
@@ -68,8 +68,8 @@ class _AuthorityPageState extends State<AuthorityPage> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
-                  onTap: (){
-                  myType.changeType();
+                  onTap: () {
+                    myType.changeType();
                   },
                   child: Card(
                     child: Column(
@@ -78,13 +78,16 @@ class _AuthorityPageState extends State<AuthorityPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 3,vertical: 10),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 3, vertical: 10),
                                 child: Text(
-                              myType.type == false ? "عرض الارشيف" : 'رجوع',
-                              style: TextStyle(fontSize: 23),
-                            )),
+                                  myType.type == false ? "عرض الارشيف" : 'رجوع',
+                                  style: TextStyle(fontSize: 23),
+                                )),
                             Icon(
-                             myType.type == false ?  Icons.archive:Icons.arrow_back,
+                              myType.type == false
+                                  ? Icons.archive
+                                  : Icons.arrow_back,
                               size: 40,
                             )
                           ],

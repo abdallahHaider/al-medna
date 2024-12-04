@@ -2,16 +2,16 @@
 //
 //     final authorityTickt = authorityTicktFromJson(jsonString);
 
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:admin/models/format_price.dart';
 
-AuthorityTickt authorityTicktFromJson(String str) =>
-    AuthorityTickt.fromJson(json.decode(str));
+// AuthorityTicket authorityTicktFromJson(String str) =>
+//     AuthorityTicket.fromJson(json.decode(str));
 
-String authorityTicktToJson(AuthorityTickt data) => json.encode(data.toJson());
+// String authorityTicktToJson(AuthorityTickt data) => json.encode(data.toJson());
 
-class AuthorityTickt {
+class AuthorityTicket {
   int? id;
   int? authorityId;
   int? numberOfTravel;
@@ -26,7 +26,7 @@ class AuthorityTickt {
   String? type;
   bool? istyped;
 
-  AuthorityTickt({
+  AuthorityTicket({
     this.id,
     this.authorityId,
     this.numberOfTravel,
@@ -38,29 +38,27 @@ class AuthorityTickt {
     this.price_of_child,
     this.createdAt,
     this.number_kade,
-    this.type ,
+    this.type,
     this.istyped,
   });
 
-  factory AuthorityTickt.fromJson(Map<String, dynamic> json) => AuthorityTickt(
-        id: json["id"],
-        authorityId: json["authority_id"] ?? 0,
-        numberOfTravel: json["number_of_travel"] ?? 0,
-        priceOfTravel: formatPrice(json["price_of_travel"] ?? 0),
-        commission: json["commission"] ?? 0,
-        
-        totalPrice: formatPrice(json["total_price"] ?? 0),
-        name: json["name"] ?? "",
-        number_of_child: json["number_of_child"] ?? 0,
-        price_of_child: formatPrice(json["price_of_child"] ?? 0),
-        createdAt: json["created_at"] == null
-            ? null
-            : DateTime.parse(json["created_at"]),
-        number_kade: json["number_kade"] ?? "0",
-                type: json["type"] ?? "iqd",
-                istyped: json["commission"] ==null
-
-      );
+  factory AuthorityTicket.fromJson(Map<String, dynamic> json) =>
+      AuthorityTicket(
+          id: json["id"],
+          authorityId: json["authority_id"] ?? 0,
+          numberOfTravel: json["number_of_travel"] ?? 0,
+          priceOfTravel: formatPrice(json["price_of_travel"] ?? 0),
+          commission: json["commission"] ?? 0,
+          totalPrice: formatPrice(json["total_price"] ?? 0),
+          name: json["name"] ?? "",
+          number_of_child: json["number_of_child"] ?? 0,
+          price_of_child: formatPrice(json["price_of_child"] ?? 0),
+          createdAt: json["created_at"] == null
+              ? null
+              : DateTime.parse(json["created_at"]),
+          number_kade: json["number_kade"] ?? "0",
+          type: json["type"] ?? "iqd",
+          istyped: json["commission"] == null);
 
   Map<String, dynamic> toJson() => {
         "id": id,

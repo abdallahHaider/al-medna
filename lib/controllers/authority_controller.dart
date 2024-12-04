@@ -11,10 +11,10 @@ import 'package:http/http.dart';
 class AuthorityController extends ChangeNotifier {
   bool isError = false;
   List authorities = [];
-  List<AuthorityTickt> authoritiesT = [];
+  List<AuthorityTicket> authoritiesT = [];
   bool isEdit = false;
   String id = "";
-  setedit(bool v) {
+  setEdit(bool v) {
     isEdit = v;
     notifyListeners();
   }
@@ -66,17 +66,17 @@ class AuthorityController extends ChangeNotifier {
     }
   }
 
+  bool type = false;
+  changeType() async {
+    type = !type;
+    authorities = await getAuthority();
+    notifyListeners();
+  }
 
-bool type = false; 
-changeType()async{
-  type = !type;
-authorities =await  getAuthority();
-  notifyListeners();
-}
   Future getAuthority() async {
     Response x;
     try {
-      x = await getpi("/api/authority/index?type=${type==true?1:0}");
+      x = await getpi("/api/authority/index?type=${type == true ? 1 : 0}");
       print(x.body);
       var data = jsonDecode(x.body);
       authorities = data.map((json) => Authority.fromJson(json)).toList();
@@ -110,14 +110,12 @@ authorities =await  getAuthority();
     }
   }
 
-Future archiveauthority(id,BuildContext context)async{
-   Response x;
+  Future archiveauthority(id, BuildContext context) async {
+    Response x;
     SmartDialog.showLoading();
     try {
-      x = await postApi("/api/authority/update", {
-        "id": id,
-        'is_archive':false
-      });
+      x = await postApi(
+          "/api/authority/update", {"id": id, 'is_archive': false});
     } catch (e) {
       snackBar(context, e.toString(), true);
       print(e);
@@ -126,40 +124,45 @@ Future archiveauthority(id,BuildContext context)async{
       SmartDialog.dismiss();
     }
     if (x.statusCode == 200 || x.statusCode == 201) {
-      snackBar(context, "تمت عملية ${type == false?"الارشفه":'الغاء الارشفه'} بنجاح", false);
+      snackBar(
+          context,
+          "تمت عملية ${type == false ? "الارشفه" : 'الغاء الارشفه'} بنجاح",
+          false);
       print(x.body);
       authorities = await getAuthority();
     } else {
       snackBar(context, jsonDecode(x.body)["message"], true);
       throw jsonDecode(x.body);
     }
-}
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////
   ///
   num allCostiqd = 0;
   num paidiqd = 0;
   num restiqd = 0;
-  num allCostusd= 0;
-  num paidusd= 0;
+  num allCostusd = 0;
+  num paidusd = 0;
   num restusd = 0;
   int page = 1;
   bool iqd = true;
   setpage(int v) {
     page = page + v;
   }
-  changeIT(){
+
+  changeIT() {
     iqd = !iqd;
     notifyListeners();
   }
 
   Future getAuthorityTicks(id) async {
-       allCostiqd = 0;
-  paidiqd = 0;
-  restiqd = 0;
-  allCostusd= 0;
-  paidusd= 0;
-  restusd = 0;
-          authoritiesT  =[];
+    allCostiqd = 0;
+    paidiqd = 0;
+    restiqd = 0;
+    allCostusd = 0;
+    paidusd = 0;
+    restusd = 0;
+    authoritiesT = [];
 
     Response x;
     try {
@@ -169,11 +172,11 @@ Future archiveauthority(id,BuildContext context)async{
       allCostiqd = data["cost_iqd"];
       paidiqd = data["paid_iqd"];
       restiqd = data["rest_iqd"];
-       allCostusd= data["cost_usd"];
+      allCostusd = data["cost_usd"];
       paidusd = data["paid_usd"];
-      restusd= data["rest_usd"];
-      for(var i in      data["data"]){
-        authoritiesT.add( AuthorityTickt.fromJson(i));
+      restusd = data["rest_usd"];
+      for (var i in data["data"]) {
+        authoritiesT.add(AuthorityTicket.fromJson(i));
       }
       notifyListeners();
     } catch (e) {
@@ -204,8 +207,8 @@ Future archiveauthority(id,BuildContext context)async{
         "number_of_child": number_of_child ?? "0",
         "price_of_child": price_of_child ?? "0",
         "name": name,
-        'type':type,
-        'IQD_to_USD':iqd_to_usd
+        'type': type,
+        'IQD_to_USD': iqd_to_usd
       });
     } catch (e) {
       snackBar(context, e.toString(), true);

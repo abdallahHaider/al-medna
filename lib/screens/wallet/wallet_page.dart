@@ -7,7 +7,7 @@ import 'package:admin/screens/wallet/widgets/wallet_table.dart';
 import 'package:admin/screens/widgets/erorr_widget.dart';
 import 'package:admin/utl/constants.dart';
 import 'package:provider/provider.dart';
-import 'package:admin/pdf/reseller_Pdf walt.dart'; // استيراد الدالة الخاصة بـ PDF
+import 'package:admin/pdf/reseller_Pdf walt.dart';
 import 'package:intl/intl.dart';
 
 class WalletPage extends StatefulWidget {
@@ -29,7 +29,8 @@ class _WalletPageState extends State<WalletPage> {
     if (value.isEmpty) return '';
     final number = double.tryParse(value.replaceAll(',', ''));
     if (number == null) return value;
-    return NumberFormat('#,##0').format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
+    return NumberFormat('#,##0')
+        .format(number); // يستخدم هذا التنسيق الفاصلة بين الألوف
   }
 
   @override
@@ -163,13 +164,13 @@ class _WalletPageState extends State<WalletPage> {
   Widget _buildActionButton(String text, VoidCallback onPressed, Color color) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(color),
-        shape: MaterialStateProperty.all(
+        backgroundColor: WidgetStateProperty.all(color),
+        shape: WidgetStateProperty.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
         ),
-        foregroundColor: MaterialStateProperty.all(Colors.white),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
       ),
       onPressed: onPressed,
       child: Text(text),

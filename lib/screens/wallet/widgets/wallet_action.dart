@@ -72,7 +72,6 @@ class _WalletActionState extends State<WalletAction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: يجب فصل وتعميم هذا اب بار
       appBar: AppBar(
         title: Header(title: "الصندوق الرئيسي"),
         actions: [

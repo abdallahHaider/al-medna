@@ -4,6 +4,7 @@ import 'package:admin/screens/authority/authority_page.dart';
 import 'package:admin/screens/bank/bank.dart';
 import 'package:admin/screens/budget/budget_page.dart';
 import 'package:admin/screens/campany/campany_page.dart';
+import 'package:admin/screens/direct/direct_page.dart';
 import 'package:admin/screens/hotel/hotel_page.dart';
 import 'package:admin/screens/many%20send/many_send.dart';
 import 'package:admin/screens/trap%20pay/trap_pay.dart';
@@ -87,94 +88,104 @@ class SideMenu extends StatelessWidget {
             index: 4,
           ),
           DrawerListTile(
-            title: " الصندوق الرئيسي",
-            svgSrc: "assets/icons/menu_store.svg",
+            title: "المباشر والاقساط",
+            svgSrc: "assets/icons/menu_doc.svg",
             press: () {
               Provider.of<Rootwidget>(context, listen: false).index = 5;
               Provider.of<Rootwidget>(context, listen: false)
-                  .getWidet(WalletPage());
+                  .getWidet(DirectPage());
             },
             index: 5,
+          ),
+          DrawerListTile(
+            title: " الصندوق الرئيسي",
+            svgSrc: "assets/icons/menu_store.svg",
+            press: () {
+              Provider.of<Rootwidget>(context, listen: false).index = 6;
+              Provider.of<Rootwidget>(context, listen: false)
+                  .getWidet(WalletPage());
+            },
+            index: 6,
           ),
           DrawerListTile(
             title: "البنوك",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 6;
+              Provider.of<Rootwidget>(context, listen: false).index = 7;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(BankPage());
             },
-            index: 6,
+            index: 7,
           ),
           DrawerListTile(
             title: "المنافذ",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 7;
+              Provider.of<Rootwidget>(context, listen: false).index = 8;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(AccountsPage());
             },
-            index: 7,
+            index: 8,
           ),
           DrawerListTile(
             title: "اضافة عملية",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 8;
+              Provider.of<Rootwidget>(context, listen: false).index = 9;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(ActionBankCard());
             },
-            index: 8,
+            index: 9,
           ),
           DrawerListTile(
             title: "الشركات ",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 9;
+              Provider.of<Rootwidget>(context, listen: false).index = 10;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(CampanyPage());
             },
-            index: 9,
+            index: 10,
           ),
           DrawerListTile(
             title: "الصرفيات ",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 10;
+              Provider.of<Rootwidget>(context, listen: false).index = 11;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(ManySendPage());
             },
-            index: 10,
+            index: 11,
           ),
           DrawerListTile(
             title: "الميزانية ",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 11;
+              Provider.of<Rootwidget>(context, listen: false).index = 12;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(BudgetPage());
             },
-            index: 11,
+            index: 12,
           ),
           DrawerListTile(
             title: "الفنادق",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 12;
+              Provider.of<Rootwidget>(context, listen: false).index = 13;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(HotelPage());
             },
-            index: 12,
+            index: 13,
           ),
           DrawerListTile(
             title: "الحسابات العامه",
             svgSrc: "assets/icons/menu_store.svg",
             press: () {
-              Provider.of<Rootwidget>(context, listen: false).index = 13;
+              Provider.of<Rootwidget>(context, listen: false).index = 14;
               Provider.of<Rootwidget>(context, listen: false)
                   .getWidet(AuthorityPage());
             },
-            index: 13,
+            index: 14,
           ),
         ],
       ),

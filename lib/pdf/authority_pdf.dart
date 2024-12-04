@@ -9,7 +9,7 @@ import 'package:printing/printing.dart';
 // import 'dart:html' as html; // Import html for web download support
 
 Future<void> authortiytoPdf(
-    List<AuthorityTickt> traps,
+    List<AuthorityTicket> traps,
     String name,
     num totalremainingiqd,
     num totalcostiqd,
@@ -43,7 +43,7 @@ Future<void> authortiytoPdf(
             pw.SizedBox(height: 20),
 
             // الصف العلوي لاسم الهيئه
-            _buildAgentRow(name ?? "اسم غير متوفر"),
+            _buildAgentRow(name),
             pw.SizedBox(height: 20),
 
             // الجدول الرئيسي
@@ -152,7 +152,7 @@ pw.Widget _buildHeaderCell(String title) {
 }
 
 // دالة لإنشاء الصفوف من البيانات
-List<pw.TableRow> _buildTableRows(List<AuthorityTickt> traps) {
+List<pw.TableRow> _buildTableRows(List<AuthorityTicket> traps) {
   return List.generate(
     traps.length,
     (index) {

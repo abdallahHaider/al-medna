@@ -4,6 +4,7 @@ import 'package:admin/controllers/action_controller.dart';
 import 'package:admin/controllers/authority_controller.dart';
 import 'package:admin/controllers/budget_controller.dart';
 import 'package:admin/controllers/company_controller.dart';
+import 'package:admin/controllers/direct_controller.dart';
 import 'package:admin/controllers/general_information.dart';
 import 'package:admin/controllers/menu_app_controller.dart';
 import 'package:admin/controllers/mony_send.dart';
@@ -81,6 +82,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AuthorityController(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DirectController(),
         ),
       ],
       child: MaterialApp(

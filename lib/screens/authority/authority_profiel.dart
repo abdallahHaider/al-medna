@@ -59,7 +59,6 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
             Row(
               children: [
                 if (!isEdit) AddTicks(widget: widget),
@@ -79,121 +78,163 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                       onerid: widget.id,
                     ),
                   ),
-          SizedBox(
-  width: 500, // Increased width for better visual impact
-  child: Consumer<AuthorityController>(
-    builder: (context, myType, child) {
-      return InkWell(
-        onTap: () {
-          myType.changeIT();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.white, // Background color for the container
-            borderRadius: BorderRadius.circular(12), // Rounded borders
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: Offset(0, 3), // Shadow direction
-              ),
-            ],
-          ),
-          child: Table(
-            border: TableBorder(
-              horizontalInside: BorderSide(width: 1, color: Colors.grey.shade300),
-              verticalInside: BorderSide(width: 1, color: Colors.grey.shade300),
-              top: BorderSide(width: 2, color: Colors.blue), // Custom border color
-              bottom: BorderSide(width: 2, color: Colors.blue),
-            ),
-            columnWidths: const {
-              0: FlexColumnWidth(),
-              1: FixedColumnWidth(220),
-            },
-            children: [
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      myType.iqd ? "مجموع الطلب بالدينار" : "مجموع الطلب بالدولار",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
+                SizedBox(
+                  width: 500, // Increased width for better visual impact
+                  child: Consumer<AuthorityController>(
+                    builder: (context, myType, child) {
+                      return InkWell(
+                        onTap: () {
+                          myType.changeIT();
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors
+                                .white, // Background color for the container
+                            borderRadius:
+                                BorderRadius.circular(12), // Rounded borders
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 2,
+                                blurRadius: 5,
+                                offset: Offset(0, 3), // Shadow direction
+                              ),
+                            ],
+                          ),
+                          child: Table(
+                            border: TableBorder(
+                              horizontalInside: BorderSide(
+                                  width: 1, color: Colors.grey.shade300),
+                              verticalInside: BorderSide(
+                                  width: 1, color: Colors.grey.shade300),
+                              top: BorderSide(
+                                  width: 2,
+                                  color: Colors.blue), // Custom border color
+                              bottom: BorderSide(width: 2, color: Colors.blue),
+                            ),
+                            columnWidths: const {
+                              0: FlexColumnWidth(),
+                              1: FixedColumnWidth(220),
+                            },
+                            children: [
+                              TableRow(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    child: Text(
+                                      myType.iqd
+                                          ? "مجموع الطلب بالدينار"
+                                          : "مجموع الطلب بالدولار",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    child: Text(
+                                      myType.iqd
+                                          ? myType.allCostiqd.toString()
+                                          : myType.allCostusd.toString(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    child: Text(
+                                      myType.iqd
+                                          ? "مجموع السداد بالدينار"
+                                          : "مجموع السداد بالدولار",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    child: Text(
+                                      myType.iqd
+                                          ? myType.paidiqd.toString()
+                                          : myType.paidusd.toString(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              TableRow(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    child: Text(
+                                      myType.iqd
+                                          ? "الباقي بالدينار"
+                                          : "الباقي بالدولار",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 16.0),
+                                    child: Text(
+                                      myType.iqd
+                                          ? myType.restiqd.toString()
+                                          : myType.restusd.toString(),
+                                      style: TextStyle(
+                                        color: (myType.iqd
+                                                    ? myType.restiqd
+                                                    : myType.restusd) <
+                                                0
+                                            ? Colors.red
+                                            : Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      myType.iqd ? myType.allCostiqd.toString() : myType.allCostusd.toString(),
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      myType.iqd ? "مجموع السداد بالدينار" : "مجموع السداد بالدولار",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      myType.iqd ? myType.paidiqd.toString() : myType.paidusd.toString(),
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      myType.iqd ? "الباقي بالدينار" : "الباقي بالدولار",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                    child: Text(
-                      myType.iqd ? myType.restiqd.toString() : myType.restusd.toString(),
-                      style: TextStyle(
-                        color: (myType.iqd ? myType.restiqd : myType.restusd) < 0
-                            ? Colors.red
-                            : Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-    },
-  ),
-)
-
-
+                )
               ],
-              
             ),
-             Consumer<AuthorityController>(
-    builder: (context, myType, child) {
-                return Card(
-                  child: InkWell(child: Text("كشف حساب"),onTap: (){
-                    authortiytoPdf(  myType.authoritiesT, widget.name,  myType.restiqd, myType.allCostiqd, myType.paidiqd,myType.restusd, myType.allCostusd, myType.paidusd);
-                  },),
-                
-                );
-              }
-            ),
+            Consumer<AuthorityController>(builder: (context, myType, child) {
+              return Card(
+                child: InkWell(
+                  child: Text("كشف حساب"),
+                  onTap: () {
+                    authortiytoPdf(
+                        myType.authoritiesT,
+                        widget.name,
+                        myType.restiqd,
+                        myType.allCostiqd,
+                        myType.paidiqd,
+                        myType.restusd,
+                        myType.allCostusd,
+                        myType.paidusd);
+                  },
+                ),
+              );
+            }),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
@@ -241,7 +282,7 @@ class _AuthorityProfileState extends State<AuthorityProfile> {
                         DataColumn(label: Text("الاجراء"))
                       ],
                       rows: List.generate(myType.authoritiesT.length, (index) {
-                        AuthorityTickt authority = myType.authoritiesT[index];
+                        AuthorityTicket authority = myType.authoritiesT[index];
                         return DataRow(
                             color: int.parse(authority.number_kade!) > 0
                                 ? WidgetStateProperty.all(Colors.grey.shade300)

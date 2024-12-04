@@ -48,7 +48,7 @@ class CardTable extends StatelessWidget {
                         IconButton(
                             onPressed: () {
                               myType.id = authority.id!.toString();
-                              myType.setedit(true);
+                              myType.setEdit(true);
                             },
                             icon: Icon(Icons.edit)),
                         IconButton(
@@ -60,13 +60,14 @@ class CardTable extends StatelessWidget {
                               });
                             },
                             icon: Icon(Icons.delete)),
-                            IconButton(icon: Icon(Icons.archive),onPressed: ()async{
-                              await Provider.of<AuthorityController>(context,
-                                        listen: false)
-                                    .archiveauthority(authority.id!, context);
-                            }
-
-                            ,)
+                        IconButton(
+                          icon: Icon(Icons.archive),
+                          onPressed: () async {
+                            await Provider.of<AuthorityController>(context,
+                                    listen: false)
+                                .archiveauthority(authority.id!, context);
+                          },
+                        )
                       ],
                     ))
                   ]);
