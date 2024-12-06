@@ -249,7 +249,6 @@ class AuthorityController extends ChangeNotifier {
     }
   }
 
-//TODO: Error frome API
   Future updateAuthorityTicks(id, String number_of_travel, price_of_travel,
       commission, BuildContext context) async {
     Response x;
