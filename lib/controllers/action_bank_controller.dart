@@ -127,7 +127,8 @@ class ActionBankController extends ChangeNotifier {
     print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     Response x;
     try {
-      x = await getpi("/api/$typeTO/index${typeTO =="authority"?"?type=0":""}");
+      x = await getpi(
+          "/api/$typeTO/index${typeTO == "authority" ? "?type=0" : ""}");
       print(x.body);
       var data = jsonDecode(x.body);
       mineActionsTO = data.map((json) => MineAction.fromJson(json)).toList();
@@ -165,7 +166,7 @@ class ActionBankController extends ChangeNotifier {
         if (isIQD == "t") "cost_USD": cost,
         if (isIQD == "f") "cost_IQD": cost,
         if (isIQD == "r") "cost_USD": double.parse(cost) / 3.75,
-        'type':isIQD=='t'?'usd':'iqd',
+        'type': isIQD == 't' ? 'usd' : 'iqd',
         if (usdToIQD.isNotEmpty) "IQD_to_USD": usdToIQD,
         "number_kade": "0",
       });
@@ -180,15 +181,13 @@ class ActionBankController extends ChangeNotifier {
       throw "حصل خطا في ارسال البيانات";
     }
   }
-  
 
   void setNumberWord(String value, String type) {
     int x = 0;
     if (value.isNotEmpty) {
       x = int.parse(value);
       numberWord = SpellingNumber(lang: 'ar').convert(x);
-      numberWord =
-          "${numberWord} $type فقط لا غير "; 
+      numberWord = "${numberWord} $type فقط لا غير ";
       notifyListeners();
     }
   }
